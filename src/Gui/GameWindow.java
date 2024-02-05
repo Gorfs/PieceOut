@@ -5,7 +5,9 @@ import javax.swing.JFrame;
 import src.Config.*;
 
 public class GameWindow extends JFrame{
-
+    /**
+     * Constructs a new GameWindow object.
+     */
     public GameWindow(){
         super("Game");
         setSize(800, 600);
@@ -13,5 +15,4 @@ public class GameWindow extends JFrame{
         this.setBackground(Colours.BACKGROUND);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
-    
 }
