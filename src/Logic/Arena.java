@@ -1,7 +1,13 @@
+package src.Logic;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
+/**
+ * The Arena class represents a game arena with a specified width and height.
+ * It contains methods to set the dimensions of the arena and load the arena from a file.
+ */
 public class Arena {
     private int width, height;
     private boolean[][] matrix;
