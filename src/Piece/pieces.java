@@ -1,6 +1,7 @@
 package src.Piece;
 
 import src.Config.Colours;
+import src.Geometry.IntCoordinates;
 
 
 /**
@@ -50,4 +51,9 @@ public sealed interface pieces permits jShape, lShape, oShape, tShape {
      * @return Returns true if the piece can be mirrored, false otherwise.
      */
     boolean getCanFlip();
+
+    /**
+     * @return Returns the pivot point of the piece.
+     */
+    IntCoordinates getPivotPoint();
 }

@@ -1,6 +1,7 @@
 package src.Piece;
 
 import src.Config.Colours;
+import src.Geometry.IntCoordinates;
 
 
 /**
@@ -13,6 +14,8 @@ import src.Config.Colours;
 public final class jShape implements pieces {
     // Color of the piece
     private final Colours color;
+    // Pivot point of the piece
+    private IntCoordinates pivotPoint;
     // Shape of the piece
     private boolean[][] shape = new boolean[][]{
             {false, false, false, false},
@@ -44,34 +47,16 @@ public final class jShape implements pieces {
             xAxis = !this.xAxis;
             yAxis = !this.yAxis;
         }
+
         // Save the one shape just in case
         boolean[][] oldShape = shape.clone();
+
         // Rotate the new shape
-        // Rotate the J angle
-        if (shape[1][1]) {
-            shape[1][1] = false;
-            shape[3][1] = true;
-        } else if (shape[3][1]) {
-            shape[3][1] = false;
-            shape[3][3] = true;
-        } else if (shape[3][3]) {
-            shape[3][3] = false;
-            shape[1][3] = true;
-        } else if (shape[1][3]) {
-            shape[1][3] = false;
-            shape[1][1] = true;
-        }
-        // Rotate the J bar
-        if (shape[1][2]) {
-            shape[1][2] = false;
-            shape[3][2] = false;
-            shape[2][1] = true;
-            shape[2][3] = true;
-        } else {
-            shape[1][2] = true;
-            shape[3][2] = true;
-            shape[2][1] = false;
-            shape[2][3] = false;
+        this.pivotPoint = new IntCoordinates(pivotPoint.y(), shape[pivotPoint.x()].length - pivotPoint.x() - 1);
+        for (int x = 0; x < shape.length; x++) {
+            for (int y = 0; y < shape[x].length; y++) {
+                shape[x][y] = oldShape[y][shape[x].length - x - 1];
+            }
         }
         return oldShape;
     }
@@ -109,5 +94,10 @@ public final class jShape implements pieces {
     @Override
     public boolean getCanFlip() {
         return canFlip;
+    }
+
+    @Override
+    public IntCoordinates getPivotPoint() {
+        return pivotPoint;
     }
 }

@@ -1,6 +1,7 @@
 package src.Piece;
 
 import src.Config.Colours;
+import src.Geometry.IntCoordinates;
 
 
 /**
@@ -13,6 +14,8 @@ import src.Config.Colours;
 public final class oShape implements pieces {
     // Color of the piece
     private final Colours color;
+    // Pivot point of the piece
+    private IntCoordinates pivotPoint;
     // Shape of the piece
     private boolean[][] shape = new boolean[][]{
             {false, false, false, false},
@@ -44,9 +47,18 @@ public final class oShape implements pieces {
             xAxis = !this.xAxis;
             yAxis = !this.yAxis;
         }
-        // There is no rotation in the O-shape, so nothing to do
-        // No changes but still needs to return something
-        return shape.clone();
+
+        // Save the one shape just in case
+        boolean[][] oldShape = shape.clone();
+
+        // Rotate the new shape
+        this.pivotPoint = new IntCoordinates(pivotPoint.y(), shape[pivotPoint.x()].length - pivotPoint.x() - 1);
+        for (int x = 0; x < shape.length; x++) {
+            for (int y = 0; y < shape[x].length; y++) {
+                shape[x][y] = oldShape[y][shape[x].length - x - 1];
+            }
+        }
+        return oldShape;
     }
 
     @Override
@@ -82,5 +94,10 @@ public final class oShape implements pieces {
     @Override
     public boolean getCanFlip() {
         return canFlip;
+    }
+
+    @Override
+    public IntCoordinates getPivotPoint() {
+        return pivotPoint;
     }
 }
