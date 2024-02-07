@@ -7,8 +7,15 @@ import src.Config.*;
 import src.utils.*;
 
 public class ArenaPanel extends JPanel {
+    /**
+     * class that represents the panel that displays the 7x7 grid of cells that 
+     * the game is played on
+     */
 
     private class ArenaRow extends JPanel {
+        /**
+         * inner class that allows for a grid like layout without use of gridLayout.
+         */
         public ArenaRow() {
             super();
             this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
@@ -27,16 +34,22 @@ public class ArenaPanel extends JPanel {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         // this.setBorder(BorderFactory.createLineBorder(Color.BLUE, 3)); // Add thicker and blue border here
         
+
+        // filling the map with cells
         for(int i = 0; i < 7; i++){
             rows[i] = new ArenaRow();
             for(int j = 0; j < 7; j++){
                 rows[i].add(new Cell(j, i));
-                Debug.out("added a new cell");
+                // TODO change cell colour to background color if the cell is not a playable cell in the game.
+                // Debug.out("added a new cell");
             }
         }
         for(ArenaRow row : rows){
             this.add(row);
         }
+
+
+
         
     }
     

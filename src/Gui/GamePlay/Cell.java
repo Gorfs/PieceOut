@@ -6,6 +6,9 @@ import java.awt.*;
 import src.Config.*;
 
 public class Cell extends JPanel{
+    /**
+     * class for the gui representatoin of the playable cells in the game.
+     */
 
     
     // pixel_x and pixel_y are the coordinates of the cell in pixels RELATIVE to the CONTAINER (ARENA PANEL)
@@ -16,6 +19,7 @@ public class Cell extends JPanel{
     public Cell(int x_coord, int y_coord){
         super();
 
+        // hard-fixing cell size
         this.setMinimumSize(new Dimension(GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE));
         this.setMaximumSize(new Dimension(GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE));
         this.setBackground(Colours.CELLCOLOUR);
@@ -33,6 +37,8 @@ public class Cell extends JPanel{
     public int getPixel_y() {
         return pixel_y;
     }
+
+    //! Cell extends JPanel, so x and y are already inherited, do not overwrite x y with int coordinates
     // public int getX() {
     //     return x;
     // }

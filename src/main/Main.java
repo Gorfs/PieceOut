@@ -17,13 +17,13 @@ public class Main {
      * @param args arguments passed in terminal
      */
     public static void main(String[] args){
+
+
         GameWindow root = new GameWindow();
         
         root.add(rootPanel);
-        root.setBackground(Color.RED);
 
 
-        // root.pack();
         root.setVisible(true);
     }
 }
