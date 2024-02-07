@@ -47,9 +47,6 @@ public class ArenaPanel extends JPanel {
         for(ArenaRow row : rows){
             this.add(row);
         }
-
-
-
         
     }
     
