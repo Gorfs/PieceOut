@@ -11,7 +11,7 @@ import src.Geometry.IntCoordinates;
  * 0 1 1 0
  * 0 0 0 0
  */
-public final class oShape implements pieces {
+public final class OShape implements Pieces {
     // Color of the piece
     private final Colours color;
     // Pivot point of the piece
@@ -39,7 +39,7 @@ public final class oShape implements pieces {
      * @param yAxis If the piece can move in the y-axis.
      * @param canFlip If the piece can flip.
      */
-    public oShape(Colours color, boolean canTurn, boolean xAxis, boolean yAxis, boolean canFlip) {
+    public OShape(Colours color, boolean canTurn, boolean xAxis, boolean yAxis, boolean canFlip) {
         this.color = color;
         this.canTurn = canTurn;
         this.xAxis = xAxis;

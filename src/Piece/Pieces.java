@@ -7,7 +7,7 @@ import src.Geometry.IntCoordinates;
 /**
  * Interface used to create pieces for the game.
  */
-public sealed interface pieces permits jShape, lShape, oShape, tShape {
+public sealed interface Pieces permits JShape, LShape, OShape, TShape {
 
     /**
      * Method that rotate the shape of the piece by -90°(or 270°) clockwise, by 90° counterclockwise.

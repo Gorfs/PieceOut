@@ -11,7 +11,7 @@ import src.Geometry.IntCoordinates;
  * 0 1 1 1
  * 0 0 1 0
  */
-public final class tShape implements pieces {
+public final class TShape implements Pieces {
     // Color of the piece
     private final Colours color;
     // Pivot point of the piece
@@ -39,7 +39,7 @@ public final class tShape implements pieces {
      * @param yAxis If the piece can move in the y-axis.
      * @param canFlip If the piece can flip.
      */
-    public tShape(Colours color, IntCoordinates pivotPoint, boolean canTurn, boolean xAxis, boolean yAxis, boolean canFlip) {
+    public TShape(Colours color, IntCoordinates pivotPoint, boolean canTurn, boolean xAxis, boolean yAxis, boolean canFlip) {
         this.color = color;
         this.pivotPoint = pivotPoint;
         this.canTurn = canTurn;
