@@ -31,7 +31,14 @@ public final class jShape implements pieces {
     // If the piece can be mirrored
     private final boolean canFlip;
 
-
+    /**
+     * Constructor of the class jShape.
+     * @param color Color of the piece.
+     * @param canTurn If the piece can turn.
+     * @param xAxis If the piece can move in the x-axis.
+     * @param yAxis If the piece can move in the y-axis.
+     * @param canFlip If the piece can flip.
+     */
     public jShape(Colours color, boolean canTurn, boolean xAxis, boolean yAxis, boolean canFlip) {
         this.color = color;
         this.canTurn = canTurn;
