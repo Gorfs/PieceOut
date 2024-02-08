@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 import src.Config.*;
+import src.Logic.Arena;
 
 public class Cell extends JPanel{
     /**
@@ -22,13 +23,18 @@ public class Cell extends JPanel{
         // hard-fixing cell size
         this.setMinimumSize(new Dimension(GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE));
         this.setMaximumSize(new Dimension(GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE));
-        this.setBackground(Colours.CELLCOLOUR);
-        this.setBorder(BorderFactory.createLineBorder(Color.BLACK)); // Add border
+
+        if(Arena.getInstance().getMatrix()[y_coord][x_coord] == false){
+            this.setBackground(Colours.BACKGROUND);
+        }else{
+            this.setBackground(Colours.CELLCOLOUR);
+            // this.setBorder(BorderFactory.createLineBorder(Color.BLACK)); // Add border
+        }
 
         this.pixel_x = x_coord * GuiConfig.CELL_SIZE; 
         this.pixel_y = y_coord * GuiConfig.CELL_SIZE;
 
-        this.add(new JLabel("x: " + pixel_x + " y: " + pixel_y));
+        // this.add(new JLabel("x: " + pixel_x + " y: " + pixel_y));
     }
 
     public int getPixel_x() {

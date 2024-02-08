@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 
 import src.Config.*;
+import src.Logic.App;
+import src.Logic.Arena;
 import src.utils.*;
 
 public class ArenaPanel extends JPanel {
@@ -36,6 +38,7 @@ public class ArenaPanel extends JPanel {
         
 
         // filling the map with cells
+        boolean matrix[][] = Arena.getInstance().getMatrix();
         for(int i = 0; i < 7; i++){
             rows[i] = new ArenaRow();
             for(int j = 0; j < 7; j++){

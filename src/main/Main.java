@@ -5,6 +5,7 @@ import javax.swing.*;
 // TODO precise imports to reduce import cost
 import src.Gui.GamePlay.*;
 import java.awt.*;
+import src.Logic.*;
 
 import src.Gui.*;
 
@@ -16,6 +17,9 @@ public class Main {
      * @param args arguments passed in terminal
      */
     public static void main(String[] args){
+
+
+        App.run();
 
 
         GameWindow root = new GameWindow();
