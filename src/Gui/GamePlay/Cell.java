@@ -1,10 +1,15 @@
 package src.Gui.GamePlay;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+
 import java.awt.*;
 
+
 import src.Config.*;
+import src.Geometry.IntCoordinates;
 import src.Logic.Arena;
+import src.Geometry.IntCoordinates;
 
 public class Cell extends JPanel{
     /**
@@ -16,6 +21,14 @@ public class Cell extends JPanel{
     private int pixel_x;
     private int pixel_y;
 
+    private int map_x;
+    private int map_y;
+
+    private Border topShadow = BorderFactory.createMatteBorder(5, 0, 0, 0, Colours.SHADOW);
+    private Border leftShadow = BorderFactory.createMatteBorder(0, 5, 0, 0, Colours.SHADOW);
+    private Border topLeftShadow = BorderFactory.createMatteBorder(5, 5, 0, 0, Colours.SHADOW);
+
+
     
     public Cell(int x_coord, int y_coord){
         super();
@@ -24,33 +37,70 @@ public class Cell extends JPanel{
         this.setMinimumSize(new Dimension(GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE));
         this.setMaximumSize(new Dimension(GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE));
 
-        if(Arena.getInstance().getMatrix()[y_coord][x_coord] == false){
-            this.setBackground(Colours.BACKGROUND);
-        }else{
-            this.setBackground(Colours.CELLCOLOUR);
-            // this.setBorder(BorderFactory.createLineBorder(Color.BLACK)); // Add border
-        }
-
         this.pixel_x = x_coord * GuiConfig.CELL_SIZE; 
         this.pixel_y = y_coord * GuiConfig.CELL_SIZE;
+        this.map_x = x_coord;
+        this.map_y = y_coord;
 
+
+        updatePlayableCell(); // inits the background of the cell
         // this.add(new JLabel("x: " + pixel_x + " y: " + pixel_y));
     }
 
+    public void updatePlayableCell(){
+        /**
+         * updates the background of the cell to the correct colour given by maze state
+         */
+        boolean matrix[][] = Arena.getInstance().getMatrix();
+        if (matrix[map_y][map_x]){
+            this.setBackground(Colours.CELLCOLOUR);
+
+            /**  this big if statement looks complicated but it's less complicated then dealing with index out of bounds excepions.
+             * the whole statement rely's on the fact that java is lazy with the "or" operator and doesn't check the left statement if it is already valided
+             * DO NOT INVERT THE ORDER OF THE EXPRESSIONS IN THE OR STATEMENTS or you will get index out of bounds exceptions.
+            */
+            if(map_y == 0 && map_x == 0 ||
+                map_y == 0 && !matrix[map_y][map_x-1] || 
+                map_x == 0 && !matrix[map_y-1][map_x] ||
+                !matrix[map_y-1][map_x] && !matrix[map_y][map_x-1]){
+                    this.setBorder(topLeftShadow);
+            }else if(map_y == 0 || !matrix[map_y-1][map_x]){
+                this.setBorder(topShadow);
+            }else if(map_x == 0 || !matrix[map_y][map_x-1]){
+                this.setBorder(leftShadow);
+            }
+                        
+        }else{
+            this.setBackground(Colours.BACKGROUND);
+        }
+    }
+
+    
+    /** 
+     * @return int
+     * RELATIVE TO THE TOP LEFT OF THE CONTAINER
+     * (Arena Panel)
+     */
     public int getPixel_x() {
         return pixel_x;
     }
+    
+    /** 
+     * @return int
+     * RELATIVE TO THE TOP LEFT OF THE CONTAINER
+     * (Arena panel)
+     */
     public int getPixel_y() {
         return pixel_y;
     }
 
-    //! Cell extends JPanel, so x and y are already inherited, do not overwrite x y with int coordinates
-    // public int getX() {
-    //     return x;
-    // }
-    // public int getY() {
-    //     return y;
-    // }
+    
+    /** 
+     * @return IntCoordinates
+     */
+    public IntCoordinates getIntCoordinates() {
+        return new IntCoordinates(map_x, map_y);
+    }
 }
     
 

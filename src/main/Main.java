@@ -10,23 +10,22 @@ import src.Logic.*;
 import src.Gui.*;
 
 public class Main {
-
-    
-    private static RootPanel rootPanel = new RootPanel();
     /** 
      * @param args arguments passed in terminal
      */
     public static void main(String[] args){
 
 
+        /**
+         * Init the logic of the game 
+         */
         App.run();
 
+        /**
+         * init the GUI manager
+         */
+        GUIManager.INSTANCE.start(); 
 
-        GameWindow root = new GameWindow();
-        
-        root.add(rootPanel);
 
-
-        root.setVisible(true);
     }
 }

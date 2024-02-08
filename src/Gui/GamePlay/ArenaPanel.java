@@ -39,18 +39,29 @@ public class ArenaPanel extends JPanel {
 
         // filling the map with cells
         boolean matrix[][] = Arena.getInstance().getMatrix();
-        for(int i = 0; i < 7; i++){
+        for(int i = 0; i < matrix.length; i++){
             rows[i] = new ArenaRow();
-            for(int j = 0; j < 7; j++){
-                rows[i].add(new Cell(j, i));
-                // TODO change cell colour to background color if the cell is not a playable cell in the game.
-                // Debug.out("added a new cell");
+            for(int j = 0; j < matrix[0].length; j++){
+                rows[i].add(new Cell(j, i)); // logic for if a cell is playable or not is handled in cell class.
             }
         }
         for(ArenaRow row : rows){
             this.add(row);
         }
         
+    }
+
+    public void updateArena(){
+        /**
+         * updates the cells to a new matrix state.
+         */
+        boolean matrix[][] = Arena.getInstance().getMatrix();
+        for(int i = 0; i < matrix.length; i++){
+            for(int j = 0; j < matrix[0].length; j++){
+                ((Cell)rows[i].getComponent(j)).updatePlayableCell();
+            }
+        }
+
     }
     
 }
