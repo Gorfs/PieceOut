@@ -1,7 +1,5 @@
 package src.Gui;
 
-import javax.swing.*;
-
 import src.Gui.GamePlay.ArenaPanel;
 
 import java.awt.*;

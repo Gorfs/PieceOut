@@ -4,9 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 import src.Config.*;
-import src.Logic.App;
 import src.Logic.Arena;
-import src.utils.*;
 
 public class ArenaPanel extends JPanel {
     /**

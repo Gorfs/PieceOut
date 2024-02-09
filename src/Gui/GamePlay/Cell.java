@@ -9,7 +9,6 @@ import java.awt.*;
 import src.Config.*;
 import src.Geometry.IntCoordinates;
 import src.Logic.Arena;
-import src.Geometry.IntCoordinates;
 
 public class Cell extends JPanel{
     /**
@@ -21,9 +20,12 @@ public class Cell extends JPanel{
     private int pixel_x;
     private int pixel_y;
 
+    // map_x and map_y are the coordinates of the cell in the matrix
     private int map_x;
     private int map_y;
 
+
+    // seperate border for shadow/3d effect
     private Border topShadow = BorderFactory.createMatteBorder(5, 0, 0, 0, Colours.SHADOW);
     private Border leftShadow = BorderFactory.createMatteBorder(0, 5, 0, 0, Colours.SHADOW);
     private Border topLeftShadow = BorderFactory.createMatteBorder(5, 5, 0, 0, Colours.SHADOW);
@@ -54,24 +56,29 @@ public class Cell extends JPanel{
         boolean matrix[][] = Arena.getInstance().getMatrix();
         if (matrix[map_y][map_x]){
             this.setBackground(Colours.CELLCOLOUR);
-
-            /**  this big if statement looks complicated but it's less complicated then dealing with index out of bounds excepions.
-             * the whole statement rely's on the fact that java is lazy with the "or" operator and doesn't check the left statement if it is already valided
-             * DO NOT INVERT THE ORDER OF THE EXPRESSIONS IN THE OR STATEMENTS or you will get index out of bounds exceptions.
-            */
-            if(map_y == 0 && map_x == 0 ||
-                map_y == 0 && !matrix[map_y][map_x-1] || 
-                map_x == 0 && !matrix[map_y-1][map_x] ||
-                !matrix[map_y-1][map_x] && !matrix[map_y][map_x-1]){
-                    this.setBorder(topLeftShadow);
-            }else if(map_y == 0 || !matrix[map_y-1][map_x]){
-                this.setBorder(topShadow);
-            }else if(map_x == 0 || !matrix[map_y][map_x-1]){
-                this.setBorder(leftShadow);
-            }
+            applyShadow();
                         
         }else{
             this.setBackground(Colours.BACKGROUND);
+        }
+    }
+
+    public void applyShadow(){
+        /**
+         * applies a shadow to the cell if there is not a playable cell to the top or to the 
+         * left of the cell.
+         * this helps to create the illusion of light coming from the top left corner.
+         */
+        boolean matrix[][] = Arena.getInstance().getMatrix();
+        if(map_y == 0 && map_x == 0 ||
+        map_y == 0 && !matrix[map_y][map_x-1] || 
+        map_x == 0 && !matrix[map_y-1][map_x] ||
+        !matrix[map_y-1][map_x] && !matrix[map_y][map_x-1]){
+            this.setBorder(topLeftShadow);
+        }else if(map_y == 0 || !matrix[map_y-1][map_x]){
+            this.setBorder(topShadow);
+        }else if(map_x == 0 || !matrix[map_y][map_x-1]){
+            this.setBorder(leftShadow);
         }
     }
 
