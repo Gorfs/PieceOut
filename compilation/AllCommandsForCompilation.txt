@@ -1,0 +1,4 @@
+javac --module-path path_to_your_modules -d output_directory RealCoordinates.java
+jar --create --file=MyGame.jar --main-class=your_main_class -C output_directory .
+jlink --no-header-files --no-man-pages --add-modules=modules_your_application_needs --output output_directory
+jpackage --name MyGame --input output_directory --main-jar MyGame.jar --main-class name_of_your_main_class --type exe
