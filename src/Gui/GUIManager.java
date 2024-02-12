@@ -6,8 +6,8 @@ import java.awt.*;
 
 public class GUIManager {
     /**
-     * GUIManager class that is responsible for creating, chainging,
-     * updaing and general management of the GUI.
+     * GUIManager class that is responsible for creating, changing,
+     * updating and general management of the GUI.
      */
     public static final GUIManager INSTANCE = new GUIManager();
 
@@ -15,23 +15,23 @@ public class GUIManager {
     /**
      * mains panels and windows for the game
      */
-    private GameWindow mainFrame = new GameWindow();
-    private ArenaPanel arenaPanel = new ArenaPanel();
+    private final GameWindow mainFrame = new GameWindow();
+    private final ArenaPanel arenaPanel = new ArenaPanel();
 
     // layout to change panels in rootPanel
-    private CardLayout layout = new CardLayout();
+    private final CardLayout layout = new CardLayout();
 
 
     private GUIManager(){
-        /**
-         * init of instance
+        /*
+          init of instance
          */
         mainFrame.setLayout(layout);
     }
 
     public void start(){
-        /**
-         * initiates the GUI window and all.
+        /*
+          initiates the GUI window and all.
          */
         mainFrame.add(arenaPanel, "arena");
         mainFrame.setVisible(true);
@@ -48,8 +48,8 @@ public class GUIManager {
 
 
     public void changePanel(String panelName){
-        /**
-         * changes the panel in the main frame to the panel with the name panelName
+        /*
+          changes the panel in the main frame to the panel with the name panelName
          */
         layout.show(mainFrame, panelName);
     }
