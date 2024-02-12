@@ -12,7 +12,7 @@ import src.Logic.Arena;
 
 public class Cell extends JPanel{
     /**
-     * class for the gui representatoin of the playable cells in the game.
+     * class for the gui representation of the playable cells in the game.
      */
 
     
@@ -37,6 +37,7 @@ public class Cell extends JPanel{
 
         // hard-fixing cell size
         this.setMinimumSize(new Dimension(GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE));
+        this.setPreferredSize(new Dimension(GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE));
         this.setMaximumSize(new Dimension(GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE));
 
         this.pixel_x = x_coord * GuiConfig.CELL_SIZE; 
