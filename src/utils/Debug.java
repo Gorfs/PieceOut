@@ -9,18 +9,18 @@ public class Debug {
 
     
     /** 
-     * @return boolean
+     * @return boolean true if the program is in debugging mode
      */
     public static boolean isDeubgging(){
         return debugging;
     }
 
     
-    /** 
-     * @param value 
+    /**
+     * Toggles the debugging mode
      */
-    public static void setDebuggin(boolean value){
-        debugging = value;
+    public static void toggleDebugging(){
+        debugging = !debugging;
     }
     
     /** 

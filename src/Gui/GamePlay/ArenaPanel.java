@@ -16,7 +16,6 @@ public class ArenaPanel extends JPanel {
         super();
         this.setBackground(Colours.BACKGROUND);
         int map_size = Arena.getInstance().getMatrix().length;
-        boolean[][] matrix = Arena.getInstance().getMatrix();
         this.setLayout(new GridLayout(map_size, map_size));
         // this.setBorder(BorderFactory.createLineBorder(Color.BLUE, 3)); // Add thicker and blue border here
         
