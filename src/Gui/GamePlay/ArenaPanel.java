@@ -12,52 +12,32 @@ public class ArenaPanel extends JPanel {
      * the game is played on
      */
 
-    private class ArenaRow extends JPanel {
-        /**
-         * inner class that allows for a grid like layout without use of gridLayout.
-         */
-        public ArenaRow() {
-            super();
-            this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-            this.setBackground(Colours.BACKGROUND);
-            // this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));            
-            this.setMinimumSize(new Dimension(7 * GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE));
-        }
-    }
-
-    // 7x7 matrix that represents the cells on the map
-    private static ArenaRow[] rows = new ArenaRow[7];
-
     public ArenaPanel() {
         super();
         this.setBackground(Colours.BACKGROUND);
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        int map_size = Arena.getInstance().getMatrix().length;
+        boolean[][] matrix = Arena.getInstance().getMatrix();
+        this.setLayout(new GridLayout(map_size, map_size));
         // this.setBorder(BorderFactory.createLineBorder(Color.BLUE, 3)); // Add thicker and blue border here
         
 
         // filling the map with cells
-        boolean matrix[][] = Arena.getInstance().getMatrix();
-        for(int i = 0; i < matrix.length; i++){
-            rows[i] = new ArenaRow();
-            for(int j = 0; j < matrix[0].length; j++){
-                rows[i].add(new Cell(j, i)); // logic for if a cell is playable or not is handled in cell class.
+        for(int i = 0; i < map_size;i++){
+            for(int j = 0 ; j < map_size; j++){
+                this.add(new Cell(j, i));
+
             }
         }
-        for(ArenaRow row : rows){
-            this.add(row);
-        }
-        
     }
 
     public void updateArena(){
-        /**
-         * updates the cells to a new matrix state.
+        /*
+          updates the cells to a new matrix state.
          */
-        boolean matrix[][] = Arena.getInstance().getMatrix();
-        for(int i = 0; i < matrix.length; i++){
-            for(int j = 0; j < matrix[0].length; j++){
-                ((Cell)rows[i].getComponent(j)).updatePlayableCell();
-            }
+        boolean[][] matrix = Arena.getInstance().getMatrix();
+        for(int i = 0; i < Math.pow(matrix.length , 2); i++){
+            Cell cell = (Cell) this.getComponent(i);
+            cell.updatePlayableCell();
         }
 
     }
