@@ -10,9 +10,9 @@ public class GameWindow extends JFrame{
      */
     public GameWindow(){
         super("Game");
-        setSize(800, 600);
-        // TODO, set size to constants in config rather than hardcoded
+        setSize(GuiConfig.WINDOW_WIDTH, GuiConfig.WINDOW_HEIGHT);
         this.setBackground(Colours.BACKGROUND);
+        this.setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 }

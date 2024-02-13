@@ -1,7 +1,5 @@
 package src.Logic;
 
-import java.util.ArrayList;
-
 public class GameLoop {
     /**
      * Indicates whether the game loop is currently running.

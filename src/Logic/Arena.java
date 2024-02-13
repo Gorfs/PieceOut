@@ -11,6 +11,7 @@ import java.io.IOException;
 public class Arena {
     private int width, height;
     private boolean[][] matrix;
+    private static final Arena INSTANCE = new Arena("resources/maps/lv1.txt");
 
     /**
      * Represents an arena in the game.
@@ -18,9 +19,29 @@ public class Arena {
      *
      * @param filePath the path to the file containing the arena data
      */
-    public Arena(String filePath){
+    private Arena(String filePath){
         setDimensions(filePath);
         loadArena(filePath);
+    }
+
+    public static Arena getInstance(){
+        return INSTANCE;
+    }
+
+    public void loadNewArena(String filePath){
+        setDimensions(filePath);
+        loadArena(filePath);
+    }
+
+
+
+    
+    /** 
+     * @return boolean[][]
+     * returns the map of the playable area.
+     */
+    public boolean[][] getMatrix(){
+        return matrix;
     }
 
     /**
