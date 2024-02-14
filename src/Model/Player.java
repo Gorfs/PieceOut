@@ -1,6 +1,6 @@
 package src.Model;
 
-import src.Config.Constants;
+import src.Config.LogicConstants;
 
 public class Player {
     int[] nbrCoupsParNiveau; //number of moves per level
@@ -9,8 +9,8 @@ public class Player {
     int currentLevel;
 
     public Player(){
-        nbrCoupsParNiveau = new int[Constants.NUMBER_OF_LEVELS];
-        nbrEtoilesParNiveau = new int[Constants.NUMBER_OF_LEVELS];
+        nbrCoupsParNiveau = new int[LogicConstants.NUMBER_OF_LEVELS];
+        nbrEtoilesParNiveau = new int[LogicConstants.NUMBER_OF_LEVELS];
         nbrCoupsActuel = 0;
         currentLevel = -1;
     }

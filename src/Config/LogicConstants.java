@@ -1,5 +1,5 @@
 package src.Config;
 
-public class Constants {
+public class LogicConstants {
     public static int NUMBER_OF_LEVELS = 3;
 }
