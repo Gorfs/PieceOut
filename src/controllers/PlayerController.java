@@ -59,23 +59,33 @@ public class PlayerController extends JPanel{
     }
 
     public void rotate() {
-        //todo: add code to ask the piece to rotate according to the decoration pattern
+        if (this.controlling){
+            //todo: add code to ask the piece to rotate according to the decoration pattern
+        }
     }
 
     public void moveUp() {
-        //todo: add code to ask the piece to move up according to the decoration pattern
+        if (this.controlling){
+            //todo: add code to ask the piece to move up according to the decoration pattern
+        }
     }
 
     public void moveLeft() {
-        //todo: add code to ask the piece to move left according to the decoration pattern
+        if (this.controlling){
+            //todo: add code to ask the piece to move left according to the decoration pattern
+        }
     }
 
     public void moveDown() {
-        //todo: add code to ask the piece to move down according to the decoration pattern
+        if (this.controlling){
+            //todo: add code to ask the piece to move down according to the decoration pattern
+        }
     }
 
     public void moveRight() {
-        //todo: add code to ask the piece to move right according to the decoration pattern
+        if (this.controlling){
+            //todo: add code to ask the piece to move right according to the decoration pattern
+        }
     }
 
 
