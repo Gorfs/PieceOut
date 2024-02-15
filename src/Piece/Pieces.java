@@ -5,55 +5,65 @@ import src.Geometry.IntCoordinates;
 
 
 /**
- * Interface used to create pieces for the game.
+ * Abstract class used to create pieces for the game.
  */
-public sealed interface Pieces permits JShape, LShape, OShape, TShape {
-
-    /**
-     * Method that rotate the shape of the piece by -90°(or 270°) clockwise, by 90° counterclockwise.
-     * @return Returns the old shape in cas we need to cancel any actions.
-     */
-    boolean[][] rotateShape();
+public abstract class Pieces {
+    // Color of the piece
+    protected Colours color;
+    // Pivot point of the piece
+    private IntCoordinates pivotPoint;
+    // Shape of the piece
+    private boolean[][] shape;
 
     /**
      * @return Returns the color of the piece.
      */
-    Colours getColor();
-
-    /**
-     * Method that set a new shape to the piece.
-     * @param shape New shape we want to give to our piece.
-     */
-    void setShape(boolean[][] shape);
-
-    /**
-     * @return Returns the current shape of the piece.
-     */
-    boolean[][] getShape();
-
-
-    /**
-     * @return Returns true if the piece can be turned, false otherwise.
-     */
-    boolean getCanTurn();
-
-    /**
-     * @return Returns true if the piece can be moved in the x-axis, false otherwise.
-     */
-    boolean getXAxis();
-
-    /**
-     * @return Returns true if the piece can be moved in the y-axis, false otherwise.
-     */
-    boolean getYAxis();
-
-    /**
-     * @return Returns true if the piece can be mirrored, false otherwise.
-     */
-    boolean getCanFlip();
+    public Colours getColor() {
+        return color;
+    }
 
     /**
      * @return Returns the pivot point of the piece.
      */
-    IntCoordinates getPivotPoint();
+    public IntCoordinates getPivotPoint() {
+        return pivotPoint;
+    }
+
+    /**
+     * Method that set the new pivotPoint of the piece.
+     * @param pivotPoint IntCoordinates of the pivot point.
+     */
+    public void setPivotPoint(IntCoordinates pivotPoint) {
+        this.pivotPoint = pivotPoint;
+    }
+
+    /**
+     * @return Returns the current shape of the piece.
+     */
+    public boolean[][] getShape() {
+        return shape;
+    }
+    /**
+     * Method that set a new shape to the piece.
+     * @param shape New shape we want to give to our piece.
+     */
+    public void setShape(boolean[][] shape) {
+        this.shape = shape;
+    }
+
+    /**
+     * @return Returns a String that represents the piece.
+     */
+    @Override
+    public String toString() {
+        StringBuilder text = new StringBuilder();
+        for (boolean[] line: shape) {
+            for (boolean tile: line) {
+                if (tile) text.append("1 ");
+                else text.append("0 ");
+            }
+            text.append("\n");
+        }
+        return text.toString();
+    }
 }
