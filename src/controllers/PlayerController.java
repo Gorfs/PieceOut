@@ -7,7 +7,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
 
 public class PlayerController extends JPanel{
-    private boolean controlling;
+    private boolean controlling; //todo: change boolean to the type of a piece
 
 
     /**

@@ -3,6 +3,7 @@ package src.model;
 import src.config.LogicConstants;
 
 public class Player {
+    //todo: change tab to list
     int[] nbMovesPerLevel; //number of moves per level
     int[] nbStarsPerLevel; //number of stars per level
     int nbMovesCurrent; //number of moves in the current level
