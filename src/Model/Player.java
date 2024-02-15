@@ -3,15 +3,15 @@ package src.Model;
 import src.Config.LogicConstants;
 
 public class Player {
-    int[] nbrCoupsParNiveau; //number of moves per level
-    int[] nbrEtoilesParNiveau; //number of stars per level
-    int nbrCoupsActuel; //number of moves in the current level
+    int[] nbMovesPerLevel; //number of moves per level
+    int[] nbStarsPerLevel; //number of stars per level
+    int nbMovesCurrent; //number of moves in the current level
     int currentLevel;
 
     public Player(){
-        nbrCoupsParNiveau = new int[LogicConstants.NUMBER_OF_LEVELS];
-        nbrEtoilesParNiveau = new int[LogicConstants.NUMBER_OF_LEVELS];
-        nbrCoupsActuel = 0;
+        nbMovesPerLevel = new int[LogicConstants.NUMBER_OF_LEVELS];
+        nbStarsPerLevel = new int[LogicConstants.NUMBER_OF_LEVELS];
+        nbMovesCurrent = 0;
         currentLevel = -1;
     }
 
@@ -20,8 +20,8 @@ public class Player {
      */
 
     public void endOfTheGameCheck(){
-        if (nbrCoupsActuel < nbrCoupsParNiveau[currentLevel]){
-            nbrCoupsParNiveau[currentLevel] = nbrCoupsActuel;
+        if (nbMovesCurrent < nbMovesPerLevel[currentLevel]){
+            nbMovesPerLevel[currentLevel] = nbMovesCurrent;
         }
         //todo: get the number of stars required to unlock the next level
         //todo: set the number of stars for the current level based on the number of moves
@@ -32,7 +32,7 @@ public class Player {
      */
 
     public void hasMadeAMove(){
-        nbrCoupsActuel++;
+        nbMovesCurrent++;
     }
 
     /**
@@ -40,7 +40,7 @@ public class Player {
      */
 
     public void hasUndoAnAction(){
-        nbrCoupsActuel--;
+        nbMovesCurrent--;
     }
 
 
