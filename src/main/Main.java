@@ -1,8 +1,8 @@
 package src.main;
 
-import src.Logic.*;
+import src.logic.*;
 
-import src.Gui.*;
+import src.gui.*;
 
 public class Main {
     /** 
