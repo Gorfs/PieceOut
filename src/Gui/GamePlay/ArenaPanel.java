@@ -14,19 +14,22 @@ public class ArenaPanel extends JPanel {
 
     public ArenaPanel() {
         super();
+        this.setLayout(new GridBagLayout());
+        JPanel containerPanel = new JPanel();
         this.setBackground(Colours.BACKGROUND);
         int map_size = Arena.getInstance().getMatrix().length;
-        this.setLayout(new GridLayout(map_size, map_size));
+        containerPanel.setLayout(new GridLayout(map_size, map_size));
         // this.setBorder(BorderFactory.createLineBorder(Color.BLUE, 3)); // Add thicker and blue border here
 
 
         // filling the map with cells
         for(int i = 0; i < map_size;i++){
             for(int j = 0 ; j < map_size; j++){
-                this.add(new Cell(j, i));
+                containerPanel.add(new Cell(j, i));
 
             }
         }
+        this.add(containerPanel);
     }
 
     public void updateArena(){
