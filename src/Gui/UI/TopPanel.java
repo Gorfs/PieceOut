@@ -23,13 +23,14 @@ public class TopPanel extends JPanel{
         levelLabel.setFont(new Font("Arial", Font.BOLD, 20));
         levelLabel.setForeground(Color.WHITE);
         JButton returnButton = new JButton("Return to Main Menu");
-        returnButton.setBackground(Colours.BACKGROUND.darker());
+        returnButton.setBackground(Colours.BACKGROUND.brighter());
         returnButton.setForeground(Color.WHITE);
         returnButton.setFocusable(false);
 
 
 
         this.setBorder(BorderFactory.createEmptyBorder(3,3,3,3));
+        //this.setBorder(BorderFactory.createMatteBorder(2,2,2,2, Color.RED));
         this.setMinimumSize(new Dimension(Integer.MAX_VALUE, 30));
         this.setMaximumSize(new Dimension(Integer.MAX_VALUE, 50));
         this.setAlignmentX(Component.LEFT_ALIGNMENT);

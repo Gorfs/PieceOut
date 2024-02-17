@@ -18,7 +18,7 @@ public class ArenaPanel extends JPanel {
         int map_size = Arena.getInstance().getMatrix().length;
         this.setLayout(new GridLayout(map_size, map_size));
         // this.setBorder(BorderFactory.createLineBorder(Color.BLUE, 3)); // Add thicker and blue border here
-        
+
 
         // filling the map with cells
         for(int i = 0; i < map_size;i++){
