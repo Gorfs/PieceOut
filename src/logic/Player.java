@@ -1,17 +1,20 @@
-package src.model;
+package src.logic;
+
+import java.util.List;
 
 import src.config.LogicConstants;
 
 public class Player {
-    //todo: change tab to list
-    int[] nbMovesPerLevel; //number of moves per level
-    int[] nbStarsPerLevel; //number of stars per level
-    int nbMovesCurrent; //number of moves in the current level
-    int currentLevel;
+    public static List<Integer> nbMovesPerLevel; //number of moves per level
+    public static List<Integer> nbStarsPerLevel; //number of stars per level
+    public static int nbMovesCurrent; //number of moves in the current level
+    public static int currentLevel;
 
     public Player(){
-        nbMovesPerLevel = new int[LogicConstants.NUMBER_OF_LEVELS];
-        nbStarsPerLevel = new int[LogicConstants.NUMBER_OF_LEVELS];
+        for (int i = 0; i < LogicConstants.NUMBER_OF_LEVELS; i++){
+            nbMovesPerLevel.add(-1);
+            nbStarsPerLevel.add(-1);
+        }
         nbMovesCurrent = 0;
         currentLevel = -1;
     }
@@ -21,8 +24,8 @@ public class Player {
      */
 
     public void endOfTheGameCheck(){
-        if (nbMovesCurrent < nbMovesPerLevel[currentLevel]){
-            nbMovesPerLevel[currentLevel] = nbMovesCurrent;
+        if (nbMovesCurrent < nbMovesPerLevel.get(currentLevel)){
+            nbMovesPerLevel.set(currentLevel, nbMovesCurrent);
         }
         //todo: get the number of stars required to unlock the next level
         //todo: set the number of stars for the current level based on the number of moves
