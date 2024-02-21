@@ -3,15 +3,16 @@ package src.piece.decorator;
 import src.geometry.IntCoordinates;
 import src.piece.Pieces;
 
-public class YAxis extends Decorator {
+public class West extends Decorator {
 
-    public YAxis(Pieces piece) {
+    public West(Pieces piece) {
         this.piece = piece;
     }
 
     @Override
     public void action() {
-        // TODO: Add the action to move the piece in the y-axis.
+        IntCoordinates pos = this.piece.getPos();
+        this.getPiece().setPos(new IntCoordinates(pos.x() - 1, pos.y()));
     }
 
     @Override
