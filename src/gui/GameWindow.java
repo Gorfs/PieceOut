@@ -4,6 +4,7 @@ import javax.swing.JFrame;
 
 import src.config.*;
 
+
 public class GameWindow extends JFrame{
     /**
      * Constructs a new GameWindow object.
