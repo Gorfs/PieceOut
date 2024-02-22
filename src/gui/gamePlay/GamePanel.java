@@ -18,12 +18,10 @@ public class GamePanel extends JPanel {
         this.setBackground(Colours.BACKGROUND);
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(new TopPanel());
-        centerArenaPanel.add(new ArenaPanel());
-//        centerArenaPanel.setBorder(BorderFactory.createMatteBorder(10, 10, 10, 10, Color.RED));
-        centerArenaPanel.setOpaque(false);
-        this.add(centerArenaPanel);
-
+        //centerArenaPanel.setBorder(BorderFactory.createMatteBorder(10, 10, 10, 10, Color.RED));
+        this.add(new ArenaPanel());
         this.add(new BottomPanel());
+
 
     }
 
