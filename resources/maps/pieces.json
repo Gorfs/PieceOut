@@ -1,0 +1,26 @@
+{
+    "levels": [
+        {
+            "id": "Level 1",
+            "pieces": [
+                {
+                    "id": "Piece 0",
+                    "shape": "J",
+                    "movements":[
+                        {
+                            "type": "translation",
+                            "direction": "rigth"
+                        },
+                        {
+                            "type": "translation",
+                            "direction": "left"
+                        }
+                        
+                    ]
+                }
+                        
+                    ]
+    
+                }
+            ]
+}
