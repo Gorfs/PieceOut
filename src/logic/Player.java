@@ -5,10 +5,10 @@ import java.util.List;
 import src.config.LogicConstants;
 
 public class Player {
-    private static List<Integer> nbMovesPerLevel; //number of moves per level
-    private static List<Integer> nbStarsPerLevel; //number of stars per level
-    private static int nbMovesCurrent; //number of moves in the current level
-    private static int currentLevel;
+    private List<Integer> nbMovesPerLevel; //number of moves per level
+    private List<Integer> nbStarsPerLevel; //number of stars per level
+    private int nbMovesCurrent; //number of moves in the current level
+    private int currentLevel;
 
     public Player(){
         for (int i = 0; i < LogicConstants.NUMBER_OF_LEVELS; i++){
@@ -53,7 +53,7 @@ public class Player {
      *
      * @return  the list of integers representing the number of moves per level
      */
-    public static List<Integer> getNbMovesPerLevel() {
+    public List<Integer> getNbMovesPerLevel() {
         return nbMovesPerLevel;
     }
     
@@ -63,7 +63,7 @@ public class Player {
      *
      * @return  the list of integers representing the number of stars per level
      */
-    public static List<Integer> getNbStarsPerLevel() {
+    public List<Integer> getNbStarsPerLevel() {
         return nbStarsPerLevel;
     }
 
@@ -73,7 +73,7 @@ public class Player {
      *
      * @return the number of moves for the current game
      */
-    public static int getNbMovesCurrent() {
+    public int getNbMovesCurrent() {
         return nbMovesCurrent;
     }
 
@@ -83,7 +83,7 @@ public class Player {
      *
      * @return the current level
      */
-    public static int getCurrentLevel() {
+    public int getCurrentLevel() {
         return currentLevel;
     }
     /**
@@ -91,8 +91,8 @@ public class Player {
      *
      * @param  nbMovesPerLevel  the list of integers representing the number of moves per level
      */
-    public static void setNbMovesPerLevel(List<Integer> nbMovesPerLevel) {
-        Player.nbMovesPerLevel = nbMovesPerLevel;
+    public void setNbMovesPerLevel(List<Integer> nbMovesPerLevel) {
+        this.nbMovesPerLevel = nbMovesPerLevel;
     }
 
     /**
@@ -100,8 +100,8 @@ public class Player {
      *
      * @param  nbStarsPerLevel  the list of integers representing the number of stars per level
      */
-    public static void setNbStarsPerLevel(List<Integer> nbStarsPerLevel) {
-        Player.nbStarsPerLevel = nbStarsPerLevel;
+    public void setNbStarsPerLevel(List<Integer> nbStarsPerLevel) {
+        this.nbStarsPerLevel = nbStarsPerLevel;
     }
 
     /**
@@ -109,8 +109,8 @@ public class Player {
      *
      * @param  nbMovesCurrent the new value for nbMovesCurrent
      */
-    public static void setNbMovesCurrent(int nbMovesCurrent) {
-        Player.nbMovesCurrent = nbMovesCurrent;
+    public void setNbMovesCurrent(int nbMovesCurrent) {
+        this.nbMovesCurrent = nbMovesCurrent;
     }
 
     /**
@@ -118,8 +118,8 @@ public class Player {
      *
      * @param  currentLevel   the new level to set for the Player
      */
-    public static void setCurrentLevel(int currentLevel) {
-        Player.currentLevel = currentLevel;
+    public void setCurrentLevel(int currentLevel) {
+        this.currentLevel = currentLevel;
     }
 
 

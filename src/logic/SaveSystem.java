@@ -32,18 +32,19 @@ public class SaveSystem {
     }
 
     /** Load function that reads a Json file and load the data in Player Class
+     * @param player the player instance where the data will be loaded
      */
-    public static void load(){
+    public static void load(Player player){
         try{
             String content = new String(Files.readAllBytes(Paths.get("resources/savePieceOut.json")));
             JSONObject obj = new JSONObject(content);
             JSONArray nbMovesPerLevel = obj.getJSONArray("nbMovesPerLevel");
             JSONArray nbStarsPerLevel = obj.getJSONArray("nbStarsPerLevel");
             for (int i = 0; i < nbMovesPerLevel.length(); i++){
-                Player.getNbMovesPerLevel().add(nbMovesPerLevel.getInt(i));
-                Player.getNbStarsPerLevel().add(nbStarsPerLevel.getInt(i));
-                Player.setNbMovesCurrent(obj.getInt("nbMovesCurrent"));
-                Player.setCurrentLevel(obj.getInt("currentLevel"));
+                player.getNbMovesPerLevel().add(nbMovesPerLevel.getInt(i));
+                player.getNbStarsPerLevel().add(nbStarsPerLevel.getInt(i));
+                player.setNbMovesCurrent(obj.getInt("nbMovesCurrent"));
+                player.setCurrentLevel(obj.getInt("currentLevel"));
             }
         } catch (IOException e) {
             e.printStackTrace();
