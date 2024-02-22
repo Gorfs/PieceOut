@@ -3,15 +3,17 @@ package src.piece.decorator;
 import src.geometry.IntCoordinates;
 import src.piece.Pieces;
 
-public class East extends Decorator {
-
+public class Translation extends Decorator {
+    Direction d; // enum avec N S E W ca sera plus simple au moment des rotations / symetries
     public East(Pieces piece) {
-        this.piece = piece;
+        super(piece);
     }
 
     @Override
-    public void action() {
+    public void personnalAction() {
         IntCoordinates pos = this.piece.getPos();
+        switch d :
+        case E :
         this.getPiece().setPos(new IntCoordinates(pos.x() + 1, pos.y()));
     }
 

@@ -15,6 +15,7 @@ public abstract class Pieces {
     private IntCoordinates pivotPoint;
     // shape of the piece
     private boolean[][] shape;
+    public void action (int x, int y){}
 
     /**
      * @return Returns the color of the piece.
