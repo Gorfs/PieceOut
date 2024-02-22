@@ -1,6 +1,6 @@
 package src.gui;
 
-import src.gui.gamePlay.ArenaPanel;
+import src.gui.gamePlay.*;
 
 import java.awt.*;
 
@@ -16,7 +16,7 @@ public class GUIManager {
      * mains panels and windows for the game
      */
     private final GameWindow mainFrame = new GameWindow();
-    private final ArenaPanel arenaPanel = new ArenaPanel();
+    private final GamePanel gamePanel = new GamePanel();
 
     // layout to change panels in rootPanel
     private final CardLayout layout = new CardLayout();
@@ -33,7 +33,7 @@ public class GUIManager {
         /*
           initiates the GUI window and all.
          */
-        mainFrame.add(arenaPanel, "arena");
+        mainFrame.add(gamePanel, "arena");
         mainFrame.setVisible(true);
     }
 
