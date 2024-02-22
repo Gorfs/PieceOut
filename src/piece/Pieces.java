@@ -10,6 +10,7 @@ import src.geometry.IntCoordinates;
 public abstract class Pieces {
     // Color of the piece
     protected Colours color;
+    private IntCoordinates pos;
     // Pivot point of the piece
     private IntCoordinates pivotPoint;
     // shape of the piece
@@ -65,5 +66,13 @@ public abstract class Pieces {
             text.append("\n");
         }
         return text.toString();
+    }
+
+    public IntCoordinates getPos() {
+        return pos;
+    }
+
+    public void setPos(IntCoordinates pos) {
+        this.pos = pos;
     }
 }
