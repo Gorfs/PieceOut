@@ -40,10 +40,10 @@ public class SaveSystem {
             JSONArray nbMovesPerLevel = obj.getJSONArray("nbMovesPerLevel");
             JSONArray nbStarsPerLevel = obj.getJSONArray("nbStarsPerLevel");
             for (int i = 0; i < nbMovesPerLevel.length(); i++){
-                Player.nbMovesPerLevel.add(nbMovesPerLevel.getInt(i));
-                Player.nbStarsPerLevel.add(nbStarsPerLevel.getInt(i));
-                Player.nbMovesCurrent = obj.getInt("nbMovesCurrent");
-                Player.currentLevel = obj.getInt("currentLevel");
+                Player.getNbMovesPerLevel().add(nbMovesPerLevel.getInt(i));
+                Player.getNbStarsPerLevel().add(nbStarsPerLevel.getInt(i));
+                Player.setNbMovesCurrent(obj.getInt("nbMovesCurrent"));
+                Player.setCurrentLevel(obj.getInt("currentLevel"));
             }
         } catch (IOException e) {
             e.printStackTrace();
