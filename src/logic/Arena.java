@@ -10,6 +10,7 @@ import java.io.IOException;
  */
 public class Arena {
     private int width, height;
+    private int level;
     private boolean[][] matrix;
     private static final Arena INSTANCE = new Arena("resources/maps/lv1.txt");
 
@@ -31,6 +32,10 @@ public class Arena {
     public void loadNewArena(String filePath){
         setDimensions(filePath);
         loadArena(filePath);
+    }
+
+    public int getLevel(){
+        return level;
     }
 
 

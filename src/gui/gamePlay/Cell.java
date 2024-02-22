@@ -15,20 +15,22 @@ public class Cell extends JPanel{
      * class for the gui representation of the playable cells in the game.
      */
 
+    private static final double scale = 0.75;
+
     
     // pixel_x and pixel_y are the coordinates of the cell in pixels RELATIVE to the CONTAINER (ARENA PANEL)
     private int pixel_x;
     private int pixel_y;
 
     // map_x and map_y are the coordinates of the cell in the matrix
-    private int map_x;
-    private int map_y;
+    private final int map_x;
+    private final int map_y;
 
 
     // seperate border for shadow/3d effect
-    private Border topShadow = BorderFactory.createMatteBorder(5, 0, 0, 0, Colours.SHADOW);
-    private Border leftShadow = BorderFactory.createMatteBorder(0, 5, 0, 0, Colours.SHADOW);
-    private Border topLeftShadow = BorderFactory.createMatteBorder(5, 5, 0, 0, Colours.SHADOW);
+    private final Border topShadow = BorderFactory.createMatteBorder(5, 0, 0, 0, Colours.SHADOW);
+    private final Border leftShadow = BorderFactory.createMatteBorder(0, 5, 0, 0, Colours.SHADOW);
+    private final Border topLeftShadow = BorderFactory.createMatteBorder(5, 5, 0, 0, Colours.SHADOW);
 
 
     
@@ -36,9 +38,9 @@ public class Cell extends JPanel{
         super();
 
         // hard-fixing cell size
-        this.setMinimumSize(new Dimension(GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE));
-        this.setPreferredSize(new Dimension(GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE));
-        this.setMaximumSize(new Dimension(GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE));
+        this.setMinimumSize(new Dimension((int) (GuiConfig.CELL_SIZE * scale), (int) (GuiConfig.CELL_SIZE * scale)));
+        this.setPreferredSize(new Dimension((int) (GuiConfig.CELL_SIZE * scale), (int) (GuiConfig.CELL_SIZE * scale)));
+        this.setMaximumSize(new Dimension((int) (GuiConfig.CELL_SIZE * scale), (int) (GuiConfig.CELL_SIZE * scale)));
 
         this.pixel_x = x_coord * GuiConfig.CELL_SIZE; 
         this.pixel_y = y_coord * GuiConfig.CELL_SIZE;
