@@ -31,7 +31,7 @@ public class GUIManager {
 
     public void start(){
         /*
-          initiates the GUI window and all.
+          initiates the GUI window.
          */
         mainFrame.add(gamePanel, "arena");
         mainFrame.setVisible(true);
