@@ -3,14 +3,24 @@ package src.piece.decorator;
 import src.geometry.IntCoordinates;
 import src.piece.Pieces;
 
+/**
+ * Class that represent the decorator pattern for the counterclockwise rotation.
+ */
 public class RotateCounter extends Decorator {
-    public RotateCounter(Pieces pieces) {
-        this.piece = pieces;
+    /**
+     * Constructor for the decorator RotateCounter.
+     * @param p Piece on which we add the decorator.
+     */
+    public RotateCounter(Pieces p) {
+        super(p);
     }
 
+    /**
+     * Action of rotating counterclockwise the piece.
+     */
     @Override
-    public void action() {
-        // TODO: Add the rotate action counter clockwise.
+    public void personalAction() {
+        // TODO: Add the rotate action counterclockwise.
     }
 
     @Override
