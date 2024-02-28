@@ -36,7 +36,7 @@ public class ShapeFactory extends Pieces{
     public boolean[][] generateShape(String filePath) {
         boolean[][] shape = new boolean[4][4];
         try {
-            FileReader fileReader = new FileReader("ressources/shapes/" + filePath + ".txt");
+            FileReader fileReader = new FileReader("resources/shapes/" + filePath + ".txt");
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             String line;
             int row = 0;

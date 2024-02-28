@@ -3,14 +3,15 @@ package src.gui.gamePlay;
 import src.geometry.IntCoordinates;
 import src.config.GuiConfig;
 import src.gui.GUIManager;
+import src.gui.UI.TopPanel;
 import src.piece.Pieces;
-
+import src.utils.Debug;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.*;
 
-public class Piece extends JPanel {
+public class GuiPiece {
     //! assumes that the piece is in a valid place in the arena
 
     private Color colour = Color.black;
@@ -20,18 +21,23 @@ public class Piece extends JPanel {
     private Pieces piece;
 
 
-    public Piece(Pieces piece){
+    public GuiPiece(Pieces piece){
         this.piece = piece;
         this.colour = piece.getColor();
         this.shapeMatrix = piece.getShape();
+        
 
     }
 
 
-    private IntCoordinates getPixelCoordiantes(IntCoordinates cellCoords){
-        Cell[][] cells = GUIManager.getInstance().getGamePanel().getArenaPanel().getCellArray();
-        Cell cell = cells[piece.getPos().y()][piece.getPos().x()];
-        return new IntCoordinates(cell.getX(), cell.getY());
+    private IntCoordinates getPixelCoordinates(IntCoordinates cellCoords){
+        IntCoordinates[][] cellsCoords = GUIManager.getInstance().getGamePanel().getArenaPanel().getCellArray();
+        // for(int i = 0 ; i < cellsCoords.length; i++){
+        //     for(int j = 0 ; j < cellsCoords[0].length; j++){
+        //         Debug.out(cellsCoords[i][j].toString());
+        //     }
+        // }
+        return cellsCoords[cellCoords.y()][cellCoords.x()];
     }
 
 
@@ -54,9 +60,8 @@ public class Piece extends JPanel {
 
     
 
-    @Override
-    protected void paintComponent(Graphics g){
-        super.paintComponent(g);
+    public void paintComponent(Graphics g){
+        Graphics2D g2d = (Graphics2D) g;
 
         // using polygon to paint shape of the piece
         boolean[][] shapeMatrix = piece.getShape();
@@ -65,10 +70,12 @@ public class Piece extends JPanel {
 
         for (int i = 0 ; i < shapeMatrix.length; i++){ // height
             for(int j = 0 ; j < shapeMatrix[0].length; j++){ // width
-                cellCoords = getPixelCoordiantes(new IntCoordinates(j + offSet.x(), i + offSet.y()));
-                
-                g.setColor(piece.getColor());
-                g.fillRect(cellCoords.x(), cellCoords.y(), GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE);
+                if (shapeMatrix[i][j]){
+                    cellCoords = getPixelCoordinates(new IntCoordinates(j + offSet.x(), i + offSet.y()));
+                    g2d.setColor(piece.getColor());
+                    Debug.out("coords are : " + cellCoords.toString() +  " x : " + j + " y : " + i + "piece positions : " + piece.getPos().toString() + " offset : " + offSet.toString());
+                    g2d.fillRect(cellCoords.x(), cellCoords.y() + 30, GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE);
+                }
                 
 
             }

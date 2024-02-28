@@ -20,11 +20,11 @@ public class PieceLogic {
     /** 
      * @param p
      */
-    public void addPiece(Pieces p){
+    public static void addPiece(Pieces p){
         pieces.add(p);
     }
 
-    public void clearPieces(){
+    public static void clearPieces(){
         pieces.clear();
     }
 

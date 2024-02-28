@@ -1,6 +1,8 @@
 package src.gui;
 
 import src.gui.gamePlay.*;
+import src.logic.PieceLogic;
+import src.utils.Debug;
 
 import java.awt.*;
 
@@ -48,6 +50,16 @@ public class GUIManager {
      */
     public static GUIManager getInstance(){
         return INSTANCE;
+    }
+
+    public void update(){
+        /*
+          updates the GUI
+         */
+        gamePanel.update();
+
+        Debug.out("updating " + PieceLogic.getPieces().size());
+    
     }
 
 

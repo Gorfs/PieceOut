@@ -2,6 +2,7 @@ package src.gui.UI;
 
 import src.config.Colours;
 import src.config.GuiConfig;
+import src.gui.GUIManager;
 import src.logic.Arena;
 
 import javax.swing.*;
@@ -27,11 +28,15 @@ public class TopPanel extends JPanel{
         returnButton.setForeground(Color.WHITE);
         returnButton.setFocusable(false);
 
+        returnButton.addActionListener(e -> {
+            // TODO remove testing button and make it return to main menu
+            GUIManager.INSTANCE.update();
+        });
 
 
         this.setBorder(BorderFactory.createEmptyBorder(3,3,3,3));
         this.setMinimumSize(new Dimension(Integer.MAX_VALUE, 30));
-        this.setMaximumSize(new Dimension(Integer.MAX_VALUE, 50));
+        this.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
         this.setAlignmentX(Component.LEFT_ALIGNMENT);
         this.add(returnButton);
         //TODO set the rigid area to a dynamic size and not just divided by 5
