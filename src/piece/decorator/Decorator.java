@@ -3,14 +3,37 @@ package src.piece.decorator;
 import src.geometry.IntCoordinates;
 import src.piece.Pieces;
 
+/**
+ * Abstract class for the decorators. It extends 'Pieces' because it uses the method of 'decorator design pattern'.
+ */
 public abstract class Decorator extends Pieces {
 
-    // piece on which we add the decorator.
+    /**
+     * piece on which we add the decorator.
+     */
     protected Pieces piece;
 
-    // TODO: We may need to remove this later and make specific method for each decorator
-    //       because we might need to return different things later.
-    public abstract void action();
+    /**
+     * Constructor for the decorators.
+     * @param p Piece on which we add the decorator.
+     */
+    public Decorator(Pieces p) {
+        this.piece = p;
+    }
+
+    @Override
+    public void action(IntCoordinates pos) {
+        // If it is the right action we pressed on, then do the action.
+        if (this.getPos().equals(pos)) personalAction();
+        // If not, then we check for the next decorator.
+        else this.piece.action(pos);
+    }
+
+
+    /**
+     * Abstract class that used to do each action for each decorator pattern.
+     */
+    public abstract void personalAction();
 
     /**
      * Method that returns the piece it decorates.
