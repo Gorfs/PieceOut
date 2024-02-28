@@ -3,6 +3,8 @@ package src.piece;
 import src.config.Colours;
 import src.geometry.IntCoordinates;
 
+import java.awt.Color;
+
 
 /**
  * Abstract class used to create pieces for the game.
@@ -11,7 +13,7 @@ public abstract class Pieces {
     /**
      * Color of the piece.
      */
-    protected Colours color;
+    protected Color color;
     /**
      * Position of the piece.
      */
@@ -33,7 +35,7 @@ public abstract class Pieces {
     /**
      * @return Returns the color of the piece.
      */
-    public Colours getColor() {
+    public Color getColor() {
         return color;
     }
 
