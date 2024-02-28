@@ -29,19 +29,22 @@ public class GuiPiece {
 
     }
 
-
+    
+    /** 
+     * @param cellCoords
+     * @return IntCoordinates
+     */
     private IntCoordinates getPixelCoordinates(IntCoordinates cellCoords){
-        IntCoordinates[][] cellsCoords = GUIManager.getInstance().getGamePanel().getArenaPanel().getCellArray();
-        // for(int i = 0 ; i < cellsCoords.length; i++){
-        //     for(int j = 0 ; j < cellsCoords[0].length; j++){
-        //         Debug.out(cellsCoords[i][j].toString());
-        //     }
-        // }
+        IntCoordinates[][] cellsCoords = GUIManager.getInstance().getGamePanel().getArenaPanel().getCellCoordArray();
         return cellsCoords[cellCoords.y()][cellCoords.x()];
     }
 
 
 
+    
+    /** 
+     * @return IntCoordinates
+     */
     private IntCoordinates getOffset(){
         // returns new int-coordinates with the offset from the piece added
 
@@ -60,6 +63,10 @@ public class GuiPiece {
 
     
 
+    
+    /** 
+     * @param g
+     */
     public void paintComponent(Graphics g){
         Graphics2D g2d = (Graphics2D) g;
 

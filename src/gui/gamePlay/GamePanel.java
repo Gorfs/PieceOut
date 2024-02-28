@@ -39,14 +39,18 @@ public class GamePanel extends JPanel {
     public void update(){
         // updating the arena like a tick in the gameloop
 
+        // clearing the arena to repaint it
+        this.removeAll();
+        this.add(topPanel);
+        this.add(arenaPanel);
+        this.add(bottomPanel);
+
 
         //redrawing pieces
         for(Pieces piece: PieceLogic.getPieces()){
             GuiPiece guiPiece = new GuiPiece(piece);
             guiPiece.paintComponent(getGraphics());
         }
-        // this.revalidate();
-        // this.repaint();
     }
 
 

@@ -37,7 +37,7 @@ public class ArenaPanel extends JPanel {
         this.add(containerPanel);
     }
 
-    public IntCoordinates[][] getCellArray(){
+    public IntCoordinates[][] getCellCoordArray(){
         // returns an array of all the gui.gameplay.cell components drawn on the map
         int width = Arena.getInstance().getMatrix().length;
         int height = Arena.getInstance().getMatrix()[0].length;
@@ -61,6 +61,7 @@ public class ArenaPanel extends JPanel {
     
         return result;
     }
+    
 
     public void updateArena(){
         /*
