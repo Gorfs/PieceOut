@@ -32,6 +32,20 @@ public class ArenaPanel extends JPanel {
         this.add(containerPanel);
     }
 
+    public Cell[][] getCellArray(){
+        // returns an array of all the gui.gameplay.cell components drawn on the map
+        int map_size_height = Arena.getInstance().getMatrix().length;
+        int map_size_width = Arena.getInstance().getMatrix()[0].length;
+        Cell[][] result = new Cell[map_size_height][map_size_width];
+        Component pane = this.getComponent(0);
+        for(int i = 0 ; i < map_size_height; i++){
+            for(int j = 0 ; j < map_size_width; j++){
+                result[i][j] = (Cell) pane.getComponentAt(i,j);
+            }
+        }
+        return result;
+    }
+
     public void updateArena(){
         /*
           updates the cells to a new matrix state.

@@ -21,6 +21,10 @@ public class GUIManager {
     // layout to change panels in rootPanel
     private final CardLayout layout = new CardLayout();
 
+    public GamePanel getGamePanel(){
+        return gamePanel;
+    }
+
 
     private GUIManager(){
         /*
