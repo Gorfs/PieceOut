@@ -2,7 +2,7 @@ package src.logic;
 
 /**
  * The Arena class represents a game arena with a specified width and height.
- * It contains methods to set the dimensions of the arena and load the arena from a file.
+ * Max width and height are 7.
  */
 public class Arena {
     private final int width = 7, height = 7;
@@ -14,7 +14,7 @@ public class Arena {
      * Represents an arena in the game.
      * The arena is responsible for managing the dimensions and loading the arena from a file.
      *
-     * @param binary the path to the file containing the arena data
+     * @param binary is a string of 49 chars that represents the arena.
      */
     private Arena(String binary){
         loadArena(binary);
@@ -53,15 +53,13 @@ public class Arena {
     }
 
 
+   
     /**
-     * Loads the arena from the specified file path.
-     * Sets the dimensions of the arena based on the contents of the file.
-     * Initializes the matrix with the dimensions of the arena.
-     * Reads the contents of the file and populates the matrix accordingly.
-     * Each character in the file represents a cell in the matrix.
-     * '0' represents a false value (not a maps cell) and any other character represents a true value (map cell).
-     *
-     * @param binary the path of the file containing the arena data
+     * Loads the arena with the given binary string.
+     * The binary string represents the state of each cell in the arena.
+     * '0' represents an empty cell, while any other character represents a filled cell.
+     * 
+     * @param binary the binary string representing the arena state
      */
     public void loadArena(String binary) {
         for (int i = 0; i < height; i++) {
