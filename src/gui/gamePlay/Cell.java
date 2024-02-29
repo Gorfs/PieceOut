@@ -15,7 +15,7 @@ public class Cell extends JPanel{
      * class for the gui representation of the playable cells in the game.
      */
 
-    private static final double scale = 0.75;
+    private static final double scale = 1;
 
     
     // pixel_x and pixel_y are the coordinates of the cell in pixels RELATIVE to the CONTAINER (ARENA PANEL)

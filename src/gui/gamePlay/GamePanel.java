@@ -3,7 +3,10 @@ package src.gui.gamePlay;
 import javax.swing.*;
 
 import src.gui.UI.*;
+import src.logic.PieceLogic;
 import src.config.*;
+import src.piece.Pieces;
+import src.utils.Debug;
 
 
 public class GamePanel extends JPanel {
@@ -11,18 +14,43 @@ public class GamePanel extends JPanel {
      * This Panel is the main panel that is the player sees when completing the puzzle
      * Contains the arena, the pieces, the UI,etc..
      */
-    JPanel centerArenaPanel = new JPanel(); // panel used to center the arena in the middle of the panel
+    private ArenaPanel arenaPanel = new ArenaPanel();
+    private JPanel topPanel = new TopPanel();
+    private JPanel bottomPanel = new BottomPanel();
+
+    public ArenaPanel getArenaPanel(){
+        return this.arenaPanel;
+    }
 
     public GamePanel(){
         super();
+        this.setLayout(null);
         this.setBackground(Colours.BACKGROUND);
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        this.add(new TopPanel());
+        this.add(topPanel);
         //centerArenaPanel.setBorder(BorderFactory.createMatteBorder(10, 10, 10, 10, Color.RED));
-        this.add(new ArenaPanel());
-        this.add(new BottomPanel());
+        this.add(arenaPanel);
+        this.add(bottomPanel);
+
+    }
 
 
+
+    public void update(){
+        // updating the arena like a tick in the gameloop
+
+        // clearing the arena to repaint it
+        this.removeAll();
+        this.add(topPanel);
+        this.add(arenaPanel);
+        this.add(bottomPanel);
+
+
+        //redrawing pieces
+        for(Pieces piece: PieceLogic.getPieces()){
+            GuiPiece guiPiece = new GuiPiece(piece);
+            guiPiece.paintComponent(getGraphics());
+        }
     }
 
 

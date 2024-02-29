@@ -3,7 +3,9 @@ package src.gui.gamePlay;
 import javax.swing.*;
 import java.awt.*;
 
+import src.utils.Debug;
 import src.config.*;
+import src.geometry.IntCoordinates;
 import src.logic.Arena;
 
 public class ArenaPanel extends JPanel {
@@ -12,10 +14,13 @@ public class ArenaPanel extends JPanel {
      * the game is played on
      */
 
+
+     private JPanel containerPanel = new JPanel();
+
+
     public ArenaPanel() {
         super();
         this.setLayout(new GridBagLayout());
-        JPanel containerPanel = new JPanel();
         this.setBackground(Colours.BACKGROUND);
         int map_size = Arena.getInstance().getMatrix().length;
         containerPanel.setLayout(new GridLayout(map_size, map_size));
@@ -31,6 +36,32 @@ public class ArenaPanel extends JPanel {
         }
         this.add(containerPanel);
     }
+
+    public IntCoordinates[][] getCellCoordArray(){
+        // returns an array of all the gui.gameplay.cell components drawn on the map
+        int width = Arena.getInstance().getMatrix().length;
+        int height = Arena.getInstance().getMatrix()[0].length;
+        int x = 0; 
+        int y = 0;
+        int xOffset = containerPanel.getX();
+        int yOffset = containerPanel.getY();
+        Component[] component = containerPanel.getComponents();
+        IntCoordinates[][] result = new IntCoordinates[height][width];
+        for(int i = 0;  i < component.length; i++){
+            Cell cell = (Cell) component[i];
+            result[y][x] = new IntCoordinates(cell.getPixel_x() + xOffset, cell.getPixel_y() + yOffset); 
+            // Debug.out(result[y][x].toString());
+            x++;
+            if (x == width){
+                x = 0;
+                y++;
+            }
+        
+        }
+    
+        return result;
+    }
+    
 
     public void updateArena(){
         /*
