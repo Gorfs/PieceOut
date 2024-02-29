@@ -3,23 +3,39 @@ package src.piece;
 import src.config.Colours;
 import src.geometry.IntCoordinates;
 
+import java.awt.Color;
+
 
 /**
  * Abstract class used to create pieces for the game.
  */
 public abstract class Pieces {
-    // Color of the piece
-    protected Colours color;
+    /**
+     * Color of the piece.
+     */
+    protected Color color;
+    /**
+     * Position of the piece.
+     */
     private IntCoordinates pos;
-    // Pivot point of the piece
+    /**
+     * Pivot point of the piece.
+     */
     private IntCoordinates pivotPoint;
-    // shape of the piece
+    /**
+     * Shape of the piece.
+     */
     private boolean[][] shape;
+
+    /**
+     * Nothing to do here, we went through all the decorator pattern.
+     */
+    public void action(IntCoordinates pos) {}
 
     /**
      * @return Returns the color of the piece.
      */
-    public Colours getColor() {
+    public Color getColor() {
         return color;
     }
 
@@ -53,6 +69,21 @@ public abstract class Pieces {
     }
 
     /**
+     * @return Returns the position of the piece.
+     */
+    public IntCoordinates getPos() {
+        return pos;
+    }
+
+    /**
+     * Manually change the position of the piece.
+     * @param pos New position of the piece.
+     */
+    public void setPos(IntCoordinates pos) {
+        this.pos = pos;
+    }
+
+    /**
      * @return Returns a String that represents the piece.
      */
     @Override
@@ -68,11 +99,4 @@ public abstract class Pieces {
         return text.toString();
     }
 
-    public IntCoordinates getPos() {
-        return pos;
-    }
-
-    public void setPos(IntCoordinates pos) {
-        this.pos = pos;
-    }
 }

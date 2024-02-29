@@ -5,6 +5,7 @@ import src.geometry.IntCoordinates;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.awt.Color;
 import java.io.IOException;
 
 
@@ -19,7 +20,7 @@ public class ShapeFactory extends Pieces{
      * @param color Color of the piece.
      * @param pivotPoint Pivot point of the face.
      */
-    public ShapeFactory(String filePath, Colours color, IntCoordinates pos, IntCoordinates pivotPoint) {
+    public ShapeFactory(String filePath, Color color, IntCoordinates pos, IntCoordinates pivotPoint) {
         this.color = color;
         this.setPos(pos);
         this.setPivotPoint(pivotPoint);
