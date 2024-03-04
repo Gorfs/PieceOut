@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 
 import javax.swing.BorderFactory;
@@ -40,7 +42,7 @@ public class BottomPanel extends JPanel{
         undoButton.setForeground(Color.WHITE);
         undoButton.setFocusable(false);
         // Setting the icon for the undo button
-        ImageIcon undoIcon = new ImageIcon(new ImageIcon("resources/icons/undoredo.png").getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH));
+        ImageIcon undoIcon = new ImageIcon(new ImageIcon("resources/icons/undo.png").getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH));
         undoButton.setIcon(undoIcon);
         //undoButton.setBorder(BorderFactory.createEmptyBorder(3,3,3,3));
         undoButton.addActionListener(new ActionListener(){
@@ -49,27 +51,14 @@ public class BottomPanel extends JPanel{
             }
         });
 
-       redoButton = new JButton("Redo");
+        redoButton = new JButton("Redo");
         redoButton.setBackground(Colours.BACKGROUND.brighter());
         redoButton.setForeground(Color.WHITE);
         redoButton.setFocusable(false);
 
-        // Convert the scaled image back to buffered image
-        BufferedImage buffered = new BufferedImage(50, 50, BufferedImage.TYPE_INT_ARGB);
-        buffered.getGraphics().drawImage(undoIcon, 0, 0 , null);
-
-        // Create a transform object
-        AffineTransform transform = AffineTransform.getScaleInstance(-1, 1);
-        transform.translate(-buffered.getWidth(null), 0);
-
-        // Create the transform operation
-        AffineTransformOp op = new AffineTransformOp(transform, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
-
-        // Apply the operation
-        BufferedImage flippedImage = op.filter(buffered, null);
-
-        // Set the flipped image as icon
-        redoIcon = new ImageIcon(flippedImage);
+        // Load the image
+        ImageIcon redoIcon = new ImageIcon(new ImageIcon("resources/icons/redo.png").getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH));
+        redoButton.setIcon(redoIcon);
         //redoButton.setBorder(BorderFactory.createEmptyBorder(3,3,3,3));
         redoButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
