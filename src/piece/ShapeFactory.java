@@ -2,35 +2,32 @@ package src.piece;
 
 import java.awt.Color;
 
-import src.config.Colours;
 import src.geometry.IntCoordinates;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.awt.Color;
 import java.io.IOException;
 
 
 /**
  * Class factory for shapes, each shape can be imported from the files.
  */
-public class ShapeFactory extends Pieces{
+public class ShapeFactory extends PieceBrute {
 
     /**
      * Constructor of ShapeFactory
      * @param filePath File name like "OShape".
-     * @param color Color of the piece.
+     * @param color Color of the nextPiece.
      * @param pivotPoint Pivot point of the face.
      */
     public ShapeFactory(String filePath, Color color, IntCoordinates pos, IntCoordinates pivotPoint) {
         this.color = color;
         this.setPos(pos);
-        this.setPivotPoint(pivotPoint);
         this.setShape(generateShape(filePath));
     }
 
     /**
-     * Method that generate a piece shape from a file based on the method used to import map.
+     * Method that generate a nextPiece shape from a file based on the method used to import map.
      * @param filePath File name like "OShape".
      * @return Returns the shape generated from the file.
      */

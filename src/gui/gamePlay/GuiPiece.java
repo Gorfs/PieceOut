@@ -3,25 +3,22 @@ package src.gui.gamePlay;
 import src.geometry.IntCoordinates;
 import src.config.GuiConfig;
 import src.gui.GUIManager;
-import src.gui.UI.TopPanel;
-import src.piece.Pieces;
+import src.piece.PieceBrute;
 import src.utils.Debug;
 
-import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.*;
 
 public class GuiPiece {
-    //! assumes that the piece is in a valid place in the arena
+    //! assumes that the nextPiece is in a valid place in the arena
 
     private Color colour = Color.black;
     private boolean[][] shapeMatrix = new boolean[4][];
     private IntCoordinates pos;
 
-    private Pieces piece;
+    private PieceBrute piece;
 
 
-    public GuiPiece(Pieces piece){
+    public GuiPiece(PieceBrute piece){
         this.piece = piece;
         this.colour = piece.getColor();
         this.shapeMatrix = piece.getShape();
@@ -46,9 +43,9 @@ public class GuiPiece {
      * @return IntCoordinates
      */
     private IntCoordinates getOffset(){
-        // returns new int-coordinates with the offset from the piece added
+        // returns new int-coordinates with the offset from the nextPiece added
 
-        int pivotPointX = piece.getPivotPoint().x(); // distance to border of piece matrix
+        int pivotPointX = piece.getPivotPoint().x(); // distance to border of nextPiece matrix
         int pivotPointY = piece.getPivotPoint().y(); // ''
 
         int posX = piece.getPos().x();
@@ -70,7 +67,7 @@ public class GuiPiece {
     public void paintComponent(Graphics g){
         Graphics2D g2d = (Graphics2D) g;
 
-        // using polygon to paint shape of the piece
+        // using polygon to paint shape of the nextPiece
         boolean[][] shapeMatrix = piece.getShape();
         IntCoordinates offSet = getOffset();
         IntCoordinates cellCoords;
@@ -80,7 +77,7 @@ public class GuiPiece {
                 if (shapeMatrix[i][j]){
                     cellCoords = getPixelCoordinates(new IntCoordinates(j + offSet.x(), i + offSet.y()));
                     g2d.setColor(piece.getColor());
-                    Debug.out("coords are : " + cellCoords.toString() +  " x : " + j + " y : " + i + "piece positions : " + piece.getPos().toString() + " offset : " + offSet.toString());
+                    Debug.out("coords are : " + cellCoords.toString() +  " x : " + j + " y : " + i + "nextPiece positions : " + piece.getPos().toString() + " offset : " + offSet.toString());
                     g2d.fillRect(cellCoords.x(), cellCoords.y() + 30, GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE);
                 }
                 

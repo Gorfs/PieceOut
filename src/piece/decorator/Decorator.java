@@ -1,34 +1,51 @@
 package src.piece.decorator;
 
 import src.geometry.IntCoordinates;
-import src.piece.Pieces;
+import src.piece.Piece;
+import src.piece.PieceBrute;
 
 /**
- * Abstract class for the decorators. It extends 'Pieces' because it uses the method of 'decorator design pattern'.
+ * Abstract class for the decorators. It extends 'Piece' because it uses the method of 'decorator design pattern'.
  */
-public abstract class Decorator extends Pieces {
+public abstract class Decorator extends Piece {
 
     /**
-     * piece on which we add the decorator.
+     * nextPiece on which we add the decorator.
      */
-    protected Pieces piece;
+    protected Piece nextPiece;
+    protected Piece prevPiece;
+    protected IntCoordinates localCoord;
 
     /**
      * Constructor for the decorators.
      * @param p Piece on which we add the decorator.
      */
-    public Decorator(Pieces p) {
-        this.piece = p;
+    public Decorator(Piece p, IntCoordinates local) {
+        this.nextPiece = null;
+        this.prevPiece = p;
+        this.localCoord = local;
     }
 
     @Override
     public void action(IntCoordinates pos) {
         // If it is the right action we pressed on, then do the action.
-        if (this.getPos().equals(pos)) personalAction();
+        if (this.localCoord.equals(pos)) personalAction();
         // If not, then we check for the next decorator.
-        else this.piece.action(pos);
+        else this.prevPiece.action(pos);
     }
 
+    public PieceBrute getLast() {
+        Piece temp = prevPiece;
+        while (!(temp instanceof PieceBrute)) temp = ((Decorator) temp).getPrevPiece();
+        return ((PieceBrute) temp);
+    }
+
+    public Piece getFirst() {
+        Piece temp = nextPiece;
+        while (!(temp == null))
+            temp = ((Decorator) temp).getNextPiece();
+        return temp;
+    }
 
     /**
      * Abstract class that used to do each action for each decorator pattern.
@@ -36,14 +53,22 @@ public abstract class Decorator extends Pieces {
     public abstract void personalAction();
 
     /**
-     * Method that returns the piece it decorates.
-     * @return Returns the piece it decorates.
+     * Method that returns the nextPiece it decorates.
+     * @return Returns the nextPiece it decorates.
      */
-    public Pieces getPiece() {
-        return piece;
+    public Piece getNextPiece() {
+        return nextPiece;
     }
 
-    public abstract boolean[][] getShape();
+    /**
+     * Method that returns the prevPiece it decorates.
+     * @return Returns the prevPiece it decorates.
+     */
+    public Piece getPrevPiece() {
+        return prevPiece;
+    }
 
-    public abstract IntCoordinates getPivotPoint();
+    public boolean[][] getShape() {
+        return this.getLast().getShape();
+    }
 }

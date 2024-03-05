@@ -1,7 +1,6 @@
 package src.piece.decorator;
 
-import src.geometry.IntCoordinates;
-import src.piece.Pieces;
+import src.piece.PieceBrute;
 
 /**
  * Class that represent the decorator pattern for the y-axis flip.
@@ -11,25 +10,15 @@ public class FlipY extends Decorator {
      * Constructor for the decorator FlipY.
      * @param p Piece on which we add the decorator.
      */
-    public FlipY(Pieces p) {
+    public FlipY(PieceBrute p) {
         super(p);
     }
 
     /**
-     * Action of flipping the piece in the y-axis.
+     * Action of flipping the nextPiece in the y-axis.
      */
     @Override
     public void personalAction() {
         // TODO: Add the flip action in the y-axis.
-    }
-
-    @Override
-    public boolean[][] getShape() {
-        return piece.getShape();
-    }
-
-    @Override
-    public IntCoordinates getPivotPoint() {
-        return piece.getPivotPoint();
     }
 }
