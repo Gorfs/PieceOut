@@ -17,7 +17,7 @@ public class RotateClock extends Decorator {
      * @param p Piece on which we add the decorator.
      */
     public RotateClock(PieceBrute p, IntCoordinates pp) {
-        super(p);
+        super(p, pp);
         this.setPivotPoint(pp);
     }
 

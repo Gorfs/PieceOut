@@ -1,5 +1,6 @@
 package src.piece.decorator;
 
+import src.geometry.IntCoordinates;
 import src.piece.Piece;
 
 /**
@@ -10,8 +11,8 @@ public class FlipX extends Decorator {
      * Constructor for the decorator FlipX.
      * @param p Piece on which we add the decorator.
      */
-    public FlipX(Piece p) {
-        super(p);
+    public FlipX(Piece p, IntCoordinates local) {
+        super(p, local);
     }
 
     /**

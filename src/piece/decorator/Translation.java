@@ -18,8 +18,8 @@ public class Translation extends Decorator {
      * @param p Piece on which we want to create the decorator
      * @param d Direction of the translation
      */
-    public Translation(PieceBrute p, Direction d) {
-        super(p);
+    public Translation(PieceBrute p, Direction d, IntCoordinates local) {
+        super(p, local);
         this.dir = d;
     }
 
