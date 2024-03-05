@@ -24,6 +24,8 @@ public class TopPanel extends JPanel{
         levelLabel.setFont(new Font("Arial", Font.BOLD, 20));
         levelLabel.setForeground(Color.WHITE);
         JButton returnButton = new JButton("Return to Main Menu");
+        ImageIcon mainMenuIcon = new ImageIcon(new ImageIcon("resources/icons/mainmenu.png").getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH));
+        returnButton.setIcon(mainMenuIcon);
         returnButton.setBackground(Colours.BACKGROUND.darker());
         returnButton.setForeground(Color.WHITE);
         returnButton.setFocusable(false);

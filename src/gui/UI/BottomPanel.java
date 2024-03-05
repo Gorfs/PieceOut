@@ -2,12 +2,17 @@ package src.gui.UI;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
+import java.awt.image.BufferedImage;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
@@ -36,6 +41,9 @@ public class BottomPanel extends JPanel{
         undoButton.setBackground(Colours.BACKGROUND.brighter());
         undoButton.setForeground(Color.WHITE);
         undoButton.setFocusable(false);
+        // Setting the icon for the undo button
+        ImageIcon undoIcon = new ImageIcon(new ImageIcon("resources/icons/undo.png").getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH));
+        undoButton.setIcon(undoIcon);
         //undoButton.setBorder(BorderFactory.createEmptyBorder(3,3,3,3));
         undoButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
@@ -43,10 +51,14 @@ public class BottomPanel extends JPanel{
             }
         });
 
-       redoButton = new JButton("Redo");
+        redoButton = new JButton("Redo");
         redoButton.setBackground(Colours.BACKGROUND.brighter());
         redoButton.setForeground(Color.WHITE);
         redoButton.setFocusable(false);
+
+        // Load the image
+        ImageIcon redoIcon = new ImageIcon(new ImageIcon("resources/icons/redo.png").getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH));
+        redoButton.setIcon(redoIcon);
         //redoButton.setBorder(BorderFactory.createEmptyBorder(3,3,3,3));
         redoButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
