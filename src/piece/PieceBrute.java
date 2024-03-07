@@ -18,10 +18,18 @@ public abstract class PieceBrute extends Piece {
      */
     private IntCoordinates pos;
     /**
-     * Shape of the nextPiece.
+     * Pivot point of the piece.
+     */
+    private IntCoordinates fixturePoint;// coordinates of the point where the piece is attached to pos.
+    /**
+     * Shape of the piece.
      */
     private boolean[][] shape;
 
+    /**
+     * boolean for finding out if the shape is movable
+     */
+    public boolean decorated = false;
     /**
      * Nothing to do here, we went through all the decorator pattern.
      */
@@ -34,6 +42,24 @@ public abstract class PieceBrute extends Piece {
         return color;
     }
 
+    /**
+     * @return Returns the pivot point of the piece.
+     */
+    public IntCoordinates getFixturePoint(){
+        return fixturePoint;
+    }
+
+    /**
+     * Method that set the new pivotPoint of the piece.
+     * @param pivotPoint IntCoordinates of the pivot point.
+     */
+    public void setFixturePoint(IntCoordinates pivotPoint) {
+        this.fixturePoint = pivotPoint;
+    }
+
+    /**
+     * @return Returns the current shape of the piece.
+     */
     public boolean[][] getShape() {
         return shape;
     }

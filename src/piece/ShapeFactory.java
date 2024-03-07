@@ -23,6 +23,7 @@ public class ShapeFactory extends PieceBrute {
     public ShapeFactory(String filePath, Color color, IntCoordinates pos, IntCoordinates pivotPoint) {
         this.color = color;
         this.setPos(pos);
+        this.setFixturePoint(pivotPoint);
         this.setShape(generateShape(filePath));
     }
 

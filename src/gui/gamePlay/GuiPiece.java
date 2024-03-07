@@ -45,8 +45,8 @@ public class GuiPiece {
     private IntCoordinates getOffset(){
         // returns new int-coordinates with the offset from the nextPiece added
 
-        // int pivotPointX = piece.getPivotPoint().x(); // distance to border of nextPiece matrix
-        // int pivotPointY = piece.getPivotPoint().y(); // ''
+        int pivotPointX = piece.getFixturePoint().x(); // distance to border of piece matrix
+        int pivotPointY = piece.getFixturePoint().y(); // ''
 
         int posX = piece.getPos().x();
         int posY = piece.getPos().y();

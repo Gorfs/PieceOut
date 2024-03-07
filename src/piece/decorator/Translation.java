@@ -38,10 +38,6 @@ public class Translation extends Decorator {
         }
     }
 
-    @Override
-    public boolean[][] getShape() {
-        return new boolean[0][];
-    }
 
     public Direction getDir() {
         return dir;

@@ -29,18 +29,4 @@ public class RotateCounter extends Decorator {
         // TODO: Add the rotate action counterclockwise.
     }
 
-    /**
-     * @return Returns the pivot point of the nextPiece.
-     */
-    public IntCoordinates getPivotPoint() {
-        return pivotPoint;
-    }
-
-    /**
-     * Method that set the new pivotPoint of the nextPiece.
-     * @param pivotPoint IntCoordinates of the pivot point.
-     */
-    public void setPivotPoint(IntCoordinates pivotPoint) {
-        this.pivotPoint = pivotPoint;
-    }
 }
