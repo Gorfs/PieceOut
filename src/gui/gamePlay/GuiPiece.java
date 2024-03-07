@@ -48,8 +48,8 @@ public class GuiPiece {
     private IntCoordinates getOffset(){
         // returns new int-coordinates with the offset from the piece added
 
-        int pivotPointX = piece.getPivotPoint().x(); // distance to border of piece matrix
-        int pivotPointY = piece.getPivotPoint().y(); // ''
+        int pivotPointX = piece.getFixturePoint().x(); // distance to border of piece matrix
+        int pivotPointY = piece.getFixturePoint().y(); // ''
 
         int posX = piece.getPos().x();
         int posY = piece.getPos().y();
@@ -81,7 +81,7 @@ public class GuiPiece {
                     cellCoords = getPixelCoordinates(new IntCoordinates(j + offSet.x(), i + offSet.y()));
                     g2d.setColor(piece.getColor());
                     Debug.out("coords are : " + cellCoords.toString() +  " x : " + j + " y : " + i + "piece positions : " + piece.getPos().toString() + " offset : " + offSet.toString());
-                    g2d.fillRect(cellCoords.x(), cellCoords.y() + 30, GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE);
+                    g2d.fillRect(cellCoords.x(), cellCoords.y() + 30, ((int) Math.round(GuiConfig.CELL_SIZE * GuiConfig.ARENA_SCALE)),((int)Math.round(GuiConfig.CELL_SIZE * GuiConfig.ARENA_SCALE)));
                 }
                 
 

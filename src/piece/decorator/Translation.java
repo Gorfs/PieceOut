@@ -39,17 +39,8 @@ public class Translation extends Decorator {
         }
     }
 
-    @Override
-    public boolean[][] getShape() {
-        return new boolean[0][];
-    }
 
-    @Override
-    public IntCoordinates getPivotPoint() {
-        return null;
-    }
-
-    public Direction getDir() {
+        public Direction getDir() {
         return dir;
     }
 }

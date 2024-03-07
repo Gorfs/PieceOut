@@ -70,6 +70,16 @@ public class PlayerController extends JPanel{
         }
     }
 
+
+    // ! these functions are temporary to allow development of gui.
+    public static boolean canUndo(){
+        return false;
+    }
+
+    public static boolean canRedo(){
+        return true;
+    }
+
     /**
      * Method to move the piece if the player is controlling one according to the key pressed
      * @param e the KeyEvent that contains the key pressed by the player

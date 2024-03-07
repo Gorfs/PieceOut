@@ -13,12 +13,16 @@ public abstract class Decorator extends Pieces {
      */
     protected Pieces piece;
 
+    public IntCoordinates pivotPoint;
+
+
     /**
      * Constructor for the decorators.
      * @param p Piece on which we add the decorator.
      */
     public Decorator(Pieces p) {
         this.piece = p;
+        this.decorated = true;
     }
 
     @Override
@@ -43,7 +47,5 @@ public abstract class Decorator extends Pieces {
         return piece;
     }
 
-    public abstract boolean[][] getShape();
 
-    public abstract IntCoordinates getPivotPoint();
 }

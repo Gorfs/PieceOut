@@ -21,12 +21,16 @@ public abstract class Pieces {
     /**
      * Pivot point of the piece.
      */
-    private IntCoordinates pivotPoint;
+    private IntCoordinates fixturePoint;// coordinates of the point where the piece is attached to pos.
     /**
      * Shape of the piece.
      */
     private boolean[][] shape;
 
+    /**
+     * boolean for finding out if the shape is movable
+     */
+    public boolean decorated = false;
     /**
      * Nothing to do here, we went through all the decorator pattern.
      */
@@ -42,16 +46,16 @@ public abstract class Pieces {
     /**
      * @return Returns the pivot point of the piece.
      */
-    public IntCoordinates getPivotPoint() {
-        return pivotPoint;
+    public IntCoordinates getFixturePoint(){
+        return fixturePoint;
     }
 
     /**
      * Method that set the new pivotPoint of the piece.
      * @param pivotPoint IntCoordinates of the pivot point.
      */
-    public void setPivotPoint(IntCoordinates pivotPoint) {
-        this.pivotPoint = pivotPoint;
+    public void setFixturePoint(IntCoordinates pivotPoint) {
+        this.fixturePoint = pivotPoint;
     }
 
     /**

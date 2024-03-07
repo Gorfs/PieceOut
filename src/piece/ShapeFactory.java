@@ -25,7 +25,7 @@ public class ShapeFactory extends Pieces{
     public ShapeFactory(String filePath, Color color, IntCoordinates pos, IntCoordinates pivotPoint) {
         this.color = color;
         this.setPos(pos);
-        this.setPivotPoint(pivotPoint);
+        this.setFixturePoint(pivotPoint);
         this.setShape(generateShape(filePath));
     }
 

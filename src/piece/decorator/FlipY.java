@@ -23,13 +23,4 @@ public class FlipY extends Decorator {
         // TODO: Add the flip action in the y-axis.
     }
 
-    @Override
-    public boolean[][] getShape() {
-        return piece.getShape();
-    }
-
-    @Override
-    public IntCoordinates getPivotPoint() {
-        return piece.getPivotPoint();
-    }
 }

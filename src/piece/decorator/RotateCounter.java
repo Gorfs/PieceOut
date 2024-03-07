@@ -23,13 +23,4 @@ public class RotateCounter extends Decorator {
         // TODO: Add the rotate action counterclockwise.
     }
 
-    @Override
-    public boolean[][] getShape() {
-        return piece.getShape();
-    }
-
-    @Override
-    public IntCoordinates getPivotPoint() {
-        return piece.getPivotPoint();
-    }
 }
