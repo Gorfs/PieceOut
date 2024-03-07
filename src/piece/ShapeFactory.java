@@ -22,11 +22,13 @@ public class ShapeFactory extends Pieces{
      * @param color Color of the piece.
      * @param pivotPoint Pivot point of the face.
      */
-    public ShapeFactory(String filePath, Color color, IntCoordinates pos, IntCoordinates pivotPoint) {
+    public ShapeFactory(String filePath, Color color, IntCoordinates pos, IntCoordinates pivotPoint, IntCoordinates dest) {
         this.color = color;
         this.setPos(pos);
         this.setPivotPoint(pivotPoint);
         this.setShape(generateShape(filePath));
+        this.setDestination(dest);
+        
     }
 
     /**

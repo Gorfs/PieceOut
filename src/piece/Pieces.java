@@ -18,7 +18,11 @@ public abstract class Pieces {
      * Position of the piece.
      */
     private IntCoordinates pos;
+
+    private IntCoordinates destination;
+
     /**
+     *
      * Pivot point of the piece.
      */
     private IntCoordinates pivotPoint;
@@ -31,6 +35,21 @@ public abstract class Pieces {
      * Nothing to do here, we went through all the decorator pattern.
      */
     public void action(IntCoordinates pos) {}
+
+    /**
+     * @return Returns the destination of the piece.
+     */
+    public IntCoordinates getDestination() {
+        return destination;
+    }
+
+    /**
+     * Set the destination of the piece.
+     * @param destination The new destination of the piece.
+     */
+    public void setDestination(IntCoordinates destination) {
+        this.destination = destination;
+    }
 
     /**
      * @return Returns the color of the piece.
