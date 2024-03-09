@@ -5,8 +5,7 @@ import javax.swing.*;
 import src.gui.UI.*;
 import src.logic.PieceLogic;
 import src.config.*;
-import src.piece.Pieces;
-import src.utils.Debug;
+import src.piece.PieceBrute;
 
 
 public class GamePanel extends JPanel {
@@ -47,7 +46,7 @@ public class GamePanel extends JPanel {
 
 
         //redrawing pieces
-        for(Pieces piece: PieceLogic.getPieces()){
+        for(PieceBrute piece: PieceLogic.getPieces()){
             GuiPiece guiPiece = new GuiPiece(piece);
             guiPiece.paintComponent(getGraphics());
         }
