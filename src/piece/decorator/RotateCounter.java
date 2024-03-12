@@ -18,7 +18,6 @@ public class RotateCounter extends Decorator {
      */
     public RotateCounter(PieceBrute p, IntCoordinates pp) {
         super(p, pp);
-        this.setPivotPoint(pp);
     }
 
     /**

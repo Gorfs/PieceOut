@@ -51,10 +51,10 @@ public class GuiPiece {
         int posX = piece.getPos().x();
         int posY = piece.getPos().y();
 
-        // int xOffset = posX - pivotPointX;
-        // int yOffset = posY - pivotPointY;
+        int xOffset = posX - pivotPointX;
+        int yOffset = posY - pivotPointY;
 
-        return new IntCoordinates(posX, posY); // TODO: Changed piece, getPivotPoint doesn't exist anymore.
+        return new IntCoordinates(xOffset, yOffset); // TODO: Changed piece, getPivotPoint doesn't exist anymore.
 
     }
 
@@ -75,6 +75,7 @@ public class GuiPiece {
         for (int i = 0 ; i < shapeMatrix.length; i++){ // height
             for(int j = 0 ; j < shapeMatrix[0].length; j++){ // width
                 if (shapeMatrix[i][j]){
+                    Debug.out("shapeMatrix coords are x : " + j + offSet.x() + " y : " + i + offSet.y() + " x1 : " + i + " y1  :" + j );
                     cellCoords = getPixelCoordinates(new IntCoordinates(j + offSet.x(), i + offSet.y()));
                     g2d.setColor(piece.getColor());
                     Debug.out("coords are : " + cellCoords.toString() +  " x : " + j + " y : " + i + "piece positions : " + piece.getPos().toString() + " offset : " + offSet.toString());
