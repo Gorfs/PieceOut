@@ -77,8 +77,9 @@ public class GuiPiece {
                 if (shapeMatrix[i][j]){
                     cellCoords = getPixelCoordinates(new IntCoordinates(j + offSet.x(), i + offSet.y()));
                     g2d.setColor(piece.getColor());
-                    Debug.out("coords are : " + cellCoords.toString() +  " x : " + j + " y : " + i + "nextPiece positions : " + piece.getPos().toString() + " offset : " + offSet.toString());
-                    g2d.fillRect(cellCoords.x(), cellCoords.y() + 30, GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE);
+                    Debug.out("coords are : " + cellCoords.toString() +  " x : " + j + " y : " + i + "piece positions : " + piece.getPos().toString() + " offset : " + offSet.toString());
+                    //TODO set the cellCoords.y + to not be a constant but instead be calculated, currently 6.
+                    g2d.fillRect(cellCoords.x(), cellCoords.y() +6, ((int) Math.round(GuiConfig.CELL_SIZE * GuiConfig.ARENA_SCALE)),((int)Math.round(GuiConfig.CELL_SIZE * GuiConfig.ARENA_SCALE)));
                 }
                 
 
