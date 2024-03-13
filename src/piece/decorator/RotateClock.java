@@ -1,6 +1,8 @@
 package src.piece.decorator;
 
+import src.geometry.IntCoordinates;
 import src.piece.PieceBrute;
+import src.utils.Debug;
 
 /**
  * Class that represent the decorator pattern for the clockwise rotation.
@@ -21,19 +23,23 @@ public class RotateClock extends Decorator {
     @Override
     public void personalAction() {
         boolean[][] initShape = this.getLast().getShape();
+        IntCoordinates initPPoint = this.getLast().getFixturePoint();
         boolean[][] rotatedShape = new boolean[initShape.length][initShape.length]; // 4x4 matrix for the rotated shape
+        // rotating matrix 90 degrees clockwise
         for(int i = 0 ; i < initShape.length; i++){
             for(int j = 0 ; j < initShape.length; j++){
-                rotatedShape[i][j] = initShape[initShape.length - 1 - j][i]; // rotating the shape
+                rotatedShape[initShape.length - j - 1][i] = initShape[i][j]; // rotating the shape
 
                 // updating the fixture point to new point on array
-                if (i == this.getLast().getFixturePoint().x() && j == this.getLast().getFixturePoint().y()) {
-                    this.getLast().setFixturePoint(new src.geometry.IntCoordinates(initShape.length - j, i));
+                if (i == initPPoint.y()  && j == initPPoint.x() ) {
+                    this.getLast().setFixturePoint(new src.geometry.IntCoordinates(i, initShape.length - j - 1));
                 }
             }
         }
+        // DeComment following lines for debugging informations on the matrix rotation and fixture point location.
+        // Debug.printShapePieces(this.getLast());
         this.getLast().setShape(rotatedShape);
-        // this.getLast().setFixturePoint();
+        // Debug.printShapePieces(this.getLast());
 
     }
 

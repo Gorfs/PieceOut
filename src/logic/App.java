@@ -14,7 +14,7 @@ public class App {
 
         Arena arena = Arena.getInstance();
         PieceBrute testPiece = new ShapeFactory("JShape", Colours.PIECE_BLUE,
-         new IntCoordinates(5, 3), new IntCoordinates(2, 4));
+         new IntCoordinates(5, 2), new IntCoordinates(2, 3));
         RotateClock testDecorator = new RotateClock(testPiece);
         PieceLogic.addPiece(testDecorator);
 
