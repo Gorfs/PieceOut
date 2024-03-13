@@ -26,7 +26,16 @@ public class RotateClock extends Decorator {
      */
     @Override
     public void personalAction() {
-        // TODO: Add the rotate action clockwise.
+        boolean[][] initShape = this.getLast().getShape();
+        boolean[][] rotatedShape = new boolean[initShape.length][initShape[0].length]; // 4x4 matrix for the rotated shape
+        for(int i = 0 ; i < initShape.length; i++){
+            for(int j = 0 ; j < initShape.length; j++){
+                rotatedShape[i][j] = initShape[initShape.length - j][i]; // rotating the shape
+            }
+        }
+        this.getLast().setShape(rotatedShape);
+        // this.getLast().setFixturePoint();
+
     }
 
     /**

@@ -15,7 +15,6 @@ public class Cell extends JPanel{
      * class for the gui representation of the playable cells in the game.
      */
 
-    private static final double scale = 1;
 
     
     // pixel_x and pixel_y are the coordinates of the cell in pixels RELATIVE to the CONTAINER (ARENA PANEL)
@@ -37,13 +36,13 @@ public class Cell extends JPanel{
     public Cell(int x_coord, int y_coord){
         super();
 
-        // hard-fixing cell size
-        this.setMinimumSize(new Dimension((int) (GuiConfig.CELL_SIZE * scale), (int) (GuiConfig.CELL_SIZE * scale)));
-        this.setPreferredSize(new Dimension((int) (GuiConfig.CELL_SIZE * scale), (int) (GuiConfig.CELL_SIZE * scale)));
-        this.setMaximumSize(new Dimension((int) (GuiConfig.CELL_SIZE * scale), (int) (GuiConfig.CELL_SIZE * scale)));
+        this.setMinimumSize(new Dimension((int) (GuiConfig.CELL_SIZE ), (int) (GuiConfig.CELL_SIZE )));
+        this.setPreferredSize(new Dimension((int) (GuiConfig.CELL_SIZE ), (int) (GuiConfig.CELL_SIZE )));
+        this.setMaximumSize(new Dimension((int) (GuiConfig.CELL_SIZE ), (int) (GuiConfig.CELL_SIZE )));
 
-        this.pixel_x = x_coord * GuiConfig.CELL_SIZE; 
-        this.pixel_y = y_coord * GuiConfig.CELL_SIZE;
+        // pixel coordinates are relative to the top left of the arena
+        this.pixel_x = (int) Math.floor(x_coord * GuiConfig.CELL_SIZE ); 
+        this.pixel_y = (int) Math.floor(y_coord * GuiConfig.CELL_SIZE );
         this.map_x = x_coord;
         this.map_y = y_coord;
 

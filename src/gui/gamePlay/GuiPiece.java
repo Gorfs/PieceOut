@@ -3,6 +3,8 @@ package src.gui.gamePlay;
 import src.geometry.IntCoordinates;
 import src.config.GuiConfig;
 import src.gui.GUIManager;
+import src.gui.UI.TopPanel;
+import src.logic.Arena;
 import src.piece.PieceBrute;
 import src.utils.Debug;
 
@@ -45,16 +47,16 @@ public class GuiPiece {
     private IntCoordinates getOffset(){
         // returns new int-coordinates with the offset from the nextPiece added
 
-        // int pivotPointX = piece.getPivotPoint().x(); // distance to border of nextPiece matrix
-        // int pivotPointY = piece.getPivotPoint().y(); // ''
+        int pivotPointX = piece.getFixturePoint().x(); // distance to border of nextPiece matrix
+        int pivotPointY = piece.getFixturePoint().y(); // ''
 
         int posX = piece.getPos().x();
         int posY = piece.getPos().y();
 
-        // int xOffset = posX - pivotPointX;
-        // int yOffset = posY - pivotPointY;
+        int xOffset = posX - pivotPointX;
+        int yOffset = posY - pivotPointY;
 
-        return new IntCoordinates(posX, posY); // TODO: Changed piece, getPivotPoint doesn't exist anymore.
+        return new IntCoordinates(xOffset, yOffset ); // TODO: Changed piece, getPivotPoint doesn't exist anymore.
 
     }
 
@@ -78,7 +80,7 @@ public class GuiPiece {
                     cellCoords = getPixelCoordinates(new IntCoordinates(j + offSet.x(), i + offSet.y()));
                     g2d.setColor(piece.getColor());
                     Debug.out("coords are : " + cellCoords.toString() +  " x : " + j + " y : " + i + "nextPiece positions : " + piece.getPos().toString() + " offset : " + offSet.toString());
-                    g2d.fillRect(cellCoords.x(), cellCoords.y() + 30, GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE);
+                    g2d.fillRect(cellCoords.x(), cellCoords.y() + GUIManager.getInstance().getArenaPanelY(), GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE);
                 }
                 
 

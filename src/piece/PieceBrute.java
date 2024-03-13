@@ -23,6 +23,11 @@ public abstract class PieceBrute extends Piece {
     private boolean[][] shape;
 
     /**
+     * fixture point of the piece to the map
+     */
+    private IntCoordinates fixturePoint;
+
+    /**
      * Nothing to do here, we went through all the decorator pattern.
      */
     public void action(IntCoordinates pos) {}
@@ -72,5 +77,17 @@ public abstract class PieceBrute extends Piece {
             text.append("\n");
         }
         return text.toString();
+    }
+
+    public IntCoordinates getFixturePoint() {
+        return this.fixturePoint;
+    }
+
+    /**
+     * sets the which point of the shape matrix to fix to the pos on the main arena grid
+     * @param fixturePoint
+     */
+    public void setFixturePoint(IntCoordinates fixturePoint) {
+        this.fixturePoint = fixturePoint;
     }
 }

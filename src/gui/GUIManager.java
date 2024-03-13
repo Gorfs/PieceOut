@@ -43,6 +43,10 @@ public class GUIManager {
         mainFrame.setVisible(true);
     }
 
+    public int getArenaPanelY(){
+        return gamePanel.getArenaPanel().getY();
+    }
+
     
     /** 
      * @return GUIManager
