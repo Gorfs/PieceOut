@@ -2,9 +2,12 @@ package src.gui;
 
 import src.gui.gamePlay.*;
 import src.logic.PieceLogic;
+import src.piece.decorator.Decorator;
 import src.utils.Debug;
 
 import java.awt.*;
+
+import java.util.ArrayList;
 
 public class GUIManager {
     /**
@@ -22,6 +25,8 @@ public class GUIManager {
 
     // layout to change panels in rootPanel
     private final CardLayout layout = new CardLayout();
+
+    private ArrayList<GuiPiece> guiPieces = new ArrayList<GuiPiece>();
 
     public GamePanel getGamePanel(){
         return gamePanel;
@@ -41,11 +46,19 @@ public class GUIManager {
          */
         mainFrame.add(gamePanel, "arena");
         mainFrame.setVisible(true);
+
+        for(Decorator piece: PieceLogic.getPieces()){
+            GuiPiece guiPiece = new GuiPiece(piece);
+            guiPieces.add(guiPiece);
+            // guiPiece.repaint();
+        }
+
     }
 
     public int getArenaPanelY(){
         return gamePanel.getArenaPanel().getY();
     }
+
 
     
     /** 
@@ -60,11 +73,16 @@ public class GUIManager {
         /*
           updates the GUI
          */
+
+
         gamePanel.update();
 
-        Debug.out("updating " + PieceLogic.getPieces().size());
-    
+
+        // Debug.out("updating " + PieceLogic.getPieces().size());
+
     }
+    
+    
 
 
     public void changePanel(String panelName){

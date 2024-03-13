@@ -15,6 +15,16 @@ public class Debug {
         return debugging;
     }
 
+    public static void printBooleanArray(boolean[][] arr){
+        for(int i = 0; i < arr.length; i++){
+            for(int j = 0; j < arr[i].length; j++){
+                System.out.print(arr[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    private static int debugMessages = 0;
     
     /**
      * Toggles the debugging mode
@@ -28,7 +38,8 @@ public class Debug {
      */
     public static void out(String message){
         if(debugging){
-            System.out.println("DEBUG > " + message);
+            System.out.println("DEBUG > " + debugMessages + " : " + message);
+            debugMessages++;
         }
     }
     

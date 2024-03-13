@@ -17,6 +17,9 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import src.config.Colours;
+import src.gui.GUIManager;
+import src.logic.PieceLogic;
+import src.piece.decorator.Decorator;
 
 public class BottomPanel extends JPanel{
     /**
@@ -63,6 +66,12 @@ public class BottomPanel extends JPanel{
         redoButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 // TODO implement undo and redo
+
+                //testing for use of decorator until controllers are put into place:
+                for(Decorator piece: PieceLogic.getPieces()){
+                    piece.personalAction();
+                    GUIManager.getInstance().update();
+                }
             }
         });
 

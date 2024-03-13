@@ -1,11 +1,20 @@
 package src.gui.gamePlay;
 
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+
 import javax.swing.*;
 
+import src.gui.GUIManager;
 import src.gui.UI.*;
 import src.logic.PieceLogic;
 import src.config.*;
-import src.piece.PieceBrute;
+import src.piece.decorator.Decorator;
+import src.utils.Debug;
+
+import java.util.ArrayList;
 
 
 public class GamePanel extends JPanel {
@@ -17,9 +26,12 @@ public class GamePanel extends JPanel {
     private JPanel topPanel = new TopPanel();
     private JPanel bottomPanel = new BottomPanel();
 
+    private ArrayList<GuiPiece> guiPieces = new ArrayList<GuiPiece>();
+
     public ArenaPanel getArenaPanel(){
         return this.arenaPanel;
     }
+
 
     public GamePanel(){
         super();
@@ -27,34 +39,41 @@ public class GamePanel extends JPanel {
         this.setBackground(Colours.BACKGROUND);
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(topPanel);
-        //centerArenaPanel.setBorder(BorderFactory.createMatteBorder(10, 10, 10, 10, Color.RED));
         this.add(arenaPanel);
         this.add(bottomPanel);
 
     }
 
+    public void paintPieces(){
+        /**
+         * paints the pieces from the Piece logic class to the gui
+         */
+        Graphics g = this.getGraphics();
+        for(Decorator piece: PieceLogic.getPieces()){
+            GuiPiece guiPiece = new GuiPiece(piece);
+            guiPiece.paintComponent(g);
+        }
+
+    }
+    
 
 
     public void update(){
-        // updating the arena like a tick in the gameloop
-
-        // clearing the arena to repaint it
-        this.removeAll();
-        this.add(topPanel);
-        this.add(arenaPanel);
-        this.add(bottomPanel);
+        //main function that updated the gui of the gameplay
 
 
-        //redrawing pieces
-        for(PieceBrute piece: PieceLogic.getPieces()){
-            GuiPiece guiPiece = new GuiPiece(piece);
-            guiPiece.paintComponent(getGraphics());
-        }
+        repaint();
+        // scheduling the painting of the pieces on the next event on the event dispatch thread
+        SwingUtilities.invokeLater(() -> {
+            paintPieces();
+        });
     }
 
-
-
-
-
-
 }
+
+
+
+
+
+
+
