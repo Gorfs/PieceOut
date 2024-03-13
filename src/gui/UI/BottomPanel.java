@@ -16,13 +16,18 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import java.util.ArrayList;
+
 import src.config.Colours;
+import src.controllers.PlayerController;
 
 public class BottomPanel extends JPanel{
     /**
      * this panel represents the bottom panel containing the undo and redo buttons
       */
 
+
+    private ArrayList<JButton> btnList = new ArrayList<JButton>();
 
     private JButton undoButton;
     private JButton redoButton;
@@ -37,22 +42,20 @@ public class BottomPanel extends JPanel{
         buttonContainer.setBorder(BorderFactory.createEmptyBorder(3,3,3,3));
         buttonContainer.setOpaque(false);
 
-        undoButton = new JButton("Undo");
+        undoButton = new JButton();
         undoButton.setBackground(Colours.BACKGROUND.brighter());
         undoButton.setForeground(Color.WHITE);
         undoButton.setFocusable(false);
         // Setting the icon for the undo button
         ImageIcon undoIcon = new ImageIcon(new ImageIcon("resources/icons/undo.png").getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH));
         undoButton.setIcon(undoIcon);
-        //undoButton.setBorder(BorderFactory.createEmptyBorder(3,3,3,3));
         undoButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 // TODO implement undo and redo
             }
         });
 
-        redoButton = new JButton("Redo");
-        redoButton.setBackground(Colours.BACKGROUND.brighter());
+        redoButton = new JButton();
         redoButton.setForeground(Color.WHITE);
         redoButton.setFocusable(false);
 
@@ -75,10 +78,47 @@ public class BottomPanel extends JPanel{
         this.setBorder(BorderFactory.createEmptyBorder(3,3,10,3));
 
 
+        btnList.add(undoButton);
+        btnList.add(redoButton);
+        updateButtons();
+
+
         // making the main bottom panel take up the whole width
         this.setMaximumSize(new Dimension(Integer.MAX_VALUE, 20));
 
 
     }
 
+
+    public void setNotAvailable(JButton btn){
+        // sets the button to grey and not clickable
+        btn.setEnabled(false);
+        btn.setBackground(Colours.BACKGROUND_GREYED);
+    }
+
+
+
+    public void updateButtons(){
+        for(JButton btn : btnList){
+            if(btn == undoButton){
+                if(PlayerController.canUndo()){
+                    btn.setEnabled(true);
+                    btn.setBackground(Colours.BACKGROUND.brighter());
+                }
+                else{
+                    setNotAvailable(btn);
+                }
+            }
+            else if(btn == redoButton){
+                if(PlayerController.canRedo()){
+                    btn.setEnabled(true);
+                    btn.setBackground(Colours.BACKGROUND.brighter());
+                }
+                else{
+                    setNotAvailable(btn);
+                }
+
+            }
+        }
+    }
 }

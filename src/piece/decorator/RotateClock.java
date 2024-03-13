@@ -18,7 +18,6 @@ public class RotateClock extends Decorator {
      */
     public RotateClock(PieceBrute p, IntCoordinates pp) {
         super(p, pp);
-        this.setPivotPoint(pp);
     }
 
     /**
@@ -29,18 +28,4 @@ public class RotateClock extends Decorator {
         // TODO: Add the rotate action clockwise.
     }
 
-    /**
-     * @return Returns the pivot point of the nextPiece.
-     */
-    public IntCoordinates getPivotPoint() {
-        return pivotPoint;
-    }
-
-    /**
-     * Method that set the new pivotPoint of the nextPiece.
-     * @param pivotPoint IntCoordinates of the pivot point.
-     */
-    public void setPivotPoint(IntCoordinates pivotPoint) {
-        this.pivotPoint = pivotPoint;
-    }
 }

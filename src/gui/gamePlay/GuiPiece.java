@@ -45,16 +45,16 @@ public class GuiPiece {
     private IntCoordinates getOffset(){
         // returns new int-coordinates with the offset from the nextPiece added
 
-        // int pivotPointX = piece.getPivotPoint().x(); // distance to border of nextPiece matrix
-        // int pivotPointY = piece.getPivotPoint().y(); // ''
+        int pivotPointX = piece.getFixturePoint().x(); // distance to border of piece matrix
+        int pivotPointY = piece.getFixturePoint().y(); // ''
 
         int posX = piece.getPos().x();
         int posY = piece.getPos().y();
 
-        // int xOffset = posX - pivotPointX;
-        // int yOffset = posY - pivotPointY;
+        int xOffset = posX - pivotPointX;
+        int yOffset = posY - pivotPointY;
 
-        return new IntCoordinates(posX, posY); // TODO: Changed piece, getPivotPoint doesn't exist anymore.
+        return new IntCoordinates(xOffset, yOffset); // TODO: Changed piece, getPivotPoint doesn't exist anymore.
 
     }
 
@@ -75,10 +75,12 @@ public class GuiPiece {
         for (int i = 0 ; i < shapeMatrix.length; i++){ // height
             for(int j = 0 ; j < shapeMatrix[0].length; j++){ // width
                 if (shapeMatrix[i][j]){
+                    Debug.out("shapeMatrix coords are x : " + j + offSet.x() + " y : " + i + offSet.y() + " x1 : " + i + " y1  :" + j );
                     cellCoords = getPixelCoordinates(new IntCoordinates(j + offSet.x(), i + offSet.y()));
                     g2d.setColor(piece.getColor());
-                    Debug.out("coords are : " + cellCoords.toString() +  " x : " + j + " y : " + i + "nextPiece positions : " + piece.getPos().toString() + " offset : " + offSet.toString());
-                    g2d.fillRect(cellCoords.x(), cellCoords.y() + 30, GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE);
+                    Debug.out("coords are : " + cellCoords.toString() +  " x : " + j + " y : " + i + "piece positions : " + piece.getPos().toString() + " offset : " + offSet.toString());
+                    //TODO set the cellCoords.y + to not be a constant but instead be calculated, currently 6.
+                    g2d.fillRect(cellCoords.x(), cellCoords.y() +6, ((int) Math.round(GuiConfig.CELL_SIZE * GuiConfig.ARENA_SCALE)),((int)Math.round(GuiConfig.CELL_SIZE * GuiConfig.ARENA_SCALE)));
                 }
                 
 
