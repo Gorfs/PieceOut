@@ -16,14 +16,17 @@ public abstract class Decorator extends Piece {
     protected Piece prevPiece;
     protected IntCoordinates localCoord;
 
+    public IntCoordinates pivotPoint;
+
+
     /**
      * Constructor for the decorators.
      * @param p Piece on which we add the decorator.
      */
     public Decorator(Piece p, IntCoordinates local) {
-        this.nextPiece = null;
         this.prevPiece = p;
         this.localCoord = local;
+        this.nextPiece = null;
     }
 
     @Override

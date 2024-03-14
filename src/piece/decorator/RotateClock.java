@@ -14,8 +14,8 @@ public class RotateClock extends Decorator {
      * Constructor for the decorator RotateClock.
      * @param p Piece on which we add the decorator.
      */
-    public RotateClock(PieceBrute p) {
-        super(p,p.getFixturePoint());
+    public RotateClock(PieceBrute p, IntCoordinates pp) {
+        super(p, pp);
     }
 
     /**
@@ -70,23 +70,4 @@ public class RotateClock extends Decorator {
 
     }
 
-
-    // DEPRECATED
-    // USED fixture point as the pivot point from now on.
-    // multiple pivot points will take too long for limited time frame.
-
-    // /**
-    //  * @return Returns the pivot point of the nextPiece.
-    //  */
-    // public IntCoordinates getPivotPoint() {
-    //     return pivotPoint;
-    // }
-
-    // /**
-    //  * Method that set the new pivotPoint of the nextPiece.
-    //  * @param pivotPoint IntCoordinates of the pivot point.
-    //  */
-    // public void setPivotPoint(IntCoordinates pivotPoint) {
-    //     this.pivotPoint = pivotPoint;
-    // }
 }

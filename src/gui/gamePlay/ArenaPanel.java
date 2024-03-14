@@ -49,6 +49,7 @@ public class ArenaPanel extends JPanel {
         int yOffset = containerPanel.getY();
         Component[] component = containerPanel.getComponents();
         IntCoordinates[][] result = new IntCoordinates[height][width];
+
         for(int i = 0;  i < component.length; i++){
             Cell cell = (Cell) component[i];
             result[y][x] = new IntCoordinates(cell.getPixel_x() + xOffset, cell.getPixel_y() + yOffset); 

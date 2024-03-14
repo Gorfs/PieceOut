@@ -18,15 +18,18 @@ public abstract class PieceBrute extends Piece {
      */
     private IntCoordinates pos;
     /**
-     * Shape of the nextPiece.
+     * Pivot point of the piece.
+     */
+    private IntCoordinates fixturePoint;// coordinates of the point where the piece is attached to pos.
+    /**
+     * Shape of the piece.
      */
     private boolean[][] shape;
 
     /**
-     * fixture point of the piece to the map
+     * boolean for finding out if the shape is movable
      */
-    private IntCoordinates fixturePoint;
-
+    public boolean decorated = false;
     /**
      * Nothing to do here, we went through all the decorator pattern.
      */
@@ -39,6 +42,17 @@ public abstract class PieceBrute extends Piece {
         return color;
     }
 
+    /**
+     * @return Returns the pivot point of the piece.
+     */
+    public IntCoordinates getFixturePoint(){
+        return fixturePoint;
+    }
+
+
+    /**
+     * @return Returns the current shape of the piece.
+     */
     public boolean[][] getShape() {
         return shape;
     }
@@ -79,9 +93,6 @@ public abstract class PieceBrute extends Piece {
         return text.toString();
     }
 
-    public IntCoordinates getFixturePoint() {
-        return this.fixturePoint;
-    }
 
     /**
      * sets the which point of the shape matrix to fix to the pos on the main arena grid
