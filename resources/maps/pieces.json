@@ -9,7 +9,7 @@
                     "movements":[
                         {
                             "type": "translation",
-                            "direction": "rigth"
+                            "direction": "right"
                         },
                         {
                             "type": "translation",

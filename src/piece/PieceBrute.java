@@ -1,39 +1,42 @@
 package src.piece;
 
-import src.config.Colours;
-import src.geometry.IntCoordinates;
 
+import src.geometry.IntCoordinates;
 import java.awt.Color;
 
 
 /**
  * Abstract class used to create pieces for the game.
  */
-public abstract class Pieces {
+public abstract class PieceBrute extends Piece {
     /**
-     * Color of the piece.
+     * Color of the nextPiece.
      */
     protected Color color;
     /**
-     * Position of the piece.
+     * Position of the nextPiece.
      */
     private IntCoordinates pos;
     /**
      * Pivot point of the piece.
      */
-    private IntCoordinates pivotPoint;
+    private IntCoordinates fixturePoint;// coordinates of the point where the piece is attached to pos.
     /**
      * Shape of the piece.
      */
     private boolean[][] shape;
 
     /**
+     * boolean for finding out if the shape is movable
+     */
+    public boolean decorated = false;
+    /**
      * Nothing to do here, we went through all the decorator pattern.
      */
     public void action(IntCoordinates pos) {}
 
     /**
-     * @return Returns the color of the piece.
+     * @return Returns the color of the nextPiece.
      */
     public Color getColor() {
         return color;
@@ -42,16 +45,16 @@ public abstract class Pieces {
     /**
      * @return Returns the pivot point of the piece.
      */
-    public IntCoordinates getPivotPoint() {
-        return pivotPoint;
+    public IntCoordinates getFixturePoint(){
+        return fixturePoint;
     }
 
     /**
      * Method that set the new pivotPoint of the piece.
      * @param pivotPoint IntCoordinates of the pivot point.
      */
-    public void setPivotPoint(IntCoordinates pivotPoint) {
-        this.pivotPoint = pivotPoint;
+    public void setFixturePoint(IntCoordinates pivotPoint) {
+        this.fixturePoint = pivotPoint;
     }
 
     /**
@@ -60,32 +63,30 @@ public abstract class Pieces {
     public boolean[][] getShape() {
         return shape;
     }
+
     /**
-     * Method that set a new shape to the piece.
-     * @param shape New shape we want to give to our piece.
+     * Method that set a new shape to the nextPiece.
+     * @param shape New shape we want to give to our nextPiece.
      */
     public void setShape(boolean[][] shape) {
         this.shape = shape;
     }
 
     /**
-     * @return Returns the position of the piece.
+     * @return Returns the position of the nextPiece.
      */
     public IntCoordinates getPos() {
         return pos;
     }
 
     /**
-     * Manually change the position of the piece.
-     * @param pos New position of the piece.
+     * Manually change the position of the nextPiece.
+     * @param pos New position of the nextPiece.
      */
     public void setPos(IntCoordinates pos) {
         this.pos = pos;
     }
 
-    /**
-     * @return Returns a String that represents the piece.
-     */
     @Override
     public String toString() {
         StringBuilder text = new StringBuilder();
@@ -98,5 +99,4 @@ public abstract class Pieces {
         }
         return text.toString();
     }
-
 }

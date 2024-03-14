@@ -2,7 +2,6 @@ package src.logic;
 
 import src.config.Colours;
 import src.geometry.IntCoordinates;
-import src.piece.Pieces;
 import src.piece.ShapeFactory;
 
 public class App {

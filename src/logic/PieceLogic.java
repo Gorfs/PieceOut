@@ -2,17 +2,17 @@ package src.logic;
 
 import java.util.ArrayList;
 
-import src.piece.Pieces;
+import src.piece.PieceBrute;
 
 public class PieceLogic {
 
-    private static ArrayList<Pieces> pieces = new ArrayList<Pieces>();
+    private static ArrayList<PieceBrute> pieces = new ArrayList<PieceBrute>();
 
     
     /** 
-     * @return ArrayList<Pieces>
+     * @return ArrayList<PieceBrute>
      */
-    public static ArrayList<Pieces> getPieces(){
+    public static ArrayList<PieceBrute> getPieces(){
         return pieces;
     }
 
@@ -20,7 +20,7 @@ public class PieceLogic {
     /** 
      * @param p
      */
-    public static void addPiece(Pieces p){
+    public static void addPiece(PieceBrute p){
         pieces.add(p);
     }
 
