@@ -11,7 +11,7 @@ public class Translation extends Decorator {
     /**
      * Direction of the translation
      */
-    private final Direction dir;
+    private Direction dir;
 
     /**
      * Constructor for the decorator Translation.
@@ -21,6 +21,15 @@ public class Translation extends Decorator {
     public Translation(PieceBrute p, Direction d, IntCoordinates local) {
         super(p, local);
         this.dir = d;
+    }
+
+    public void flipDirectionClockWise(){
+        switch (dir) {
+            case NORTH -> dir = Direction.EAST;
+            case EAST -> dir = Direction.SOUTH;
+            case SOUTH -> dir = Direction.WEST;
+            case WEST -> dir = Direction.NORTH;
+        }
     }
 
     /**

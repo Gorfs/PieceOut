@@ -57,6 +57,14 @@ public class GamePanel extends JPanel {
     }
     
 
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        //paint the arena
+        SwingUtilities.invokeLater(() -> {
+            paintPieces();
+        });
+    }
 
     public void update(){
         //main function that updated the gui of the gameplay

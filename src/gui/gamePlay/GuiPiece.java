@@ -40,7 +40,12 @@ public class GuiPiece extends JPanel {
      */
     private IntCoordinates getPixelCoordinates(IntCoordinates cellCoords){
         IntCoordinates[][] cellsCoords = GUIManager.getInstance().getGamePanel().getArenaPanel().getCellCoordArray();
-        return cellsCoords[cellCoords.y()][cellCoords.x()];
+        try{
+            return cellsCoords[cellCoords.y()][cellCoords.x()];
+        }catch( Exception e){
+            Debug.out("Error in getPixelCoordinates : " + e.getMessage());
+            return new IntCoordinates(-100,0);
+        }
     }
 
 
@@ -78,9 +83,6 @@ public class GuiPiece extends JPanel {
         this.hasBeenPainted = true;
         Graphics2D g2d = (Graphics2D) g;
 
-        Debug.out("painting the piece ");
-
-        g2d.drawString("HELL WORDL", 100, 100);
         // using polygon to paint shape of the nextPiece
         boolean[][] shapeMatrix = piece.getShape();
         IntCoordinates offSet = getOffset();
