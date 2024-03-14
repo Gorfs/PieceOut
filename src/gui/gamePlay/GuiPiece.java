@@ -88,7 +88,7 @@ public class GuiPiece extends JPanel {
         Graphics2D g2d = (Graphics2D) g;
 
         BufferedImage img = null;
-        double imgScale = 0.5;
+        double imgScale = 0.05;
         try{
             img = ImageIO.read(new File("resources/icons/rotate.png"));
         } catch (Exception e){
@@ -118,12 +118,11 @@ public class GuiPiece extends JPanel {
 
         }
         if (img != null){
-            int imageWidth = ((int) Math.round(GuiConfig.CELL_SIZE * GuiConfig.ARENA_SCALE * imgScale));
-            int imageHeight = ((int) Math.round(GuiConfig.CELL_SIZE * GuiConfig.ARENA_SCALE * imgScale));
-
-            cellCoords = getPixelCoordinates(new IntCoordinates(piece.getFixturePoint().x() + offSet.x(), piece.getFixturePoint().y() + offSet.y()));
-            int rectCenterX = cellCoords.x() + ((int) Math.round(GuiConfig.CELL_SIZE * GuiConfig.ARENA_SCALE)) / 2;
-            int rectCenterY = cellCoords.y() + 6 + ((int)Math.round(GuiConfig.CELL_SIZE * GuiConfig.ARENA_SCALE)) / 2;
+            int imageWidth = (int) (img.getWidth() * imgScale);
+            int imageHeight = (int) (img.getHeight() * imgScale);
+            cellCoords = getPixelCoordinates(new IntCoordinates(piece.getLast().getFixturePoint().x() + offSet.x(), piece.getLast().getFixturePoint().y() + offSet.y()));
+            int rectCenterX = cellCoords.x() + (GuiConfig.CELL_SIZE / 2);
+            int rectCenterY = cellCoords.y() + (GuiConfig.CELL_SIZE / 2) + GUIManager.getInstance().getArenaPanelY();
             g2d.drawImage(img, rectCenterX - imageWidth / 2, rectCenterY - imageHeight / 2, imageWidth, imageHeight, null);
             
 
