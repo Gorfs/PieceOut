@@ -7,6 +7,10 @@ import src.piece.PieceBrute;
 import src.utils.Debug;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+
+import javax.imageio.ImageIO;
 
 public class GuiPiece {
     //! assumes that the nextPiece is in a valid place in the arena
@@ -67,6 +71,14 @@ public class GuiPiece {
     public void paintComponent(Graphics g){
         Graphics2D g2d = (Graphics2D) g;
 
+        BufferedImage img = null;
+        double imgScale = 0.5;
+        try{
+            img = ImageIO.read(new File("resources/icons/rotate.png"));
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
         // using polygon to paint shape of the nextPiece
         boolean[][] shapeMatrix = piece.getShape();
         IntCoordinates offSet = getOffset();
@@ -85,6 +97,17 @@ public class GuiPiece {
                 
 
             }
+
+        }
+        if (img != null){
+            int imageWidth = ((int) Math.round(GuiConfig.CELL_SIZE * GuiConfig.ARENA_SCALE * imgScale));
+            int imageHeight = ((int) Math.round(GuiConfig.CELL_SIZE * GuiConfig.ARENA_SCALE * imgScale));
+
+            cellCoords = getPixelCoordinates(new IntCoordinates(piece.getFixturePoint().x() + offSet.x(), piece.getFixturePoint().y() + offSet.y()));
+            int rectCenterX = cellCoords.x() + ((int) Math.round(GuiConfig.CELL_SIZE * GuiConfig.ARENA_SCALE)) / 2;
+            int rectCenterY = cellCoords.y() + 6 + ((int)Math.round(GuiConfig.CELL_SIZE * GuiConfig.ARENA_SCALE)) / 2;
+            g2d.drawImage(img, rectCenterX - imageWidth / 2, rectCenterY - imageHeight / 2, imageWidth, imageHeight, null);
+            
 
         }
     }
