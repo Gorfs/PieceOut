@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import src.config.Colours;
 import src.geometry.IntCoordinates;
+import src.piece.decorator.Direction;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -56,4 +57,6 @@ public class ShapeFactory extends Pieces{
         }
         return shape;
     }
+
+    
 }

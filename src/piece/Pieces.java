@@ -2,8 +2,11 @@ package src.piece;
 
 import src.config.Colours;
 import src.geometry.IntCoordinates;
+import src.piece.decorator.Direction;
 
 import java.awt.Color;
+
+import javax.print.attribute.standard.Destination;
 
 
 /**
@@ -45,10 +48,10 @@ public abstract class Pieces {
 
     /**
      * Set the destination of the piece.
-     * @param destination The new destination of the piece.
+     * @param dest The new destination of the piece.
      */
-    public void setDestination(IntCoordinates destination) {
-        this.destination = destination;
+    public void setDestination(IntCoordinates dest) {
+        this.destination = dest;
     }
 
     /**
