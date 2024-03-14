@@ -1,5 +1,6 @@
 package src.gui.gamePlay;
 
+import src.controllers.PlayerController;
 import src.geometry.IntCoordinates;
 import src.config.GuiConfig;
 import src.gui.GUIManager;
@@ -26,11 +27,21 @@ public class GuiPiece extends JPanel {
 
     public GuiPiece(Decorator piece){
         this.piece = piece;
-        this.colour = piece.getLast().getColor();
+        PlayerController controller = PlayerController.INSTANCE;
+
+        if (controller.getPiece() != null) {
+            Debug.out("controller.getPiece() is not null");
+            IntCoordinates temp = piece.getLast().getPos();
+            IntCoordinates controllerPos = controller.getPiece().getLast().getPos();
+            if ((temp.x()) == controllerPos.x() && temp.y() == controllerPos.y()) {
+                this.colour = Color.black;
+            } else {
+                this.colour = piece.getLast().getColor();
+            }
+        } else {
+            this.colour = piece.getLast().getColor();
+        }
         this.shapeMatrix = piece.getShape();
-
-        
-
     }
 
     
@@ -47,31 +58,6 @@ public class GuiPiece extends JPanel {
             return new IntCoordinates(-100,0);
         }
     }
-
-
-
-    
-    /** 
-     * @return IntCoordinates
-     */
-    private IntCoordinates getOffset(){
-        // returns new int-coordinates with the offset from the nextPiece added
-
-        int pivotPointX = piece.getLast().getFixturePoint().x(); // distance to border of nextPiece matrix
-        int pivotPointY = piece.getLast().getFixturePoint().y(); // ''
-
-        int posX = piece.getLast().getPos().x();
-        int posY = piece.getLast().getPos().y();
-
-        int xOffset = posX - pivotPointX;
-        int yOffset = posY - pivotPointY;
-
-        return new IntCoordinates(xOffset, yOffset); // TODO: Changed piece, getPivotPoint doesn't exist anymore.
-
-    }
-
-    
-
     
     /** 
      * @param g
@@ -85,19 +71,19 @@ public class GuiPiece extends JPanel {
 
         // using polygon to paint shape of the nextPiece
         boolean[][] shapeMatrix = piece.getShape();
-        IntCoordinates offSet = getOffset();
+        IntCoordinates offSet = this.piece.getLast().getOffset();
         IntCoordinates cellCoords;
-
-        Debug.out("boolean array is : ");
-        Debug.printBooleanArray(shapeMatrix);
 
         for (int i = 0 ; i < shapeMatrix.length; i++){ // height
             for(int j = 0 ; j < shapeMatrix[0].length; j++){ // width
                 if (shapeMatrix[i][j]){
-                    Debug.out("shapeMatrix coords are x : " + j + offSet.x() + " y : " + i + offSet.y() + " x1 : " + i + " y1  :" + j );
                     cellCoords = getPixelCoordinates(new IntCoordinates(j + offSet.x(), i + offSet.y()));
-                    g2d.setColor(piece.getLast().getColor());
+                    g2d.setColor(this.colour);
                     // Debug.out("coords are : " + cellCoords.toString() +  " x : " + j + " y : " + i + "nextPiece positions : " + piece.getLast().getPos().toString() + " offset : " + offSet.toString());
+                    g2d.fillRect(cellCoords.x(), cellCoords.y() + GUIManager.getInstance().getArenaPanelY(), GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE);
+                } else {
+                    cellCoords = getPixelCoordinates(new IntCoordinates(j + offSet.x(), i + offSet.y()));
+                    g2d.setColor(Color.RED);
                     g2d.fillRect(cellCoords.x(), cellCoords.y() + GUIManager.getInstance().getArenaPanelY(), GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE);
                 }
                 

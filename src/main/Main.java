@@ -19,11 +19,6 @@ public class Main {
         /*
           init the GUI manager
          */
-        GUIManager.INSTANCE.start(); 
-
-
-
-
-
+        GUIManager.INSTANCE.start();
     }
 }

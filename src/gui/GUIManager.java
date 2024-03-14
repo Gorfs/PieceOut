@@ -1,5 +1,6 @@
 package src.gui;
 
+import src.controllers.PlayerController;
 import src.gui.gamePlay.*;
 import src.logic.PieceLogic;
 import src.piece.decorator.Decorator;
@@ -46,6 +47,7 @@ public class GUIManager {
          */
         mainFrame.add(gamePanel, "arena");
         mainFrame.setVisible(true);
+        new PlayerController(gamePanel.getArenaPanel().getContainerPanel());
 
         for(Decorator piece: PieceLogic.getPieces()){
             GuiPiece guiPiece = new GuiPiece(piece);
@@ -73,11 +75,7 @@ public class GUIManager {
         /*
           updates the GUI
          */
-
-
         gamePanel.update();
-
-
         // Debug.out("updating " + PieceLogic.getPieces().size());
 
     }

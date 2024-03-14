@@ -2,7 +2,6 @@ package src.logic;
 
 import src.config.Colours;
 import src.geometry.IntCoordinates;
-import src.gui.GUIManager;
 import src.piece.PieceBrute;
 import src.piece.ShapeFactory;
 import src.piece.decorator.RotateClock;
@@ -17,9 +16,6 @@ public class App {
          new IntCoordinates(5, 2), new IntCoordinates(2, 3));
         RotateClock testDecorator = new RotateClock(testPiece, testPiece.getPos());
         PieceLogic.addPiece(testDecorator);
-
-
-
         
     }
 
