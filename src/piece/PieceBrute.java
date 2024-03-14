@@ -49,13 +49,6 @@ public abstract class PieceBrute extends Piece {
         return fixturePoint;
     }
 
-    /**
-     * Method that set the new pivotPoint of the piece.
-     * @param pivotPoint IntCoordinates of the pivot point.
-     */
-    public void setFixturePoint(IntCoordinates pivotPoint) {
-        this.fixturePoint = pivotPoint;
-    }
 
     /**
      * @return Returns the current shape of the piece.
@@ -98,5 +91,14 @@ public abstract class PieceBrute extends Piece {
             text.append("\n");
         }
         return text.toString();
+    }
+
+
+    /**
+     * sets the which point of the shape matrix to fix to the pos on the main arena grid
+     * @param fixturePoint
+     */
+    public void setFixturePoint(IntCoordinates fixturePoint) {
+        this.fixturePoint = fixturePoint;
     }
 }

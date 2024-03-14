@@ -18,12 +18,12 @@ public class ShapeFactory extends PieceBrute {
      * Constructor of ShapeFactory
      * @param filePath File name like "OShape".
      * @param color Color of the nextPiece.
-     * @param pivotPoint Pivot point of the face.
+     * @param fixturePivot point of the face.
      */
-    public ShapeFactory(String filePath, Color color, IntCoordinates pos, IntCoordinates pivotPoint) {
+    public ShapeFactory(String filePath, Color color, IntCoordinates pos, IntCoordinates fixturePoint) {
         this.color = color;
         this.setPos(pos);
-        this.setFixturePoint(pivotPoint);
+        this.setFixturePoint(fixturePoint);
         this.setShape(generateShape(filePath));
     }
 
