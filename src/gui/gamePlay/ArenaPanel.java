@@ -20,7 +20,7 @@ public class ArenaPanel extends JPanel {
     public ArenaPanel() {
         super();
         this.setLayout(new GridBagLayout());
-        this.setBackground(Color.GREEN);
+        this.setBackground(Colours.BACKGROUND);
 
 
         int map_size = Arena.getInstance().getMatrix().length;

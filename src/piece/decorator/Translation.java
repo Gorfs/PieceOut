@@ -1,7 +1,7 @@
 package src.piece.decorator;
 
 import src.geometry.IntCoordinates;
-import src.piece.PieceBrute;
+import src.piece.Piece;
 
 /**
  * Class that represent the decorator pattern for the translation.
@@ -20,7 +20,7 @@ public class Translation extends Decorator {
      * @param p Piece on which we want to create the decorator
      * @param d Direction of the translation
      */
-    public Translation(PieceBrute p, Direction d, IntCoordinates local) {
+    public Translation(Piece p, Direction d, IntCoordinates local) {
         super(p, local);
         this.dir = d;
     }
