@@ -5,7 +5,7 @@ import src.geometry.IntCoordinates;
 import src.gui.GUIManager;
 import src.piece.PieceBrute;
 import src.piece.ShapeFactory;
-import src.piece.decorator.RotateClock;
+import src.piece.decorator.Rotation;
 
 
 public class App {
@@ -15,7 +15,7 @@ public class App {
         Arena arena = Arena.getInstance();
         PieceBrute testPiece = new ShapeFactory("JShape", Colours.PIECE_BLUE,
          new IntCoordinates(5, 2), new IntCoordinates(2, 3));
-        RotateClock testDecorator = new RotateClock(testPiece, testPiece.getPos());
+        Rotation testDecorator = new Rotation(testPiece, testPiece.getPos(), true);
         PieceLogic.addPiece(testDecorator);
 
 
