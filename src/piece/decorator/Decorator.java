@@ -20,6 +20,20 @@ public abstract class Decorator extends Piece {
 
 
     /**
+     * applys the necessary actions for the movement to be adjusted to a new rotation
+     */
+    public void applyRotation(){
+        return;
+    }
+
+    /**
+     * same as for the applyRotation() methode but for the flip action
+     */
+    public void applyFlip(){
+        return;
+    }
+
+    /**
      * Constructor for the decorators.
      * @param p Piece on which we add the decorator.
      */
@@ -37,15 +51,17 @@ public abstract class Decorator extends Piece {
         else this.prevPiece.action(pos);
     }
 
+    // returns the piece brute at the very front of the chained list
     public PieceBrute getLast() {
-        Piece temp = prevPiece;
+        Piece temp = this;
         while (!(temp instanceof PieceBrute)) temp = ((Decorator) temp).getPrevPiece();
         return ((PieceBrute) temp);
     }
 
+    // returns the last decorator in the chain
     public Piece getFirst() {
-        Piece temp = nextPiece;
-        while (!(temp == null))
+        Piece temp = this;
+        while (!(((Decorator)temp).getNextPiece() == null))
             temp = ((Decorator) temp).getNextPiece();
         return temp;
     }

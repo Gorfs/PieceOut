@@ -8,17 +8,34 @@ import src.utils.Debug;
 /**
  * Class that represent the decorator pattern for the clockwise rotation.
  */
-public class Rotate extends Decorator {
+public class Rotation extends Decorator {
 
     // rotation direction is -1 for clockwise and 1 for anti-clockwise
-    private int rotationDirection = 1; 
+    private boolean rotationDirectionClockwise = true; 
+
+
+    public void flipDirection(){
+        this.rotationDirectionClockwise = !this.rotationDirectionClockwise;
+    }
+
 
     /**
      * Constructor for the decorator RotateClock.
      * @param p Piece on which we add the decorator.
      */
-    public Rotate(PieceBrute p, IntCoordinates pp) {
+    public Rotation(PieceBrute p, IntCoordinates pp) {
         super(p, pp);
+    }
+
+
+    public void applyFlip(){
+        // change the direction of the rotation
+        this.flipDirection();
+    }
+
+    public Rotation(PieceBrute p, IntCoordinates pp, boolean directionIsClockwise){
+        super(p, pp);
+        this.rotationDirectionClockwise = directionIsClockwise;
     }
 
     /**
@@ -34,7 +51,7 @@ public class Rotate extends Decorator {
             for(int j = 0 ; j < initShape.length; j++){
 
                 // checking if the rotation direction is anti-clockwise
-                if(this.rotationDirection == -1){
+                if(!this.rotationDirectionClockwise){
 
                     rotatedShape[initShape.length - j - 1][i] = initShape[i][j]; // rotating the shape
 
@@ -44,7 +61,16 @@ public class Rotate extends Decorator {
                     }
     
                 }else{
-                    
+                    // the rotation is clockwise
+                    rotatedShape[j][initShape.length -i - 1] = initShape[i][j]; // rotating the shape
+
+                    // updating the fixture point to new point on array
+                    if (i == initPPoint.y()  && j == initPPoint.x() ) {
+                        this.getLast().setFixturePoint(new src.geometry.IntCoordinates( initShape.length - i - 1,j ));
+                    }
+ 
+
+
                 }
            }
         }
@@ -57,28 +83,17 @@ public class Rotate extends Decorator {
 
         // changing previous and succeding decorator to change direction according to new rotation.
         
-        //! need to change all flipx to flip y and all translations to permute x and y
-        // goes backwards in the list of nested Decorators to switch the necessary ones to the new rotation
-        Decorator piece = this;
+        Decorator piece = (Decorator) this.getFirst();
 
-        while (piece.getClass() == Decorator.class) {
-                Decorator nextPiece = (Decorator) piece.nextPiece;
-                Piece prevPiece = piece.prevPiece;
-            if(piece.getClass() == FlipX.class){
-                piece = new FlipY(piece.getLast(), piece.getLast().getPos());
-                piece.nextPiece = nextPiece;
-                piece.prevPiece = prevPiece;
-            }else if(piece.prevPiece.getClass() == FlipY.class){
-                piece = new FlipY(piece.getLast(), piece.getLast().getPos());
-                piece.nextPiece = nextPiece;
-                piece.prevPiece = prevPiece;
-            }else if (piece.prevPiece.getClass() == Translation.class ){
-                ((Translation) piece).flipDirectionClockWise();
-            }
-            // restarting for the next piece in the list
-            piece = (Decorator) piece.prevPiece;
+        // while the next current decorator is not the last
+        while(piece.getPrevPiece().getClass() == Decorator.class){
+            piece.applyRotation();
+            piece = (Decorator) piece.getPrevPiece();
         }
+        // to apply the rotation to the last piece in the linked list
+        piece.applyRotation();
 
+        
     }
 
 }

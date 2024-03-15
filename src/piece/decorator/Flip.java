@@ -6,13 +6,17 @@ import src.piece.Piece;
 /**
  * Class that represent the decorator pattern for the x-axis flip.
  */
-public class FlipX extends Decorator {
+public class Flip extends Decorator {
     /**
      * Constructor for the decorator FlipX.
      * @param p Piece on which we add the decorator.
      */
-    public FlipX(Piece p, IntCoordinates local) {
+    public Flip(Piece p, IntCoordinates local) {
         super(p, local);
+    }
+
+    public void applyRotation(){
+        // TODO apply rotation element when flipping action is completed
     }
 
     /**
