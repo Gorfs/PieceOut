@@ -9,13 +9,15 @@ import src.piece.Piece;
 public class Flip extends Decorator {
     /**
      * Constructor for the decorator FlipX.
+     * 
      * @param p Piece on which we add the decorator.
      */
     public Flip(Piece p, IntCoordinates local) {
         super(p, local);
     }
 
-    public void applyRotation(){
+    @Override
+    public void applyRotation(boolean clockwise) {
         // TODO apply rotation element when flipping action is completed
     }
 
