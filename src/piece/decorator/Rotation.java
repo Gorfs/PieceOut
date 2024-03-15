@@ -2,8 +2,6 @@ package src.piece.decorator;
 
 import src.geometry.IntCoordinates;
 import src.piece.Piece;
-import src.piece.PieceBrute;
-import src.utils.Debug;
 
 /**
  * Class that represent the decorator pattern for the clockwise rotation.
@@ -22,7 +20,7 @@ public class Rotation extends Decorator {
      * 
      * @param p Piece on which we add the decorator.
      */
-    public Rotation(PieceBrute p, IntCoordinates pp) {
+    public Rotation(Piece p, IntCoordinates pp) {
         super(p, pp);
     }
 
@@ -32,7 +30,7 @@ public class Rotation extends Decorator {
         this.flipDirection();
     }
 
-    public Rotation(PieceBrute p, IntCoordinates pp, boolean directionIsClockwise) {
+    public Rotation(Piece p, IntCoordinates pp, boolean directionIsClockwise) {
         super(p, pp);
         this.rotationDirectionClockwise = directionIsClockwise;
     }

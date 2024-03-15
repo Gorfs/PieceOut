@@ -95,6 +95,25 @@ public abstract class PieceBrute extends Piece {
 
 
     /**
+     * @return IntCoordinates
+     */
+    public IntCoordinates getOffset(){
+        // returns new int-coordinates with the offset from the nextPiece added
+
+        int pivotPointX = this.getFixturePoint().x(); // distance to border of nextPiece matrix
+        int pivotPointY = this.getFixturePoint().y(); // ''
+
+        int posX = this.getPos().x();
+        int posY = this.getPos().y();
+
+        int xOffset = posX - pivotPointX;
+        int yOffset = posY - pivotPointY;
+
+        return new IntCoordinates(xOffset, yOffset); // TODO: Changed piece, getPivotPoint doesn't exist anymore.
+
+    }
+
+    /**
      * sets the which point of the shape matrix to fix to the pos on the main arena grid
      * @param fixturePoint
      */

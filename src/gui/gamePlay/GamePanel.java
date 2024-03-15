@@ -1,18 +1,13 @@
 package src.gui.gamePlay;
 
-import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 
 import javax.swing.*;
 
-import src.gui.GUIManager;
 import src.gui.UI.*;
 import src.logic.PieceLogic;
 import src.config.*;
 import src.piece.decorator.Decorator;
-import src.utils.Debug;
 
 import java.util.ArrayList;
 

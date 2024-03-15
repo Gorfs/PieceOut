@@ -1,75 +1,60 @@
 package src.controllers;
 
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import src.geometry.IntCoordinates;
+import src.gui.GUIManager;
+import src.logic.PieceLogic;
+import src.piece.decorator.Decorator;
+import src.utils.Debug;
+
+import java.awt.*;
+import java.awt.event.*;
 import javax.swing.JPanel;
 
-public class PlayerController extends JPanel{
-    private boolean controlling; //todo: change boolean to the type of a nextPiece
+import static src.config.GuiConfig.CELL_SIZE;
 
+public class PlayerController extends JPanel implements MouseListener {
+    public static PlayerController INSTANCE;
 
     /**
      * Constructor of the PlayerController where we initialize the attribute controlling
      * and add the MouseListener and KeyListener to the JPanel
      */
-
-    public PlayerController() {
-        this.controlling = false;
-
-        this.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (e.getButton() == MouseEvent.BUTTON1) {
-                    toggleControlManager();
-                }
-            }
-        });
-
-        this.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_SPACE) {
-                    rotate();
-                }
-                else{
-                    move(e);
-                }
-            }
-        });
-
-        this.setFocusable(true);
-    }
-
-
-    /**
-     * Method to activate or deactivate the control of the nextPiece
-     */
-
-    public void toggleControlManager() {
-        if (this.controlling) {
-            this.controlling = false;
-            System.out.println("Player is no longer controlling the nextPiece");
-            //todo: add code to release the control of the actual nextPiece
-        }
-        else {
-            this.controlling = true;
-            System.out.println("Player is now controlling a nextPiece");
-            //todo: add code to take control of the nextPiece that is closest to the mouse
-        }
+    public PlayerController(Container content) {
+        content.addMouseListener(this);
+        PlayerController.INSTANCE = this;
     }
 
     /**
-     * Method to rotate the nextPiece if the player is controlling one
+     * Method to activate or deactivate the control of the piece
      */
+    public void toggleControlManager(MouseEvent e) {
+        // Get mouse position in the ArenaPanel
+        IntCoordinates mousePos = new IntCoordinates((e.getX()/CELL_SIZE), e.getY()/CELL_SIZE);
+        // Print the mouse position
+        Debug.out(mousePos.toString());
+        // Initialize the position of the piece
+        IntCoordinates piecePos;
 
-    public void rotate() {
-        if (this.controlling){
-            //todo: add code to ask the nextPiece to rotate according to the decoration pattern
+        for (var piece: PieceLogic.getPieces()) {
+            // Get the position of the piece
+            piecePos = piece.getLast().getOffset();
+            // Look into the shape of the piece
+            for(int i = 0; i < piece.getShape().length; i++){
+                for(int j = 0; j < piece.getShape()[i].length; j++){
+                    // Check if the mouse position is on the piece
+                    if (piece.getShape()[i][j]) {
+                        IntCoordinates temp = new IntCoordinates(piecePos.x() + j, piecePos.y() + i);
+                        // If the mouse position is on the piece, the piece is now controlled
+                        if (mousePos.equals(temp)) {
+                            piece.action(temp);
+                            return;
+                        }
+                    }
+                }
+            }
         }
+        // If the mouse position is not on the piece, Nothing happens
     }
-
 
     // ! these functions are temporary to allow development of gui.
     public static boolean canUndo(){
@@ -80,35 +65,29 @@ public class PlayerController extends JPanel{
         return true;
     }
 
-    /**
-     * Method to move the nextPiece if the player is controlling one according to the key pressed
-     * @param e the KeyEvent that contains the key pressed by the player
-     */
-
-    public void move(KeyEvent e){
-        if(this.controlling){
-            switch (e.getKeyCode()) {
-                case KeyEvent.VK_Z:
-                    //todo: add code to ask the nextPiece to move up according to the decoration pattern
-                    break;
-
-                case KeyEvent.VK_Q:
-                    //todo: add code to ask the nextPiece to move left according to the decoration pattern
-                    break;
-                
-                case KeyEvent.VK_S:
-                    //todo: add code to ask the nextPiece to move down according to the decoration pattern
-                    break;
-                
-                case KeyEvent.VK_D:
-                    //todo: add code to ask the nextPiece to move right according to the decoration pattern
-                    break;
-            
-                default:
-                    break;
-            }
-        }
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        toggleControlManager(e);
+        GUIManager.INSTANCE.update();
     }
 
+    @Override
+    public void mousePressed(MouseEvent e) {
 
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
+    }
 }
