@@ -39,6 +39,7 @@ public class Cell extends JPanel{
         this.setMinimumSize(new Dimension((int) (GuiConfig.CELL_SIZE ), (int) (GuiConfig.CELL_SIZE )));
         this.setPreferredSize(new Dimension((int) (GuiConfig.CELL_SIZE ), (int) (GuiConfig.CELL_SIZE )));
         this.setMaximumSize(new Dimension((int) (GuiConfig.CELL_SIZE ), (int) (GuiConfig.CELL_SIZE )));
+        this.setBorder(BorderFactory.createLineBorder(Color.black, 1));
 
         // pixel coordinates are relative to the top left of the arena
         this.pixel_x = (int) Math.floor(x_coord * GuiConfig.CELL_SIZE ); 

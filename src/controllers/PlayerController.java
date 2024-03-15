@@ -10,68 +10,51 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.JPanel;
 
-public class PlayerController extends JPanel implements MouseListener {
-    private Decorator piece;
-    protected IntCoordinates[][] cellsCoords = GUIManager.INSTANCE.getGamePanel().getArenaPanel().getCellCoordArray();
+import static src.config.GuiConfig.CELL_SIZE;
 
+public class PlayerController extends JPanel implements MouseListener {
     public static PlayerController INSTANCE;
 
     /**
      * Constructor of the PlayerController where we initialize the attribute controlling
      * and add the MouseListener and KeyListener to the JPanel
      */
-
     public PlayerController(Container content) {
-        this.piece = null;
         content.addMouseListener(this);
         PlayerController.INSTANCE = this;
     }
-
 
     /**
      * Method to activate or deactivate the control of the piece
      */
     public void toggleControlManager(MouseEvent e) {
-        //todo: add code to take control of the piece that is closest to the mouse
-        IntCoordinates pos = new IntCoordinates(e.getX(), e.getY());
-        boolean found = false;
-        int x = -1, y = -1;
-        for (int i = 0; i < this.cellsCoords.length; i++) {
-            for (int j = 0; j < this.cellsCoords[i].length; j++) {
-                if (this.cellsCoords[i][j].x() >= pos.x() && this.cellsCoords[i][j].y() >= pos.y()) {
-                    x = j;
-                    y = i;
-                    Debug.out("x: " + x + " y: " + y);
-                    found = true;
-                    break;
+        // Get mouse position in the ArenaPanel
+        IntCoordinates mousePos = new IntCoordinates((e.getX()/CELL_SIZE), e.getY()/CELL_SIZE);
+        // Print the mouse position
+        Debug.out(mousePos.toString());
+        // Initialize the position of the piece
+        IntCoordinates piecePos;
+
+        for (var piece: PieceLogic.getPieces()) {
+            // Get the position of the piece
+            piecePos = piece.getLast().getOffset();
+            // Look into the shape of the piece
+            for(int i = 0; i < piece.getShape().length; i++){
+                for(int j = 0; j < piece.getShape()[i].length; j++){
+                    // Check if the mouse position is on the piece
+                    if (piece.getShape()[i][j]) {
+                        IntCoordinates temp = new IntCoordinates(piecePos.x() + j, piecePos.y() + i);
+                        // If the mouse position is on the piece, the piece is now controlled
+                        if (mousePos.equals(temp)) {
+                            piece.action(temp);
+                            return;
+                        }
+                    }
                 }
             }
-            if (found) break;
         }
-        for (var piece: PieceLogic.getPieces()) {
-            pos = piece.getLast().getOffset();
-
-            Debug.out(pos.toString());
-            if ((pos.x()) == x && pos.y() == y) {
-                Debug.out("Player is now controlling the piece");
-                this.piece = piece;
-                return;
-            }
-        }
-        Debug.out("Player is no longer controlling the piece");
-        this.piece = null;
+        // If the mouse position is not on the piece, Nothing happens
     }
-
-    /**
-     * Method to rotate the piece if the player is controlling one
-
-    public void rotate() {
-        if (this.controlling){
-            //todo: add code to ask the piece to rotate according to the decoration pattern
-        }
-    }
-     */
-
 
     // ! these functions are temporary to allow development of gui.
     public static boolean canUndo(){
@@ -85,6 +68,7 @@ public class PlayerController extends JPanel implements MouseListener {
     @Override
     public void mouseClicked(MouseEvent e) {
         toggleControlManager(e);
+        GUIManager.INSTANCE.update();
     }
 
     @Override
@@ -106,38 +90,4 @@ public class PlayerController extends JPanel implements MouseListener {
     public void mouseExited(MouseEvent e) {
 
     }
-
-    public Decorator getPiece() {
-        return piece;
-    }
-
-    /**
-     * Method to move the piece if the player is controlling one according to the key pressed
-     * @param e the KeyEvent that contains the key pressed by the player
-
-    public void move(KeyEvent e){
-        if(this.controlling){
-            switch (e.getKeyCode()) {
-                case KeyEvent.VK_Z:
-                    //todo: add code to ask the piece to move up according to the decoration pattern
-                    break;
-
-                case KeyEvent.VK_Q:
-                    //todo: add code to ask the piece to move left according to the decoration pattern
-                    break;
-                
-                case KeyEvent.VK_S:
-                    //todo: add code to ask the piece to move down according to the decoration pattern
-                    break;
-                
-                case KeyEvent.VK_D:
-                    //todo: add code to ask the piece to move right according to the decoration pattern
-                    break;
-            
-                default:
-                    break;
-            }
-        }
-    }
-     */
 }

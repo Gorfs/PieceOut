@@ -27,20 +27,9 @@ public class GuiPiece extends JPanel {
 
     public GuiPiece(Decorator piece){
         this.piece = piece;
-        PlayerController controller = PlayerController.INSTANCE;
 
-        if (controller.getPiece() != null) {
-            Debug.out("controller.getPiece() is not null");
-            IntCoordinates temp = piece.getLast().getPos();
-            IntCoordinates controllerPos = controller.getPiece().getLast().getPos();
-            if ((temp.x()) == controllerPos.x() && temp.y() == controllerPos.y()) {
-                this.colour = Color.black;
-            } else {
-                this.colour = piece.getLast().getColor();
-            }
-        } else {
-            this.colour = piece.getLast().getColor();
-        }
+        this.colour = piece.getLast().getColor();
+
         this.shapeMatrix = piece.getShape();
     }
 
@@ -79,15 +68,9 @@ public class GuiPiece extends JPanel {
                 if (shapeMatrix[i][j]){
                     cellCoords = getPixelCoordinates(new IntCoordinates(j + offSet.x(), i + offSet.y()));
                     g2d.setColor(this.colour);
-                    // Debug.out("coords are : " + cellCoords.toString() +  " x : " + j + " y : " + i + "nextPiece positions : " + piece.getLast().getPos().toString() + " offset : " + offSet.toString());
-                    g2d.fillRect(cellCoords.x(), cellCoords.y() + GUIManager.getInstance().getArenaPanelY(), GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE);
-                } else {
-                    cellCoords = getPixelCoordinates(new IntCoordinates(j + offSet.x(), i + offSet.y()));
-                    g2d.setColor(Color.RED);
+                    // Debug.out("coords are: " + cellCoords.toString() +  " x : " + j + " y : " + i + "nextPiece positions : " + piece.getLast().getPos().toString() + " offset : " + offSet.toString());
                     g2d.fillRect(cellCoords.x(), cellCoords.y() + GUIManager.getInstance().getArenaPanelY(), GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE);
                 }
-                
-
             }
 
         }
