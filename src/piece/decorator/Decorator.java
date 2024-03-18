@@ -52,6 +52,11 @@ public abstract class Decorator extends Piece {
         this.nextPiece = null;
     }
 
+    public Decorator(Decorator p, IntCoordinates local){
+        this((Piece) p, local);
+        p.setNextPiece(this);
+    }
+
     @Override
     public void action(int x, int y) {
         // If it is the right action we pressed on, then do the action.
@@ -91,6 +96,15 @@ public abstract class Decorator extends Piece {
      */
     public Piece getNextPiece() {
         return nextPiece;
+    }
+
+
+    /**
+     * Method that sets the nextPiece it decorates.
+     * @param p
+     */
+    public void setNextPiece(Piece p){
+        this.nextPiece = p;
     }
 
     /**
