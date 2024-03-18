@@ -49,9 +49,18 @@ public class Rotation extends Decorator {
     @Override
     public void personalAction() {
         boolean[][] initShape = this.getLast().getShape();
-        IntCoordinates initPPoint = this.getLast().getFixturePoint();
+        IntCoordinates initPPoint = this.actionPoint;
         boolean[][] rotatedShape = new boolean[initShape.length][initShape.length]; // 4x4 matrix for the rotated shape
         // updating the pivot point of the rotation
+
+        //TODO update piece position to accomodoate new pivot point
+        // find the current offset between old fixuture point and new fixture point.
+        int xOffset = this.getLast().getFixturePoint().x() - this.actionPoint.x();
+        int yOffset = this.getLast().getFixturePoint().y() - this.actionPoint.y();
+
+        IntCoordinates currentCoords = this.getLast().getPos();
+        this.getLast().setPos(new IntCoordinates(currentCoords.x() + xOffset, currentCoords.y() + yOffset));
+
         this.getLast().setFixturePoint(actionPoint);
         // rotating matrix 90 degrees clockwise
         for (int i = 0; i < initShape.length; i++) {
@@ -64,7 +73,7 @@ public class Rotation extends Decorator {
 
                     // updating the fixture point to new point on array
                     if (i == initPPoint.y() && j == initPPoint.x()) {
-                        this.getLast().setFixturePoint(new src.geometry.IntCoordinates(i, initShape.length - j - 1));
+                        this.setActionPoint(new src.geometry.IntCoordinates(i, initShape.length - j - 1));
                     }
 
                 } else {
@@ -73,14 +82,14 @@ public class Rotation extends Decorator {
 
                     // updating the fixture point to new point on array
                     if (i == initPPoint.y() && j == initPPoint.x()) {
-                        this.getLast().setFixturePoint(new src.geometry.IntCoordinates(initShape.length - i - 1, j));
+                        this.setActionPoint(new src.geometry.IntCoordinates(initShape.length - i - 1, j));
                     }
 
                 }
             }
         }
         //editing pivot point after rotation
-        this.actionPoint = this.getLast().getFixturePoint(); 
+        this.getLast().setFixturePoint(this.actionPoint);
         // DeComment following lines for debugging informations on the matrix rotation
         // and fixture point location.
         // Debug.printShapePieces(this.getLast());

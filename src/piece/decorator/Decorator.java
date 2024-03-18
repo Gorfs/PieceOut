@@ -20,6 +20,11 @@ public abstract class Decorator extends Piece {
     // the point which we apply the action too
     public IntCoordinates actionPoint;
 
+
+    public void setActionPoint(IntCoordinates p) {
+        this.actionPoint = p;
+    }
+
     /**
      * applys the necessary actions for the movement to be adjusted to a new
      * rotation
