@@ -22,6 +22,7 @@ public class Rotation extends Decorator {
      */
     public Rotation(Piece p, IntCoordinates pp) {
         super(p, pp);
+        this.actionPoint= pp;
     }
 
     @Override
@@ -35,6 +36,13 @@ public class Rotation extends Decorator {
         this.rotationDirectionClockwise = directionIsClockwise;
     }
 
+    public void setPivotPoint(IntCoordinates pp) {
+        this.actionPoint= pp;
+    }
+
+    public IntCoordinates getPivotPoint() {
+        return this.actionPoint;
+    }
     /**
      * Action of rotating clockwise the nextPiece.
      */
@@ -43,6 +51,8 @@ public class Rotation extends Decorator {
         boolean[][] initShape = this.getLast().getShape();
         IntCoordinates initPPoint = this.getLast().getFixturePoint();
         boolean[][] rotatedShape = new boolean[initShape.length][initShape.length]; // 4x4 matrix for the rotated shape
+        // updating the pivot point of the rotation
+        this.getLast().setFixturePoint(actionPoint);
         // rotating matrix 90 degrees clockwise
         for (int i = 0; i < initShape.length; i++) {
             for (int j = 0; j < initShape.length; j++) {
@@ -69,6 +79,8 @@ public class Rotation extends Decorator {
                 }
             }
         }
+        //editing pivot point after rotation
+        this.actionPoint = this.getLast().getFixturePoint(); 
         // DeComment following lines for debugging informations on the matrix rotation
         // and fixture point location.
         // Debug.printShapePieces(this.getLast());

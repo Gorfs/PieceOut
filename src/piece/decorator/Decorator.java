@@ -17,7 +17,8 @@ public abstract class Decorator extends Piece {
     protected Piece prevPiece;
     protected IntCoordinates localCoord;
 
-    public IntCoordinates pivotPoint;
+    // the point which we apply the action too
+    public IntCoordinates actionPoint;
 
     /**
      * applys the necessary actions for the movement to be adjusted to a new
@@ -42,17 +43,19 @@ public abstract class Decorator extends Piece {
     public Decorator(Piece p, IntCoordinates local) {
         this.prevPiece = p;
         this.localCoord = local;
+        this.actionPoint = local;
         this.nextPiece = null;
     }
 
     @Override
-    public void action(IntCoordinates pos) {
+    public void action(int x, int y) {
         // If it is the right action we pressed on, then do the action.
-        if (this.localCoord.equals(pos))
+        // TODO change comparison to local vs local or absolute vs absolute comparison (deal with offset)
+        if (this.actionPoint.x() == x && this.actionPoint.y() == y)
             personalAction();
         // If not, then we check for the next decorator.
         else
-            this.prevPiece.action(pos);
+            this.prevPiece.action(x, y);
     }
 
     // returns the piece brute at the very front of the chained list

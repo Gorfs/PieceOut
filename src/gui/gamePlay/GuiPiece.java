@@ -9,6 +9,7 @@ import src.logic.Arena;
 import src.piece.PieceBrute;
 import src.piece.decorator.Decorator;
 import src.utils.Debug;
+import src.piece.decorator.Rotation;
 
 import java.awt.*;
 
@@ -69,11 +70,12 @@ public class GuiPiece extends JPanel {
                     cellCoords = getPixelCoordinates(new IntCoordinates(j + offSet.x(), i + offSet.y()));
                     g2d.setColor(this.colour);
                     // Debug.out("coords are: " + cellCoords.toString() +  " x : " + j + " y : " + i + "nextPiece positions : " + piece.getLast().getPos().toString() + " offset : " + offSet.toString());
-                    g2d.fillRect(cellCoords.x(), cellCoords.y() + GUIManager.getInstance().getArenaPanelY(), GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE);
+                    g2d.fillRect(cellCoords.x(), cellCoords.y() + GUIManager.getInstance().getArenaPanelY(), GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE);       
+                    }
                 }
             }
-
         }
+    
     }
     
-}
+
