@@ -1,17 +1,11 @@
 package src.piece;
 
 import java.awt.Color;
-
-import src.config.Colours;
 import src.geometry.IntCoordinates;
-import src.piece.decorator.Direction;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.awt.Color;
 import java.io.IOException;
 
-import javax.print.attribute.standard.Destination;
 
 
 /**
@@ -24,6 +18,8 @@ public class ShapeFactory extends Pieces{
      * @param filePath File name like "OShape".
      * @param color Color of the piece.
      * @param pivotPoint Pivot point of the face.
+     * @param pos Position of the piece.
+     * @param target Target of the piece.
      */
     public ShapeFactory(String filePath, Color color, IntCoordinates pos, IntCoordinates pivotPoint, Target target) {
         this.color = color;
