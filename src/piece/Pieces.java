@@ -3,10 +3,9 @@ package src.piece;
 import src.config.Colours;
 import src.geometry.IntCoordinates;
 import src.piece.decorator.Direction;
+import src.piece.Target;
 
 import java.awt.Color;
-
-import javax.print.attribute.standard.Destination;
 
 
 /**
@@ -22,7 +21,9 @@ public abstract class Pieces {
      */
     private IntCoordinates pos;
 
-    private IntCoordinates destination;
+    private Target target;
+
+    private Direction destRotation;
 
     /**
      *
@@ -40,18 +41,26 @@ public abstract class Pieces {
     public void action(IntCoordinates pos) {}
 
     /**
-     * @return Returns the destination of the piece.
+     * @return Returns the target of the piece.
      */
-    public IntCoordinates getDestination() {
-        return destination;
+    public Target getTarget() {
+        return target;
+    }
+
+    public Direction getDestRotation() {
+        return destRotation;
+    }
+
+    public void setDestRotation(Direction destRotation) {
+        this.destRotation = destRotation;
     }
 
     /**
-     * Set the destination of the piece.
-     * @param dest The new destination of the piece.
+     * Set the target of the piece.
+     * @param dest The new target of the piece.
      */
-    public void setDestination(IntCoordinates dest) {
-        this.destination = dest;
+    public void setTarget(Target dest) {
+        this.target = dest;
     }
 
     /**

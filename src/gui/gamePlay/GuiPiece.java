@@ -67,8 +67,8 @@ public class GuiPiece {
         int pivotPointX = piece.getPivotPoint().x(); // distance to border of piece matrix
         int pivotPointY = piece.getPivotPoint().y(); // ''
 
-        int posX = piece.getDestination().x();
-        int posY = piece.getDestination().y();
+        int posX = piece.getTarget().getDest().x();
+        int posY = piece.getTarget().getDest().y();
 
         int xOffset = posX - pivotPointX; 
         int yOffset = posY - pivotPointY;

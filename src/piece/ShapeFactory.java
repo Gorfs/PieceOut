@@ -11,6 +11,8 @@ import java.io.FileReader;
 import java.awt.Color;
 import java.io.IOException;
 
+import javax.print.attribute.standard.Destination;
+
 
 /**
  * Class factory for shapes, each shape can be imported from the files.
@@ -23,13 +25,12 @@ public class ShapeFactory extends Pieces{
      * @param color Color of the piece.
      * @param pivotPoint Pivot point of the face.
      */
-    public ShapeFactory(String filePath, Color color, IntCoordinates pos, IntCoordinates pivotPoint, IntCoordinates dest) {
+    public ShapeFactory(String filePath, Color color, IntCoordinates pos, IntCoordinates pivotPoint, Target target) {
         this.color = color;
         this.setPos(pos);
         this.setPivotPoint(pivotPoint);
         this.setShape(generateShape(filePath));
-        this.setDestination(dest);
-        
+        this.setTarget(target); 
     }
 
     /**
