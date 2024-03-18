@@ -6,10 +6,14 @@ import src.piece.decorator.Direction;
 public class Target {
     private final IntCoordinates dest;
     private final Direction destRotation;
-
-    public Target(IntCoordinates dest, Direction destRotation) {
+    private final boolean isFlippedX;
+    private final boolean isFlippedY;
+    
+    public Target(IntCoordinates dest, Direction destRotation, boolean isFlippedX, boolean isFlippedY) {
         this.dest = dest;
         this.destRotation = destRotation;
+        this.isFlippedX = isFlippedX;
+        this.isFlippedY = isFlippedY;
     }
 
     public IntCoordinates getDest() {
@@ -18,6 +22,14 @@ public class Target {
 
     public Direction getDestRotation() {
         return destRotation;
+    }
+
+    public boolean isFlippedX() {
+        return isFlippedX;
+    }
+
+    public boolean isFlippedY() {
+        return isFlippedY;
     }
 
 }
