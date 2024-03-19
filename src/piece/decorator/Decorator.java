@@ -3,6 +3,7 @@ package src.piece.decorator;
 import src.geometry.IntCoordinates;
 import src.piece.Piece;
 import src.piece.PieceBrute;
+import src.utils.Debug;
 
 /**
  * Abstract class for the decorators. It extends 'Piece' because it uses the
@@ -20,6 +21,26 @@ public abstract class Decorator extends Piece {
     // the point which we apply the action too
     public IntCoordinates actionPoint;
 
+    /**
+     * Constructor for the decorators.
+     * 
+     * @param p Piece on which we add the decorator.
+     */
+    public Decorator(Piece p, IntCoordinates local) {
+        // if the piece is a decorator, setting the next piece to allow for getting of
+        // the first element of the list
+        try {
+            Decorator p1 = (Decorator) p;
+            p1.setNextPiece(this);
+        } catch (Exception e) {
+            // TODO handle this exception to make it look prettier
+        }
+        this.prevPiece = p;
+        this.localCoord = local;
+        this.actionPoint = local;
+        this.decorated = true;
+        this.nextPiece = null;
+    }
 
     public void setActionPoint(IntCoordinates p) {
         this.actionPoint = p;
@@ -40,27 +61,10 @@ public abstract class Decorator extends Piece {
         return;
     }
 
-    /**
-     * Constructor for the decorators.
-     * 
-     * @param p Piece on which we add the decorator.
-     */
-    public Decorator(Piece p, IntCoordinates local) {
-        this.prevPiece = p;
-        this.localCoord = local;
-        this.actionPoint = local;
-        this.nextPiece = null;
-    }
-
-    public Decorator(Decorator p, IntCoordinates local){
-        this((Piece) p, local);
-        p.setNextPiece(this);
-    }
-
     @Override
     public void action(int x, int y) {
         // If it is the right action we pressed on, then do the action.
-        // TODO change comparison to local vs local or absolute vs absolute comparison (deal with offset)
+        // (deal with offset)
         if (this.actionPoint.x() == x && this.actionPoint.y() == y)
             personalAction();
         // If not, then we check for the next decorator.
@@ -78,9 +82,9 @@ public abstract class Decorator extends Piece {
 
     // returns the last decorator in the chain
     public Piece getFirst() {
-        Piece temp = this;
-        while (!(((Decorator) temp).getNextPiece() == null))
-            temp = ((Decorator) temp).getNextPiece();
+        Decorator temp = this;
+        while (!(temp.getNextPiece() == null))
+            temp = (Decorator) temp.getNextPiece();
         return temp;
     }
 
@@ -98,12 +102,12 @@ public abstract class Decorator extends Piece {
         return nextPiece;
     }
 
-
     /**
      * Method that sets the nextPiece it decorates.
+     * 
      * @param p
      */
-    public void setNextPiece(Piece p){
+    public void setNextPiece(Piece p) {
         this.nextPiece = p;
     }
 

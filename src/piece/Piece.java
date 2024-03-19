@@ -9,6 +9,7 @@ public abstract class Piece {
      * @param x  local x coordinates in shape array
      * @param y  local y coordinates in shape array
      */
+    public boolean decorated = false;
     public abstract void action(int x, int y);
 
     /**
@@ -21,5 +22,10 @@ public abstract class Piece {
      */
     public String toString() {
         return "";
+    }
+
+
+    public boolean isDecorated() {
+        return this.decorated;
     }
 }
