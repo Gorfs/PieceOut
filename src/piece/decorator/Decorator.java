@@ -68,14 +68,14 @@ public abstract class Decorator extends Piece {
         int yOffset = this.getLast().getFixturePoint().y() - actionArea.y();
 
         IntCoordinates pos = this.getLast().getPos();
-        Debug.out("Current Coords: " + pos.x() + " " + pos.y() + " " + xOffset + " " + yOffset);
-        Debug.out("Action Coords: " + actionArea.x() + " " + actionArea.y());
-        Debug.out("Fixture Coords: " + this.getLast().getFixturePoint().x() + " " + this.getLast().getFixturePoint().y());
+        // Debug.out("Current Coords: " + pos.x() + " " + pos.y() + " " + xOffset + " " + yOffset);
+        // Debug.out("Action Coords: " + actionArea.x() + " " + actionArea.y());
+        // Debug.out("Fixture Coords: " + this.getLast().getFixturePoint().x() + " " + this.getLast().getFixturePoint().y());
 
 
         this.getLast().setPos(new IntCoordinates(pos.x()  -  xOffset, pos.y() - yOffset));
 
-        Debug.out("New Coords: " + this.getLast().getPos().x() + " " + this.getLast().getPos().y());
+        // Debug.out("New Coords: " + this.getLast().getPos().x() + " " + this.getLast().getPos().y());
 
 
         // last step, apply the new fixture Point

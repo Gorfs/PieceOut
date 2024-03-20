@@ -49,15 +49,21 @@ public class Flip extends Decorator {
     public void applyRotation(boolean clockwise) {
         // TODO repair this so that it works correctly
         boolean[][] shape = this.getLast().getShape();
+        boolean alreadyRotated = false;
         this.xFlip = !this.xFlip;
-
-        if (!clockwise){
-            this.setActionPoint(new IntCoordinates(shape.length - this.actionPoint.x() - 1, this.actionPoint.y()));
-        }else{
-            this.setActionPoint(new IntCoordinates(this.actionPoint.x(), shape.length - this.actionPoint.y() - 1));
-           
+        for(int i =  0; i < shape.length ; i++){
+            for(int j = 0 ; j < shape.length ; j++){
+                if (i == this.actionPoint.y() && j == this.actionPoint.x() && !alreadyRotated) {
+                    alreadyRotated = true;
+                    if (clockwise){
+                        this.setActionPoint(new IntCoordinates(shape.length - i - 1, j));
+                    }else{
+                        this.setActionPoint(new IntCoordinates(i , shape.length - j - 1));
+                    }
+                }
+            }
         }
-        if(this.getPrevPiece().isDecorated()){
+       if(this.getPrevPiece().isDecorated()){
             ((Decorator) this.getPrevPiece()).applyRotation(clockwise);
         }
     }

@@ -2,6 +2,7 @@ package src.utils;
 
 import src.geometry.IntCoordinates;
 import src.piece.PieceBrute;
+import src.piece.decorator.Decorator;
 
 /** Utils packages for debugging
 */
@@ -43,6 +44,27 @@ public class Debug {
             }
             System.out.println();
         }
+    }
+
+    public static void printDecorator(Decorator d){
+        System.out.println("Decorator is : " + d.getClass().getName());
+        System.out.println("Action point is : " + d.actionPoint.x() + " " + d.actionPoint.y());
+        System.out.println("Position is : " + d.getLast().getPos().x() + " " + d.getLast().getPos().y());
+        System.out.println("Shape is : ");
+        boolean[][] shape = d.getLast().getShape();
+        IntCoordinates fixturePoint = d.getLast().getFixturePoint();
+        for (int i = 0; i < shape.length; i++){
+            for (int j = 0; j < shape[i].length; j++){
+                // System.out.println(" i = " + i + " j = " + j + " fixturePoint.x() = " + fixturePoint.x() + " fixturePoint.y() = " + fixturePoint.y());
+                if (d.actionPoint.x() == (j) && d.actionPoint.y() == (i)){
+                    System.out.print("X");
+                } else {
+                    System.out.print(shape[i][j] == true ? "O" : ".");
+                }
+            }
+            System.out.println();
+        }
+        // printBooleanArray(d.getShape());
     }
 
     private static int debugMessages = 0;
