@@ -29,17 +29,17 @@ public class Rotation extends Decorator {
     }
 
     @Override
-    public void applyFlip(boolean xAxis){
-        //updating the decorator's action points for a flip depending on axis of flip
+    public void applyFlip(boolean xAxis) {
+        // updating the decorator's action points for a flip depending on axis of flip
         boolean[][] shape = this.getLast().getShape();
-        if(!xAxis){
-            this.actionPoint = new IntCoordinates(shape.length - this.actionPoint.x()  -1, this.actionPoint.y());
-        }else{
-            this.actionPoint = new IntCoordinates(this.actionPoint.x(), shape.length - this.actionPoint.y() -1);
+        if (!xAxis) {
+            this.actionPoint = new IntCoordinates(shape.length - this.actionPoint.x() - 1, this.actionPoint.y());
+        } else {
+            this.actionPoint = new IntCoordinates(this.actionPoint.x(), shape.length - this.actionPoint.y() - 1);
         }
         this.rotationDirectionClockwise = !this.rotationDirectionClockwise;
         // recursively apply flip to rest of the list
-        if(this.getPrevPiece().isDecorated()){
+        if (this.getPrevPiece().isDecorated()) {
             ((Decorator) this.getPrevPiece()).applyFlip(xAxis);
         }
     }
@@ -130,7 +130,7 @@ public class Rotation extends Decorator {
         this.getLast().setFixturePoint(this.actionPoint);
 
         // Debug.printShapePieces(this.getLast());
-        Debug.printDecorator((Decorator) this.getFirst());
+        // Debug.printDecorator((Decorator) this.getFirst());
 
     }
 
