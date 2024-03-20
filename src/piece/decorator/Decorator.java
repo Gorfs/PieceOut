@@ -1,6 +1,7 @@
 package src.piece.decorator;
 
 import src.geometry.IntCoordinates;
+import src.logic.Arena;
 import src.piece.Piece;
 import src.piece.PieceBrute;
 
@@ -30,9 +31,7 @@ public abstract class Decorator extends Piece {
     /**
      * same as for the applyRotation() methode but for the flip action
      */
-    public void applyFlip() {
-        return;
-    }
+    public abstract void applyFlip();
 
     /**
      * Constructor for the decorators.
@@ -48,11 +47,9 @@ public abstract class Decorator extends Piece {
     @Override
     public void action(IntCoordinates pos) {
         // If it is the right action we pressed on, then do the action.
-        if (this.localCoord.equals(pos))
-            personalAction();
+        if (this.localCoord.equals(pos)) personalAction();
         // If not, then we check for the next decorator.
-        else
-            this.prevPiece.action(pos);
+        else this.prevPiece.action(pos);
     }
 
     // returns the piece brute at the very front of the chained list
@@ -69,6 +66,27 @@ public abstract class Decorator extends Piece {
         while (!(((Decorator) temp).getNextPiece() == null))
             temp = ((Decorator) temp).getNextPiece();
         return temp;
+    }
+
+    /**
+     * Method that checks collision for the piece.
+     * @return true if the piece is not colliding with the walls
+     */
+    private boolean checkCollision() {
+        // Get the position of the piece
+        IntCoordinates piecePos = this.getLast().getOffset();
+        // Get the matrix of the arena
+        boolean[][] matrix = Arena.getInstance().getMatrix();
+        // For each cell in the piece
+        for (int i = 0; i < this.getShape().length; i++) {
+            for (int j = 0; j < this.getShape()[i].length; j++) {
+                if (this.getShape()[i][j]) {
+                    // Check if the piece is colliding with the walls
+                    if (matrix[piecePos.y() + i][piecePos.x() + j]) return false; // Might need to swap the x and y here
+                }
+            }
+        }
+        return true;
     }
 
     /**
