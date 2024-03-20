@@ -29,11 +29,20 @@ public class Rotation extends Decorator {
     }
 
     @Override
-    public void applyFlip() {
-        // change the direction of the rotation
-        this.flipDirection();
+    public void applyFlip(boolean xAxis){
+        //updating the decorator's action points for a flip depending on axis of flip
+        boolean[][] shape = this.getLast().getShape();
+        if(!xAxis){
+            this.actionPoint = new IntCoordinates(shape.length - this.actionPoint.x()  -1, this.actionPoint.y());
+        }else{
+            this.actionPoint = new IntCoordinates(this.actionPoint.x(), shape.length - this.actionPoint.y() -1);
+        }
+        // recursively apply flip to rest of the list
+        if(this.getPrevPiece().isDecorated()){
+            ((Decorator) this.getPrevPiece()).applyFlip(xAxis);
+        }
     }
-
+    
     @Override
     public void applyRotation(boolean direction) {
         boolean[][] shape = this.getLast().getShape();
@@ -77,6 +86,7 @@ public class Rotation extends Decorator {
      */
     @Override
     public void personalAction() {
+        Debug.out("ROTATING");
         // action is to rotate the shape of the piece.getLast().
         boolean[][] initShape = this.getLast().getShape();
         boolean[][] rotatedShape = new boolean[initShape.length][initShape.length]; // 4x4 matrix for the rotated shape
