@@ -7,7 +7,6 @@ public class MoveEdit extends AbstractUndoableEdit {
 
     public MoveEdit(Move m){
         this.m = m;
-        m.doit();
     }
 
     public void undo() {

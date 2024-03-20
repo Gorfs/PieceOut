@@ -64,10 +64,13 @@ public class PlayerController extends JPanel implements MouseListener {
     // ! these functions are temporary to allow development of gui.
     public static boolean canUndo(){
         Debug.out((um.canUndo())?"can Undo":"cannot Undo");
-        return um.canUndo();}
+//        return um.canUndo();
+        return true;
+    }
 
     public static boolean canRedo(){
         Debug.out((um.canRedo())?"can Redo":"cannot Redo");
+//        return um.canRedo();
         return true;
     }
 
@@ -75,6 +78,7 @@ public class PlayerController extends JPanel implements MouseListener {
     public void mouseClicked(MouseEvent e) {
         toggleControlManager(e);
         GUIManager.INSTANCE.update();
+
     }
 
     @Override

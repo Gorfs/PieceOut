@@ -79,12 +79,9 @@ public class BottomPanel extends JPanel{
         redoButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 // TODO implement undo and redo
-                for(Decorator piece: PieceLogic.getPieces()){
-//                    piece.personalReverseAction();
-                    um.addEdit(new MoveEdit(new Move(piece)));
-                    GUIManager.getInstance().update();
-                    updateButtons();
-                }
+                um.redo();
+                GUIManager.INSTANCE.update();
+                updateButtons();
 
 
             }

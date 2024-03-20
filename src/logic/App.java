@@ -21,8 +21,10 @@ public class App {
         Target jTarget = new Target(new IntCoordinates(3, 3), Direction.NORTH, false, false);
         PieceBrute testPiece = new ShapeFactory("JShape", Colours.PIECE_BLUE,
                 new IntCoordinates(3, 2), new IntCoordinates(2, 3), jTarget);
-        Translation Left = new Translation(testPiece, Direction.WEST, testPiece.getPos());
-        PieceLogic.addPiece(Left);
+        Rotation rot = new Rotation(testPiece, testPiece.getPos());
+        Translation left = new Translation(rot, Direction.SOUTH, new IntCoordinates(1,3));
+        PieceLogic.addPiece(left);
+//        PieceLogic.addPiece(rot);
 
 
     }

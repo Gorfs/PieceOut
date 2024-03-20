@@ -1,8 +1,12 @@
 package src.piece.decorator;
 
+import src.controllers.PlayerController;
 import src.geometry.IntCoordinates;
+import src.logic.Move;
+import src.logic.MoveEdit;
 import src.piece.Piece;
 import src.piece.PieceBrute;
+import src.utils.Debug;
 
 /**
  * Abstract class for the decorators. It extends 'Piece' because it uses the
@@ -48,8 +52,12 @@ public abstract class Decorator extends Piece {
     @Override
     public void action(IntCoordinates pos) {
         // If it is the right action we pressed on, then do the action.
-        if (this.localCoord.equals(pos))
+        if (this.localCoord.equals(pos)){
             personalAction();
+            PlayerController.um.addEdit(new MoveEdit(new Move(this)));
+            Debug.out(PlayerController.um.canUndo() ? "can Undo" : "cannot undo");
+            Debug.out(PlayerController.um.canRedo() ? "can Redo" : "cannot redo");
+        }
         // If not, then we check for the next decorator.
         else
             this.prevPiece.action(pos);
