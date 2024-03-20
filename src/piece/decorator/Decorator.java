@@ -4,6 +4,7 @@ import src.geometry.IntCoordinates;
 import src.logic.Arena;
 import src.piece.Piece;
 import src.piece.PieceBrute;
+import src.utils.Debug;
 
 /**
  * Abstract class for the decorators. It extends 'Piece' because it uses the
@@ -18,7 +19,33 @@ public abstract class Decorator extends Piece {
     protected Piece prevPiece;
     protected IntCoordinates localCoord;
 
-    public IntCoordinates pivotPoint;
+    // the point which we apply the action too
+    public IntCoordinates actionPoint;
+
+    /**
+     * Constructor for the decorators.
+     *
+     * @param p Piece on which we add the decorator.
+     */
+    public Decorator(Piece p, IntCoordinates local) {
+        // if the piece is a decorator, setting the next piece to allow for getting of
+        // the first element of the list
+        try {
+            Decorator p1 = (Decorator) p;
+            p1.setNextPiece(this);
+        } catch (Exception e) {
+            // TODO handle this exception to make it look prettier
+        }
+        this.prevPiece = p;
+        this.localCoord = local;
+        this.actionPoint = local;
+        this.decorated = true;
+        this.nextPiece = null;
+    }
+
+    public void setActionPoint(IntCoordinates p) {
+        this.actionPoint = p;
+    }
 
     /**
      * applys the necessary actions for the movement to be adjusted to a new
@@ -33,23 +60,13 @@ public abstract class Decorator extends Piece {
      */
     public void applyFlip() {}
 
-    /**
-     * Constructor for the decorators.
-     * 
-     * @param p Piece on which we add the decorator.
-     */
-    public Decorator(Piece p, IntCoordinates local) {
-        this.prevPiece = p;
-        this.localCoord = local;
-        this.nextPiece = null;
-    }
-
     @Override
-    public void action(IntCoordinates pos) {
+    public void action(int x, int y) {
         // If it is the right action we pressed on, then do the action.
-        if (this.localCoord.equals(pos)) personalAction();
+        // (deal with offset)
+        if (this.actionPoint.x() == x && this.actionPoint.y() == y) personalAction();
         // If not, then we check for the next decorator.
-        else this.prevPiece.action(pos);
+        else this.prevPiece.action(x, y);
     }
 
     // returns the piece brute at the very front of the chained list
@@ -62,9 +79,9 @@ public abstract class Decorator extends Piece {
 
     // returns the last decorator in the chain
     public Piece getFirst() {
-        Piece temp = this;
-        while (!(((Decorator) temp).getNextPiece() == null))
-            temp = ((Decorator) temp).getNextPiece();
+        Decorator temp = this;
+        while (!(temp.getNextPiece() == null))
+            temp = (Decorator) temp.getNextPiece();
         return temp;
     }
 
@@ -101,6 +118,15 @@ public abstract class Decorator extends Piece {
      */
     public Piece getNextPiece() {
         return nextPiece;
+    }
+
+    /**
+     * Method that sets the nextPiece it decorates.
+     *
+     * @param p
+     */
+    public void setNextPiece(Piece p) {
+        this.nextPiece = p;
     }
 
     /**

@@ -9,6 +9,9 @@ import java.awt.Color;
  * Abstract class used to create pieces for the game.
  */
 public abstract class PieceBrute extends Piece {
+    public boolean isDecorated(){
+        return this.decorated;
+    }
     /**
      * Color of the nextPiece.
      */
