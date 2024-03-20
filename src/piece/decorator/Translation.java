@@ -60,6 +60,18 @@ public class Translation extends Decorator {
         }
     }
 
+    @Override
+    public void personalReverseAction() {
+        IntCoordinates pos = this.getLast().getPos();
+        // Switch to check for each direction
+        switch (getDir()) {
+            case NORTH -> this.getLast().setPos(new IntCoordinates(pos.x(), pos.y() + 1));
+            case EAST -> this.getLast().setPos(new IntCoordinates(pos.x() - 1, pos.y()));
+            case SOUTH -> this.getLast().setPos(new IntCoordinates(pos.x(), pos.y() - 1));
+            case WEST -> this.getLast().setPos(new IntCoordinates(pos.x() + 1, pos.y()));
+        }
+    }
+
     public Direction getDir() {
         return dir;
     }

@@ -90,4 +90,9 @@ public class Rotation extends Decorator {
 
     }
 
+    @Override
+    public void personalReverseAction() {
+
+    }
+
 }

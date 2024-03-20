@@ -2,6 +2,7 @@ package src.controllers;
 
 import src.geometry.IntCoordinates;
 import src.gui.GUIManager;
+import src.gui.UI.BottomPanel;
 import src.logic.PieceLogic;
 import src.piece.decorator.Decorator;
 import src.utils.Debug;
@@ -9,11 +10,15 @@ import src.utils.Debug;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.JPanel;
+import javax.swing.undo.UndoManager;
 
 import static src.config.GuiConfig.CELL_SIZE;
 
 public class PlayerController extends JPanel implements MouseListener {
     public static PlayerController INSTANCE;
+
+    public static UndoManager um = new UndoManager();
+
 
     /**
      * Constructor of the PlayerController where we initialize the attribute controlling
@@ -58,10 +63,11 @@ public class PlayerController extends JPanel implements MouseListener {
 
     // ! these functions are temporary to allow development of gui.
     public static boolean canUndo(){
-        return false;
-    }
+        Debug.out((um.canUndo())?"can Undo":"cannot Undo");
+        return um.canUndo();}
 
     public static boolean canRedo(){
+        Debug.out((um.canRedo())?"can Redo":"cannot Redo");
         return true;
     }
 

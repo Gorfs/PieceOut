@@ -28,4 +28,9 @@ public class Flip extends Decorator {
     public void personalAction() {
         // TODO: Add the flip action in the x-axis.
     }
+
+    @Override
+    public void personalReverseAction() {
+
+    }
 }

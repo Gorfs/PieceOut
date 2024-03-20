@@ -76,6 +76,8 @@ public abstract class Decorator extends Piece {
      */
     public abstract void personalAction();
 
+    public abstract void personalReverseAction();
+
     /**
      * Method that returns the nextPiece it decorates.
      * 
