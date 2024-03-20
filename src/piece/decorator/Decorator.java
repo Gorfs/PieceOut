@@ -31,7 +31,7 @@ public abstract class Decorator extends Piece {
     /**
      * same as for the applyRotation() methode but for the flip action
      */
-    public abstract void applyFlip();
+    public void applyFlip() {}
 
     /**
      * Constructor for the decorators.
