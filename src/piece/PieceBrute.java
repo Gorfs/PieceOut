@@ -29,6 +29,9 @@ public abstract class PieceBrute extends Piece {
      */
     private boolean[][] shape;
 
+
+    private Target target;
+
     /**
      * boolean for finding out if the shape is movable
      */
@@ -43,6 +46,22 @@ public abstract class PieceBrute extends Piece {
      */
     public Color getColor() {
         return color;
+    }
+
+    /**
+     * @return Returns the target of the piece.
+     */
+
+    public Target getTarget() {
+        return target;
+    }
+
+    /**
+     * @param target Target of the piece.
+     */
+
+    public void setTarget(Target target) {
+        this.target = target;
     }
 
     /**
@@ -116,6 +135,22 @@ public abstract class PieceBrute extends Piece {
 
     }
 
+
+    public IntCoordinates getDestOffset(){
+        // returns new int-coordinates with the offset from the piece added
+
+        int pivotPointX = getFixturePoint().x(); // distance to border of piece matrix
+        int pivotPointY = getFixturePoint().y(); // ''
+
+        int posX = getTarget().getDest().x();
+        int posY = getTarget().getDest().y();
+
+        int xOffset = posX - pivotPointX; 
+        int yOffset = posY - pivotPointY;
+
+        return new IntCoordinates(xOffset, yOffset);
+    }
+
     /**
      * sets the which point of the shape matrix to fix to the pos on the main arena grid
      * @param fixturePoint
@@ -124,3 +159,4 @@ public abstract class PieceBrute extends Piece {
         this.fixturePoint = fixturePoint;
     }
 }
+

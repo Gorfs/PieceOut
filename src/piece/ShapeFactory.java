@@ -1,12 +1,11 @@
 package src.piece;
 
 import java.awt.Color;
-
 import src.geometry.IntCoordinates;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+
 
 
 /**
@@ -23,12 +22,15 @@ public class ShapeFactory extends PieceBrute {
      * @param filePath File name like "OShape".
      * @param color Color of the nextPiece.
      * @param fixturePivot point of the face.
+     * @param pos Position of the piece.
+     * @param target Target of the piece.
      */
-    public ShapeFactory(String filePath, Color color, IntCoordinates pos, IntCoordinates fixturePoint) {
+    public ShapeFactory(String filePath, Color color, IntCoordinates pos, IntCoordinates fixturePoint, Target target) {
         this.color = color;
         this.setPos(pos);
         this.setFixturePoint(fixturePoint);
         this.setShape(generateShape(filePath));
+        this.setTarget(target); 
     }
 
     /**
@@ -56,4 +58,6 @@ public class ShapeFactory extends PieceBrute {
         }
         return shape;
     }
+
+    
 }
