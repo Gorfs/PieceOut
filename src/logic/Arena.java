@@ -8,7 +8,7 @@ public class Arena {
     private final int width = 7, height = 7;
     private int level;
     private boolean[][] matrix = new boolean[height][width];
-    private static final Arena INSTANCE = new Arena(LevelManager.loadLevelFromJson(0));
+    private static final Arena INSTANCE = new Arena(LevelManager.loadLevelFromJson(4));
 
     /**
      * Represents an arena in the game.

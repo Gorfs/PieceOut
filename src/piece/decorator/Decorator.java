@@ -91,9 +91,15 @@ public abstract class Decorator extends Piece {
         // (deal with offset)
         if (this.actionPoint.x() == x && this.actionPoint.y() == y){
             personalAction();
-            PlayerController.um.addEdit(new MoveEdit(new Move(this)));
-            Debug.out(PlayerController.um.canUndo() ? "can Undo" : "cannot undo");
-            Debug.out(PlayerController.um.canRedo() ? "can Redo" : "cannot redo");
+            if (checkCollision()) {
+                Debug.out("Collision detected");
+                personalReverseAction();
+            } else {
+                Debug.out("No collision detected");
+                PlayerController.um.addEdit(new MoveEdit(new Move(this)));
+                Debug.out(PlayerController.um.canUndo() ? "can Undo" : "cannot undo");
+                Debug.out(PlayerController.um.canRedo() ? "can Redo" : "cannot redo");
+            }
             // If not, then we check for the next decorator.
         }else{
             this.prevPiece.action(x, y);
@@ -131,11 +137,16 @@ public abstract class Decorator extends Piece {
             for (int j = 0; j < this.getShape()[i].length; j++) {
                 if (this.getShape()[i][j]) {
                     // Check if the piece is colliding with the walls
-                    if (matrix[piecePos.y() + i][piecePos.x() + j]) return false; // Might need to swap the x and y here
+                    if (piecePos.x() + j < 0 || piecePos.x() + j >= matrix[0].length ||
+                            piecePos.y() + i < 0 || piecePos.y() + i >= matrix.length) {
+                        return true;
+                    } if (!matrix[piecePos.y() + i][piecePos.x() + j]) {
+                        return true;
+                    } // Might need to swap the x and y here
                 }
             }
         }
-        return true;
+        return false;
     }
 
     /**

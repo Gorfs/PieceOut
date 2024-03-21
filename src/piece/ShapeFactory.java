@@ -34,6 +34,10 @@ public class ShapeFactory extends PieceBrute {
         this.setTarget(target); 
     }
 
+    public ShapeFactory(String filePath, Color color, IntCoordinates pos, IntCoordinates fixturePoint) {
+        this(filePath, color, pos, fixturePoint, null);
+    }
+
     /**
      * Method that generate a nextPiece shape from a file based on the method used to import map.
      * @param filePath File name like "OShape".
@@ -55,6 +59,7 @@ public class ShapeFactory extends PieceBrute {
             bufferedReader.close();
             fileReader.close();
         } catch (IOException e) {
+            // TODO: handle exception
             e.printStackTrace();
         }
         return shape;
