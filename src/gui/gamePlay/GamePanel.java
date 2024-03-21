@@ -50,6 +50,10 @@ public class GamePanel extends JPanel {
         }
 
     }
+
+    public BottomPanel getBottomPanel(){
+        return (BottomPanel) this.bottomPanel;
+    }
     
 
     @Override

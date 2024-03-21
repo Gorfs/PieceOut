@@ -119,7 +119,7 @@ public class BottomPanel extends JPanel{
     public void updateButtons(){
         for(JButton btn : btnList){
             if(btn == undoButton){
-                if(PlayerController.canUndo()){
+                if(PlayerController.um.canUndo()){
                     btn.setEnabled(true);
                     btn.setBackground(Colours.BACKGROUND.brighter());
                 }
@@ -128,7 +128,7 @@ public class BottomPanel extends JPanel{
                 }
             }
             else if(btn == redoButton){
-                if(PlayerController.canRedo()){
+                if(PlayerController.um.canRedo()){
                     btn.setEnabled(true);
                     btn.setBackground(Colours.BACKGROUND.brighter());
                 }

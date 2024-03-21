@@ -52,6 +52,7 @@ public class PlayerController extends JPanel implements MouseListener {
                         // If the mouse position is on the piece, the piece is now controlled
                         if (mousePos.equals(temp)) {
                             piece.action(temp);
+                            GUIManager.INSTANCE.update();
                             return;
                         }
                     }
@@ -61,18 +62,8 @@ public class PlayerController extends JPanel implements MouseListener {
         // If the mouse position is not on the piece, Nothing happens
     }
 
-    // ! these functions are temporary to allow development of gui.
-    public static boolean canUndo(){
-        Debug.out((um.canUndo())?"can Undo":"cannot Undo");
-//        return um.canUndo();
-        return true;
-    }
 
-    public static boolean canRedo(){
-        Debug.out((um.canRedo())?"can Redo":"cannot Redo");
-//        return um.canRedo();
-        return true;
-    }
+
 
     @Override
     public void mouseClicked(MouseEvent e) {
