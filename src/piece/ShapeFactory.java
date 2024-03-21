@@ -5,6 +5,7 @@ import src.geometry.IntCoordinates;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import src.piece.Target;
 
 
 
@@ -21,7 +22,7 @@ public class ShapeFactory extends PieceBrute {
      * Constructor of ShapeFactory
      * @param filePath File name like "OShape".
      * @param color Color of the nextPiece.
-     * @param fixturePivot point of the face.
+     * @param fixturePoint point of the face.
      * @param pos Position of the piece.
      * @param target Target of the piece.
      */
