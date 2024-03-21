@@ -68,15 +68,16 @@ public abstract class Decorator extends Piece {
     public void action(int x, int y) {
         // If it is the right action we pressed on, then do the action.
         // (deal with offset)
-        if (this.actionPoint.x() == x && this.actionPoint.y() == y)
+        if (this.actionPoint.x() == x && this.actionPoint.y() == y){
             personalAction();
             PlayerController.um.addEdit(new MoveEdit(new Move(this)));
             Debug.out(PlayerController.um.canUndo() ? "can Undo" : "cannot undo");
             Debug.out(PlayerController.um.canRedo() ? "can Redo" : "cannot redo");
-        }
-        // If not, then we check for the next decorator.
-        else
+ 
+        }else{
             this.prevPiece.action(x, y);
+        }
+       
     }
 
     // returns the piece brute at the very front of the chained list
