@@ -23,7 +23,7 @@ public class App {
 
 
         Rotation testDecorator = new Rotation(testPiece, new IntCoordinates(2, 3),true);
-        // testDecorator = new Rotation(testDecorator, new IntCoordinates(2, 2), true);
+        testDecorator = new Rotation(testDecorator, new IntCoordinates(2, 2), true);
         Flip testDecorator2 = new Flip(testDecorator, new IntCoordinates(2, 1), false);
         PieceLogic.addPiece(testDecorator2);
         
