@@ -71,15 +71,20 @@ public class GuiPiece extends JPanel {
         for (int i = 0 ; i < shapeMatrix.length; i++){ // height
             for(int j = 0 ; j < shapeMatrix[0].length; j++){ // width
                 if (shapeMatrix[i][j]){
-                    cellCoords = getPixelCoordinates(new IntCoordinates(j + offSet.x(), i + offSet.y()));
-                    g2d.setColor(this.colour);
-                    // Debug.out("coords are: " + cellCoords.toString() +  " x : " + j + " y : " + i + "nextPiece positions : " + piece.getLast().getPos().toString() + " offset : " + offSet.toString());
-                    g2d.fillRect(cellCoords.x(), cellCoords.y() + GUIManager.getInstance().getArenaPanelY(), GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE);       
-                    
-                    g2d.setColor(new Color(255, 0, 0, 75));
-                    destCoords = getPixelCoordinates(new IntCoordinates(j + destOffSet.x(), i + destOffSet.y()));
-                    g2d.fillRect(destCoords.x(), destCoords.y() + GUIManager.getInstance().getArenaPanelY(), GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE);
+                    try{
+                        cellCoords = getPixelCoordinates(new IntCoordinates(j + offSet.x(), i + offSet.y()));
+                        g2d.setColor(this.colour);
+                        // Debug.out("coords are: " + cellCoords.toString() +  " x : " + j + " y : " + i + "nextPiece positions : " + piece.getLast().getPos().toString() + " offset : " + offSet.toString());
+                        g2d.fillRect(cellCoords.x(), cellCoords.y() + GUIManager.getInstance().getArenaPanelY(), GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE);       
+                        
+                        g2d.setColor(new Color(255, 0, 0, 75));
+                        destCoords = getPixelCoordinates(new IntCoordinates(j + destOffSet.x(), i + destOffSet.y()));
+                        g2d.fillRect(destCoords.x(), destCoords.y() + GUIManager.getInstance().getArenaPanelY(), GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE);
+    
+                    }catch(Exception e){
+                        Debug.out("Error in paintComponent : " + e.getMessage());
                     }
+                   }
                 }
             }
 
