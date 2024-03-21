@@ -28,6 +28,13 @@ public class PieceLogic {
         pieces.clear();
     }
 
+    // public static boolean piecesInPlace(){
+    //     for (Pieces p : pieces) {
+    //         if (p.getPos() != p.getDestination()) return false;
+    //     }
+    //     return true;
+    // }
+
 
 
 

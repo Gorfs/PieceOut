@@ -2,24 +2,25 @@ package src.logic;
 
 import src.config.Colours;
 import src.geometry.IntCoordinates;
-import src.gui.GUIManager;
 import src.piece.PieceBrute;
 import src.piece.ShapeFactory;
-import src.piece.decorator.RotateClock;
+import src.piece.decorator.Rotation;
+import src.piece.decorator.Translation;
 
+import src.piece.Target;
+import src.piece.decorator.Direction;
 
 public class App {
 
     public static void run() {
 
         Arena arena = Arena.getInstance();
+        Target jTarget = new Target(new IntCoordinates(3, 3), Direction.NORTH, false, false);
         PieceBrute testPiece = new ShapeFactory("JShape", Colours.PIECE_BLUE,
-         new IntCoordinates(5, 2), new IntCoordinates(2, 3));
-        RotateClock testDecorator = new RotateClock(testPiece, testPiece.getPos());
+                new IntCoordinates(5, 2), new IntCoordinates(2, 3), jTarget);
+        Rotation testDecorator = new Rotation(testPiece, testPiece.getPos(), true);
+        testDecorator = new Rotation(testDecorator, new IntCoordinates(5, 3), true);
         PieceLogic.addPiece(testDecorator);
-
-
-
         
     }
 

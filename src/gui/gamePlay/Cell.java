@@ -39,6 +39,8 @@ public class Cell extends JPanel{
         this.setMinimumSize(new Dimension((int) (GuiConfig.CELL_SIZE ), (int) (GuiConfig.CELL_SIZE )));
         this.setPreferredSize(new Dimension((int) (GuiConfig.CELL_SIZE ), (int) (GuiConfig.CELL_SIZE )));
         this.setMaximumSize(new Dimension((int) (GuiConfig.CELL_SIZE ), (int) (GuiConfig.CELL_SIZE )));
+        // For debugging purposes
+        // this.setBorder(BorderFactory.createLineBorder(Color.black, 1));
 
         // pixel coordinates are relative to the top left of the arena
         this.pixel_x = (int) Math.floor(x_coord * GuiConfig.CELL_SIZE ); 
@@ -75,7 +77,7 @@ public class Cell extends JPanel{
         if(map_y == 0 && map_x == 0 ||
         map_y == 0 && !matrix[map_y][map_x-1] || 
         map_x == 0 && !matrix[map_y-1][map_x] ||
-        !matrix[map_y-1][map_x] && !matrix[map_y][map_x-1]){
+        !matrix[map_y][map_x] && !matrix[map_y][map_x-1]){
             this.setBorder(topLeftShadow);
         }else if(map_y == 0 || !matrix[map_y-1][map_x]){
             this.setBorder(topShadow);

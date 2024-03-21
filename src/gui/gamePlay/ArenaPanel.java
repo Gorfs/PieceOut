@@ -3,6 +3,7 @@ package src.gui.gamePlay;
 import javax.swing.*;
 import java.awt.*;
 
+import src.controllers.PlayerController;
 import src.utils.Debug;
 import src.config.*;
 import src.geometry.IntCoordinates;
@@ -14,9 +15,7 @@ public class ArenaPanel extends JPanel {
      * the game is played on
      */
 
-
      private JPanel containerPanel = new JPanel();
-
 
     public ArenaPanel() {
         super();
@@ -75,7 +74,9 @@ public class ArenaPanel extends JPanel {
             Cell cell = (Cell) this.getComponent(i);
             cell.updatePlayableCell();
         }
-
     }
-    
+
+    public JPanel getContainerPanel(){
+        return containerPanel;
+    }
 }
