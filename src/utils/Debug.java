@@ -30,6 +30,7 @@ public class Debug {
     public static void printShapePieces(PieceBrute p){
         IntCoordinates fixturePoint = p.getFixturePoint();
         System.out.println("Fixture point is : " + fixturePoint.x() + " " + fixturePoint.y());
+        System.out.println("position is x : " + p.getPos().x() + " y : " + p.getPos().y());
         boolean[][] shape = p.getShape();
         for (int i = 0; i < shape.length; i++){
             for (int j = 0; j < shape[i].length; j++){

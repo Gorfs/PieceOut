@@ -14,6 +14,10 @@ import src.piece.Target;
  */
 public class ShapeFactory extends PieceBrute {
 
+    public void action(int a, int b){
+        return;
+    }
+
     /**
      * Constructor of ShapeFactory
      * @param filePath File name like "OShape".

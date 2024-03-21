@@ -20,13 +20,11 @@ public class App {
         Arena arena = Arena.getInstance();
         Target jTarget = new Target(new IntCoordinates(3, 3), Direction.NORTH, false, false);
         PieceBrute testPiece = new ShapeFactory("JShape", Colours.PIECE_BLUE,
-                new IntCoordinates(3, 2), new IntCoordinates(2, 3), jTarget);
-        Rotation rot = new Rotation(testPiece, testPiece.getPos());
-        Translation left = new Translation(rot, Direction.SOUTH, new IntCoordinates(1,3));
-        PieceLogic.addPiece(left);
-//        PieceLogic.addPiece(rot);
-
-
+            new IntCoordinates(3, 2), new IntCoordinates(2, 3), jTarget);
+        Rotation testDecorator = new Rotation(testPiece, new IntCoordinates(2, 3),true);
+        testDecorator = new Rotation(testDecorator, new IntCoordinates(2, 2), true);
+        PieceLogic.addPiece(testDecorator);
+        
     }
 
     

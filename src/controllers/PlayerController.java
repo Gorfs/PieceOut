@@ -51,8 +51,9 @@ public class PlayerController extends JPanel implements MouseListener {
                         IntCoordinates temp = new IntCoordinates(piecePos.x() + j, piecePos.y() + i);
                         // If the mouse position is on the piece, the piece is now controlled
                         if (mousePos.equals(temp)) {
-                            piece.action(temp);
-                            GUIManager.INSTANCE.update();
+                            // triggering action at localt coords of shape array
+                            piece.action(j, i);
+                            Debug.out("triggering piece action");
                             return;
                         }
                     }
