@@ -58,6 +58,9 @@ public class Translation extends Decorator {
             case SOUTH -> this.getLast().setPos(new IntCoordinates(pos.x(), pos.y() + 1));
             case WEST -> this.getLast().setPos(new IntCoordinates(pos.x() - 1, pos.y()));
         }
+        if (this.checkCollision()) {
+            this.getLast().setPos(pos);
+        }
     }
 
     public Direction getDir() {

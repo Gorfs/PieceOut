@@ -4,7 +4,6 @@ import src.geometry.IntCoordinates;
 import src.logic.Arena;
 import src.piece.Piece;
 import src.piece.PieceBrute;
-import src.utils.Debug;
 
 /**
  * Abstract class for the decorators. It extends 'Piece' because it uses the
@@ -87,9 +86,9 @@ public abstract class Decorator extends Piece {
 
     /**
      * Method that checks collision for the piece.
-     * @return true if the piece is not colliding with the walls
+     * @return true if the piece is colliding with the walls
      */
-    private boolean checkCollision() {
+    protected boolean checkCollision() {
         // Get the position of the piece
         IntCoordinates piecePos = this.getLast().getOffset();
         // Get the matrix of the arena
