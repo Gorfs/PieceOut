@@ -2,6 +2,7 @@ package src.controllers;
 
 import src.geometry.IntCoordinates;
 import src.gui.GUIManager;
+import src.gui.UI.BottomPanel;
 import src.logic.PieceLogic;
 import src.piece.decorator.Decorator;
 import src.utils.Debug;
@@ -9,11 +10,15 @@ import src.utils.Debug;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.JPanel;
+import javax.swing.undo.UndoManager;
 
 import static src.config.GuiConfig.CELL_SIZE;
 
 public class PlayerController extends JPanel implements MouseListener {
     public static PlayerController INSTANCE;
+
+    public static UndoManager um = new UndoManager();
+
 
     /**
      * Constructor of the PlayerController where we initialize the attribute controlling
@@ -46,7 +51,9 @@ public class PlayerController extends JPanel implements MouseListener {
                         IntCoordinates temp = new IntCoordinates(piecePos.x() + j, piecePos.y() + i);
                         // If the mouse position is on the piece, the piece is now controlled
                         if (mousePos.equals(temp)) {
-                            piece.action(temp);
+                            // triggering action at localt coords of shape array
+                            piece.action(j, i);
+                            Debug.out("triggering piece action");
                             return;
                         }
                     }
@@ -56,19 +63,14 @@ public class PlayerController extends JPanel implements MouseListener {
         // If the mouse position is not on the piece, Nothing happens
     }
 
-    // ! these functions are temporary to allow development of gui.
-    public static boolean canUndo(){
-        return false;
-    }
 
-    public static boolean canRedo(){
-        return true;
-    }
+
 
     @Override
     public void mouseClicked(MouseEvent e) {
         toggleControlManager(e);
         GUIManager.INSTANCE.update();
+
     }
 
     @Override

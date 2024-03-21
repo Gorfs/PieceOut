@@ -1,8 +1,12 @@
 package src.piece.decorator;
 
+import src.controllers.PlayerController;
 import src.geometry.IntCoordinates;
+import src.logic.Move;
+import src.logic.MoveEdit;
 import src.piece.Piece;
 import src.piece.PieceBrute;
+import src.utils.Debug;
 
 /**
  * Abstract class for the decorators. It extends 'Piece' because it uses the
@@ -17,7 +21,33 @@ public abstract class Decorator extends Piece {
     protected Piece prevPiece;
     protected IntCoordinates localCoord;
 
-    public IntCoordinates pivotPoint;
+    // the point which we apply the action too
+    public IntCoordinates actionPoint;
+
+    /**
+     * Constructor for the decorators.
+     * 
+     * @param p Piece on which we add the decorator.
+     */
+    public Decorator(Piece p, IntCoordinates local) {
+        // if the piece is a decorator, setting the next piece to allow for getting of
+        // the first element of the list
+        try {
+            Decorator p1 = (Decorator) p;
+            p1.setNextPiece(this);
+        } catch (Exception e) {
+            // TODO handle this exception to make it look prettier
+        }
+        this.prevPiece = p;
+        this.localCoord = local;
+        this.actionPoint = local;
+        this.decorated = true;
+        this.nextPiece = null;
+    }
+
+    public void setActionPoint(IntCoordinates p) {
+        this.actionPoint = p;
+    }
 
     /**
      * applys the necessary actions for the movement to be adjusted to a new
@@ -30,29 +60,47 @@ public abstract class Decorator extends Piece {
     /**
      * same as for the applyRotation() methode but for the flip action
      */
-    public void applyFlip() {
+    public void applyFlip(boolean xAxis) {
         return;
     }
 
-    /**
-     * Constructor for the decorators.
-     * 
-     * @param p Piece on which we add the decorator.
-     */
-    public Decorator(Piece p, IntCoordinates local) {
-        this.prevPiece = p;
-        this.localCoord = local;
-        this.nextPiece = null;
+    public void offsetPosition(IntCoordinates actionArea) {
+        // move the position of a piece so that it is in the same place on the board but with a new fixture point
+
+        int xOffset = this.getLast().getFixturePoint().x() - actionArea.x();
+        int yOffset = this.getLast().getFixturePoint().y() - actionArea.y();
+
+        IntCoordinates pos = this.getLast().getPos();
+        // Debug.out("Current Coords: " + pos.x() + " " + pos.y() + " " + xOffset + " " + yOffset);
+        // Debug.out("Action Coords: " + actionArea.x() + " " + actionArea.y());
+        // Debug.out("Fixture Coords: " + this.getLast().getFixturePoint().x() + " " + this.getLast().getFixturePoint().y());
+
+
+        this.getLast().setPos(new IntCoordinates(pos.x()  -  xOffset, pos.y() - yOffset));
+
+        // Debug.out("New Coords: " + this.getLast().getPos().x() + " " + this.getLast().getPos().y());
+
+
+        // last step, apply the new fixture Point
+        // this.getLast().setFixturePoint(actionArea);
+        // Debug.printShapePieces(this.getLast());
+
     }
 
     @Override
-    public void action(IntCoordinates pos) {
+    public void action(int x, int y) {
         // If it is the right action we pressed on, then do the action.
-        if (this.localCoord.equals(pos))
+        // (deal with offset)
+        if (this.actionPoint.x() == x && this.actionPoint.y() == y){
             personalAction();
-        // If not, then we check for the next decorator.
-        else
-            this.prevPiece.action(pos);
+            PlayerController.um.addEdit(new MoveEdit(new Move(this)));
+            Debug.out(PlayerController.um.canUndo() ? "can Undo" : "cannot undo");
+            Debug.out(PlayerController.um.canRedo() ? "can Redo" : "cannot redo");
+ 
+        }else{
+            this.prevPiece.action(x, y);
+        }
+       
     }
 
     // returns the piece brute at the very front of the chained list
@@ -65,9 +113,9 @@ public abstract class Decorator extends Piece {
 
     // returns the last decorator in the chain
     public Piece getFirst() {
-        Piece temp = this;
-        while (!(((Decorator) temp).getNextPiece() == null))
-            temp = ((Decorator) temp).getNextPiece();
+        Decorator temp = this;
+        while (!(temp.getNextPiece() == null))
+            temp = (Decorator) temp.getNextPiece();
         return temp;
     }
 
@@ -76,6 +124,8 @@ public abstract class Decorator extends Piece {
      */
     public abstract void personalAction();
 
+    public abstract void personalReverseAction();
+
     /**
      * Method that returns the nextPiece it decorates.
      * 
@@ -83,6 +133,15 @@ public abstract class Decorator extends Piece {
      */
     public Piece getNextPiece() {
         return nextPiece;
+    }
+
+    /**
+     * Method that sets the nextPiece it decorates.
+     * 
+     * @param p
+     */
+    public void setNextPiece(Piece p) {
+        this.nextPiece = p;
     }
 
     /**
