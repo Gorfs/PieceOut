@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import src.piece.decorator.*;
 
+import javax.swing.undo.UndoableEditSupport;
+
 public class PieceLogic {
 
     private static ArrayList<Decorator> pieces = new ArrayList<Decorator>();

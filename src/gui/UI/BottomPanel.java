@@ -5,9 +5,7 @@ import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
-import java.awt.image.BufferedImage;
+
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -15,14 +13,19 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.undo.UndoManager;
 
 import java.util.ArrayList;
 
 import src.config.Colours;
 import src.gui.GUIManager;
+import src.logic.Move;
+import src.logic.MoveEdit;
 import src.logic.PieceLogic;
 import src.piece.decorator.Decorator;
 import src.controllers.PlayerController;
+
+import static src.controllers.PlayerController.um;
 
 public class BottomPanel extends JPanel{
     /**
@@ -34,6 +37,8 @@ public class BottomPanel extends JPanel{
 
     private JButton undoButton;
     private JButton redoButton;
+
+
 
 
     public BottomPanel(){
@@ -55,6 +60,11 @@ public class BottomPanel extends JPanel{
         undoButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 // TODO implement undo and redo
+
+                // testing undo
+                um.undo();
+                GUIManager.INSTANCE.update();
+                updateButtons();
             }
         });
 
@@ -69,6 +79,11 @@ public class BottomPanel extends JPanel{
         redoButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 // TODO implement undo and redo
+                um.redo();
+                GUIManager.INSTANCE.update();
+                updateButtons();
+
+
             }
         });
 
@@ -104,7 +119,7 @@ public class BottomPanel extends JPanel{
     public void updateButtons(){
         for(JButton btn : btnList){
             if(btn == undoButton){
-                if(PlayerController.canUndo()){
+                if(PlayerController.um.canUndo()){
                     btn.setEnabled(true);
                     btn.setBackground(Colours.BACKGROUND.brighter());
                 }
@@ -113,7 +128,7 @@ public class BottomPanel extends JPanel{
                 }
             }
             else if(btn == redoButton){
-                if(PlayerController.canRedo()){
+                if(PlayerController.um.canRedo()){
                     btn.setEnabled(true);
                     btn.setBackground(Colours.BACKGROUND.brighter());
                 }

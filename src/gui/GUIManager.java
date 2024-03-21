@@ -76,6 +76,7 @@ public class GUIManager {
           updates the GUI
          */
         gamePanel.update();
+        gamePanel.getBottomPanel().updateButtons();
         // Debug.out("updating " + PieceLogic.getPieces().size());
 
     }
