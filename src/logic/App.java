@@ -19,7 +19,6 @@ public class App {
 
         Target target1 = new Target(new IntCoordinates(3, 3), Direction.NORTH, false, false);
 
-        // TODO: this is for testing purposes, remove it later
         // Piece number one
         PieceBrute piece1 = new ShapeFactory("JShape", Colours.PIECE_BLUE,
             new IntCoordinates(3, 5), new IntCoordinates(2, 3));
