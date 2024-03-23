@@ -73,16 +73,31 @@ public class Cell extends JPanel{
          * left of the cell.
          * this helps to create the illusion of light coming from the top left corner.
          */
-        boolean matrix[][] = Arena.getInstance().getMatrix();
-        if(map_y == 0 && map_x == 0 ||
-        map_y == 0 && !matrix[map_y][map_x-1] || 
-        map_x == 0 && !matrix[map_y-1][map_x] ||
-        !matrix[map_y][map_x] && !matrix[map_y][map_x-1]){
+
+        boolean[][] matrix = Arena.getInstance().getMatrix();
+        if(map_x == 0 && map_y == 0){
             this.setBorder(topLeftShadow);
-        }else if(map_y == 0 || !matrix[map_y-1][map_x]){
-            this.setBorder(topShadow);
-        }else if(map_x == 0 || !matrix[map_y][map_x-1]){
-            this.setBorder(leftShadow);
+        }else if(map_x == 0){
+            if(!matrix[map_y-1][map_x]){
+                this.setBorder(topShadow);
+            }else{
+                this.setBorder(topLeftShadow);
+            }
+        }else if (map_y == 0){
+            if(!matrix[map_y][map_x-1]){
+                this.setBorder(leftShadow);
+            }else{
+                this.setBorder(topLeftShadow);
+            }
+            
+        }else{
+            if(!matrix[map_y-1][map_x] && !matrix[map_y][map_x-1]){
+                this.setBorder(topLeftShadow);
+            }else if(!matrix[map_y-1][map_x]){
+                this.setBorder(topShadow);
+            }else if(!matrix[map_y][map_x-1]){
+                this.setBorder(leftShadow);
+            }
         }
     }
 
