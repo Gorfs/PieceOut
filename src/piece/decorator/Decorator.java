@@ -2,6 +2,7 @@ package src.piece.decorator;
 
 import src.controllers.PlayerController;
 import src.geometry.IntCoordinates;
+import src.logic.Arena;
 import src.logic.Move;
 import src.logic.MoveEdit;
 import src.piece.Piece;
@@ -26,7 +27,6 @@ public abstract class Decorator extends Piece {
 
     /**
      * Constructor for the decorators.
-     * 
      * @param p Piece on which we add the decorator.
      */
     public Decorator(Piece p, IntCoordinates local) {
@@ -60,9 +60,7 @@ public abstract class Decorator extends Piece {
     /**
      * same as for the applyRotation() methode but for the flip action
      */
-    public void applyFlip(boolean xAxis) {
-        return;
-    }
+    public void applyFlip(boolean xAxis) {}
 
     public void offsetPosition(IntCoordinates actionArea) {
         // move the position of a piece so that it is in the same place on the board but with a new fixture point
@@ -93,14 +91,20 @@ public abstract class Decorator extends Piece {
         // (deal with offset)
         if (this.actionPoint.x() == x && this.actionPoint.y() == y){
             personalAction();
-            PlayerController.um.addEdit(new MoveEdit(new Move(this)));
-            Debug.out(PlayerController.um.canUndo() ? "can Undo" : "cannot undo");
-            Debug.out(PlayerController.um.canRedo() ? "can Redo" : "cannot redo");
- 
+            if (checkCollision()) {
+                Debug.out("Collision detected");
+                personalReverseAction();
+            } else {
+                Debug.out("No collision detected");
+                PlayerController.um.addEdit(new MoveEdit(new Move(this)));
+                Debug.out(PlayerController.um.canUndo() ? "can Undo" : "cannot undo");
+                Debug.out(PlayerController.um.canRedo() ? "can Redo" : "cannot redo");
+            }
+            // If not, then we check for the next decorator.
         }else{
             this.prevPiece.action(x, y);
         }
-       
+
     }
 
     // returns the piece brute at the very front of the chained list
@@ -117,6 +121,32 @@ public abstract class Decorator extends Piece {
         while (!(temp.getNextPiece() == null))
             temp = (Decorator) temp.getNextPiece();
         return temp;
+    }
+
+    /**
+     * Method that checks collision for the piece.
+     * @return true if the piece is colliding with the walls
+     */
+    protected boolean checkCollision() {
+        // Get the position of the piece
+        IntCoordinates piecePos = this.getLast().getOffset();
+        // Get the matrix of the arena
+        boolean[][] matrix = Arena.getInstance().getMatrix();
+        // For each cell in the piece
+        for (int i = 0; i < this.getShape().length; i++) {
+            for (int j = 0; j < this.getShape()[i].length; j++) {
+                if (this.getShape()[i][j]) {
+                    // Check if the piece is colliding with the walls
+                    if (piecePos.x() + j < 0 || piecePos.x() + j >= matrix[0].length ||
+                            piecePos.y() + i < 0 || piecePos.y() + i >= matrix.length) {
+                        return true;
+                    } if (!matrix[piecePos.y() + i][piecePos.x() + j]) {
+                        return true;
+                    } // Might need to swap the x and y here
+                }
+            }
+        }
+        return false;
     }
 
     /**
@@ -137,7 +167,6 @@ public abstract class Decorator extends Piece {
 
     /**
      * Method that sets the nextPiece it decorates.
-     * 
      * @param p
      */
     public void setNextPiece(Piece p) {

@@ -64,9 +64,12 @@ public class GuiPiece extends JPanel {
         // using polygon to paint shape of the nextPiece
         boolean[][] shapeMatrix = piece.getShape();
         IntCoordinates offSet = this.piece.getLast().getOffset();
-        IntCoordinates destOffSet = this.piece.getLast().getDestOffset();
-        IntCoordinates cellCoords;
+        IntCoordinates destOffSet = new IntCoordinates(0, 0);
         IntCoordinates destCoords;
+        if (this.piece.getLast().getTarget() != null) {
+            destOffSet = this.piece.getLast().getDestOffset();
+        }
+        IntCoordinates cellCoords;
 
         for (int i = 0 ; i < shapeMatrix.length; i++){ // height
             for(int j = 0 ; j < shapeMatrix[0].length; j++){ // width
@@ -78,9 +81,10 @@ public class GuiPiece extends JPanel {
                         g2d.fillRect(cellCoords.x(), cellCoords.y() + GUIManager.getInstance().getArenaPanelY(), GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE);       
                         
                         g2d.setColor(new Color(255, 0, 0, 75));
-                        destCoords = getPixelCoordinates(new IntCoordinates(j + destOffSet.x(), i + destOffSet.y()));
-                        g2d.fillRect(destCoords.x(), destCoords.y() + GUIManager.getInstance().getArenaPanelY(), GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE);
-    
+                        if (this.piece.getLast().getTarget() != null) {
+                            destCoords = getPixelCoordinates(new IntCoordinates(j + destOffSet.x(), i + destOffSet.y()));
+                            g2d.fillRect(destCoords.x(), destCoords.y() + GUIManager.getInstance().getArenaPanelY(), GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE);
+                        }
                     }catch(Exception e){
                         Debug.out("Error in paintComponent : " + e.getMessage());
                     }

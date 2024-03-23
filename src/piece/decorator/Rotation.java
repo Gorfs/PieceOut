@@ -2,9 +2,7 @@ package src.piece.decorator;
 
 import src.geometry.IntCoordinates;
 import src.piece.Piece;
-import src.piece.PieceBrute;
-import src.piece.ShapeFactory;
-import src.utils.*;
+import src.utils.Debug;
 
 /**
  * Class that represent the decorator pattern for the clockwise rotation.
