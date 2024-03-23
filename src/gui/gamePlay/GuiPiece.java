@@ -67,11 +67,6 @@ public class GuiPiece extends JPanel {
 
         BufferedImage img = null;
         double imgScale = 0.05;
-        try{
-            img = ImageIO.read(new File("resources/icons/rotate.png"));
-        } catch (Exception e){
-            e.printStackTrace();
-        }
 
         // using polygon to paint shape of the nextPiece
         boolean[][] shapeMatrix = piece.getShape();
@@ -92,24 +87,34 @@ public class GuiPiece extends JPanel {
                         g2d.setColor(new Color(255, 0, 0, 75));
                         destCoords = getPixelCoordinates(new IntCoordinates(j + destOffSet.x(), i + destOffSet.y()));
                         g2d.fillRect(destCoords.x(), destCoords.y() + GUIManager.getInstance().getArenaPanelY(), GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE);
+
+                        // paint the icon of the action that you can do with this part of the Piece
+                        String action = piece.getActionType(j, i);
+                        try{
+                            if (action != ""){
+                                img = ImageIO.read(new File("resources/icons/" + action + ".png"));
+                            }
+                        }
+                        catch(Exception e){
+                            e.printStackTrace();
+                        }
+                        if (img != null){
+                            int imageWidth = (int) (img.getWidth() * imgScale);
+                            int imageHeight = (int) (img.getHeight() * imgScale);
+                            int rectCenterX = cellCoords.x() + (GuiConfig.CELL_SIZE / 2);
+                            int rectCenterY = cellCoords.y() + (GuiConfig.CELL_SIZE / 2) + GUIManager.getInstance().getArenaPanelY();
+                            g2d.drawImage(img, rectCenterX - imageWidth / 2, rectCenterY - imageHeight / 2, imageWidth, imageHeight, null);
+                            img = null;
+                        }
     
                     }catch(Exception e){
                         Debug.out("Error in paintComponent : " + e.getMessage());
                     }
+                    
                    }
                 }
             }
 
-
-        }
-        if (img != null){
-            int imageWidth = (int) (img.getWidth() * imgScale);
-            int imageHeight = (int) (img.getHeight() * imgScale);
-            cellCoords = getPixelCoordinates(new IntCoordinates(piece.getLast().getFixturePoint().x() + offSet.x(), piece.getLast().getFixturePoint().y() + offSet.y()));
-            int rectCenterX = cellCoords.x() + (GuiConfig.CELL_SIZE / 2);
-            int rectCenterY = cellCoords.y() + (GuiConfig.CELL_SIZE / 2) + GUIManager.getInstance().getArenaPanelY();
-            g2d.drawImage(img, rectCenterX - imageWidth / 2, rectCenterY - imageHeight / 2, imageWidth, imageHeight, null);
-            
 
         }
     }

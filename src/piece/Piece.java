@@ -24,6 +24,15 @@ public abstract class Piece {
         return "";
     }
 
+    /**
+     * @param x local x coordinates in shape array
+     * @param y local y coordinates in shape array
+     * @return Returns a String that represent the action type of the nextPiece.
+     */
+    public String getActionType(int x, int y) {
+        return "";
+    }
+
 
     public boolean isDecorated() {
         return this.decorated;
