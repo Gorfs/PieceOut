@@ -1,26 +1,156 @@
 {
     "levels": [
         {
-            "id": "Level 1",
+            "id": 0,
             "pieces": [
                 {
-                    "id": "Piece 0",
-                    "shape": "J",
-                    "movements":[
+                    "id": 0,
+                    "shape": "HoShape",
+                    "color": "blue",
+                    "position": [-1, 1],
+                    "decorators":[
                         {
                             "type": "translation",
-                            "direction": "right"
+                            "direction": "left",
+                            "position": [1, 1]
                         },
                         {
                             "type": "translation",
-                            "direction": "left"
+                            "direction": "right",
+                            "position": [2, 1]
                         }
-                        
                     ]
-                }
-                        
-                    ]
-    
                 }
             ]
+        },
+        {
+            "id": 1,
+            "pieces": [
+                {
+                    "id": 0,
+                    "shape": "HoShape",
+                    "color": "blue",
+                    "position": [3, 2],
+                    "decorators":[
+                        {
+                            "type": "translation",
+                            "direction": "left",
+                            "position": [1, 1]
+                        },
+                        {
+                            "type": "translation",
+                            "direction": "right",
+                            "position": [2, 1]
+                        }
+                    ]
+                },
+                {
+                    "id": 1,
+                    "shape": "SingleShape",
+                    "color": "red",
+                    "position": [3, 5],
+                    "decorators":[
+                        {
+                            "type": "translation",
+                            "direction": "up",
+                            "position": [1, 1]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "pieces": [
+                {
+                    "id": 0,
+                    "shape": "TShape",
+                    "color": "blue",
+                    "position": [0, 3],
+                    "decorators":[
+                        {
+                            "type": "translation",
+                            "direction": "right",
+                            "position": [3, 2]
+                        },
+                        {
+                            "type": "rotation",
+                            "clockwise": false,
+                            "position": [2, 2],
+                            "repeat": 2
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "pieces": [
+                {
+                    "id": 0,
+                    "shape": "TShape",
+                    "color": "blue",
+                    "position": [2, 1],
+                    "decorators":[
+                        {
+                            "type": "rotation",
+                            "clockwise": false,
+                            "position": [2, 2],
+                            "repeat": 1
+                        }
+                    ]
+                },
+                {
+                    "id": 1,
+                    "shape": "SingleShape",
+                    "color": "red",
+                    "position": [4, 5],
+                    "decorators":[
+                        {
+                            "type": "translation",
+                            "direction": "up",
+                            "position": [1, 1]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 4,
+            "pieces": [
+                {
+                    "id": 0,
+                    "shape": "LShape",
+                    "color": "blue",
+                    "position": [3, 2],
+                    "decorators":[
+                        {
+                            "type": "rotation",
+                            "clockwise": false,
+                            "position": [1, 2],
+                            "repeat": 1
+                        }
+                    ]
+                },
+                {
+                    "id": 1,
+                    "shape": "SingleShape",
+                    "color": "red",
+                    "position": [0, 4],
+                    "decorators":[
+                        {
+                            "type": "translation",
+                            "direction": "right",
+                            "position": [1, 1]
+                        },
+                        {
+                            "type": "translation",
+                            "direction": "up",
+                            "position": [1, 1]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
 }

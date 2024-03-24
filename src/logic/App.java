@@ -14,19 +14,9 @@ import src.piece.decorator.Flip;
 public class App {
 
     public static void run() {
-
+        // Load the arena
         Arena arena = Arena.getInstance();
-
-        Target target1 = new Target(new IntCoordinates(3, 3), Direction.NORTH, false, false);
-
-        // Piece number one
-        PieceBrute piece1 = new ShapeFactory("JShape", Colours.PIECE_BLUE,
-            new IntCoordinates(3, 5), new IntCoordinates(2, 3));
-        // Add its rotation
-        Rotation rota1 = new Rotation(piece1, new IntCoordinates(2, 3), true);
-        // Add the piece to the game
-        PieceLogic.addPiece(rota1);
+        // TODO: Choose the id of the level to load (same in Arena.java -> line 11)
+        LevelManager.loadPiecesFromJson(4);
     }
-
-    
 }
