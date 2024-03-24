@@ -5,6 +5,7 @@ import src.geometry.IntCoordinates;
 import src.logic.Arena;
 import src.logic.Move;
 import src.logic.MoveEdit;
+import src.logic.PieceLogic;
 import src.piece.Piece;
 import src.piece.PieceBrute;
 import src.utils.Debug;
@@ -132,17 +133,33 @@ public abstract class Decorator extends Piece {
         IntCoordinates piecePos = this.getLast().getOffset();
         // Get the matrix of the arena
         boolean[][] matrix = Arena.getInstance().getMatrix();
+        // Variable to store the last piece
+        PieceBrute last;
         // For each cell in the piece
         for (int i = 0; i < this.getShape().length; i++) {
             for (int j = 0; j < this.getShape()[i].length; j++) {
                 if (this.getShape()[i][j]) {
                     // Check if the piece is colliding with the walls
-                    if (piecePos.x() + j < 0 || piecePos.x() + j >= matrix[0].length ||
-                            piecePos.y() + i < 0 || piecePos.y() + i >= matrix.length) {
+                    if (piecePos.x() + j < 0 || piecePos.x() + j >= matrix[0].length || piecePos.y() + i < 0 || piecePos.y() + i >= matrix.length) {
                         return true;
                     } if (!matrix[piecePos.y() + i][piecePos.x() + j]) {
                         return true;
-                    } // Might need to swap the x and y here
+                    }
+                    // Check if the piece is colliding with another piece
+                    for (var piece: PieceLogic.getPieces()) {
+                        last = piece.getLast();
+                        if (this.getLast() != last) {
+                            for (int k = 0; k < last.getShape().length; k++) {
+                                for (int l = 0; l < last.getShape()[k].length; l++) {
+                                    if (last.getShape()[k][l]) {
+                                        if (piecePos.x() + j == last.getOffset().x() + l && piecePos.y() + i == last.getOffset().y() + k) {
+                                            return true;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
