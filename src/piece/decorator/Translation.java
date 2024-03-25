@@ -25,6 +25,27 @@ public class Translation extends Decorator {
         this.dir = d;
     }
 
+
+    @Override
+    public void applyFlip(boolean xAxis){
+        switch(dir){
+            case NORTH -> dir = Direction.SOUTH;
+            case EAST -> dir = Direction.WEST;
+            case SOUTH -> dir = Direction.NORTH;
+            case WEST -> dir = Direction.EAST;
+        }
+        boolean[][] shape = this.getLast().getShape();
+        if (!xAxis) {
+            this.actionPoint = new IntCoordinates(shape.length - this.actionPoint.x() - 1, this.actionPoint.y());
+        } else {
+            this.actionPoint = new IntCoordinates(this.actionPoint.x(), shape.length - this.actionPoint.y() - 1);
+        }
+        // recursively apply flip to rest of the list
+        if (this.getPrevPiece().isDecorated()) {
+            ((Decorator) this.getPrevPiece()).applyFlip(xAxis);
+        }
+    }
+
     @Override
     public void applyRotation(boolean clockwise) {
        this.rotateActionPoint(clockwise); 

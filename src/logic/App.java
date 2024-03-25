@@ -25,7 +25,7 @@ public class App {
                 new IntCoordinates(3, 5), new IntCoordinates(2, 3));
         // Add its rotation
         Rotation rota1 = new Rotation(piece1, new IntCoordinates(2, 3), true);
-        Flip flip1 = new Flip(rota1, new IntCoordinates(2, 2), true);
+        Flip flip1 = new Flip(rota1, new IntCoordinates(2, 2), false);
         Translation trans1 = new Translation(flip1, Direction.EAST, new IntCoordinates(2, 1));
         // Add the piece to the game
         PieceLogic.addPiece(trans1);
