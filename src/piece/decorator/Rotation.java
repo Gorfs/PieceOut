@@ -44,25 +44,7 @@ public class Rotation extends Decorator {
 
     @Override
     public void applyRotation(boolean direction) {
-        // boolean[][] shape = this.getLast().getShape();
-        // boolean alreadyRotated = false;
-        // for (int i = 0; i < shape.length; i++) {
-        //     for (int j = 0; j < shape.length; j++) {
-        //         if (i == this.actionPoint.y() && j == this.actionPoint.x() && !alreadyRotated) {
-        //             alreadyRotated = true;
-        //             if (this.rotationDirectionClockwise) {
-        //                 this.setActionPoint(new IntCoordinates(shape.length - i - 1, j));
-
-        //             } else {
-        //                 this.setActionPoint(new IntCoordinates(i, shape.length - j - 1));
-        //             }
-
-        //         }
-        //     }
-
-        // }
         this.rotateActionPoint(direction);
-
         if (this.getPrevPiece().isDecorated()) {
             ((Decorator) this.getPrevPiece()).applyRotation(direction);
         }
@@ -87,6 +69,9 @@ public class Rotation extends Decorator {
     @Override
     public void personalAction() {
         Debug.out("ROTATING");
+            
+        // rotate the actionPoint 
+        // this.rotateActionPoint(this.rotationDirectionClockwise);
         // action is to rotate the shape of the piece.getLast().
         boolean[][] initShape = this.getLast().getShape();
         boolean[][] rotatedShape = new boolean[initShape.length][initShape.length]; // 4x4 matrix for the rotated shape

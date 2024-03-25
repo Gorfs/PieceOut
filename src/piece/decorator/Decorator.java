@@ -54,7 +54,7 @@ public abstract class Decorator extends Piece {
      * rotation
      */
     public void applyRotation(boolean clockwise) {
-        return;
+        rotateActionPoint(clockwise);
     }
 
     public void rotateActionPoint(boolean clockwise){
