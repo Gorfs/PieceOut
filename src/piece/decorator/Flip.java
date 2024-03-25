@@ -43,6 +43,7 @@ public class Flip extends Decorator {
 
     @Override
     public void applyRotation(boolean clockwise) {
+        this.xFlip = !this.xFlip;
         this.rotateActionPoint(clockwise);
         if (this.getPrevPiece().isDecorated()) {
             ((Decorator) this.getPrevPiece()).applyRotation(clockwise);
@@ -83,6 +84,7 @@ public class Flip extends Decorator {
         }
         this.getLast().setShape(rotatedShape);
         this.getLast().setFixturePoint(actionPoint);
+        Debug.printDecorator(this);
 
     }
 

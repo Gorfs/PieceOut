@@ -82,7 +82,19 @@ public abstract class Decorator extends Piece {
     /**
      * same as for the applyRotation() methode but for the flip action
      */
-    public void applyFlip(boolean xAxis) {}
+    public void applyFlip(boolean xAxis) {
+        // updating the decorator's action points for a flip depending on axis of flip
+        boolean[][] shape = this.getLast().getShape();
+        if (!xAxis) {
+            this.actionPoint = new IntCoordinates(shape.length - this.actionPoint.x() - 1, this.actionPoint.y());
+        } else {
+            this.actionPoint = new IntCoordinates(this.actionPoint.x(), shape.length - this.actionPoint.y() - 1);
+        }
+        // recursively apply flip to rest of the list
+        if (this.getPrevPiece().isDecorated()) {
+            ((Decorator) this.getPrevPiece()).applyFlip(xAxis);
+        }
+    }
 
     public void offsetPosition(IntCoordinates actionArea) {
         // move the position of a piece so that it is in the same place on the board but with a new fixture point
