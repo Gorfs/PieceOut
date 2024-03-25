@@ -57,6 +57,28 @@ public abstract class Decorator extends Piece {
         return;
     }
 
+    public void rotateActionPoint(boolean clockwise){
+        // rotate the action point of the piece
+        // used in the applyRotation() methode
+        boolean[][] shape = this.getLast().getShape();
+        boolean alreadyRotated = false;
+        for (int i = 0; i < shape.length; i++) {
+            for (int j = 0; j < shape.length; j++) {
+                if (i == this.actionPoint.y() && j == this.actionPoint.x() && !alreadyRotated) {
+                    alreadyRotated = true;
+                    if (clockwise) {
+                        this.setActionPoint(new IntCoordinates(shape.length - i - 1, j));
+
+                    } else {
+                        this.setActionPoint(new IntCoordinates(i, shape.length - j - 1));
+                    }
+
+                }
+            }
+
+        }
+    }
+
     /**
      * same as for the applyRotation() methode but for the flip action
      */

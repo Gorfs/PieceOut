@@ -44,23 +44,24 @@ public class Rotation extends Decorator {
 
     @Override
     public void applyRotation(boolean direction) {
-        boolean[][] shape = this.getLast().getShape();
-        boolean alreadyRotated = false;
-        for (int i = 0; i < shape.length; i++) {
-            for (int j = 0; j < shape.length; j++) {
-                if (i == this.actionPoint.y() && j == this.actionPoint.x() && !alreadyRotated) {
-                    alreadyRotated = true;
-                    if (this.rotationDirectionClockwise) {
-                        this.setActionPoint(new IntCoordinates(shape.length - i - 1, j));
+        // boolean[][] shape = this.getLast().getShape();
+        // boolean alreadyRotated = false;
+        // for (int i = 0; i < shape.length; i++) {
+        //     for (int j = 0; j < shape.length; j++) {
+        //         if (i == this.actionPoint.y() && j == this.actionPoint.x() && !alreadyRotated) {
+        //             alreadyRotated = true;
+        //             if (this.rotationDirectionClockwise) {
+        //                 this.setActionPoint(new IntCoordinates(shape.length - i - 1, j));
 
-                    } else {
-                        this.setActionPoint(new IntCoordinates(i, shape.length - j - 1));
-                    }
+        //             } else {
+        //                 this.setActionPoint(new IntCoordinates(i, shape.length - j - 1));
+        //             }
 
-                }
-            }
+        //         }
+        //     }
 
-        }
+        // }
+        this.rotateActionPoint(direction);
 
         if (this.getPrevPiece().isDecorated()) {
             ((Decorator) this.getPrevPiece()).applyRotation(direction);
