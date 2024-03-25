@@ -11,6 +11,7 @@ import src.config.Colours;
 import src.geometry.IntCoordinates;
 import src.piece.Piece;
 import src.piece.ShapeFactory;
+import src.piece.Target;
 import src.piece.decorator.*;
 
 public class LevelManager {
@@ -63,10 +64,24 @@ public class LevelManager {
             for (int i = 0; i < levels.length(); i++) {
                 JSONObject level = levels.getJSONObject(i);
                 if (level.getInt("id") == id) {
+                    JSONArray targets = level.getJSONArray("targets");
+                    Target target_to_add;
+                    int n = 0;
                     JSONArray pieces = level.getJSONArray("pieces");
                     for (int j = 0; j < pieces.length(); j++) {
+                        if (n < targets.length()) {
+                            JSONObject target = targets.getJSONObject(n);
+                            if (target.getInt("id") == j) {
+                                target_to_add = createTarget(target);
+                                n++;
+                            } else {
+                                target_to_add = null;
+                            }
+                        } else {
+                            target_to_add = null;
+                        }
                         JSONObject piece = pieces.getJSONObject(j);
-                        createPiece(piece);
+                        createPiece(piece, target_to_add);
                     }
                     return;
                 }
@@ -76,7 +91,7 @@ public class LevelManager {
         }
     }
 
-    public static void createPiece(JSONObject piece) {
+    public static void createPiece(JSONObject piece, Target target) {
 
         // Get the color
         Color color = switch (piece.getString("color")) {
@@ -89,7 +104,7 @@ public class LevelManager {
         JSONArray positionArray = piece.getJSONArray("position");
         IntCoordinates position = new IntCoordinates(positionArray.getInt(0), positionArray.getInt(1));
         // Create the piece
-        Piece piece_to_add = new ShapeFactory(piece.getString("shape"), color, position, new IntCoordinates(0, 0));
+        Piece piece_to_add = new ShapeFactory(piece.getString("shape"), color, position, new IntCoordinates(0, 0), target);
 
         // Add the decorators
         JSONArray decorators = piece.getJSONArray("decorators");
@@ -138,9 +153,23 @@ public class LevelManager {
         return result;
     }
 
-    private static Decorator createFlip(Piece piece, JSONObject decoratorJSON) {
+    public static Decorator createFlip(Piece piece, JSONObject decoratorJSON) {
         JSONArray positionArray = decoratorJSON.getJSONArray("position");
         IntCoordinates position = new IntCoordinates(positionArray.getInt(0), positionArray.getInt(1));
         return new Flip(piece, position, decoratorJSON.getBoolean("horizontal"));
+    }
+
+    public static Target createTarget(JSONObject target) {
+        // Get the position
+        JSONArray positionArray = target.getJSONArray("position");
+        IntCoordinates position = new IntCoordinates(positionArray.getInt(0), positionArray.getInt(1));
+        Direction direction = switch (target.getString("direction")) {
+            case "up" -> Direction.NORTH;
+            case "down" -> Direction.SOUTH;
+            case "left" -> Direction.WEST;
+            default -> Direction.EAST;
+        };
+        // Create the target
+        return new Target(position, direction, target.getBoolean("flip_x"), target.getBoolean("flip_y"));
     }
 }
