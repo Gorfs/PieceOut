@@ -55,13 +55,47 @@ public abstract class Decorator extends Piece {
      * rotation
      */
     public void applyRotation(boolean clockwise) {
-        return;
+        rotateActionPoint(clockwise);
+    }
+
+    public void rotateActionPoint(boolean clockwise){
+        // rotate the action point of the piece
+        // used in the applyRotation() methode
+        boolean[][] shape = this.getLast().getShape();
+        boolean alreadyRotated = false;
+        for (int i = 0; i < shape.length; i++) {
+            for (int j = 0; j < shape.length; j++) {
+                if (i == this.actionPoint.y() && j == this.actionPoint.x() && !alreadyRotated) {
+                    alreadyRotated = true;
+                    if (clockwise) {
+                        this.setActionPoint(new IntCoordinates(shape.length - i - 1, j));
+
+                    } else {
+                        this.setActionPoint(new IntCoordinates(i, shape.length - j - 1));
+                    }
+
+                }
+            }
+
+        }
     }
 
     /**
      * same as for the applyRotation() methode but for the flip action
      */
-    public void applyFlip(boolean xAxis) {}
+    public void applyFlip(boolean xAxis) {
+        // updating the decorator's action points for a flip depending on axis of flip
+        boolean[][] shape = this.getLast().getShape();
+        if (!xAxis) {
+            this.actionPoint = new IntCoordinates(shape.length - this.actionPoint.x() - 1, this.actionPoint.y());
+        } else {
+            this.actionPoint = new IntCoordinates(this.actionPoint.x(), shape.length - this.actionPoint.y() - 1);
+        }
+        // recursively apply flip to rest of the list
+        if (this.getPrevPiece().isDecorated()) {
+            ((Decorator) this.getPrevPiece()).applyFlip(xAxis);
+        }
+    }
 
     public void offsetPosition(IntCoordinates actionArea) {
         // move the position of a piece so that it is in the same place on the board but with a new fixture point
@@ -92,6 +126,7 @@ public abstract class Decorator extends Piece {
         // (deal with offset)
         if (this.actionPoint.x() == x && this.actionPoint.y() == y){
             personalAction();
+            Debug.printDecorator(this);
             if (checkCollision()) {
                 Debug.out("Collision detected");
                 personalReverseAction();
