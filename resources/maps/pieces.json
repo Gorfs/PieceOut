@@ -162,9 +162,9 @@
                     "decorators":[
                         {
                             "type": "rotation",
-                            "clockwise": false,
+                            "clockwise": true,
                             "position": [1, 2],
-                            "repeat": 1
+                            "repeat": 3
                         }
                     ]
                 },
@@ -182,7 +182,7 @@
                         {
                             "type": "translation",
                             "direction": "up",
-                            "position": [1, 1]
+                            "position": [1, 2]
                         }
                     ]
                 }
