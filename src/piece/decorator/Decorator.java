@@ -142,6 +142,38 @@ public abstract class Decorator extends Piece {
 
     }
 
+    /**
+     * Method that returns the action type of the correct Piece.
+     * @param x local x coordinates in shape array
+     * @param y local y coordinates in shape array
+     * @return Returns a String of the action type of the Piece.
+     */
+    public String getActionType(int x, int y){
+        if (this.actionPoint.x() == x && this.actionPoint.y() == y){
+            switch(this.getClass().getSimpleName()){
+                case "Translation":
+                    return "Translation";
+                case "Rotation":
+                    if (((Rotation) this).getRotationDirection()) {
+                        return "RotationR";
+                    } else {
+                        return "RotationL";
+                    }
+                case "Flip":
+                    if (((Flip) this).getFlipAxis()) {
+                        return "FlipX";
+                    } else {
+                        return "FlipY";
+                    }
+                default:
+                    return "";
+            }
+        }
+        else{
+            return this.prevPiece.getActionType(x, y);
+        }
+    }
+
     // returns the piece brute at the very front of the chained list
     public PieceBrute getLast() {
         Piece temp = prevPiece;
