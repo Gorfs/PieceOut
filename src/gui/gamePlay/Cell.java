@@ -84,7 +84,7 @@ public class Cell extends JPanel{
                 this.setBorder(topLeftShadow);
             }
         }else if (map_y == 0){
-            if(!matrix[map_y][map_x-1]){
+            if(matrix[map_y][map_x-1]){
                 this.setBorder(leftShadow);
             }else{
                 this.setBorder(topLeftShadow);
