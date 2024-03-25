@@ -12,6 +12,10 @@ public class Flip extends Decorator {
     // the axis on which we flip the piece
     public boolean xFlip = true;
 
+    public boolean getFlipAxis() {
+        return this.xFlip;
+    }
+
     /**
      * Constructor for the decorator FlipX.
      * 

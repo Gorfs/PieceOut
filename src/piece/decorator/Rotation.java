@@ -12,6 +12,10 @@ public class Rotation extends Decorator {
     // rotation direction is -1 for clockwise and 1 for anti-clockwise
     private boolean rotationDirectionClockwise = true;
 
+    public boolean getRotationDirection() {
+        return this.rotationDirectionClockwise;
+    }
+
     public void flipDirection() {
         this.rotationDirectionClockwise = !this.rotationDirectionClockwise;
     }

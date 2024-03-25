@@ -119,9 +119,17 @@ public abstract class Decorator extends Piece {
                 case "Translation":
                     return "Translation";
                 case "Rotation":
-                    return "Rotation";
+                    if (((Rotation) this).getRotationDirection()) {
+                        return "RotationR";
+                    } else {
+                        return "RotationL";
+                    }
                 case "Flip":
-                    return "Flip";
+                    if (((Flip) this).getFlipAxis()) {
+                        return "FlipX";
+                    } else {
+                        return "FlipY";
+                    }
                 default:
                     return "";
             }
