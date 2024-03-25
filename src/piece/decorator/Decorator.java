@@ -113,6 +113,7 @@ public abstract class Decorator extends Piece {
         // (deal with offset)
         if (this.actionPoint.x() == x && this.actionPoint.y() == y){
             personalAction();
+            Debug.printDecorator(this);
             if (checkCollision()) {
                 Debug.out("Collision detected");
                 personalReverseAction();

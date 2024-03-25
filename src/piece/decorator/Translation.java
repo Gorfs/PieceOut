@@ -43,6 +43,9 @@ public class Translation extends Decorator {
                 case WEST -> dir = Direction.SOUTH;
             }
         }
+        if(this.getPrevPiece().isDecorated()){
+            ((Decorator)this.getPrevPiece()).applyRotation(clockwise);
+        }
     }
 
     /**
