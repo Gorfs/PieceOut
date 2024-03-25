@@ -47,7 +47,6 @@ public class Flip extends Decorator {
 
     @Override
     public void applyRotation(boolean clockwise) {
-        // TODO repair this so that it works correctly
         boolean[][] shape = this.getLast().getShape();
         boolean alreadyRotated = false;
         this.xFlip = !this.xFlip;

@@ -59,8 +59,6 @@ public class BottomPanel extends JPanel{
         undoButton.setIcon(undoIcon);
         undoButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                // TODO implement undo and redo
-
                 // testing undo
                 um.undo();
                 GUIManager.INSTANCE.update();
@@ -78,7 +76,6 @@ public class BottomPanel extends JPanel{
         //redoButton.setBorder(BorderFactory.createEmptyBorder(3,3,3,3));
         redoButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                // TODO implement undo and redo
                 um.redo();
                 GUIManager.INSTANCE.update();
                 updateButtons();
@@ -87,7 +84,6 @@ public class BottomPanel extends JPanel{
             }
         });
 
-        // TODO set dimensiosn of rigid area to dynamic instead of hardcoded values.
         // this.add(Box.createRigidArea(new Dimension(GuiConfig.WINDOW_WIDTH / 5, 20)));
         this.add(buttonContainer);
         buttonContainer.add(undoButton);
