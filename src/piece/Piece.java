@@ -1,6 +1,7 @@
 package src.piece;
 
 import src.geometry.IntCoordinates;
+import src.logic.PieceLogic;
 
 
 public abstract class Piece {
@@ -8,8 +9,8 @@ public abstract class Piece {
 
     /**
      * Method that check
-     * @param x  local getX coordinates in a shape array
-     * @param y  local getY coordinates in a shape array
+     * @param x local x coordinates in a shape array
+     * @param y local y coordinates in a shape array
      */
     public abstract void action(int x, int y);
 
@@ -24,6 +25,8 @@ public abstract class Piece {
     public String toString() {
         return "";
     }
+
+    public abstract void action(PieceLogic pieceLogic, int x, int y);
 
     /**
      * @param x local getX coordinates in shape array

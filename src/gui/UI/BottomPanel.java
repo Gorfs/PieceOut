@@ -41,7 +41,7 @@ public class BottomPanel extends JPanel{
 
 
 
-    public BottomPanel(){
+    public BottomPanel(GUIManager guiManager){
         super();
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.setOpaque(false);
@@ -61,7 +61,7 @@ public class BottomPanel extends JPanel{
             public void actionPerformed(ActionEvent e){
                 // testing undo
                 um.undo();
-                GUIManager.INSTANCE.update();
+                guiManager.update();
                 updateButtons();
             }
         });
@@ -77,10 +77,8 @@ public class BottomPanel extends JPanel{
         redoButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 um.redo();
-                GUIManager.INSTANCE.update();
+                guiManager.update();
                 updateButtons();
-
-
             }
         });
 
