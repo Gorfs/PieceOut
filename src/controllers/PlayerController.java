@@ -2,9 +2,7 @@ package src.controllers;
 
 import src.geometry.IntCoordinates;
 import src.gui.GUIManager;
-import src.gui.UI.BottomPanel;
 import src.logic.PieceLogic;
-import src.piece.decorator.Decorator;
 import src.utils.Debug;
 
 import java.awt.*;
@@ -19,12 +17,16 @@ public class PlayerController extends JPanel implements MouseListener {
 
     public static UndoManager um = new UndoManager();
 
+    protected final PieceLogic pieceLogic;
+    protected final GUIManager guiManager;
 
     /**
      * Constructor of the PlayerController where we initialize the attribute controlling
      * and add the MouseListener and KeyListener to the JPanel
      */
-    public PlayerController(Container content) {
+    public PlayerController(GUIManager guiManager, PieceLogic pieceLogic, Container content) {
+        this.guiManager = guiManager;
+        this.pieceLogic = pieceLogic;
         content.addMouseListener(this);
         PlayerController.INSTANCE = this;
     }
@@ -40,7 +42,7 @@ public class PlayerController extends JPanel implements MouseListener {
         // Initialize the position of the piece
         IntCoordinates piecePos;
 
-        for (var piece: PieceLogic.getPieces()) {
+        for (var piece: this.pieceLogic.getPieces()) {
             // Get the position of the piece
             piecePos = piece.getLast().getOffset();
             // Look into the shape of the piece
@@ -51,8 +53,8 @@ public class PlayerController extends JPanel implements MouseListener {
                         IntCoordinates temp = new IntCoordinates(piecePos.x() + j, piecePos.y() + i);
                         // If the mouse position is on the piece, the piece is now controlled
                         if (mousePos.equals(temp)) {
-                            // triggering action at localt coords of shape array
-                            piece.action(j, i);
+                            // triggering action at local coords of a shape array
+                            piece.action(this.pieceLogic, j, i);
                             Debug.out("triggering piece action");
                             return;
                         }
@@ -69,7 +71,7 @@ public class PlayerController extends JPanel implements MouseListener {
     @Override
     public void mouseClicked(MouseEvent e) {
         toggleControlManager(e);
-        GUIManager.INSTANCE.update();
+        this.guiManager.update();
 
     }
 

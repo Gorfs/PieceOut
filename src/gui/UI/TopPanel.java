@@ -14,7 +14,7 @@ public class TopPanel extends JPanel{
      which indicates current level
      */
 
-    public TopPanel(){
+    public TopPanel(GUIManager guiManager){
         super();
         this.setOpaque(false);
         this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
@@ -32,7 +32,7 @@ public class TopPanel extends JPanel{
 
         returnButton.addActionListener(e -> {
             // TODO remove testing button and make it return to main menu
-            GUIManager.INSTANCE.update();
+            guiManager.update();
         });
 
 

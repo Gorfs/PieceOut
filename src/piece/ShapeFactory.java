@@ -5,6 +5,8 @@ import src.geometry.IntCoordinates;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+
+import src.logic.PieceLogic;
 import src.piece.Target;
 
 
@@ -65,5 +67,9 @@ public class ShapeFactory extends PieceBrute {
         return shape;
     }
 
-    
+
+    @Override
+    public void action(PieceLogic pieceLogic, int x, int y) {
+        // Does nothing
+    }
 }

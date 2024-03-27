@@ -1,6 +1,7 @@
 package src.piece;
 
 import src.geometry.IntCoordinates;
+import src.logic.PieceLogic;
 
 
 public abstract class Piece {
@@ -10,7 +11,6 @@ public abstract class Piece {
      * @param y  local y coordinates in shape array
      */
     public boolean decorated = false;
-    public abstract void action(int x, int y);
 
     /**
      * @return Returns the current shape of the nextPiece.
@@ -23,6 +23,8 @@ public abstract class Piece {
     public String toString() {
         return "";
     }
+
+    public abstract void action(PieceLogic pieceLogic, int x, int y);
 
     /**
      * @param x local x coordinates in shape array
