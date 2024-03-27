@@ -31,14 +31,14 @@ public class Debug {
 
     public static void printShapePieces(PieceBrute p) {
         IntCoordinates fixturePoint = p.getFixturePoint();
-        System.out.println("Fixture point is : " + fixturePoint.x() + " " + fixturePoint.y());
-        System.out.println("position is x : " + p.getPos().x() + " y : " + p.getPos().y());
+        System.out.println("Fixture point is : " + fixturePoint.getX() + " " + fixturePoint.getY());
+        System.out.println("position is x : " + p.getPos().getX() + " y : " + p.getPos().getY());
         boolean[][] shape = p.getShape();
         for (int i = 0; i < shape.length; i++) {
             for (int j = 0; j < shape[i].length; j++) {
-                // System.out.println(" i = " + i + " j = " + j + " fixturePoint.x() = " +
-                // fixturePoint.x() + " fixturePoint.y() = " + fixturePoint.y());
-                if (fixturePoint.x() == (j) && fixturePoint.y() == (i)) {
+                // System.out.println(" i = " + i + " j = " + j + " fixturePoint.getX() = " +
+                // fixturePoint.getX() + " fixturePoint.getY() = " + fixturePoint.getY());
+                if (fixturePoint.getX() == (j) && fixturePoint.getY() == (i)) {
                     System.out.print("X");
                 } else {
                     System.out.print(shape[i][j] == true ? "O" : ".");
@@ -50,16 +50,16 @@ public class Debug {
 
     public static void printDecorator(Decorator d) {
         System.out.println("Decorator is : " + d.getClass().getName());
-        System.out.println("Action point is : " + d.actionPoint.x() + " " + d.actionPoint.y());
-        System.out.println("Position is : " + d.getLast().getPos().x() + " " + d.getLast().getPos().y());
+        System.out.println("Action point is : " + d.actionPoint.getX() + " " + d.actionPoint.getY());
+        System.out.println("Position is : " + d.getLast().getPos().getX() + " " + d.getLast().getPos().getY());
         System.out.println("Shape is : ");
         boolean[][] shape = d.getLast().getShape();
         IntCoordinates fixturePoint = d.getLast().getFixturePoint();
         for (int i = 0; i < shape.length; i++) {
             for (int j = 0; j < shape[i].length; j++) {
-                // System.out.println(" i = " + i + " j = " + j + " fixturePoint.x() = " +
-                // fixturePoint.x() + " fixturePoint.y() = " + fixturePoint.y());
-                if (d.actionPoint.x() == (j) && d.actionPoint.y() == (i)) {
+                // System.out.println(" i = " + i + " j = " + j + " fixturePoint.getX() = " +
+                // fixturePoint.getX() + " fixturePoint.getY() = " + fixturePoint.getY());
+                if (d.actionPoint.getX() == (j) && d.actionPoint.getY() == (i)) {
                     System.out.print("X");
                 } else {
                     System.out.print(shape[i][j] == true ? "O" : ".");

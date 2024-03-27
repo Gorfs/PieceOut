@@ -5,7 +5,7 @@ import src.piece.Piece;
 import src.utils.Debug;
 
 /**
- * Class that represent the decorator pattern for the x-axis flip.
+ * Class that represent the decorator pattern for the getX-axis flip.
  */
 public class Flip extends Decorator {
 
@@ -35,9 +35,9 @@ public class Flip extends Decorator {
         // updating the decorator's action points for a flip depending on axis of flip
         boolean[][] shape = this.getLast().getShape();
         if (!xAxis) {
-            this.actionPoint = new IntCoordinates(shape.length - this.actionPoint.x() - 1, this.actionPoint.y());
+            this.actionPoint = new IntCoordinates(shape.length - this.actionPoint.getX() - 1, this.actionPoint.getY());
         } else {
-            this.actionPoint = new IntCoordinates(this.actionPoint.x(), shape.length - this.actionPoint.y() - 1);
+            this.actionPoint = new IntCoordinates(this.actionPoint.getX(), shape.length - this.actionPoint.getY() - 1);
         }
         // recursively apply flip to rest of the list
         if (this.getPrevPiece().isDecorated()) {
@@ -55,7 +55,7 @@ public class Flip extends Decorator {
     }
 
     /**
-     * Action of flipping the nextPiece in the x-axis.
+     * Action of flipping the nextPiece in the getX-axis.
      */
     @Override
     public void personalAction() {
@@ -69,13 +69,13 @@ public class Flip extends Decorator {
 
         // updating current position to allow the rotation of multiple pivot points
         IntCoordinates currentCoords = this.getLast().getPos();
-        // Debug.out("Current Coords: " + currentCoords.x() + " " + currentCoords.y() +
+        // Debug.out("Current Coords: " + currentCoords.getX() + " " + currentCoords.getY() +
         // " " + xOffset + " " + yOffset);
 
-        // this.getLast().setPos(new IntCoordinates(currentCoords.x() - xOffset + 1,
-        // currentCoords.y() - yOffset));
-        // Debug.out("New Coords: " + this.getLast().getPos().x() + " " +
-        // this.getLast().getPos().y());
+        // this.getLast().setPos(new IntCoordinates(currentCoords.getX() - xOffset + 1,
+        // currentCoords.getY() - yOffset));
+        // Debug.out("New Coords: " + this.getLast().getPos().getX() + " " +
+        // this.getLast().getPos().getY());
 
         for (int i = 0; i < shape.length; i++) {
             for (int j = 0; j < shape.length; j++) {

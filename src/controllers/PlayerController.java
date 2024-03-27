@@ -2,9 +2,7 @@ package src.controllers;
 
 import src.geometry.IntCoordinates;
 import src.gui.GUIManager;
-import src.gui.UI.BottomPanel;
 import src.logic.PieceLogic;
-import src.piece.decorator.Decorator;
 import src.utils.Debug;
 
 import java.awt.*;
@@ -48,7 +46,7 @@ public class PlayerController extends JPanel implements MouseListener {
                 for(int j = 0; j < piece.getShape()[i].length; j++){
                     // Check if the mouse position is on the piece
                     if (piece.getShape()[i][j]) {
-                        IntCoordinates temp = new IntCoordinates(piecePos.x() + j, piecePos.y() + i);
+                        IntCoordinates temp = new IntCoordinates(piecePos.getX() + j, piecePos.getY() + i);
                         // If the mouse position is on the piece, the piece is now controlled
                         if (mousePos.equals(temp)) {
                             // triggering action at localt coords of shape array

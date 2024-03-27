@@ -4,12 +4,13 @@ import src.geometry.IntCoordinates;
 
 
 public abstract class Piece {
+    public boolean decorated = false;
+
     /**
      * Method that check
-     * @param x  local x coordinates in shape array
-     * @param y  local y coordinates in shape array
+     * @param x  local getX coordinates in a shape array
+     * @param y  local getY coordinates in a shape array
      */
-    public boolean decorated = false;
     public abstract void action(int x, int y);
 
     /**
@@ -25,8 +26,8 @@ public abstract class Piece {
     }
 
     /**
-     * @param x local x coordinates in shape array
-     * @param y local y coordinates in shape array
+     * @param x local getX coordinates in shape array
+     * @param y local getY coordinates in shape array
      * @return Returns a String that represent the action type of the nextPiece.
      */
     public String getActionType(int x, int y) {
