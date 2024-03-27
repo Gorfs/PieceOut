@@ -48,7 +48,7 @@ public class LevelManager {
         }
     }
 
-    public static void loadPiecesFromJson(int id) {
+    public static void loadPiecesFromJson(PieceLogic pieceLogic, int id) {
         try {
             // Read the .json file
             String content = new String(Files.readAllBytes(Paths.get("resources/maps/pieces.json")));
@@ -81,7 +81,7 @@ public class LevelManager {
                             target_to_add = null;
                         }
                         JSONObject piece = pieces.getJSONObject(j);
-                        createPiece(piece, target_to_add);
+                        createPiece(piece, target_to_add, pieceLogic);
                     }
                     return;
                 }
@@ -91,7 +91,7 @@ public class LevelManager {
         }
     }
 
-    public static void createPiece(JSONObject piece, Target target) {
+    public static void createPiece(JSONObject piece, Target target, PieceLogic pieceLogic) {
 
         // Get the color
         Color color = switch (piece.getString("color")) {
@@ -127,7 +127,7 @@ public class LevelManager {
         }
 
         // Add the piece to the arena
-        PieceLogic.addPiece(decorator);
+        pieceLogic.addPiece(decorator);
     }
 
     public static Translation createTranslation(Piece piece, JSONObject decoratorJSON) {

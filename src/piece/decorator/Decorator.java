@@ -113,12 +113,13 @@ public abstract class Decorator extends Piece {
     }
 
     @Override
-    public void action(int x, int y) {
+    public void action(PieceLogic pieceLogic, int x, int y) {
+        // If it is the right action we pressed on, then do the action.
         // (deal with offset)
         if (this.actionPoint.getX() == x && this.actionPoint.getY() == y){
             personalAction();
             Debug.printDecorator(this);
-            if (checkCollision()) {
+            if (checkCollision(pieceLogic)) {
                 Debug.out("Collision detected");
                 personalReverseAction();
             } else {
@@ -129,7 +130,7 @@ public abstract class Decorator extends Piece {
             }
             // If not, then we check for the next decorator.
         }else{
-            this.prevPiece.action(x, y);
+            this.prevPiece.action(pieceLogic, x, y);
         }
 
     }
@@ -186,7 +187,7 @@ public abstract class Decorator extends Piece {
      * Method that checks collision for the piece.
      * @return true if the piece is colliding with the walls
      */
-    protected boolean checkCollision() {
+    protected boolean checkCollision(PieceLogic pieceLogic) {
         // Get the position of the piece
         IntCoordinates piecePos = this.getLast().getOffset();
         // Get the matrix of the arena
@@ -204,7 +205,7 @@ public abstract class Decorator extends Piece {
                         return true;
                     }
                     // Check if the piece is colliding with another piece
-                    for (var piece: PieceLogic.getPieces()) {
+                    for (var piece: pieceLogic.getPieces()) {
                         last = piece.getLast();
                         if (this.getLast() != last) {
                             for (int k = 0; k < last.getShape().length; k++) {

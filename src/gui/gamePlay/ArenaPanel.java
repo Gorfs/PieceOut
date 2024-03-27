@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 import src.controllers.PlayerController;
+import src.gui.GUIManager;
 import src.utils.Debug;
 import src.config.*;
 import src.geometry.IntCoordinates;
@@ -15,24 +16,21 @@ public class ArenaPanel extends JPanel {
      * the game is played on
      */
 
-     private JPanel containerPanel = new JPanel();
+     private final JPanel containerPanel = new JPanel();
 
     public ArenaPanel() {
         super();
         this.setLayout(new GridBagLayout());
         this.setBackground(Colours.BACKGROUND);
 
-
         int map_size = Arena.getInstance().getMatrix().length;
         containerPanel.setLayout(new GridLayout(map_size, map_size));
         // this.setBorder(BorderFactory.createLineBorder(Color.BLUE, 3)); // Add thicker and blue border here
-
 
         // filling the map with cells
         for(int i = 0; i < map_size;i++){
             for(int j = 0 ; j < map_size; j++){
                 containerPanel.add(new Cell(j, i));
-
             }
         }
         this.add(containerPanel);
