@@ -1,16 +1,25 @@
 package src.geometry;
 
 /**
- * @param x coordinates in x-axis
- * @param y coordinates on y-axis
+ * Class IntCoordinates that represents the coordinates of the piece.
  */
-public record IntCoordinates(int x, int y) {
+public class IntCoordinates {
+    /**
+     * Attributes of IntCoordinates
+     * x: coordinates in X-axis
+     * y: coordinates on Y-axis
+     */
+    private int x;
+    private int y;
 
     /**
-     * @return coordinates of IntCoordinates
+     * Constructor of IntCoordinates
+     * @param x coordinates in getX-axis
+     * @param y coordinates on getY-axis
      */
-    public String toString(){
-        return ("x:" + x + "\ty: " + y);
+    public IntCoordinates(int x, int y){
+        this.x = x;
+        this.y = y;
     }
 
     /**
@@ -18,6 +27,41 @@ public record IntCoordinates(int x, int y) {
      * @return Returns true or false, whether equal or not.
      */
     public boolean equals(IntCoordinates pos) {
-        return this.x() == pos.x() && this.y() == pos.y();
+        return this.getX() == pos.getX() && this.getY() == pos.getY();
+    }
+
+    /**
+     * @return Returns the coordinates of the piece.
+     */
+    public int getX() {
+        return x;
+    }
+
+    /**
+     * @return Returns the coordinates of the piece.
+     */
+    public int getY() {
+        return y;
+    }
+
+    /**
+     * @param x coordinates in getX-axis
+     */
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    /**
+     * @param y coordinates on getY-axis
+     */
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    /**
+     * @return coordinates of IntCoordinates
+     */
+    public String toString(){
+        return ("getX:" + x + "\tgetY: " + y);
     }
 }

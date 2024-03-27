@@ -36,9 +36,9 @@ public class Translation extends Decorator {
         }
         boolean[][] shape = this.getLast().getShape();
         if (!xAxis) {
-            this.actionPoint = new IntCoordinates(shape.length - this.actionPoint.x() - 1, this.actionPoint.y());
+            this.actionPoint = new IntCoordinates(shape.length - this.actionPoint.getX() - 1, this.actionPoint.getY());
         } else {
-            this.actionPoint = new IntCoordinates(this.actionPoint.x(), shape.length - this.actionPoint.y() - 1);
+            this.actionPoint = new IntCoordinates(this.actionPoint.getX(), shape.length - this.actionPoint.getY() - 1);
         }
         // recursively apply flip to rest of the list
         if (this.getPrevPiece().isDecorated()) {
@@ -77,10 +77,10 @@ public class Translation extends Decorator {
         IntCoordinates pos = this.getLast().getPos();
         // Switch to check for each direction
         switch (getDir()) {
-            case NORTH -> this.getLast().setPos(new IntCoordinates(pos.x(), pos.y() - 1));
-            case EAST -> this.getLast().setPos(new IntCoordinates(pos.x() + 1, pos.y()));
-            case SOUTH -> this.getLast().setPos(new IntCoordinates(pos.x(), pos.y() + 1));
-            case WEST -> this.getLast().setPos(new IntCoordinates(pos.x() - 1, pos.y()));
+            case NORTH -> this.getLast().setPos(new IntCoordinates(pos.getX(), pos.getY() - 1));
+            case EAST -> this.getLast().setPos(new IntCoordinates(pos.getX() + 1, pos.getY()));
+            case SOUTH -> this.getLast().setPos(new IntCoordinates(pos.getX(), pos.getY() + 1));
+            case WEST -> this.getLast().setPos(new IntCoordinates(pos.getX() - 1, pos.getY()));
         }
     }
 
@@ -89,10 +89,10 @@ public class Translation extends Decorator {
         IntCoordinates pos = this.getLast().getPos();
         // Switch to check for each direction
         switch (getDir()) {
-            case NORTH -> this.getLast().setPos(new IntCoordinates(pos.x(), pos.y() + 1));
-            case EAST -> this.getLast().setPos(new IntCoordinates(pos.x() - 1, pos.y()));
-            case SOUTH -> this.getLast().setPos(new IntCoordinates(pos.x(), pos.y() - 1));
-            case WEST -> this.getLast().setPos(new IntCoordinates(pos.x() + 1, pos.y()));
+            case NORTH -> this.getLast().setPos(new IntCoordinates(pos.getX(), pos.getY() + 1));
+            case EAST -> this.getLast().setPos(new IntCoordinates(pos.getX() - 1, pos.getY()));
+            case SOUTH -> this.getLast().setPos(new IntCoordinates(pos.getX(), pos.getY() - 1));
+            case WEST -> this.getLast().setPos(new IntCoordinates(pos.getX() + 1, pos.getY()));
         }
     }
 

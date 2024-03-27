@@ -122,11 +122,11 @@ public abstract class PieceBrute extends Piece {
     public IntCoordinates getOffset(){
         // returns new int-coordinates with the offset from the nextPiece added
 
-        int pivotPointX = this.getFixturePoint().x(); // distance to border of nextPiece matrix
-        int pivotPointY = this.getFixturePoint().y(); // ''
+        int pivotPointX = this.getFixturePoint().getX(); // distance to border of nextPiece matrix
+        int pivotPointY = this.getFixturePoint().getY(); // ''
 
-        int posX = this.getPos().x();
-        int posY = this.getPos().y();
+        int posX = this.getPos().getX();
+        int posY = this.getPos().getY();
 
         int xOffset = posX - pivotPointX;
         int yOffset = posY - pivotPointY;
@@ -139,11 +139,11 @@ public abstract class PieceBrute extends Piece {
     public IntCoordinates getDestOffset(){
         // returns new int-coordinates with the offset from the piece added
 
-        int pivotPointX = getFixturePoint().x(); // distance to border of piece matrix
-        int pivotPointY = getFixturePoint().y(); // ''
+        int pivotPointX = getFixturePoint().getX(); // distance to border of piece matrix
+        int pivotPointY = getFixturePoint().getY(); // ''
 
-        int posX = getTarget().getDest().x();
-        int posY = getTarget().getDest().y();
+        int posX = getTarget().getDest().getX();
+        int posY = getTarget().getDest().getY();
 
         int xOffset = posX - pivotPointX; 
         int yOffset = posY - pivotPointY;
