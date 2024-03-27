@@ -33,14 +33,9 @@ public class Flip extends Decorator {
     @Override
     public void applyFlip(boolean xAxis) {
         // updating the decorator's action points for a flip depending on axis of flip
-        boolean[][] shape = this.getLast().getShape();
-        if (!xAxis) {
-            this.actionPoint = new IntCoordinates(shape.length - this.actionPoint.getX() - 1, this.actionPoint.getY());
-        } else {
-            this.actionPoint = new IntCoordinates(this.actionPoint.getX(), shape.length - this.actionPoint.getY() - 1);
-        }
+        this.flipActionPoint(xAxis);
         // recursively apply flip to rest of the list
-        if (this.getPrevPiece().isDecorated()) {
+        if (this.getPrevPiece() instanceof Decorator) {
             ((Decorator) this.getPrevPiece()).applyFlip(xAxis);
         }
     }
@@ -49,7 +44,7 @@ public class Flip extends Decorator {
     public void applyRotation(boolean clockwise) {
         this.xFlip = !this.xFlip;
         this.rotateActionPoint(clockwise);
-        if (this.getPrevPiece().isDecorated()) {
+        if (this.getPrevPiece() instanceof Decorator) {
             ((Decorator) this.getPrevPiece()).applyRotation(clockwise);
         }
     }
@@ -59,24 +54,17 @@ public class Flip extends Decorator {
      */
     @Override
     public void personalAction() {
-        // Debug.out("FLIPPING");
         boolean[][] shape = this.getLast().getShape();
         boolean[][] rotatedShape = new boolean[shape.length][shape.length];
 
+        // changing the position on the map to offset change of fixturePoint
         this.offsetPosition(actionPoint);
+
+        // flipping the action point for all the decorators in the list
         Decorator first = (Decorator) this.getFirst();
         first.applyFlip(this.xFlip);
 
-        // updating current position to allow the rotation of multiple pivot points
-        IntCoordinates currentCoords = this.getLast().getPos();
-        // Debug.out("Current Coords: " + currentCoords.getX() + " " + currentCoords.getY() +
-        // " " + xOffset + " " + yOffset);
-
-        // this.getLast().setPos(new IntCoordinates(currentCoords.getX() - xOffset + 1,
-        // currentCoords.getY() - yOffset));
-        // Debug.out("New Coords: " + this.getLast().getPos().getX() + " " +
-        // this.getLast().getPos().getY());
-
+        // setting rotated shape to the rotation of the initial shape
         for (int i = 0; i < shape.length; i++) {
             for (int j = 0; j < shape.length; j++) {
                 if (!this.xFlip) {
@@ -86,9 +74,9 @@ public class Flip extends Decorator {
                 }
             }
         }
+        // applying change of shape to the original shape
         this.getLast().setShape(rotatedShape);
         this.getLast().setFixturePoint(actionPoint);
-        Debug.printDecorator(this);
 
     }
 

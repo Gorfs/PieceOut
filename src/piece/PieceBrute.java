@@ -131,7 +131,7 @@ public abstract class PieceBrute extends Piece {
         int xOffset = posX - pivotPointX;
         int yOffset = posY - pivotPointY;
 
-        return new IntCoordinates(xOffset, yOffset); // TODO: Changed piece, getPivotPoint doesn't exist anymore.
+        return new IntCoordinates(xOffset, yOffset); 
 
     }
 

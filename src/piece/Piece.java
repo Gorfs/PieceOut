@@ -5,7 +5,6 @@ import src.logic.PieceLogic;
 
 
 public abstract class Piece {
-    public boolean decorated = false;
 
     /**
      * @return Returns the current shape of the nextPiece.
@@ -28,10 +27,5 @@ public abstract class Piece {
      */
     public String getActionType(int x, int y) {
         return "";
-    }
-
-
-    public boolean isDecorated() {
-        return this.decorated;
     }
 }
