@@ -79,7 +79,7 @@ public class GuiPiece extends JPanel {
                     try{
                         cellCoords = getPixelCoordinates(new IntCoordinates(j + offSet.getX(), i + offSet.getY()));
                         g2d.setColor(this.colour);
-                        // Debug.out("coords are: " + cellCoords.toString() +  " getX : " + j + " getY : " + i + "nextPiece positions : " + piece.getLast().getPos().toString() + " offset : " + offSet.toString());
+                        // Debug.out("coords are: " + cellCoords.toString() +  " x : " + j + " y : " + i + "nextPiece positions : " + piece.getLast().getPos().toString() + " offset : " + offSet.toString());
                         g2d.fillRect(cellCoords.getX(), cellCoords.getY() + GUIManager.getInstance().getArenaPanelY(), GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE);
                         
                         g2d.setColor(new Color(255, 0, 0, 75));

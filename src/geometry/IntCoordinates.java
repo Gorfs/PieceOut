@@ -14,8 +14,8 @@ public class IntCoordinates {
 
     /**
      * Constructor of IntCoordinates
-     * @param x coordinates in getX-axis
-     * @param y coordinates on getY-axis
+     * @param x coordinates in X-axis
+     * @param y coordinates on Y-axis
      */
     public IntCoordinates(int x, int y){
         this.x = x;
@@ -45,14 +45,14 @@ public class IntCoordinates {
     }
 
     /**
-     * @param x coordinates in getX-axis
+     * @param x coordinates in X-axis
      */
     public void setX(int x) {
         this.x = x;
     }
 
     /**
-     * @param y coordinates on getY-axis
+     * @param y coordinates on Y-axis
      */
     public void setY(int y) {
         this.y = y;
@@ -62,6 +62,6 @@ public class IntCoordinates {
      * @return coordinates of IntCoordinates
      */
     public String toString(){
-        return ("getX:" + x + "\tgetY: " + y);
+        return ("x:" + x + "\ty: " + y);
     }
 }

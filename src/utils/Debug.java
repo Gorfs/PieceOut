@@ -32,7 +32,7 @@ public class Debug {
     public static void printShapePieces(PieceBrute p) {
         IntCoordinates fixturePoint = p.getFixturePoint();
         System.out.println("Fixture point is : " + fixturePoint.getX() + " " + fixturePoint.getY());
-        System.out.println("position is getX : " + p.getPos().getX() + " getY : " + p.getPos().getY());
+        System.out.println("position is x : " + p.getPos().getX() + " y : " + p.getPos().getY());
         boolean[][] shape = p.getShape();
         for (int i = 0; i < shape.length; i++) {
             for (int j = 0; j < shape[i].length; j++) {

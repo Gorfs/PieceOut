@@ -50,7 +50,7 @@ public class Cell extends JPanel{
 
 
         updatePlayableCell(); // inits the background of the cell
-        // this.add(new JLabel("getX: " + pixel_x + " getY: " + pixel_y));
+        // this.add(new JLabel("x: " + pixel_x + " y: " + pixel_y));
     }
 
     public void updatePlayableCell(){

@@ -4,12 +4,13 @@ import src.geometry.IntCoordinates;
 
 
 public abstract class Piece {
+    public boolean decorated = false;
+
     /**
      * Method that check
-     * @param getX  local getX coordinates in shape array
-     * @param getY  local getY coordinates in shape array
+     * @param x  local getX coordinates in a shape array
+     * @param y  local getY coordinates in a shape array
      */
-    public boolean decorated = false;
     public abstract void action(int x, int y);
 
     /**
