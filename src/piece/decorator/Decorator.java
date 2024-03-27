@@ -65,7 +65,7 @@ public abstract class Decorator extends Piece {
         boolean alreadyRotated = false;
         for (int i = 0; i < shape.length; i++) {
             for (int j = 0; j < shape.length; j++) {
-                if (i == this.actionPoint.y() && j == this.actionPoint.x() && !alreadyRotated) {
+                if (i == this.actionPoint.getY() && j == this.actionPoint.getX() && !alreadyRotated) {
                     alreadyRotated = true;
                     if (clockwise) {
                         this.setActionPoint(new IntCoordinates(shape.length - i - 1, j));
@@ -87,9 +87,9 @@ public abstract class Decorator extends Piece {
         // updating the decorator's action points for a flip depending on axis of flip
         boolean[][] shape = this.getLast().getShape();
         if (!xAxis) {
-            this.actionPoint = new IntCoordinates(shape.length - this.actionPoint.x() - 1, this.actionPoint.y());
+            this.actionPoint = new IntCoordinates(shape.length - this.actionPoint.getX() - 1, this.actionPoint.getY());
         } else {
-            this.actionPoint = new IntCoordinates(this.actionPoint.x(), shape.length - this.actionPoint.y() - 1);
+            this.actionPoint = new IntCoordinates(this.actionPoint.getX(), shape.length - this.actionPoint.getY() - 1);
         }
         // recursively apply flip to rest of the list
         if (this.getPrevPiece().isDecorated()) {
@@ -100,18 +100,18 @@ public abstract class Decorator extends Piece {
     public void offsetPosition(IntCoordinates actionArea) {
         // move the position of a piece so that it is in the same place on the board but with a new fixture point
 
-        int xOffset = this.getLast().getFixturePoint().x() - actionArea.x();
-        int yOffset = this.getLast().getFixturePoint().y() - actionArea.y();
+        int xOffset = this.getLast().getFixturePoint().getX() - actionArea.getX();
+        int yOffset = this.getLast().getFixturePoint().getY() - actionArea.getY();
 
         IntCoordinates pos = this.getLast().getPos();
-        // Debug.out("Current Coords: " + pos.x() + " " + pos.y() + " " + xOffset + " " + yOffset);
-        // Debug.out("Action Coords: " + actionArea.x() + " " + actionArea.y());
-        // Debug.out("Fixture Coords: " + this.getLast().getFixturePoint().x() + " " + this.getLast().getFixturePoint().y());
+        // Debug.out("Current Coords: " + pos.getX() + " " + pos.getY() + " " + xOffset + " " + yOffset);
+        // Debug.out("Action Coords: " + actionArea.getX() + " " + actionArea.getY());
+        // Debug.out("Fixture Coords: " + this.getLast().getFixturePoint().getX() + " " + this.getLast().getFixturePoint().getY());
 
 
-        this.getLast().setPos(new IntCoordinates(pos.x()  -  xOffset, pos.y() - yOffset));
+        this.getLast().setPos(new IntCoordinates(pos.getX()  -  xOffset, pos.getY() - yOffset));
 
-        // Debug.out("New Coords: " + this.getLast().getPos().x() + " " + this.getLast().getPos().y());
+        // Debug.out("New Coords: " + this.getLast().getPos().getX() + " " + this.getLast().getPos().getY());
 
 
         // last step, apply the new fixture Point
@@ -124,7 +124,7 @@ public abstract class Decorator extends Piece {
     public void action(PieceLogic pieceLogic, int x, int y) {
         // If it is the right action we pressed on, then do the action.
         // (deal with offset)
-        if (this.actionPoint.x() == x && this.actionPoint.y() == y){
+        if (this.actionPoint.getX() == x && this.actionPoint.getY() == y){
             personalAction();
             Debug.printDecorator(this);
             if (checkCollision(pieceLogic)) {
@@ -145,12 +145,12 @@ public abstract class Decorator extends Piece {
 
     /**
      * Method that returns the action type of the correct Piece.
-     * @param x local x coordinates in shape array
-     * @param y local y coordinates in shape array
+     * @param x local getX coordinates in shape array
+     * @param y local getY coordinates in shape array
      * @return Returns a String of the action type of the Piece.
      */
     public String getActionType(int x, int y){
-        if (this.actionPoint.x() == x && this.actionPoint.y() == y){
+        if (this.actionPoint.getX() == x && this.actionPoint.getY() == y){
             switch(this.getClass().getSimpleName()){
                 case "Translation":
                     return "Translation";
@@ -207,9 +207,9 @@ public abstract class Decorator extends Piece {
             for (int j = 0; j < this.getShape()[i].length; j++) {
                 if (this.getShape()[i][j]) {
                     // Check if the piece is colliding with the walls
-                    if (piecePos.x() + j < 0 || piecePos.x() + j >= matrix[0].length || piecePos.y() + i < 0 || piecePos.y() + i >= matrix.length) {
+                    if (piecePos.getX() + j < 0 || piecePos.getX() + j >= matrix[0].length || piecePos.getY() + i < 0 || piecePos.getY() + i >= matrix.length) {
                         return true;
-                    } if (!matrix[piecePos.y() + i][piecePos.x() + j]) {
+                    } if (!matrix[piecePos.getY() + i][piecePos.getX() + j]) {
                         return true;
                     }
                     // Check if the piece is colliding with another piece
@@ -219,7 +219,7 @@ public abstract class Decorator extends Piece {
                             for (int k = 0; k < last.getShape().length; k++) {
                                 for (int l = 0; l < last.getShape()[k].length; l++) {
                                     if (last.getShape()[k][l]) {
-                                        if (piecePos.x() + j == last.getOffset().x() + l && piecePos.y() + i == last.getOffset().y() + k) {
+                                        if (piecePos.getX() + j == last.getOffset().getX() + l && piecePos.getY() + i == last.getOffset().getY() + k) {
                                             return true;
                                         }
                                     }

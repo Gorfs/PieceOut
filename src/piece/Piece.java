@@ -5,12 +5,14 @@ import src.logic.PieceLogic;
 
 
 public abstract class Piece {
+    public boolean decorated = false;
+
     /**
      * Method that check
-     * @param x  local x coordinates in shape array
-     * @param y  local y coordinates in shape array
+     * @param x local x coordinates in a shape array
+     * @param y local y coordinates in a shape array
      */
-    public boolean decorated = false;
+    public abstract void action(int x, int y);
 
     /**
      * @return Returns the current shape of the nextPiece.
@@ -27,8 +29,8 @@ public abstract class Piece {
     public abstract void action(PieceLogic pieceLogic, int x, int y);
 
     /**
-     * @param x local x coordinates in shape array
-     * @param y local y coordinates in shape array
+     * @param x local getX coordinates in shape array
+     * @param y local getY coordinates in shape array
      * @return Returns a String that represent the action type of the nextPiece.
      */
     public String getActionType(int x, int y) {

@@ -1,15 +1,10 @@
 package src.gui.gamePlay;
 
-import src.controllers.PlayerController;
 import src.geometry.IntCoordinates;
 import src.config.GuiConfig;
 import src.gui.GUIManager;
-import src.gui.UI.TopPanel;
-import src.logic.Arena;
-import src.piece.PieceBrute;
 import src.piece.decorator.Decorator;
 import src.utils.Debug;
-import src.piece.decorator.Rotation;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -45,7 +40,7 @@ public class GuiPiece extends JPanel {
     private IntCoordinates getPixelCoordinates(IntCoordinates cellCoords){
         IntCoordinates[][] cellsCoords = this.guiManager.getGamePanel().getArenaPanel().getCellCoordArray();
         try{
-            return cellsCoords[cellCoords.y()][cellCoords.x()];
+            return cellsCoords[cellCoords.getY()][cellCoords.getX()];
         }catch( Exception e){
             Debug.out("Error in getPixelCoordinates : " + e.getMessage());
             return new IntCoordinates(-100,0);
@@ -81,15 +76,15 @@ public class GuiPiece extends JPanel {
             for(int j = 0 ; j < shapeMatrix[0].length; j++){ // width
                 if (shapeMatrix[i][j]){
                     try{
-                        cellCoords = getPixelCoordinates(new IntCoordinates(j + offSet.x(), i + offSet.y()));
+                        cellCoords = getPixelCoordinates(new IntCoordinates(j + offSet.getX(), i + offSet.getY()));
                         g2d.setColor(this.colour);
                         // Debug.out("coords are: " + cellCoords.toString() +  " x : " + j + " y : " + i + "nextPiece positions : " + piece.getLast().getPos().toString() + " offset : " + offSet.toString());
-                        g2d.fillRect(cellCoords.x(), cellCoords.y() + this.guiManager.getArenaPanelY(), GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE);
+                        g2d.fillRect(cellCoords.getX(), cellCoords.getY() + this.guiManager.getArenaPanelY(), GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE);
                         
                         g2d.setColor(new Color(255, 0, 0, 75));
                         if (this.piece.getLast().getTarget() != null) {
-                            destCoords = getPixelCoordinates(new IntCoordinates(j + destOffSet.x(), i + destOffSet.y()));
-                            g2d.fillRect(destCoords.x(), destCoords.y() + this.guiManager.getArenaPanelY(), GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE);
+                            destCoords = getPixelCoordinates(new IntCoordinates(j + destOffSet.getX(), i + destOffSet.getY()));
+                            g2d.fillRect(destCoords.getX(), destCoords.getY() + this.guiManager.getArenaPanelY(), GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE);
                         }
                         // paint the icon of the action that you can do with this part of the Piece
                         String action = piece.getActionType(j, i);
@@ -104,8 +99,8 @@ public class GuiPiece extends JPanel {
                         if (img != null){
                             int imageWidth = (int) (img.getWidth() * imgScale);
                             int imageHeight = (int) (img.getHeight() * imgScale);
-                            int rectCenterX = cellCoords.x() + (GuiConfig.CELL_SIZE / 2);
-                            int rectCenterY = cellCoords.y() + (GuiConfig.CELL_SIZE / 2) + this.guiManager.getArenaPanelY();
+                            int rectCenterX = cellCoords.getX() + (GuiConfig.CELL_SIZE / 2);
+                            int rectCenterY = cellCoords.getY() + (GuiConfig.CELL_SIZE / 2) + this.guiManager.getArenaPanelY();
                             g2d.drawImage(img, rectCenterX - imageWidth / 2, rectCenterY - imageHeight / 2, imageWidth, imageHeight, null);
                             img = null;
                         }
