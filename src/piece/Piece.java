@@ -8,13 +8,6 @@ public abstract class Piece {
     public boolean decorated = false;
 
     /**
-     * Method that check
-     * @param x local x coordinates in a shape array
-     * @param y local y coordinates in a shape array
-     */
-    public abstract void action(int x, int y);
-
-    /**
      * @return Returns the current shape of the nextPiece.
      */
     public abstract boolean[][] getShape();
