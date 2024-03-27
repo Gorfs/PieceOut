@@ -20,12 +20,4 @@ public record IntCoordinates(int x, int y) {
     public boolean equals(IntCoordinates pos) {
         return this.x() == pos.x() && this.y() == pos.y();
     }
-
-    /**
-     * @param scale default should be 1
-     * @return RealCoordinates of IntCoordinates
-     */
-    public RealCoordinates toRealCoordinates(double scale) {
-        return new RealCoordinates(x * scale, y * scale);
-    }
 }
