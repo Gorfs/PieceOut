@@ -4,7 +4,6 @@ import src.geometry.IntCoordinates;
 
 
 public abstract class Piece {
-    public boolean decorated = false;
 
     /**
      * Method that check
@@ -32,10 +31,5 @@ public abstract class Piece {
      */
     public String getActionType(int x, int y) {
         return "";
-    }
-
-
-    public boolean isDecorated() {
-        return this.decorated;
     }
 }

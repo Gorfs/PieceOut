@@ -42,7 +42,6 @@ public abstract class Decorator extends Piece {
         this.prevPiece = p;
         this.localCoord = local;
         this.actionPoint = local;
-        this.decorated = true;
         this.nextPiece = null;
     }
 
@@ -80,49 +79,41 @@ public abstract class Decorator extends Piece {
         }
     }
 
-    /**
-     * same as for the applyRotation() methode but for the flip action
-     */
-    public void applyFlip(boolean xAxis) {
-        // updating the decorator's action points for a flip depending on axis of flip
+
+    public void flipActionPoint(boolean xAxis){
         boolean[][] shape = this.getLast().getShape();
         if (!xAxis) {
             this.actionPoint = new IntCoordinates(shape.length - this.actionPoint.getX() - 1, this.actionPoint.getY());
         } else {
             this.actionPoint = new IntCoordinates(this.actionPoint.getX(), shape.length - this.actionPoint.getY() - 1);
         }
+    }
+    /**
+     * same as for the applyRotation() methode but for the flip action
+     */
+    public void applyFlip(boolean xAxis) {
+        // default applyFlip
+        // updating the decorator's action points for a flip depending on axis of flip
+        this.flipActionPoint(xAxis);
         // recursively apply flip to rest of the list
-        if (this.getPrevPiece().isDecorated()) {
+        if (this.getPrevPiece() instanceof Decorator){
             ((Decorator) this.getPrevPiece()).applyFlip(xAxis);
         }
     }
 
     public void offsetPosition(IntCoordinates actionArea) {
-        // move the position of a piece so that it is in the same place on the board but with a new fixture point
+        // offset the position of the piece to compensate for change of fixture Point change
 
         int xOffset = this.getLast().getFixturePoint().getX() - actionArea.getX();
         int yOffset = this.getLast().getFixturePoint().getY() - actionArea.getY();
 
         IntCoordinates pos = this.getLast().getPos();
-        // Debug.out("Current Coords: " + pos.getX() + " " + pos.getY() + " " + xOffset + " " + yOffset);
-        // Debug.out("Action Coords: " + actionArea.getX() + " " + actionArea.getY());
-        // Debug.out("Fixture Coords: " + this.getLast().getFixturePoint().getX() + " " + this.getLast().getFixturePoint().getY());
-
 
         this.getLast().setPos(new IntCoordinates(pos.getX()  -  xOffset, pos.getY() - yOffset));
-
-        // Debug.out("New Coords: " + this.getLast().getPos().getX() + " " + this.getLast().getPos().getY());
-
-
-        // last step, apply the new fixture Point
-        // this.getLast().setFixturePoint(actionArea);
-        // Debug.printShapePieces(this.getLast());
-
     }
 
     @Override
     public void action(int x, int y) {
-        // If it is the right action we pressed on, then do the action.
         // (deal with offset)
         if (this.actionPoint.getX() == x && this.actionPoint.getY() == y){
             personalAction();

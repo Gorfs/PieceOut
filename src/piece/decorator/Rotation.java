@@ -33,15 +33,10 @@ public class Rotation extends Decorator {
     @Override
     public void applyFlip(boolean xAxis) {
         // updating the decorator's action points for a flip depending on axis of flip
-        boolean[][] shape = this.getLast().getShape();
-        if (!xAxis) {
-            this.actionPoint = new IntCoordinates(shape.length - this.actionPoint.getX() - 1, this.actionPoint.getY());
-        } else {
-            this.actionPoint = new IntCoordinates(this.actionPoint.getX(), shape.length - this.actionPoint.getY() - 1);
-        }
         this.rotationDirectionClockwise = !this.rotationDirectionClockwise;
+        this.flipActionPoint(xAxis);
         // recursively apply flip to rest of the list
-        if (this.getPrevPiece().isDecorated()) {
+        if (this.getPrevPiece() instanceof Decorator) {
             ((Decorator) this.getPrevPiece()).applyFlip(xAxis);
         }
     }
@@ -49,7 +44,7 @@ public class Rotation extends Decorator {
     @Override
     public void applyRotation(boolean direction) {
         this.rotateActionPoint(direction);
-        if (this.getPrevPiece().isDecorated()) {
+        if (this.getPrevPiece() instanceof Decorator) {
             ((Decorator) this.getPrevPiece()).applyRotation(direction);
         }
     }
@@ -72,24 +67,12 @@ public class Rotation extends Decorator {
      */
     @Override
     public void personalAction() {
-        Debug.out("ROTATING");
-            
-        // rotate the actionPoint 
-        // this.rotateActionPoint(this.rotationDirectionClockwise);
-        // action is to rotate the shape of the piece.getLast().
         boolean[][] initShape = this.getLast().getShape();
         boolean[][] rotatedShape = new boolean[initShape.length][initShape.length]; // 4x4 matrix for the rotated shape
 
-        // find the current offset between old fixuture point and new fixture point.
-        int xOffset = this.getLast().getFixturePoint().getX() - this.actionPoint.getX();
-        int yOffset = this.getLast().getFixturePoint().getY() - this.actionPoint.getY();
+        this.offsetPosition(this.actionPoint);
 
-        // updating current position to allow the rotation of multiple pivot points
-        IntCoordinates currentCoords = this.getLast().getPos();
-        this.getLast().setPos(new IntCoordinates(currentCoords.getX() - xOffset, currentCoords.getY() - yOffset));
-
-        // updaing the action points and actions for all other decortors part of this
-        // piece
+        // changing action point for all the decorators in the list
         Decorator piece = (Decorator) this.getFirst();
         piece.applyRotation(this.rotationDirectionClockwise);
 
@@ -108,18 +91,10 @@ public class Rotation extends Decorator {
                 }
             }
         }
-        // editing pivot point after rotation
-        // DeComment following lines for debugging informations on the matrix rotation
-        // and fixture point location.
 
-        // Debug.printShapePieces(this.getLast());
-
+        // applying change to piece
         this.getLast().setShape(rotatedShape);
         this.getLast().setFixturePoint(this.actionPoint);
-
-        // Debug.printShapePieces(this.getLast());
-        // Debug.printDecorator((Decorator) this.getFirst());
-
     }
 
     @Override
