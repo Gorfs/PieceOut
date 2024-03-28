@@ -22,10 +22,6 @@ public class Arena {
     }
 
 
-    public void loadNewArena(String binary){
-        loadArena(binary);
-    }
-
     public int getLevel(){
         return level;
     }

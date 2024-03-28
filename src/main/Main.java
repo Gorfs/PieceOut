@@ -1,5 +1,6 @@
 package src.main;
 
+import java.util.concurrent.*;
 import src.logic.*;
 
 import src.gui.*;
@@ -19,5 +20,6 @@ public class Main {
         // init the GUI manager
         InstanceManager instanceManager = new InstanceManager(new PieceLogic());
         instanceManager.start(level);
+        
     }
 }

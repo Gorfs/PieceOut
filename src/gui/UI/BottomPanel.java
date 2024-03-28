@@ -109,12 +109,20 @@ public class BottomPanel extends JPanel {
 
     }
 
+    /**
+     * updates the buttons to clickable or not
+     */
     public void updateButtons() {
         // on update of gameloop, update the buttons to clickable or not.
         updateButton(redoButton, playerController.um.canRedo());
         updateButton(undoButton, playerController.um.canUndo());
     }
 
+    /**
+     * updates a single button to clickable or not
+     * @param btn
+     * @param available
+     */
     public void updateButton(JButton btn, boolean available) {
         // setting the value of the button to available (clickable) or not
         if (available) {
@@ -125,6 +133,10 @@ public class BottomPanel extends JPanel {
         }
     }
 
+    /**
+     * set the button to not clickable and all grey.
+     * @param btn
+     */
     public void setNotAvailable(JButton btn) {
         // sets the button to grey and not clickable
         btn.setEnabled(false);
