@@ -23,7 +23,6 @@ public abstract class Decorator extends Piece {
     protected Piece nextPiece;
     protected Piece prevPiece;
     protected IntCoordinates localCoord;
-    private InstanceManager guiManager;
 
     // the point which we apply the action too
     public IntCoordinates actionPoint;
@@ -33,7 +32,7 @@ public abstract class Decorator extends Piece {
      * 
      * @param p Piece on which we add the decorator.
      */
-    public Decorator(Piece p, IntCoordinates local, InstanceManager guiManager) {
+    public Decorator(Piece p, IntCoordinates local) {
         // if the piece is a decorator, setting the next piece to allow for getting of
         // the first element of the list
         try {
@@ -46,11 +45,6 @@ public abstract class Decorator extends Piece {
         this.localCoord = local;
         this.actionPoint = local;
         this.nextPiece = null;
-        this.guiManager = guiManager;
-    }
-
-    public Decorator(Piece p, IntCoordinates local) {
-        this(p, local, p.guiManager);
     }
 
     public void setActionPoint(IntCoordinates p) {
@@ -199,7 +193,7 @@ public abstract class Decorator extends Piece {
         // Get the position of the piece
         IntCoordinates piecePos = this.getLast().getOffset();
         // Get the matrix of the arena
-        boolean[][] matrix = guiManager.arena.getMatrix();
+        boolean[][] matrix = this.getLast().guiManager.arena.getMatrix();
         // Variable to store the last piece
         PieceBrute last;
         // For each cell in the piece

@@ -50,11 +50,7 @@ public class InstanceManager {
          */
         this.level = level;
         playerController = new PlayerController(this, pieceLogic);
-
-        // TODO init the arena here
-
-
-
+        arena = new Arena(this);
 
         this.gamePanel = new GamePanel(pieceLogic, this);
         playerController.startController(gamePanel.getArenaPanel().getContainerPanel());
