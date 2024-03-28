@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 
 import src.controllers.PlayerController;
-import src.gui.GUIManager;
+import src.gui.InstanceManager;
 import src.utils.Debug;
 import src.config.*;
 import src.geometry.IntCoordinates;
@@ -17,20 +17,22 @@ public class ArenaPanel extends JPanel {
      */
 
      private final JPanel containerPanel = new JPanel();
+     private final InstanceManager instanceManager;
 
-    public ArenaPanel() {
+    public ArenaPanel(InstanceManager instanceManager) {
         super();
         this.setLayout(new GridBagLayout());
         this.setBackground(Colours.BACKGROUND);
+        this.instanceManager = instanceManager;
 
-        int map_size = Arena.getInstance().getMatrix().length;
+        int map_size = instanceManager.arena.getMatrix().length;
         containerPanel.setLayout(new GridLayout(map_size, map_size));
         // this.setBorder(BorderFactory.createLineBorder(Color.BLUE, 3)); // Add thicker and blue border here
 
         // filling the map with cells
         for(int i = 0; i < map_size;i++){
             for(int j = 0 ; j < map_size; j++){
-                containerPanel.add(new Cell(j, i));
+                containerPanel.add(new Cell(instanceManager, j, i));
             }
         }
         this.add(containerPanel);
@@ -38,8 +40,9 @@ public class ArenaPanel extends JPanel {
 
     public IntCoordinates[][] getCellCoordArray(){
         // returns an array of all the gui.gameplay.cell components drawn on the map
-        int width = Arena.getInstance().getMatrix().length;
-        int height = Arena.getInstance().getMatrix()[0].length;
+        boolean[][] matrix = instanceManager.arena.getMatrix();
+        int width = matrix.length;
+        int height = matrix[0].length;
         int x = 0; 
         int y = 0;
         int xOffset = containerPanel.getX();
@@ -67,7 +70,7 @@ public class ArenaPanel extends JPanel {
         /*
           updates the cells to a new matrix state.
          */
-        boolean[][] matrix = Arena.getInstance().getMatrix();
+        boolean[][] matrix = instanceManager.arena.getMatrix();
         for(int i = 0; i < Math.pow(matrix.length , 2); i++){
             Cell cell = (Cell) this.getComponent(i);
             cell.updatePlayableCell();

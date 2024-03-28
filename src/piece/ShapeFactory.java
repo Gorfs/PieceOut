@@ -2,7 +2,7 @@ package src.piece;
 
 import java.awt.Color;
 import src.geometry.IntCoordinates;
-import src.gui.GUIManager;
+import src.gui.InstanceManager;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -30,7 +30,7 @@ public class ShapeFactory extends PieceBrute {
      * @param pos Position of the piece.
      * @param target Target of the piece.
      */
-    public ShapeFactory(String filePath, Color color, IntCoordinates pos, IntCoordinates fixturePoint, Target target, GUIManager guiManager) {
+    public ShapeFactory(String filePath, Color color, IntCoordinates pos, IntCoordinates fixturePoint, Target target, InstanceManager guiManager) {
         this.color = color;
         this.setPos(pos);
         this.setFixturePoint(fixturePoint);
@@ -72,7 +72,7 @@ public class ShapeFactory extends PieceBrute {
 
 
     @Override
-    public void action(PieceLogic pieceLogic, int x, int y) {
+    public void action(PieceLogic pieceLogic, InstanceManager instanceManager, int x, int y) {
         // Does nothing
     }
 }

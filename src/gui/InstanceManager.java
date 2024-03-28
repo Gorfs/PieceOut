@@ -2,6 +2,7 @@ package src.gui;
 
 import src.controllers.PlayerController;
 import src.gui.gamePlay.*;
+import src.logic.Arena;
 import src.logic.LevelManager;
 import src.logic.PieceLogic;
 import src.piece.decorator.Decorator;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
  * GUIManager class that is responsible for creating, changing,
  * updating and general management of the GUI.
  */
-public class GUIManager {
+public class InstanceManager {
     /**
      * mains panels and windows for the game
      */
@@ -27,12 +28,15 @@ public class GUIManager {
     private ArrayList<GuiPiece> guiPieces = new ArrayList<GuiPiece>();
     private final PieceLogic pieceLogic;
     public PlayerController playerController;
+    public Arena arena;
+
+    public int level;
 
     public GamePanel getGamePanel() {
         return gamePanel;
     }
 
-    public GUIManager(PieceLogic pieceLogic) {
+    public InstanceManager(PieceLogic pieceLogic) {
         /*
          * init of instance
          */
@@ -44,20 +48,28 @@ public class GUIManager {
         /*
          * initiates the GUI window.
          */
+        this.level = level;
         playerController = new PlayerController(this, pieceLogic);
+
+        // TODO init the arena here
+
+
+
+
         this.gamePanel = new GamePanel(pieceLogic, this);
         playerController.startController(gamePanel.getArenaPanel().getContainerPanel());
 
         mainFrame.add(gamePanel, "arena");
         mainFrame.setVisible(true);
 
+        LevelManager.loadPiecesFromJson(this.pieceLogic, level, this);
+
         for (Decorator piece : this.pieceLogic.getPieces()) {
             GuiPiece guiPiece = new GuiPiece(this, piece);
             guiPieces.add(guiPiece);
             // guiPiece.repaint();
         }
-        // TODO: Choose the id of the level to load (same in Arena.java -> line 11)
-        LevelManager.loadPiecesFromJson(this.pieceLogic, 4, this);
+
 
     }
 

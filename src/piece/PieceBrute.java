@@ -2,6 +2,9 @@ package src.piece;
 
 
 import src.geometry.IntCoordinates;
+import src.gui.InstanceManager;
+import src.logic.PieceLogic;
+
 import java.awt.Color;
 
 
@@ -9,6 +12,7 @@ import java.awt.Color;
  * Abstract class used to create pieces for the game.
  */
 public abstract class PieceBrute extends Piece {
+    
     /**
      * Color of the nextPiece.
      */
@@ -32,7 +36,7 @@ public abstract class PieceBrute extends Piece {
     /**
      * Nothing to do here, we went through all the decorator pattern.
      */
-    public void action(IntCoordinates pos) {}
+    public void action(int x , int y) {}
 
     /**
      * @return Returns the color of the nextPiece.

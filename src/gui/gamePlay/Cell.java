@@ -8,6 +8,7 @@ import java.awt.*;
 
 import src.config.*;
 import src.geometry.IntCoordinates;
+import src.gui.InstanceManager;
 import src.logic.Arena;
 
 public class Cell extends JPanel{
@@ -16,6 +17,7 @@ public class Cell extends JPanel{
      */
 
 
+     private final InstanceManager instanceManager;
     
     // pixel_x and pixel_y are the coordinates of the cell in pixels RELATIVE to the CONTAINER (ARENA PANEL)
     private int pixel_x;
@@ -33,9 +35,10 @@ public class Cell extends JPanel{
 
 
     
-    public Cell(int x_coord, int y_coord){
+    public Cell(InstanceManager instanceManager ,int x_coord, int y_coord){
         super();
 
+        this.instanceManager = instanceManager;
         this.setMinimumSize(new Dimension((int) (GuiConfig.CELL_SIZE ), (int) (GuiConfig.CELL_SIZE )));
         this.setPreferredSize(new Dimension((int) (GuiConfig.CELL_SIZE ), (int) (GuiConfig.CELL_SIZE )));
         this.setMaximumSize(new Dimension((int) (GuiConfig.CELL_SIZE ), (int) (GuiConfig.CELL_SIZE )));
@@ -57,7 +60,7 @@ public class Cell extends JPanel{
         /**
          * updates the background of the cell to the correct colour given by maze state
          */
-        boolean matrix[][] = Arena.getInstance().getMatrix();
+        boolean matrix[][] = instanceManager.arena.getMatrix();
         if (matrix[map_y][map_x]){
             this.setBackground(Colours.CELLCOLOUR);
             applyShadow();
@@ -74,7 +77,7 @@ public class Cell extends JPanel{
          * this helps to create the illusion of light coming from the top left corner.
          */
 
-        boolean[][] matrix = Arena.getInstance().getMatrix();
+        boolean[][] matrix = instanceManager.arena.getMatrix();
         if(map_x == 0 && map_y == 0){
             this.setBorder(topLeftShadow);
         }else if(map_x == 0){

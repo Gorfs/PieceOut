@@ -2,7 +2,7 @@ package src.gui.UI;
 
 import src.config.Colours;
 import src.config.GuiConfig;
-import src.gui.GUIManager;
+import src.gui.InstanceManager;
 import src.logic.Arena;
 
 import javax.swing.*;
@@ -14,12 +14,12 @@ public class TopPanel extends JPanel{
      which indicates current level
      */
 
-    public TopPanel(GUIManager guiManager){
+    public TopPanel(InstanceManager guiManager){
         super();
         this.setOpaque(false);
         this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 
-        JLabel levelLabel = new JLabel("Level : " + Arena.getInstance().getLevel());
+        JLabel levelLabel = new JLabel("Level : " + guiManager.level);
         levelLabel.setHorizontalAlignment(SwingConstants.CENTER);
         levelLabel.setFont(new Font("Arial", Font.BOLD, 20));
         levelLabel.setForeground(Color.WHITE);

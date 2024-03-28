@@ -2,7 +2,7 @@ package src.piece.decorator;
 
 import src.controllers.PlayerController;
 import src.geometry.IntCoordinates;
-import src.gui.GUIManager;
+import src.gui.InstanceManager;
 import src.logic.Arena;
 import src.logic.Move;
 import src.logic.MoveEdit;
@@ -23,7 +23,7 @@ public abstract class Decorator extends Piece {
     protected Piece nextPiece;
     protected Piece prevPiece;
     protected IntCoordinates localCoord;
-    private GUIManager guiManager;
+    private InstanceManager guiManager;
 
     // the point which we apply the action too
     public IntCoordinates actionPoint;
@@ -33,7 +33,7 @@ public abstract class Decorator extends Piece {
      * 
      * @param p Piece on which we add the decorator.
      */
-    public Decorator(Piece p, IntCoordinates local, GUIManager guiManager) {
+    public Decorator(Piece p, IntCoordinates local, InstanceManager guiManager) {
         // if the piece is a decorator, setting the next piece to allow for getting of
         // the first element of the list
         try {
@@ -122,7 +122,7 @@ public abstract class Decorator extends Piece {
     }
 
     @Override
-    public void action(PieceLogic pieceLogic, int x, int y) {
+    public void action(PieceLogic pieceLogic, InstanceManager instanceManager, int x, int y) {
         // If it is the right action we pressed on, then do the action.
         // (deal with offset)
         if (this.actionPoint.getX() == x && this.actionPoint.getY() == y) {
@@ -133,11 +133,11 @@ public abstract class Decorator extends Piece {
                 personalReverseAction();
             } else {
                 Debug.out("No collision detected");
-                guiManager.playerController.um.addEdit(new MoveEdit(new Move(this)));
+                instanceManager.playerController.um.addEdit(new MoveEdit(new Move(this)));
             }
             // If not, then we check for the next decorator.
         } else {
-            this.prevPiece.action(pieceLogic, x, y);
+            this.prevPiece.action(pieceLogic, instanceManager, x, y);
         }
 
     }
@@ -199,7 +199,7 @@ public abstract class Decorator extends Piece {
         // Get the position of the piece
         IntCoordinates piecePos = this.getLast().getOffset();
         // Get the matrix of the arena
-        boolean[][] matrix = Arena.getInstance().getMatrix();
+        boolean[][] matrix = guiManager.arena.getMatrix();
         // Variable to store the last piece
         PieceBrute last;
         // For each cell in the piece

@@ -3,7 +3,7 @@ package src.logic;
 import java.util.ArrayList;
 
 import src.config.GuiConfig;
-import src.gui.GUIManager;
+import src.gui.InstanceManager;
 import src.piece.decorator.*;
 
 import javax.swing.undo.UndoableEditSupport;

@@ -9,7 +9,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import src.config.Colours;
 import src.geometry.IntCoordinates;
-import src.gui.GUIManager;
+import src.gui.InstanceManager;
 import src.piece.Piece;
 import src.piece.ShapeFactory;
 import src.piece.Target;
@@ -49,7 +49,7 @@ public class LevelManager {
         }
     }
 
-    public static void loadPiecesFromJson(PieceLogic pieceLogic, int id, GUIManager guiManager) {
+    public static void loadPiecesFromJson(PieceLogic pieceLogic, int id, InstanceManager guiManager) {
         try {
             // Read the .json file
             String content = new String(Files.readAllBytes(Paths.get("resources/maps/pieces.json")));
@@ -92,7 +92,7 @@ public class LevelManager {
         }
     }
 
-    public static void createPiece(JSONObject piece, Target target, PieceLogic pieceLogic, GUIManager guiManager) {
+    public static void createPiece(JSONObject piece, Target target, PieceLogic pieceLogic, InstanceManager guiManager) {
 
         // Get the color
         Color color = switch (piece.getString("color")) {

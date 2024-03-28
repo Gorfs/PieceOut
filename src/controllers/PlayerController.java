@@ -1,7 +1,7 @@
 package src.controllers;
 
 import src.geometry.IntCoordinates;
-import src.gui.GUIManager;
+import src.gui.InstanceManager;
 import src.logic.PieceLogic;
 import src.utils.Debug;
 
@@ -18,15 +18,15 @@ public class PlayerController extends JPanel implements MouseListener {
     public UndoManager um = new UndoManager();
 
     protected final PieceLogic pieceLogic;
-    protected final GUIManager guiManager;
+    protected final InstanceManager instanceManager;
 
     /**
      * Constructor of the PlayerController where we initialize the attribute
      * controlling
      * and add the MouseListener and KeyListener to the JPanel
      */
-    public PlayerController(GUIManager guiManager, PieceLogic pieceLogic) {
-        this.guiManager = guiManager;
+    public PlayerController(InstanceManager instanceManager, PieceLogic pieceLogic) {
+        this.instanceManager = instanceManager;
         this.pieceLogic = pieceLogic;
         PlayerController.INSTANCE = this;
     }
@@ -58,7 +58,7 @@ public class PlayerController extends JPanel implements MouseListener {
                         // If the mouse position is on the piece, the piece is now controlled
                         if (mousePos.equals(temp)) {
                             // triggering action at local coords of a shape array
-                            piece.action(this.pieceLogic, j, i);
+                            piece.action(this.pieceLogic,instanceManager, j, i);
                             Debug.out("triggering piece action");
                             return;
                         }
@@ -72,7 +72,7 @@ public class PlayerController extends JPanel implements MouseListener {
     @Override
     public void mouseClicked(MouseEvent e) {
         toggleControlManager(e);
-        this.guiManager.update();
+        this.instanceManager.update();
 
     }
 

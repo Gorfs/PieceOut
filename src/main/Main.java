@@ -10,14 +10,14 @@ public class Main {
      */
     public static void main(String[] args){
 
-        int level = 4;
+        int level = 0;
         /*
           Init the logic of the game
          */
         // App.run();
 
         // init the GUI manager
-        GUIManager guiManager = new GUIManager(new PieceLogic());
-        guiManager.start(level);
+        InstanceManager instanceManager = new InstanceManager(new PieceLogic());
+        instanceManager.start(level);
     }
 }

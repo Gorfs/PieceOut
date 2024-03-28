@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 import src.config.Colours;
 import src.config.GuiConfig;
-import src.gui.GUIManager;
+import src.gui.InstanceManager;
 import src.logic.Move;
 import src.logic.MoveEdit;
 import src.logic.PieceLogic;
@@ -39,7 +39,7 @@ public class BottomPanel extends JPanel {
 
     public PlayerController playerController;
 
-    public BottomPanel(GUIManager guiManager) {
+    public BottomPanel(InstanceManager guiManager) {
         /**
          * main constructur of the bottom panel
          */
