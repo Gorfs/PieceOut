@@ -22,6 +22,7 @@ import src.gui.GUIManager;
 import src.logic.Move;
 import src.logic.MoveEdit;
 import src.logic.PieceLogic;
+import src.logic.Player;
 import src.piece.decorator.Decorator;
 import src.controllers.PlayerController;
 
@@ -111,26 +112,18 @@ public class BottomPanel extends JPanel{
 
 
     public void updateButtons(){
-        for(JButton btn : btnList){
-            if(btn == undoButton){
-                if(PlayerController.um.canUndo()){
-                    btn.setEnabled(true);
-                    btn.setBackground(Colours.BACKGROUND.brighter());
-                }
-                else{
-                    setNotAvailable(btn);
-                }
-            }
-            else if(btn == redoButton){
-                if(PlayerController.um.canRedo()){
-                    btn.setEnabled(true);
-                    btn.setBackground(Colours.BACKGROUND.brighter());
-                }
-                else{
-                    setNotAvailable(btn);
-                }
+        // undo button update.
+        updateButton(redoButton, PlayerController.um.canRedo());
+        updateButton(undoButton, PlayerController.um.canUndo());
+    }
 
-            }
+    public void updateButton(JButton btn, boolean available){
+        // setting the value of the button to available (clickable) or not
+        if(available){
+            btn.setEnabled(true);
+            btn.setBackground(Colours.BACKGROUND.brighter());
+        }else{
+            setNotAvailable(btn);
         }
     }
 }
