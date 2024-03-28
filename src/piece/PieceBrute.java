@@ -9,9 +9,6 @@ import java.awt.Color;
  * Abstract class used to create pieces for the game.
  */
 public abstract class PieceBrute extends Piece {
-    public boolean isDecorated(){
-        return this.decorated;
-    }
     /**
      * Color of the nextPiece.
      */
@@ -32,10 +29,6 @@ public abstract class PieceBrute extends Piece {
 
     private Target target;
 
-    /**
-     * boolean for finding out if the shape is movable
-     */
-    public boolean decorated = false;
     /**
      * Nothing to do here, we went through all the decorator pattern.
      */

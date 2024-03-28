@@ -19,63 +19,64 @@ public class GUIManager {
      * mains panels and windows for the game
      */
     private final GameWindow mainFrame = new GameWindow();
-    private final GamePanel gamePanel;
+    private GamePanel gamePanel;
 
     // layout to change panels in rootPanel
     private final CardLayout layout = new CardLayout();
 
     private ArrayList<GuiPiece> guiPieces = new ArrayList<GuiPiece>();
     private final PieceLogic pieceLogic;
+    public PlayerController playerController;
 
-    public GamePanel getGamePanel(){
+    public GamePanel getGamePanel() {
         return gamePanel;
     }
 
-
-    public GUIManager(PieceLogic pieceLogic){
-        this.gamePanel  = new GamePanel(pieceLogic, this);
+    public GUIManager(PieceLogic pieceLogic) {
         /*
-          init of instance
+         * init of instance
          */
         mainFrame.setLayout(layout);
         this.pieceLogic = pieceLogic;
     }
 
-    public void start(int level){
+    public void start(int level) {
         /*
-          initiates the GUI window.
+         * initiates the GUI window.
          */
+        playerController = new PlayerController(this, pieceLogic);
+        this.gamePanel = new GamePanel(pieceLogic, this);
+        playerController.startController(gamePanel.getArenaPanel().getContainerPanel());
+
         mainFrame.add(gamePanel, "arena");
         mainFrame.setVisible(true);
-        new PlayerController(this, pieceLogic, gamePanel.getArenaPanel().getContainerPanel());
 
-        for(Decorator piece: this.pieceLogic.getPieces()){
+        for (Decorator piece : this.pieceLogic.getPieces()) {
             GuiPiece guiPiece = new GuiPiece(this, piece);
             guiPieces.add(guiPiece);
             // guiPiece.repaint();
         }
         // TODO: Choose the id of the level to load (same in Arena.java -> line 11)
-        LevelManager.loadPiecesFromJson(this.pieceLogic, 4);
+        LevelManager.loadPiecesFromJson(this.pieceLogic, 4, this);
 
     }
 
-    public int getArenaPanelY(){
+    public int getArenaPanelY() {
         return gamePanel.getArenaPanel().getY();
     }
 
-    public void update(){
+    public void update() {
         /*
-          updates the GUI
+         * updates the GUI
          */
         gamePanel.update();
         gamePanel.getBottomPanel().updateButtons();
-        // Debug.out("updating " + PieceLogic.getPieces().size());
 
     }
 
-    public void changePanel(String panelName){
+    public void changePanel(String panelName) {
         /*
-          changes the panel in the main frame to the panel with the name panelName
+         * changes the panel in the main frame to the panel with the name panelName
          */
         layout.show(mainFrame, panelName);
     }

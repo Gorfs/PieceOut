@@ -2,13 +2,14 @@ package src.logic;
 
 import java.util.ArrayList;
 
+import src.config.GuiConfig;
+import src.gui.GUIManager;
 import src.piece.decorator.*;
 
 import javax.swing.undo.UndoableEditSupport;
 
 public class PieceLogic {
     private final ArrayList<Decorator> pieces;
-
 
     public PieceLogic() {
         this.pieces = new ArrayList<Decorator>();

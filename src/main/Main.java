@@ -14,7 +14,7 @@ public class Main {
         /*
           Init the logic of the game
          */
-        App.run();
+        // App.run();
 
         // init the GUI manager
         GUIManager guiManager = new GUIManager(new PieceLogic());

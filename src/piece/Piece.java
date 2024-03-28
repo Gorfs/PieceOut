@@ -1,6 +1,7 @@
 package src.piece;
 
 import src.geometry.IntCoordinates;
+import src.gui.GUIManager;
 import src.logic.PieceLogic;
 
 
@@ -17,6 +18,7 @@ public abstract class Piece {
     public String toString() {
         return "";
     }
+    public GUIManager guiManager;
 
     public abstract void action(PieceLogic pieceLogic, int x, int y);
 
