@@ -17,6 +17,7 @@ import javax.swing.undo.UndoManager;
 import java.util.ArrayList;
 
 import src.config.Colours;
+import src.config.GuiConfig;
 import src.gui.GUIManager;
 import src.logic.Move;
 import src.logic.MoveEdit;
@@ -25,7 +26,6 @@ import src.logic.Player;
 import src.piece.decorator.Decorator;
 import src.utils.Debug;
 import src.controllers.PlayerController;
-
 
 public class BottomPanel extends JPanel {
     /**
@@ -63,7 +63,8 @@ public class BottomPanel extends JPanel {
         undoButton.setFocusable(false);
         // Setting the icon for the undo button
         ImageIcon undoIcon = new ImageIcon(
-                new ImageIcon("resources/icons/undo.png").getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH));
+                new ImageIcon(GuiConfig.iconPath + "undo.png").getImage().getScaledInstance(50, 50,
+                        Image.SCALE_SMOOTH));
         undoButton.setIcon(undoIcon);
         undoButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -80,7 +81,8 @@ public class BottomPanel extends JPanel {
 
         // Load the image
         ImageIcon redoIcon = new ImageIcon(
-                new ImageIcon("resources/icons/redo.png").getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH));
+                new ImageIcon(GuiConfig.iconPath + "redo.png").getImage().getScaledInstance(50, 50,
+                        Image.SCALE_SMOOTH));
         redoButton.setIcon(redoIcon);
         // redoButton.setBorder(BorderFactory.createEmptyBorder(3,3,3,3));
         redoButton.addActionListener(new ActionListener() {
