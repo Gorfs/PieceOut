@@ -1,7 +1,7 @@
 package src.controllers;
 
 import src.geometry.IntCoordinates;
-import src.gui.GUIManager;
+import src.gui.InstanceManager;
 import src.logic.PieceLogic;
 import src.utils.Debug;
 
@@ -15,20 +15,24 @@ import static src.config.GuiConfig.CELL_SIZE;
 public class PlayerController extends JPanel implements MouseListener {
     public static PlayerController INSTANCE;
 
-    public static UndoManager um = new UndoManager();
+    public UndoManager um = new UndoManager();
 
     protected final PieceLogic pieceLogic;
-    protected final GUIManager guiManager;
+    protected final InstanceManager instanceManager;
 
     /**
-     * Constructor of the PlayerController where we initialize the attribute controlling
+     * Constructor of the PlayerController where we initialize the attribute
+     * controlling
      * and add the MouseListener and KeyListener to the JPanel
      */
-    public PlayerController(GUIManager guiManager, PieceLogic pieceLogic, Container content) {
-        this.guiManager = guiManager;
+    public PlayerController(InstanceManager instanceManager, PieceLogic pieceLogic) {
+        this.instanceManager = instanceManager;
         this.pieceLogic = pieceLogic;
-        content.addMouseListener(this);
         PlayerController.INSTANCE = this;
+    }
+
+    public void startController(Container content){
+        content.addMouseListener(this);
     }
 
     /**
@@ -36,25 +40,25 @@ public class PlayerController extends JPanel implements MouseListener {
      */
     public void toggleControlManager(MouseEvent e) {
         // Get mouse position in the ArenaPanel
-        IntCoordinates mousePos = new IntCoordinates((e.getX()/CELL_SIZE), e.getY()/CELL_SIZE);
+        IntCoordinates mousePos = new IntCoordinates((e.getX() / CELL_SIZE), e.getY() / CELL_SIZE);
         // Print the mouse position
         Debug.out(mousePos.toString());
         // Initialize the position of the piece
         IntCoordinates piecePos;
 
-        for (var piece: this.pieceLogic.getPieces()) {
+        for (var piece : this.pieceLogic.getPieces()) {
             // Get the position of the piece
             piecePos = piece.getLast().getOffset();
             // Look into the shape of the piece
-            for(int i = 0; i < piece.getShape().length; i++){
-                for(int j = 0; j < piece.getShape()[i].length; j++){
+            for (int i = 0; i < piece.getShape().length; i++) {
+                for (int j = 0; j < piece.getShape()[i].length; j++) {
                     // Check if the mouse position is on the piece
                     if (piece.getShape()[i][j]) {
                         IntCoordinates temp = new IntCoordinates(piecePos.getX() + j, piecePos.getY() + i);
                         // If the mouse position is on the piece, the piece is now controlled
                         if (mousePos.equals(temp)) {
                             // triggering action at local coords of a shape array
-                            piece.action(this.pieceLogic, j, i);
+                            piece.action(this.pieceLogic,instanceManager, j, i);
                             Debug.out("triggering piece action");
                             return;
                         }
@@ -65,13 +69,10 @@ public class PlayerController extends JPanel implements MouseListener {
         // If the mouse position is not on the piece, Nothing happens
     }
 
-
-
-
     @Override
     public void mouseClicked(MouseEvent e) {
         toggleControlManager(e);
-        this.guiManager.update();
+        this.instanceManager.update();
 
     }
 

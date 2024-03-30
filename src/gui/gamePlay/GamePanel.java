@@ -4,7 +4,7 @@ import java.awt.Graphics;
 
 import javax.swing.*;
 
-import src.gui.GUIManager;
+import src.gui.InstanceManager;
 import src.gui.UI.*;
 import src.logic.PieceLogic;
 import src.config.*;
@@ -26,13 +26,13 @@ public class GamePanel extends JPanel {
 
     private final PieceLogic pieceLogic;
 
-    protected final GUIManager guiManager;
+    protected final InstanceManager guiManager;
 
     public ArenaPanel getArenaPanel(){
         return this.arenaPanel;
     }
 
-    public GamePanel(PieceLogic pieceLogic, GUIManager guiManager){
+    public GamePanel(PieceLogic pieceLogic, InstanceManager guiManager){
         super();
 
         this.guiManager = guiManager;
@@ -45,7 +45,7 @@ public class GamePanel extends JPanel {
         this.topPanel = new TopPanel(guiManager);
         this.add(topPanel);
 
-        this.arenaPanel = new ArenaPanel();
+        this.arenaPanel = new ArenaPanel(guiManager);
         this.add(arenaPanel);
 
         this.bottomPanel = new BottomPanel(guiManager);

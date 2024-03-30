@@ -2,6 +2,7 @@ package src.piece.decorator;
 
 import src.controllers.PlayerController;
 import src.geometry.IntCoordinates;
+import src.gui.InstanceManager;
 import src.logic.Arena;
 import src.logic.Move;
 import src.logic.MoveEdit;
@@ -28,6 +29,7 @@ public abstract class Decorator extends Piece {
 
     /**
      * Constructor for the decorators.
+     * 
      * @param p Piece on which we add the decorator.
      */
     public Decorator(Piece p, IntCoordinates local) {
@@ -57,7 +59,7 @@ public abstract class Decorator extends Piece {
         rotateActionPoint(clockwise);
     }
 
-    public void rotateActionPoint(boolean clockwise){
+    public void rotateActionPoint(boolean clockwise) {
         // rotate the action point of the piece
         // used in the applyRotation() methode
         boolean[][] shape = this.getLast().getShape();
@@ -79,8 +81,7 @@ public abstract class Decorator extends Piece {
         }
     }
 
-
-    public void flipActionPoint(boolean xAxis){
+    public void flipActionPoint(boolean xAxis) {
         boolean[][] shape = this.getLast().getShape();
         if (!xAxis) {
             this.actionPoint = new IntCoordinates(shape.length - this.actionPoint.getX() - 1, this.actionPoint.getY());
@@ -88,6 +89,7 @@ public abstract class Decorator extends Piece {
             this.actionPoint = new IntCoordinates(this.actionPoint.getX(), shape.length - this.actionPoint.getY() - 1);
         }
     }
+
     /**
      * same as for the applyRotation() methode but for the flip action
      */
@@ -96,27 +98,28 @@ public abstract class Decorator extends Piece {
         // updating the decorator's action points for a flip depending on axis of flip
         this.flipActionPoint(xAxis);
         // recursively apply flip to rest of the list
-        if (this.getPrevPiece() instanceof Decorator){
+        if (this.getPrevPiece() instanceof Decorator) {
             ((Decorator) this.getPrevPiece()).applyFlip(xAxis);
         }
     }
 
     public void offsetPosition(IntCoordinates actionArea) {
-        // offset the position of the piece to compensate for change of fixture Point change
+        // offset the position of the piece to compensate for change of fixture Point
+        // change
 
         int xOffset = this.getLast().getFixturePoint().getX() - actionArea.getX();
         int yOffset = this.getLast().getFixturePoint().getY() - actionArea.getY();
 
         IntCoordinates pos = this.getLast().getPos();
 
-        this.getLast().setPos(new IntCoordinates(pos.getX()  -  xOffset, pos.getY() - yOffset));
+        this.getLast().setPos(new IntCoordinates(pos.getX() - xOffset, pos.getY() - yOffset));
     }
 
     @Override
-    public void action(PieceLogic pieceLogic, int x, int y) {
+    public void action(PieceLogic pieceLogic, InstanceManager instanceManager, int x, int y) {
         // If it is the right action we pressed on, then do the action.
         // (deal with offset)
-        if (this.actionPoint.getX() == x && this.actionPoint.getY() == y){
+        if (this.actionPoint.getX() == x && this.actionPoint.getY() == y) {
             personalAction();
             Debug.printDecorator(this);
             if (checkCollision(pieceLogic)) {
@@ -124,26 +127,25 @@ public abstract class Decorator extends Piece {
                 personalReverseAction();
             } else {
                 Debug.out("No collision detected");
-                PlayerController.um.addEdit(new MoveEdit(new Move(this)));
-                Debug.out(PlayerController.um.canUndo() ? "can Undo" : "cannot undo");
-                Debug.out(PlayerController.um.canRedo() ? "can Redo" : "cannot redo");
+                instanceManager.playerController.um.addEdit(new MoveEdit(new Move(this)));
             }
             // If not, then we check for the next decorator.
-        }else{
-            this.prevPiece.action(pieceLogic, x, y);
+        } else {
+            this.prevPiece.action(pieceLogic, instanceManager, x, y);
         }
 
     }
 
     /**
      * Method that returns the action type of the correct Piece.
+     * 
      * @param x local getX coordinates in shape array
      * @param y local getY coordinates in shape array
      * @return Returns a String of the action type of the Piece.
      */
-    public String getActionType(int x, int y){
-        if (this.actionPoint.getX() == x && this.actionPoint.getY() == y){
-            switch(this.getClass().getSimpleName()){
+    public String getActionType(int x, int y) {
+        if (this.actionPoint.getX() == x && this.actionPoint.getY() == y) {
+            switch (this.getClass().getSimpleName()) {
                 case "Translation":
                     return "Translation";
                 case "Rotation":
@@ -161,8 +163,7 @@ public abstract class Decorator extends Piece {
                 default:
                     return "";
             }
-        }
-        else{
+        } else {
             return this.prevPiece.getActionType(x, y);
         }
     }
@@ -185,13 +186,14 @@ public abstract class Decorator extends Piece {
 
     /**
      * Method that checks collision for the piece.
+     * 
      * @return true if the piece is colliding with the walls
      */
     protected boolean checkCollision(PieceLogic pieceLogic) {
         // Get the position of the piece
         IntCoordinates piecePos = this.getLast().getOffset();
         // Get the matrix of the arena
-        boolean[][] matrix = Arena.getInstance().getMatrix();
+        boolean[][] matrix = this.getLast().guiManager.arena.getMatrix();
         // Variable to store the last piece
         PieceBrute last;
         // For each cell in the piece
@@ -199,19 +201,22 @@ public abstract class Decorator extends Piece {
             for (int j = 0; j < this.getShape()[i].length; j++) {
                 if (this.getShape()[i][j]) {
                     // Check if the piece is colliding with the walls
-                    if (piecePos.getX() + j < 0 || piecePos.getX() + j >= matrix[0].length || piecePos.getY() + i < 0 || piecePos.getY() + i >= matrix.length) {
+                    if (piecePos.getX() + j < 0 || piecePos.getX() + j >= matrix[0].length || piecePos.getY() + i < 0
+                            || piecePos.getY() + i >= matrix.length) {
                         return true;
-                    } if (!matrix[piecePos.getY() + i][piecePos.getX() + j]) {
+                    }
+                    if (!matrix[piecePos.getY() + i][piecePos.getX() + j]) {
                         return true;
                     }
                     // Check if the piece is colliding with another piece
-                    for (var piece: pieceLogic.getPieces()) {
+                    for (var piece : pieceLogic.getPieces()) {
                         last = piece.getLast();
                         if (this.getLast() != last) {
                             for (int k = 0; k < last.getShape().length; k++) {
                                 for (int l = 0; l < last.getShape()[k].length; l++) {
                                     if (last.getShape()[k][l]) {
-                                        if (piecePos.getX() + j == last.getOffset().getX() + l && piecePos.getY() + i == last.getOffset().getY() + k) {
+                                        if (piecePos.getX() + j == last.getOffset().getX() + l
+                                                && piecePos.getY() + i == last.getOffset().getY() + k) {
                                             return true;
                                         }
                                     }
@@ -243,6 +248,7 @@ public abstract class Decorator extends Piece {
 
     /**
      * Method that sets the nextPiece it decorates.
+     * 
      * @param p
      */
     public void setNextPiece(Piece p) {

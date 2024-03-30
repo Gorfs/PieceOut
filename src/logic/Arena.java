@@ -1,5 +1,7 @@
 package src.logic;
 
+import src.gui.InstanceManager;
+
 /**
  * The Arena class represents a game arena with a specified width and height.
  * Max width and height are 7.
@@ -8,7 +10,6 @@ public class Arena {
     private final int width = 7, height = 7;
     private int level;
     private boolean[][] matrix = new boolean[height][width];
-    private static final Arena INSTANCE = new Arena(LevelManager.loadLevelFromJson(4));
 
     /**
      * Represents an arena in the game.
@@ -16,17 +17,10 @@ public class Arena {
      *
      * @param binary is a string of 49 chars that represents the arena.
      */
-    private Arena(String binary){
-        loadArena(binary);
+    public Arena(InstanceManager guiManager){
+        loadArena(LevelManager.loadLevelFromJson(guiManager.level));
     }
 
-    public static Arena getInstance(){
-        return INSTANCE;
-    }
-
-    public void loadNewArena(String binary){
-        loadArena(binary);
-    }
 
     public int getLevel(){
         return level;

@@ -2,7 +2,7 @@ package src.gui.gamePlay;
 
 import src.geometry.IntCoordinates;
 import src.config.GuiConfig;
-import src.gui.GUIManager;
+import src.gui.InstanceManager;
 import src.piece.decorator.Decorator;
 import src.utils.Debug;
 
@@ -15,7 +15,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 public class GuiPiece extends JPanel {
-    private final GUIManager guiManager;
+    private final InstanceManager guiManager;
     //! assumes that the nextPiece is in a valid place in the arena
 
     private Color colour = Color.black;
@@ -26,7 +26,7 @@ public class GuiPiece extends JPanel {
     private Decorator piece;
 
 
-    public GuiPiece(GUIManager guiManager, Decorator piece){
+    public GuiPiece(InstanceManager guiManager, Decorator piece){
         this.guiManager = guiManager;
         this.piece = piece;
         this.colour = piece.getLast().getColor();
