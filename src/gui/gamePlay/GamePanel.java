@@ -32,6 +32,8 @@ public class GamePanel extends JPanel {
     public ArenaPanel getArenaPanel(){
         return this.arenaPanel;
     }
+
+    // this getter is mostly used to get it's y position, could probably be done in a better way.
     public ArenaContainerPanel getArenaContainerPanel(){
         return this.arenaContainerPanel;
     }

@@ -71,34 +71,4 @@ public class ArenaPanel extends JPanel {
         }
     }
 
-    // DEPRECATED
-
-    // public IntCoordinates[][] getCellCoordArray(){
-    // // returns an array of all the gui.gameplay.cell components drawn on the map
-    // boolean[][] matrix = instanceManager.arena.getMatrix();
-    // int width = matrix.length;
-    // int height = matrix[0].length;
-    // int x = 0;
-    // int y = 0;
-    // int xOffset = this.getX();
-    // int yOffset = this.getY();
-    // Component[] component = this.getComponents();
-    // IntCoordinates[][] result = new IntCoordinates[height][width];
-
-    // for(int i = 0; i < component.length; i++){
-    // Cell cell = (Cell) component[i];
-    // result[y][x] = new IntCoordinates(cell.getPixel_x() + xOffset,
-    // cell.getPixel_y() + yOffset);
-    // // Debug.out(result[y][x].toString());
-    // x++;
-    // if (x == width){
-    // x = 0;
-    // y++;
-    // }
-
-    // }
-
-    // return result;
-    // }
-
 }
