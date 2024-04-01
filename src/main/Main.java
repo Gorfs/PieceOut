@@ -11,7 +11,7 @@ public class Main {
      */
     public static void main(String[] args){
 
-        int level = 0;
+        int level = 1;
         /*
           Init the logic of the game
          */
