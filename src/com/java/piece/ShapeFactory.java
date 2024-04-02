@@ -1,0 +1,79 @@
+package src.com.java.piece;
+
+import java.awt.Color;
+
+import src.com.java.piece.Target;
+import src.com.java.geometry.IntCoordinates;
+import src.com.java.gui.InstanceManager;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
+import src.com.java.logic.PieceLogic;
+
+
+
+/**
+ * Class factory for shapes, each shape can be imported from the files.
+ */
+public class ShapeFactory extends PieceBrute {
+
+    public void action(int a, int b){
+        return;
+    }
+
+    /**
+     * Constructor of ShapeFactory
+     * @param filePath File name like "OShape".
+     * @param color Color of the nextPiece.
+     * @param fixturePoint point of the face.
+     * @param pos Position of the piece.
+     * @param target Target of the piece.
+     */
+    public ShapeFactory(String filePath, Color color, IntCoordinates pos, IntCoordinates fixturePoint, Target target, InstanceManager guiManager) {
+        this.color = color;
+        this.setPos(pos);
+        this.setFixturePoint(fixturePoint);
+        this.setShape(generateShape(filePath));
+        this.setTarget(target); 
+        this.guiManager = guiManager;
+    }
+
+    public ShapeFactory(String filePath, Color color, IntCoordinates pos, IntCoordinates fixturePoint) {
+        this(filePath, color, pos, fixturePoint, null, null);
+    }
+
+    /**
+     * Method that generate a nextPiece shape from a file based on the method used to import map.
+     * @param filePath File name like "OShape".
+     * @return Returns the shape generated from the file.
+     */
+    public boolean[][] generateShape(String filePath) {
+        boolean[][] shape = new boolean[4][4];
+        try {
+            FileReader fileReader = new FileReader("resources/shapes/" + filePath + ".txt");
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            String line;
+            int row = 0;
+            while ((line = bufferedReader.readLine()) != null) {
+                for (int col = 0; col < line.length(); col += 2) { // increment by 2 to skip spaces
+                    shape[row][col / 2] = Character.getNumericValue(line.charAt(col)) != 0; // divide by 2 to adjust for spaces
+                }
+                row++;
+            }
+            bufferedReader.close();
+            fileReader.close();
+        } catch (IOException e) {
+            // TODO: handle exception
+            e.printStackTrace();
+        }
+        return shape;
+    }
+
+
+    @Override
+    public void action(PieceLogic pieceLogic, InstanceManager instanceManager, int x, int y) {
+        // Does nothing
+    }
+}
