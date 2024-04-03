@@ -53,7 +53,7 @@ public class InstanceManager {
         arena = new Arena(this);
 
         this.gamePanel = new GamePanel(pieceLogic, this);
-        playerController.startController(gamePanel.getArenaPanel().getContainerPanel());
+        playerController.startController(gamePanel.getArenaPanel());
 
         mainFrame.add(gamePanel, "arena");
         mainFrame.setVisible(true);
@@ -70,26 +70,30 @@ public class InstanceManager {
     }
 
     public int getArenaPanelY() {
-        return gamePanel.getArenaPanel().getY();
+        return this.gamePanel.getArenaPanel().getY() + this.gamePanel.getArenaContainerPanel().getY();
     }
 
+    /** 
+     * updates the GUI
+    */
     public void update() {
-        /*
-         * updates the GUI
-         */
         gamePanel.update();
         gamePanel.getBottomPanel().updateButtons();
 
     }
 
+    /*
+     * changes the panel in the main frame to the panel with the name panelName
+    */
     public void changePanel(String panelName) {
-        /*
-         * changes the panel in the main frame to the panel with the name panelName
-         */
         layout.show(mainFrame, panelName);
     }
 
     public PieceLogic getPieceLogic() {
         return pieceLogic;
+    }
+
+    public int getHeight() {
+        return this.mainFrame.getHeight();
     }
 }
