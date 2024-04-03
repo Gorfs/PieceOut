@@ -5,9 +5,9 @@ package src.logic;
  * Max width and height are 7.
  */
 public class Arena {
-    private final int width = 7, height = 7;
+    private int width = 7, height = 7;
     private int level;
-    private boolean[][] matrix = new boolean[height][width];
+    private boolean[][] matrix;
     private static final Arena INSTANCE = new Arena(LevelManager.loadLevelFromJson(4));
 
     /**
@@ -16,8 +16,11 @@ public class Arena {
      *
      * @param binary is a string of 49 chars that represents the arena.
      */
-    private Arena(String binary){
-        loadArena(binary);
+    private Arena(String[] data){
+        width = Integer.parseInt(data[1]);
+        height = Integer.parseInt(data[2]);
+        matrix = new boolean[height][width];
+        loadArena(data[0]);
     }
 
     public static Arena getInstance(){
