@@ -17,7 +17,7 @@ public class Arena {
      *
      * @param binary is a string of 49 chars that represents the arena.
      */
-    private Arena(InstanceManager guiManager){
+    public Arena(InstanceManager guiManager){
         String[] data = LevelManager.loadLevelFromJson(guiManager.level);
         width = Integer.parseInt(data[1]);
         height = Integer.parseInt(data[2]);
