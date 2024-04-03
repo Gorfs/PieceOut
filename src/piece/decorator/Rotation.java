@@ -35,7 +35,7 @@ public class Rotation extends Decorator {
         // updating the decorator's action points for a flip depending on axis of flip
         this.rotationDirectionClockwise = !this.rotationDirectionClockwise;
         this.flipActionPoint(xAxis);
-        // recursively apply flip to rest of the list
+        // recursively apply flip to the rest of the list
         if (this.getPrevPiece() instanceof Decorator) {
             ((Decorator) this.getPrevPiece()).applyFlip(xAxis);
         }
@@ -68,7 +68,7 @@ public class Rotation extends Decorator {
     @Override
     public void personalAction() {
         boolean[][] initShape = this.getLast().getShape();
-        boolean[][] rotatedShape = new boolean[initShape.length][initShape.length]; // 4x4 matrix for the rotated shape
+        boolean[][] rotatedShape = new boolean[initShape[0].length][initShape.length]; // new shape after rotation
 
         this.offsetPosition(this.actionPoint);
 
@@ -78,11 +78,11 @@ public class Rotation extends Decorator {
 
         // rotating matrix 90 degrees clockwise
         for (int i = 0; i < initShape.length; i++) {
-            for (int j = 0; j < initShape.length; j++) {
+            for (int j = 0; j < initShape[0].length; j++) {
                 if (!this.rotationDirectionClockwise) {
                     // rotating the shape anti-clockwise
 
-                    rotatedShape[initShape.length - j - 1][i] = initShape[i][j]; // rotating the shape
+                    rotatedShape[initShape[0].length - j - 1][i] = initShape[i][j]; // rotating the shape
 
                 } else {
                     // the rotation is clockwise

@@ -7,17 +7,17 @@
                     "id": 0,
                     "shape": "HoShape",
                     "color": "blue",
-                    "position": [-1, 1],
+                    "position": [0, 2],
                     "decorators":[
                         {
                             "type": "translation",
                             "direction": "left",
-                            "position": [1, 1]
+                            "position": [0, 0]
                         },
                         {
                             "type": "translation",
                             "direction": "right",
-                            "position": [2, 1]
+                            "position": [1, 0]
                         }
                     ]
                 }
@@ -25,7 +25,7 @@
             "targets": [
                 {
                     "id": 0,
-                    "position": [3, 1],
+                    "position": [4, 2],
                     "direction": "right",
                     "flip_x": false,
                     "flip_y": false
@@ -39,17 +39,17 @@
                     "id": 0,
                     "shape": "HoShape",
                     "color": "blue",
-                    "position": [3, 2],
+                    "position": [4, 3],
                     "decorators":[
                         {
                             "type": "translation",
                             "direction": "left",
-                            "position": [1, 1]
+                            "position": [0, 0]
                         },
                         {
                             "type": "translation",
                             "direction": "right",
-                            "position": [2, 1]
+                            "position": [1, 0]
                         }
                     ]
                 },
@@ -57,12 +57,12 @@
                     "id": 1,
                     "shape": "SingleShape",
                     "color": "red",
-                    "position": [3, 5],
+                    "position": [4, 6],
                     "decorators":[
                         {
                             "type": "translation",
                             "direction": "up",
-                            "position": [1, 1]
+                            "position": [0, 0]
                         }
                     ]
                 }
@@ -70,7 +70,7 @@
             "targets": [
                 {
                     "id": 1,
-                    "position": [3, -1],
+                    "position": [4, 0],
                     "direction": "right",
                     "flip_x": false,
                     "flip_y": false
@@ -84,17 +84,17 @@
                     "id": 0,
                     "shape": "TShape",
                     "color": "blue",
-                    "position": [0, 3],
+                    "position": [1, 5],
                     "decorators":[
                         {
                             "type": "translation",
                             "direction": "right",
-                            "position": [3, 2]
+                            "position": [2, 0]
                         },
                         {
                             "type": "rotation",
                             "clockwise": false,
-                            "position": [2, 2],
+                            "position": [1, 0],
                             "repeat": 2
                         }
                     ]
@@ -117,12 +117,12 @@
                     "id": 0,
                     "shape": "TShape",
                     "color": "blue",
-                    "position": [2, 1],
+                    "position": [3, 3],
                     "decorators":[
                         {
                             "type": "rotation",
                             "clockwise": false,
-                            "position": [2, 2],
+                            "position": [1, 0],
                             "repeat": 1
                         }
                     ]
@@ -131,12 +131,12 @@
                     "id": 1,
                     "shape": "SingleShape",
                     "color": "red",
-                    "position": [4, 5],
+                    "position": [5, 6],
                     "decorators":[
                         {
                             "type": "translation",
                             "direction": "up",
-                            "position": [1, 1]
+                            "position": [0, 0]
                         }
                     ]
                 }
@@ -144,7 +144,7 @@
             "targets": [
                 {
                     "id": 1,
-                    "position": [4, -1],
+                    "position": [5, 0],
                     "direction": "right",
                     "flip_x": false,
                     "flip_y": false
@@ -158,12 +158,12 @@
                     "id": 0,
                     "shape": "LShape",
                     "color": "blue",
-                    "position": [3, 2],
+                    "position": [4, 3],
                     "decorators":[
                         {
                             "type": "rotation",
                             "clockwise": true,
-                            "position": [1, 2],
+                            "position": [0, 1],
                             "repeat": 3
                         }
                     ]
@@ -172,17 +172,17 @@
                     "id": 1,
                     "shape": "SingleShape",
                     "color": "red",
-                    "position": [0, 4],
+                    "position": [1, 5],
                     "decorators":[
                         {
                             "type": "translation",
                             "direction": "right",
-                            "position": [1, 1]
+                            "position": [0, 0]
                         },
                         {
                             "type": "translation",
                             "direction": "up",
-                            "position": [1, 2]
+                            "position": [0, 1]
                         }
                     ]
                 }
@@ -190,7 +190,7 @@
             "targets": [
                 {
                     "id": 1,
-                    "position": [3, 0],
+                    "position": [4, 1],
                     "direction": "right",
                     "flip_x": false,
                     "flip_y": false
