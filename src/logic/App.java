@@ -5,6 +5,6 @@ public class App {
 
     public static void run() {
         // Load the arena
-        Arena arena = Arena.getInstance();
+        // Arena arena = new Arena();
     }
 }

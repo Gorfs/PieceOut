@@ -1,5 +1,6 @@
 package src.main;
 
+import java.util.concurrent.*;
 import src.logic.*;
 
 import src.gui.*;
@@ -14,10 +15,11 @@ public class Main {
         /*
           Init the logic of the game
          */
-        App.run();
+        // App.run();
 
         // init the GUI manager
-        GUIManager guiManager = new GUIManager(new PieceLogic());
-        guiManager.start(level);
+        InstanceManager instanceManager = new InstanceManager(new PieceLogic());
+        instanceManager.start(level);
+        
     }
 }

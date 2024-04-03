@@ -4,7 +4,7 @@ import java.awt.Graphics;
 
 import javax.swing.*;
 
-import src.gui.GUIManager;
+import src.gui.InstanceManager;
 import src.gui.UI.*;
 import src.logic.PieceLogic;
 import src.config.*;
@@ -19,20 +19,26 @@ import java.util.ArrayList;
  */
 public class GamePanel extends JPanel {
     private final JPanel topPanel;
-    private final ArenaPanel arenaPanel;
+    private ArenaContainerPanel arenaContainerPanel;
+    private ArenaPanel arenaPanel;
     private final JPanel bottomPanel;
 
     private ArrayList<GuiPiece> guiPieces = new ArrayList<GuiPiece>();
 
     private final PieceLogic pieceLogic;
 
-    protected final GUIManager guiManager;
+    protected final InstanceManager guiManager;
 
     public ArenaPanel getArenaPanel(){
         return this.arenaPanel;
     }
 
-    public GamePanel(PieceLogic pieceLogic, GUIManager guiManager){
+    // this getter is mostly used to get it's y position, could probably be done in a better way.
+    public ArenaContainerPanel getArenaContainerPanel(){
+        return this.arenaContainerPanel;
+    }
+
+    public GamePanel(PieceLogic pieceLogic, InstanceManager guiManager){
         super();
 
         this.guiManager = guiManager;
@@ -45,12 +51,12 @@ public class GamePanel extends JPanel {
         this.topPanel = new TopPanel(guiManager);
         this.add(topPanel);
 
-        this.arenaPanel = new ArenaPanel();
-        this.add(arenaPanel);
+        this.arenaContainerPanel = new ArenaContainerPanel(guiManager);
+        this.arenaPanel = arenaContainerPanel.getArenaPanel();
+        this.add(arenaContainerPanel);
 
         this.bottomPanel = new BottomPanel(guiManager);
         this.add(bottomPanel);
-
     }
 
     /**

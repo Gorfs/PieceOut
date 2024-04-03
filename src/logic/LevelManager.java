@@ -9,6 +9,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import src.config.Colours;
 import src.geometry.IntCoordinates;
+import src.gui.InstanceManager;
 import src.piece.Piece;
 import src.piece.ShapeFactory;
 import src.piece.Target;
@@ -54,7 +55,7 @@ public class LevelManager {
         }
     }
 
-    public static void loadPiecesFromJson(PieceLogic pieceLogic, int id) {
+    public static void loadPiecesFromJson(PieceLogic pieceLogic, int id, InstanceManager guiManager) {
         try {
             // Read the .json file
             String content = new String(Files.readAllBytes(Paths.get("resources/maps/pieces.json")));
@@ -87,7 +88,7 @@ public class LevelManager {
                             target_to_add = null;
                         }
                         JSONObject piece = pieces.getJSONObject(j);
-                        createPiece(piece, target_to_add, pieceLogic);
+                        createPiece(piece, target_to_add, pieceLogic, guiManager);
                     }
                     return;
                 }
@@ -97,7 +98,7 @@ public class LevelManager {
         }
     }
 
-    public static void createPiece(JSONObject piece, Target target, PieceLogic pieceLogic) {
+    public static void createPiece(JSONObject piece, Target target, PieceLogic pieceLogic, InstanceManager guiManager) {
 
         // Get the color
         Color color = switch (piece.getString("color")) {
@@ -110,7 +111,8 @@ public class LevelManager {
         JSONArray positionArray = piece.getJSONArray("position");
         IntCoordinates position = new IntCoordinates(positionArray.getInt(0), positionArray.getInt(1));
         // Create the piece
-        Piece piece_to_add = new ShapeFactory(piece.getString("shape"), color, position, new IntCoordinates(0, 0), target);
+        Piece piece_to_add = new ShapeFactory(piece.getString("shape"), color, position, new IntCoordinates(0, 0), target, guiManager);
+        
 
         // Add the decorators
         JSONArray decorators = piece.getJSONArray("decorators");
