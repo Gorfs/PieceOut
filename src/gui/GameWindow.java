@@ -14,11 +14,11 @@ public class GameWindow extends JFrame{
      */
     public GameWindow(){
         super("Game");
-        setSize(GuiConfig.WINDOW_WIDTH, GuiConfig.WINDOW_HEIGHT);
+        setSize(GuiConfig.width, GuiConfig.height);
         this.setBackground(Colours.BACKGROUND);
         // this.setResizable(false);
-        this.setSize(new Dimension(src.config.GuiConfig.WINDOW_WIDTH, src.config.GuiConfig.WINDOW_HEIGHT));
-        this.setMaximumSize(new Dimension(src.config.GuiConfig.WINDOW_WIDTH, src.config.GuiConfig.WINDOW_HEIGHT));
+        this.setSize(new Dimension(GuiConfig.width, GuiConfig.height));
+        this.setMaximumSize(new Dimension(GuiConfig.width, GuiConfig.height));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 }

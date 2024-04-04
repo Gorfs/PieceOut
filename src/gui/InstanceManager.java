@@ -1,14 +1,18 @@
 package src.gui;
 
+import src.config.GuiConfig;
 import src.controllers.PlayerController;
 import src.gui.gamePlay.*;
 import src.logic.Arena;
 import src.logic.LevelManager;
 import src.logic.PieceLogic;
 import src.piece.decorator.Decorator;
+import src.gui.gamePlay.Cell;
 
 import java.awt.*;
 
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
 
 /**
@@ -66,7 +70,16 @@ public class InstanceManager {
             // guiPiece.repaint();
         }
 
+        this.mainFrame.addComponentListener(new ComponentAdapter() {
+            public void componentResized(ComponentEvent componentEvent) {
+                GuiConfig.width = mainFrame.getWidth();
+                GuiConfig.height = mainFrame.getHeight();
+                GuiConfig.updateArenaScale();
 
+                for (Cell[] cells : gamePanel.getArenaPanel().getCells())
+                    for (Cell cell : cells) cell.updateCell();
+            }
+        });
     }
 
     public int getArenaPanelY() {
