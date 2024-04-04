@@ -1,0 +1,67 @@
+{
+    "shapes": [
+        {
+            "type": "SingleShape",
+            "width": 1,
+            "height": 1,
+            "form": [
+                [1]
+            ]
+        },
+        {
+            "type": "HoShape",
+            "width": 2,
+            "height": 1,
+            "form": [
+                [1, 1]
+            ]
+        },
+        {
+            "type": "JShape",
+            "width": 2,
+            "height": 3,
+            "form": [
+                [0, 1],
+                [0, 1],
+                [1, 1]
+            ]
+        },
+        {
+            "type": "LShape",
+            "width": 2,
+            "height": 3,
+            "form": [
+                [1, 0],
+                [1, 0],
+                [1, 1]
+            ]
+        },
+        {
+            "type": "0Shape",
+            "width": 2,
+            "height": 2,
+            "form": [
+                [1, 1],
+                [1, 1]
+            ]
+        },
+        {
+            "type": "TShape",
+            "width": 3,
+            "height": 2,
+            "form": [
+                [1, 1, 1],
+                [0, 1, 0]
+            ]
+        },
+        {
+            "type": "VeShape",
+            "width": 1,
+            "height": 2,
+              "form": [
+                  [1],
+                  [1]
+              ]
+        }
+    ]
+}

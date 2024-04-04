@@ -59,20 +59,25 @@ public abstract class Decorator extends Piece {
         rotateActionPoint(clockwise);
     }
 
+    /**
+     * rotates the action point of the piece
+     * @param clockwise
+     */
     public void rotateActionPoint(boolean clockwise) {
         // rotate the action point of the piece
         // used in the applyRotation() methode
+
         boolean[][] shape = this.getLast().getShape();
         boolean alreadyRotated = false;
         for (int i = 0; i < shape.length; i++) {
-            for (int j = 0; j < shape.length; j++) {
+            for (int j = 0; j < shape[0].length; j++) {
                 if (i == this.actionPoint.getY() && j == this.actionPoint.getX() && !alreadyRotated) {
                     alreadyRotated = true;
                     if (clockwise) {
                         this.setActionPoint(new IntCoordinates(shape.length - i - 1, j));
 
                     } else {
-                        this.setActionPoint(new IntCoordinates(i, shape.length - j - 1));
+                        this.setActionPoint(new IntCoordinates(i, shape[0].length - j - 1));
                     }
 
                 }
@@ -84,7 +89,7 @@ public abstract class Decorator extends Piece {
     public void flipActionPoint(boolean xAxis) {
         boolean[][] shape = this.getLast().getShape();
         if (!xAxis) {
-            this.actionPoint = new IntCoordinates(shape.length - this.actionPoint.getX() - 1, this.actionPoint.getY());
+            this.actionPoint = new IntCoordinates(shape[0].length - this.actionPoint.getX() - 1, this.actionPoint.getY());
         } else {
             this.actionPoint = new IntCoordinates(this.actionPoint.getX(), shape.length - this.actionPoint.getY() - 1);
         }
@@ -192,11 +197,9 @@ public abstract class Decorator extends Piece {
     protected boolean checkCollision(PieceLogic pieceLogic) {
         // Get the position of the piece
         IntCoordinates piecePos = this.getLast().getOffset();
-        // Get the matrix of the arena
         boolean[][] matrix = this.getLast().guiManager.arena.getMatrix();
         // Variable to store the last piece
         PieceBrute last;
-        // For each cell in the piece
         for (int i = 0; i < this.getShape().length; i++) {
             for (int j = 0; j < this.getShape()[i].length; j++) {
                 if (this.getShape()[i][j]) {

@@ -7,9 +7,9 @@ import src.com.java.gui.InstanceManager;
  * Max width and height are 7.
  */
 public class Arena {
-    private final int width = 7, height = 7;
+    private int width = 7, height = 7;
     private int level;
-    private boolean[][] matrix = new boolean[height][width];
+    private boolean[][] matrix;
 
     /**
      * Represents an arena in the game.
@@ -18,9 +18,12 @@ public class Arena {
      * @param binary is a string of 49 chars that represents the arena.
      */
     public Arena(InstanceManager guiManager){
-        loadArena(LevelManager.loadLevelFromJson(guiManager.level));
+        String[] data = LevelManager.loadLevelFromJson(guiManager.level);
+        width = Integer.parseInt(data[1]);
+        height = Integer.parseInt(data[2]);
+        matrix = new boolean[height][width];
+        loadArena(data[0]);
     }
-
 
     public int getLevel(){
         return level;

@@ -130,6 +130,14 @@ public class Cell extends JPanel{
     public IntCoordinates getIntCoordinates() {
         return new IntCoordinates(map_x, map_y);
     }
+
+    /**
+     * returns the coordinates in pixels RELATIVE to the top left of the arena Panel
+     * @return
+     */
+    public IntCoordinates getPixelCoordinates(){
+        return new IntCoordinates(pixel_x, pixel_y);
+    }
 }
     
 

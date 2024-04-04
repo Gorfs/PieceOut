@@ -6,10 +6,16 @@ import src.com.java.piece.Target;
 import src.com.java.config.GuiConfig;
 import src.com.java.geometry.IntCoordinates;
 import src.com.java.gui.InstanceManager;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import src.com.java.geometry.IntCoordinates;
+import src.com.java.gui.InstanceManager;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import src.com.java.logic.PieceLogic;
 
@@ -58,25 +64,32 @@ public class ShapeFactory extends PieceBrute {
      * @return Returns the shape generated from the file.
      */
     public boolean[][] generateShape(String filePath) {
-        boolean[][] shape = new boolean[4][4];
         try {
-            FileReader fileReader = new FileReader(GuiConfig.resourcePath + "shapes/" + filePath + ".txt");
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
-            String line;
-            int row = 0;
-            while ((line = bufferedReader.readLine()) != null) {
-                for (int col = 0; col < line.length(); col += 2) { // increment by 2 to skip spaces
-                    shape[row][col / 2] = Character.getNumericValue(line.charAt(col)) != 0; // divide by 2 to adjust for spaces
+            String content = new String(Files.readAllBytes(Paths.get(GuiConfig.resourcePath + "shapes.json")));
+            JSONObject jsonObject = new JSONObject(content);
+            JSONArray shapeArray = jsonObject.getJSONArray("shapes");
+            for (int i = 0; i < shapeArray.length(); i++) {
+                JSONObject type = shapeArray.getJSONObject(i);
+                // If the shape is found, get the shape
+                if (type.getString("type").equals(filePath)) {
+                    JSONArray form = type.getJSONArray("form");
+                    // Create the shape
+                    boolean[][] shape = new boolean[type.getInt("height")][type.getInt("width")];
+                    for (int j = 0; j < shape.length; j++) {
+                        // get a row of the shape
+                        JSONArray row = form.getJSONArray(j);
+                        for (int k = 0; k < shape[0].length; k++) {
+                            shape[j][k] = row.getInt(k) == 1;
+                        }
+                    }
+                    return shape;
                 }
-                row++;
             }
-            bufferedReader.close();
-            fileReader.close();
         } catch (IOException e) {
             // TODO: handle exception
             e.printStackTrace();
         }
-        return shape;
+        return null;
     }
 
 

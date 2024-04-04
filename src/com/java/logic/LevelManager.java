@@ -23,7 +23,7 @@ public class LevelManager {
      * @param id the id of the level to load
      * @return the map of the level
      */
-    public static String loadLevelFromJson(int id){
+    public static String[] loadLevelFromJson(int id){
         try {
             // Read the .json file
             String content = new String(Files.readAllBytes(Paths.get(GuiConfig.resourcePath + "maps/levels.json")));
@@ -39,7 +39,13 @@ public class LevelManager {
                 JSONObject level = levels.getJSONObject(i);
                 if (level.getInt("id") == id) {
                     // If the id matches, return the map
-                    return level.getString("map");
+                    JSONArray map = level.getJSONObject("map").getJSONArray("data");
+                    String mapString = "";
+                    for (int j = 0; j < map.length(); j++) {
+                        mapString += map.getString(j);
+                    }
+
+                    return new String[]{mapString, String.valueOf(level.getJSONObject("map").getInt("width")), String.valueOf(level.getJSONObject("map").getInt("height"))};
                 }
             }
 
