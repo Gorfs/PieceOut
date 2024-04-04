@@ -9,6 +9,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import src.com.java.config.Colours;
+import src.com.java.config.GuiConfig;
 import src.com.java.piece.Piece;
 import src.com.java.piece.ShapeFactory;
 import src.com.java.piece.Target;
@@ -25,7 +26,7 @@ public class LevelManager {
     public static String loadLevelFromJson(int id){
         try {
             // Read the .json file
-            String content = new String(Files.readAllBytes(Paths.get("resources/maps/levels.json")));
+            String content = new String(Files.readAllBytes(Paths.get(GuiConfig.resourcePath + "maps/levels.json")));
 
             // Parse the content into a JSONObject
             JSONObject obj = new JSONObject(content);
@@ -53,7 +54,7 @@ public class LevelManager {
     public static void loadPiecesFromJson(PieceLogic pieceLogic, int id, InstanceManager guiManager) {
         try {
             // Read the .json file
-            String content = new String(Files.readAllBytes(Paths.get("resources/maps/pieces.json")));
+            String content = new String(Files.readAllBytes(Paths.get(GuiConfig.resourcePath + "maps/pieces.json")));
 
             // Parse the content into a JSONObject
             JSONObject obj = new JSONObject(content);

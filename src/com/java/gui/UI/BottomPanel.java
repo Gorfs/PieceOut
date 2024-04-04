@@ -63,7 +63,7 @@ public class BottomPanel extends JPanel {
         undoButton.setFocusable(false);
         // Setting the icon for the undo button
         ImageIcon undoIcon = new ImageIcon(
-                new ImageIcon(GuiConfig.iconPath + "undo.png").getImage().getScaledInstance(50, 50,
+                new ImageIcon(GuiConfig.resourcePath + "icons/undo.png").getImage().getScaledInstance(50, 50,
                         Image.SCALE_SMOOTH));
         undoButton.setIcon(undoIcon);
         undoButton.addActionListener(new ActionListener() {
@@ -81,7 +81,7 @@ public class BottomPanel extends JPanel {
 
         // Load the image
         ImageIcon redoIcon = new ImageIcon(
-                new ImageIcon(GuiConfig.iconPath + "redo.png").getImage().getScaledInstance(50, 50,
+                new ImageIcon(GuiConfig.resourcePath + "icons/redo.png").getImage().getScaledInstance(50, 50,
                         Image.SCALE_SMOOTH));
         redoButton.setIcon(redoIcon);
         // redoButton.setBorder(BorderFactory.createEmptyBorder(3,3,3,3));

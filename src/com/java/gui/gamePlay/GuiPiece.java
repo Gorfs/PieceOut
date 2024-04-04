@@ -90,7 +90,7 @@ public class GuiPiece extends JPanel {
                         String action = piece.getActionType(j, i);
                         try{
                             if (action != ""){
-                                img = ImageIO.read(new File("resources/icons/" + action + ".png"));
+                                img = ImageIO.read(new File(GuiConfig.resourcePath + "icons/" + action + ".png"));
                             }
                         }
                         catch(Exception e){

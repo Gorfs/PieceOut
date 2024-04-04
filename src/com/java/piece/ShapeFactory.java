@@ -3,6 +3,7 @@ package src.com.java.piece;
 import java.awt.Color;
 
 import src.com.java.piece.Target;
+import src.com.java.config.GuiConfig;
 import src.com.java.geometry.IntCoordinates;
 import src.com.java.gui.InstanceManager;
 
@@ -52,7 +53,7 @@ public class ShapeFactory extends PieceBrute {
     public boolean[][] generateShape(String filePath) {
         boolean[][] shape = new boolean[4][4];
         try {
-            FileReader fileReader = new FileReader("resources/shapes/" + filePath + ".txt");
+            FileReader fileReader = new FileReader(GuiConfig.resourcePath + "shapes/" + filePath + ".txt");
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             String line;
             int row = 0;

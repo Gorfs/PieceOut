@@ -7,6 +7,6 @@ public class GuiConfig {
     
     public static double ArenaScale = 0.5;
     public static int CELL_SIZE = (int) Math.floor(100 * ArenaScale);
-    public static String iconPath = "resources/icons/";
+    public static String resourcePath = "src/com/resources/";
     
 }
