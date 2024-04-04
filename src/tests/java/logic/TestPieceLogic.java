@@ -1,14 +1,36 @@
 package src.tests.java.logic;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import src.com.java.geometry.IntCoordinates;
+import src.com.java.logic.PieceLogic;
+import src.com.java.piece.decorator.*;
+import src.com.java.piece.*;
+
 public class TestPieceLogic {
 
+
     @Test
-    public void basicTest1() {
-        assertTrue(true);
+    public void testAddPiece() {
+        PieceLogic pieceLogic = new PieceLogic();
+        PieceBrute piece = new ShapeFactory(); 
+        Decorator dec = new Rotation(piece, new IntCoordinates(0, 0) );
+        pieceLogic.addPiece(dec);
+        assertTrue(pieceLogic.getPieces().contains(dec));
+    }
+
+    @Test
+    public void testClearPieces() {
+        PieceLogic pieceLogic = new PieceLogic();
+        PieceBrute piece = new ShapeFactory(); 
+        Decorator dec = new Rotation(piece, new IntCoordinates(0, 0) );
+        pieceLogic.addPiece(dec);
+        assertEquals(1, pieceLogic.getPieces().size());
+        pieceLogic.clearPieces();
+        assertEquals(0, pieceLogic.getPieces().size());
     }
 
 }

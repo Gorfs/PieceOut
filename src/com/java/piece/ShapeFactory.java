@@ -46,6 +46,13 @@ public class ShapeFactory extends PieceBrute {
     }
 
     /**
+     * used mostly for test purposes
+     */
+    public ShapeFactory(){
+        this(null, null, null, null,null, null);
+    }
+
+    /**
      * Method that generate a nextPiece shape from a file based on the method used to import map.
      * @param filePath File name like "OShape".
      * @return Returns the shape generated from the file.
