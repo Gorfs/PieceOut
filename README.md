@@ -22,3 +22,8 @@ javac -cp .:path/to/junit/junit-<version>.jar org.junit.runner.JUnitCore AllTest
 
 
 Install the java Test runner extension
+
+click on the "testing" icon next to the extension, then click on enable java testing with JUnit, 
+You can now run tests
+
+Now on the testing icon you can run any test you want in that panel.
