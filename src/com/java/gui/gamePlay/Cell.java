@@ -40,14 +40,14 @@ public class Cell extends JPanel{
 
         this.instanceManager = instanceManager;
         this.setMinimumSize(new Dimension((int) (GuiConfig.CELL_SIZE ), (int) (GuiConfig.CELL_SIZE )));
-        this.setPreferredSize(new Dimension((int) (GuiConfig.CELL_SIZE ), (int) (GuiConfig.CELL_SIZE )));
+        this.setPreferredSize(new Dimension(GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE));
         this.setMaximumSize(new Dimension((int) (GuiConfig.CELL_SIZE ), (int) (GuiConfig.CELL_SIZE )));
         // For debugging purposes
         // this.setBorder(BorderFactory.createLineBorder(Color.black, 1));
 
         // pixel coordinates are relative to the top left of the arena
-        this.pixel_x = (int) Math.floor(x_coord * GuiConfig.CELL_SIZE ); 
-        this.pixel_y = (int) Math.floor(y_coord * GuiConfig.CELL_SIZE );
+        this.pixel_x = (int) Math.floor(x_coord * GuiConfig.CELL_SIZE);
+        this.pixel_y = (int) Math.floor(y_coord * GuiConfig.CELL_SIZE);
         this.map_x = x_coord;
         this.map_y = y_coord;
 
@@ -56,11 +56,22 @@ public class Cell extends JPanel{
         // this.add(new JLabel("x: " + pixel_x + " y: " + pixel_y));
     }
 
+    public void updateCell(){
+        this.pixel_x = (int) (double) (map_x * GuiConfig.CELL_SIZE);
+        this.pixel_y = (int) (double) (map_y * GuiConfig.CELL_SIZE);
+
+        this.setSize(new Dimension(GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE));
+        this.setMinimumSize(new Dimension(GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE));
+        this.setPreferredSize(new Dimension(GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE));
+        this.setMaximumSize(new Dimension(GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE));
+        updatePlayableCell();
+    }
+
+    /**
+     * updates the background of the cell to the correct color given by maze state
+     */
     public void updatePlayableCell(){
-        /**
-         * updates the background of the cell to the correct colour given by maze state
-         */
-        boolean matrix[][] = instanceManager.arena.getMatrix();
+        boolean[][] matrix = instanceManager.arena.getMatrix();
         if (matrix[map_y][map_x]){
             this.setBackground(Colours.CELLCOLOUR);
             applyShadow();
@@ -70,13 +81,12 @@ public class Cell extends JPanel{
         }
     }
 
+    /**
+     * applies a shadow to the cell if there is not a playable cell to the top or to the
+     * left of the cell.
+     * this helps to create the illusion of light coming from the top left corner.
+     */
     public void applyShadow(){
-        /**
-         * applies a shadow to the cell if there is not a playable cell to the top or to the 
-         * left of the cell.
-         * this helps to create the illusion of light coming from the top left corner.
-         */
-
         boolean[][] matrix = instanceManager.arena.getMatrix();
         if(map_x == 0 && map_y == 0){
             this.setBorder(topLeftShadow);

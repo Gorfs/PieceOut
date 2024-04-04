@@ -1,5 +1,6 @@
 package src.com.java.gui;
 
+import src.com.java.config.GuiConfig;
 import src.com.java.piece.decorator.Decorator;
 import src.com.java.controllers.PlayerController;
 import src.com.java.gui.gamePlay.*;
@@ -9,6 +10,8 @@ import src.com.java.logic.PieceLogic;
 
 import java.awt.*;
 
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
 
 /**
@@ -66,7 +69,16 @@ public class InstanceManager {
             // guiPiece.repaint();
         }
 
+        this.mainFrame.addComponentListener(new ComponentAdapter() {
+            public void componentResized(ComponentEvent componentEvent) {
+                GuiConfig.width = mainFrame.getWidth();
+                GuiConfig.height = mainFrame.getHeight();
+                GuiConfig.updateArenaScale();
 
+                for (Cell[] cells : gamePanel.getArenaPanel().getCells())
+                    for (Cell cell : cells) cell.updateCell();
+            }
+        });
     }
 
     public int getArenaPanelY() {
