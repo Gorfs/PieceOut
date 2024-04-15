@@ -1,12 +1,14 @@
 package src.com.java.gui;
 
 import src.com.java.config.GuiConfig;
+import src.com.java.piece.Piece;
 import src.com.java.piece.decorator.Decorator;
 import src.com.java.controllers.PlayerController;
 import src.com.java.gui.gamePlay.*;
 import src.com.java.logic.Arena;
 import src.com.java.logic.LevelManager;
 import src.com.java.logic.PieceLogic;
+import src.com.java.utils.Debug;
 
 import java.awt.*;
 
@@ -91,12 +93,28 @@ public class InstanceManager {
     public void update() {
         gamePanel.update();
         gamePanel.getBottomPanel().updateButtons();
-
+        for (Decorator piece : pieceLogic.getPieces()) {
+            if (piece.getLast().getTarget() != null) {
+                if (!piece.getLast().getTarget().getDest().equals(piece.getLast().getPos())) {
+                    // if the piece is not in the correct position, no need to call method won()
+                    Debug.out("Piece not in correct position");
+                    return;
+                }
+                // TODO: check for rotation and flip of the piece
+            }
+        }
+        // if all pieces are in the correct position, call method won()
+        Debug.out("Piece in correct position");
+        this.won();
     }
 
-    /*
+    public void won() {
+        // TODO: implement level transition here
+    }
+
+    /**
      * changes the panel in the main frame to the panel with the name panelName
-    */
+     */
     public void changePanel(String panelName) {
         layout.show(mainFrame, panelName);
     }
