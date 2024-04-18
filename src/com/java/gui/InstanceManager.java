@@ -59,7 +59,7 @@ public class InstanceManager {
         this.pieceLogic = pieceLogic;
         levelTransitionPanel = new JPanel();
         levelTransitionPanel.setBackground(Color.BLACK);
-        levelTransitionPanel.setBounds(-GuiConfig.WINDOW_WIDTH, 0, GuiConfig.WINDOW_WIDTH, GuiConfig.WINDOW_HEIGHT);
+        levelTransitionPanel.setBounds(0, 0, GuiConfig.WINDOW_WIDTH, GuiConfig.WINDOW_HEIGHT);
     }
 
     public void start(int level) {
@@ -101,6 +101,18 @@ public class InstanceManager {
                     for (Cell cell : cells) cell.updateCell();
             }
         });
+        this.animationOnStart();
+    }
+
+    /*
+     * method that is called when the player wants to change level
+     */
+
+    public void changeLevel(){
+        //TODO: Implement this :
+        //1. We remove everything that we have set on start
+        //2. We load the new level
+        //3. We do a new start with the new level
     }
 
     public int getArenaPanelY() {
@@ -128,8 +140,28 @@ public class InstanceManager {
         this.won();
     }
 
+    public void animationOnStart() {
+        Timer timer = new Timer(10, null);
+        timer.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                int x = levelTransitionPanel.getLocation().x;
+                x += 10;
+                if (x >= GuiConfig.WINDOW_WIDTH) {
+                    x = GuiConfig.WINDOW_WIDTH;
+                    timer.stop();
+                }
+                levelTransitionPanel.setLocation(x, 0);
+            }
+        });
+        timer.start();
+    }
+
+    /*
+     * method that is called when the player has won the level
+     */
+
     public void won() {
-        // TODO: implement level transition here
+        levelTransitionPanel.setLocation(-GuiConfig.WINDOW_WIDTH, 0);
         Timer timer1 = new Timer(10, null);
         timer1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -143,20 +175,7 @@ public class InstanceManager {
                     timer2.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent e) {
                             timer2.stop();
-
-                            Timer timer3 = new Timer(10, null);
-                            timer3.addActionListener(new ActionListener() {
-                                public void actionPerformed(ActionEvent e) {
-                                    int x = levelTransitionPanel.getLocation().x;
-                                    x += 10;
-                                    if (x >= GuiConfig.WINDOW_WIDTH) {
-                                        x = GuiConfig.WINDOW_WIDTH;
-                                        timer3.stop();
-                                    }
-                                    levelTransitionPanel.setLocation(x, 0);
-                                }
-                            });
-                            timer3.start();
+                            changeLevel();
                         }
                     });
                     timer2.setRepeats(false);
@@ -166,8 +185,6 @@ public class InstanceManager {
             }
         });
         timer1.start();
-
-        levelTransitionPanel.setLocation(-GuiConfig.WINDOW_WIDTH, 0);
     }
 
     /**
