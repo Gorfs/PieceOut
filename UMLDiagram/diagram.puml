@@ -1,4 +1,5 @@
 @startuml
+allowmixing
 package src.com.java.config{
 
     class Colours{
@@ -31,8 +32,22 @@ package src.com.java.geometry{
         + int y
         public int getX()
         public int getY()
-        
+        public void setX(int x)
+        pbulci void setY(int y)
+
     }
+}
+package src.com.resources{
+    folder "icons"{
+
+    }
+    folder "maps"{
+
+    artifact "levels<U+002E>json" as  v1
+    artifact "pieces<U+002E>json" as  v2
+    }
+    artifact "shapes<U+002E>json" as validation
+
 }
 
 @enduml
