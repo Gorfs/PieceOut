@@ -1,5 +1,7 @@
 @startuml
+' skinparam linetype polyline
 allowmixing
+skinparam classAttributeIconSize 0
 package src.com.java.config{
 
     class Colours{
@@ -37,9 +39,9 @@ package src.com.java.geometry{
 
     }
 }
-package src.com.java.gui{
+package src.com.java.gui {
     class gameWindow extends JFrame
-    class instanceManager{
+    class InstanceManager{
         public InstanceManager(PieceLogic pieceLogic)
         public void start(int level)
         public int getArenaPanelY()
@@ -83,10 +85,10 @@ package src.com.java.gui{
         class GuiPiece{
 
         }
-        ArenaContainerPanel <- instanceManager : uses
+        ArenaContainerPanel <- InstanceManager : uses
         ArenaContainerPanel -> ArenaPanel : contains
         ArenaPanel -> Cell : contains multiple of 
-        GamePanel -> ArenaContainerPanel : contains
+        GamePanel -down-> ArenaContainerPanel : contains
         GamePanel -> BottomPanel : contains
         GamePanel -> TopPanel : contains
 
@@ -124,7 +126,7 @@ package src.com.java.logic{
         public static void save(List<Integer> nbMovesPerLevel, List<Integer> nbStarsPerLevel, int nbMovesCurrent, int currentLevel)
         public static void load(Player player)
     }
-    SaveSystem -> Player: used for saving data
+    SaveSystem -down-> Player: used for saving data
 }
 package src.com.java.main{
     class Main{
@@ -143,11 +145,13 @@ package src.com.java.piece{
         public Target getTarget()
         public void setTarget(Target target)
         public IntCoordiantes getFixturePoint()
-        public void setFixturePoint(IntCoordinates fixturePoint)
+        public void sn
+        tFixturePoint(IntCoordinates fixturePoint)
         public void setShape(boolean[][] shape)
     }
     class ShapeFactory extends PieceBrute{
-        public ShapeFactory(String filePath, Color color, IntCoordinates pos, IntCoordinates fixturePoint, Target target, InstanceManager guiManager)
+        public ShapeFactory(String filePath, Color c, IntCoordinates pos, IntCoordinates fixtureP, Target t,
+         InstanceManager IM) 
 
     }
     class Target{
@@ -201,6 +205,17 @@ package src.tests{
 }
 
 
+main -down-> InstanceManager
+PieceLogic -> Decorator : stores
+' src.com.java.gui -down-> src.com.java.piece 
+Arena -down-> LevelManager : uses
+src.com.java.gui -[hidden]- src.com.java.logic
+src.com.java.main.Main -up-> src.com.resources
+InstanceManager -down-> PieceLogic : required to construct
+src.com.java.controllers.playerControlle -up-> ArenaPanel : actived on
+Cell -down-> IntCoordinates : uses
+gui -down-> src.com.java.config.GuiConfig : is configured by
+
 
 
 
@@ -216,6 +231,5 @@ package src.com.resources{
     artifact "shapes<U+002E>json" as validation
 
 }
-Main -> instanceManager : uses to start the game
 
 @enduml
