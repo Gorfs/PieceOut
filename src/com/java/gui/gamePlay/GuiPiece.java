@@ -93,7 +93,7 @@ public class GuiPiece extends JPanel {
                     String action = piece.getActionType(j, i);
                     try{ // try to load the icon
                         // if the decorator has an action, load the icon
-                        if (!Objects.equals(!Objects.equals(action, ""))){
+                        if (!Objects.equals(action, "")){
                             img = ImageIO.read(new File(GuiConfig.resPath + "icons/" + action + ".png"));
                         }
                     } catch (Exception e) {
