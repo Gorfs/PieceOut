@@ -23,8 +23,7 @@ public class Cell extends JPanel{
     /**
      * Coordinates of the cell in the matrix
      */
-    private int pixel_x;
-    private int pixel_y;
+    private IntCoordinates pixelCoordinates;
 
     // map_x and map_y are the coordinates of the cell in the matrix
     private final int map_x;
@@ -36,32 +35,27 @@ public class Cell extends JPanel{
     private final Border leftShadow = BorderFactory.createMatteBorder(0, 5, 0, 0, Colours.SHADOW);
     private final Border topLeftShadow = BorderFactory.createMatteBorder(5, 5, 0, 0, Colours.SHADOW);
 
-
-    
     public Cell(InstanceManager instanceManager ,int x_coord, int y_coord){
         super();
 
         this.instanceManager = instanceManager;
-        this.setMinimumSize(new Dimension((int) (GuiConfig.CELL_SIZE ), (int) (GuiConfig.CELL_SIZE )));
+        this.setMinimumSize(new Dimension(GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE));
         this.setPreferredSize(new Dimension(GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE));
-        this.setMaximumSize(new Dimension((int) (GuiConfig.CELL_SIZE ), (int) (GuiConfig.CELL_SIZE )));
-        // For debugging purposes
-        // this.setBorder(BorderFactory.createLineBorder(Color.black, 1));
+        this.setMaximumSize(new Dimension(GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE));
 
         // pixel coordinates are relative to the top left of the arena
-        this.pixel_x = (int) Math.floor(x_coord * GuiConfig.CELL_SIZE);
-        this.pixel_y = (int) Math.floor(y_coord * GuiConfig.CELL_SIZE);
+        this.pixelCoordinates = new IntCoordinates((x_coord * GuiConfig.CELL_SIZE), (y_coord * GuiConfig.CELL_SIZE));
         this.map_x = x_coord;
         this.map_y = y_coord;
 
-
-        updatePlayableCell(); // inits the background of the cell
-        // this.add(new JLabel("x: " + pixel_x + " y: " + pixel_y));
+        // inits the background of the cell
+        updatePlayableCell();
     }
 
     public void updateCell(){
-        this.pixel_x = (int) (double) (map_x * GuiConfig.CELL_SIZE);
-        this.pixel_y = (int) (double) (map_y * GuiConfig.CELL_SIZE);
+        int pixel_x = (int) (double) (map_x * GuiConfig.CELL_SIZE);
+        int pixel_y = (int) (double) (map_y * GuiConfig.CELL_SIZE);
+        this.pixelCoordinates = new IntCoordinates(pixel_x, pixel_y);
 
         this.setSize(new Dimension(GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE));
         this.setMinimumSize(new Dimension(GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE));
@@ -120,7 +114,7 @@ public class Cell extends JPanel{
     /** 
      * @return IntCoordinates
      */
-    public IntCoordinates getIntCoordinates() {
+    public IntCoordinates getMapCoordinates() {
         return new IntCoordinates(map_x, map_y);
     }
 
@@ -128,7 +122,7 @@ public class Cell extends JPanel{
      * @return Returns the coordinates in pixels RELATIVE to the top left of the arena Panel
      */
     public IntCoordinates getPixelCoordinates(){
-        return new IntCoordinates(pixel_x, pixel_y);
+        return this.pixelCoordinates;
     }
 }
     
