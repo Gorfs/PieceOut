@@ -132,26 +132,26 @@ public class GuiPiece extends JPanel {
         int cellSize = GuiConfig.CELL_SIZE;
         int lo = cellSize / 2, la = cellSize / 4;
 
-        g2d.setColor(Color.GRAY);
+        g2d.setColor(Color.WHITE);
         int x1, y1;
         for (int i = 0; i < piece.getDirections().length; i++) {
             if (piece.getDirections()[i]) {
                 switch (i) {
                     case 0 -> {
                         x1 = x + cellSize / 2 - lo / 2; y1 = y;
-                        g2d.fillRect(x1, y1, lo, la);
+                        g2d.fillPolygon(new int[]{x1, x1 + lo, x1 + la}, new int[]{y1 + la, y1 + la, y1}, 3);
                     }
                     case 1 -> {
                         x1 = x + cellSize - la; y1 = y + cellSize / 2 - lo / 2;
-                        g2d.fillRect(x1, y1, la, lo);
+                        g2d.fillPolygon(new int[]{x1, x1 + la, x1}, new int[]{y1 + lo, y1 + la, y1}, 3);
                     }
                     case 2 -> {
                         x1 = x + cellSize / 2 - lo / 2; y1 = y + cellSize - la;
-                        g2d.fillRect(x1, y1, lo, la);
+                        g2d.fillPolygon(new int[]{x1, x1 + lo, x1 + la}, new int[]{y1, y1, y1 + la}, 3);
                     }
                     case 3 -> {
                         x1 = x; y1 = y + cellSize / 2 - lo / 2;
-                        g2d.fillRect(x1, y1, la, lo);
+                        g2d.fillPolygon(new int[]{x1 + la, x1, x1 + la}, new int[]{y1 + lo, y1 + la, y1}, 3);
                     }
                 }
             }
