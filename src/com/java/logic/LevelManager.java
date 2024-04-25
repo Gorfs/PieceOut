@@ -26,7 +26,7 @@ public class LevelManager {
     public static String[] loadLevelFromJson(int id){
         try {
             // Read the .json file
-            String content = new String(Files.readAllBytes(Paths.get(GuiConfig.resourcePath + "maps/levels.json")));
+            String content = new String(Files.readAllBytes(Paths.get(GuiConfig.resPath + "maps/levels.json")));
 
             // Parse the content into a JSONObject
             JSONObject obj = new JSONObject(content);
@@ -60,7 +60,7 @@ public class LevelManager {
     public static void loadPiecesFromJson(PieceLogic pieceLogic, int id, InstanceManager guiManager) {
         try {
             // Read the .json file
-            String content = new String(Files.readAllBytes(Paths.get(GuiConfig.resourcePath + "maps/pieces.json")));
+            String content = new String(Files.readAllBytes(Paths.get(GuiConfig.resPath + "maps/pieces.json")));
 
             // Parse the content into a JSONObject
             JSONObject obj = new JSONObject(content);

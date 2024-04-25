@@ -38,7 +38,7 @@ public class GuiConfig {
     /**
      * Path to the resources. By default, it's "src/com/resources/"
      */
-    public static String resourcePath = "src/com/resources/";
+    public static String resPath = "src/com/resources/";
 
     /**
      * Method to update the scale of the arena when we change the window's size.

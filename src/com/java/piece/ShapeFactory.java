@@ -2,17 +2,12 @@ package src.com.java.piece;
 
 import java.awt.Color;
 
-import src.com.java.piece.Target;
 import src.com.java.config.GuiConfig;
 import src.com.java.geometry.IntCoordinates;
 import src.com.java.gui.InstanceManager;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import src.com.java.geometry.IntCoordinates;
-import src.com.java.gui.InstanceManager;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -65,7 +60,7 @@ public class ShapeFactory extends PieceBrute {
      */
     public boolean[][] generateShape(String filePath) {
         try {
-            String content = new String(Files.readAllBytes(Paths.get(GuiConfig.resourcePath + "shapes.json")));
+            String content = new String(Files.readAllBytes(Paths.get(GuiConfig.resPath + "shapes.json")));
             JSONObject jsonObject = new JSONObject(content);
             JSONArray shapeArray = jsonObject.getJSONArray("shapes");
             for (int i = 0; i < shapeArray.length(); i++) {

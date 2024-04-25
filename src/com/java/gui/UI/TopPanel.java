@@ -3,7 +3,6 @@ package src.com.java.gui.UI;
 import src.com.java.config.Colours;
 import src.com.java.config.GuiConfig;
 import src.com.java.gui.InstanceManager;
-import src.com.java.logic.Arena;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,7 +23,7 @@ public class TopPanel extends JPanel{
         levelLabel.setFont(new Font("Arial", Font.BOLD, 20));
         levelLabel.setForeground(Color.WHITE);
         JButton returnButton = new JButton("Return to Main Menu");
-        ImageIcon mainMenuIcon = new ImageIcon(new ImageIcon(GuiConfig.resourcePath + "icons/mainmenu.png").getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH));
+        ImageIcon mainMenuIcon = new ImageIcon(new ImageIcon(GuiConfig.resPath + "icons/mainmenu.png").getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH));
         returnButton.setIcon(mainMenuIcon);
         returnButton.setBackground(Colours.BACKGROUND.darker());
         returnButton.setForeground(Color.WHITE);

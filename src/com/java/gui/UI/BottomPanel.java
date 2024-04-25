@@ -12,19 +12,13 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.undo.UndoManager;
 
 import java.util.ArrayList;
 
 import src.com.java.config.Colours;
 import src.com.java.config.GuiConfig;
 import src.com.java.utils.Debug;
-import src.com.java.piece.decorator.Decorator;
 import src.com.java.gui.InstanceManager;
-import src.com.java.logic.Move;
-import src.com.java.logic.MoveEdit;
-import src.com.java.logic.PieceLogic;
-import src.com.java.logic.Player;
 import src.com.java.controllers.PlayerController;
 
 public class BottomPanel extends JPanel {
@@ -63,7 +57,7 @@ public class BottomPanel extends JPanel {
         undoButton.setFocusable(false);
         // Setting the icon for the undo button
         ImageIcon undoIcon = new ImageIcon(
-                new ImageIcon(GuiConfig.resourcePath + "icons/undo.png").getImage().getScaledInstance(50, 50,
+                new ImageIcon(GuiConfig.resPath + "icons/undo.png").getImage().getScaledInstance(50, 50,
                         Image.SCALE_SMOOTH));
         undoButton.setIcon(undoIcon);
         undoButton.addActionListener(new ActionListener() {
@@ -81,7 +75,7 @@ public class BottomPanel extends JPanel {
 
         // Load the image
         ImageIcon redoIcon = new ImageIcon(
-                new ImageIcon(GuiConfig.resourcePath + "icons/redo.png").getImage().getScaledInstance(50, 50,
+                new ImageIcon(GuiConfig.resPath + "icons/redo.png").getImage().getScaledInstance(50, 50,
                         Image.SCALE_SMOOTH));
         redoButton.setIcon(redoIcon);
         // redoButton.setBorder(BorderFactory.createEmptyBorder(3,3,3,3));

@@ -19,37 +19,31 @@ import java.util.ArrayList;
  * Contains the arena, the pieces, the UI, etc.
  */
 public class GamePanel extends JPanel {
-    private final JPanel topPanel;
-    private ArenaContainerPanel arenaContainerPanel;
-    private ArenaPanel arenaPanel;
+    private final ArenaContainerPanel arenaContainerPanel;
+    private final ArenaPanel arenaPanel;
     private final JPanel bottomPanel;
-
-    private ArrayList<GuiPiece> guiPieces = new ArrayList<GuiPiece>();
 
     private final PieceLogic pieceLogic;
 
     protected final InstanceManager guiManager;
 
-    public ArenaPanel getArenaPanel(){
-        return this.arenaPanel;
-    }
-
-    // this getter is mostly used to get it's y position, could probably be done in a better way.
-    public ArenaContainerPanel getArenaContainerPanel(){
-        return this.arenaContainerPanel;
-    }
-
+    /**
+     * Constructor for the GamePanel class, it initializes the attributes, sets the background color and
+     * set up the layout and the panels.
+     * @param pieceLogic PieceLogic instance that manages the pieces
+     * @param guiManager InstanceManager instance that manages the game
+     */
     public GamePanel(PieceLogic pieceLogic, InstanceManager guiManager){
         super();
-
+        // initializing the attributes
         this.guiManager = guiManager;
         this.pieceLogic = pieceLogic;
-
+        // setting the background color and the layout
         this.setLayout(null);
         this.setBackground(Colours.BACKGROUND);
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
-        this.topPanel = new TopPanel(guiManager);
+        // setting up the panels
+        JPanel topPanel = new TopPanel(guiManager);
         this.add(topPanel);
 
         this.arenaContainerPanel = new ArenaContainerPanel(guiManager);
@@ -71,11 +65,6 @@ public class GamePanel extends JPanel {
         }
     }
 
-    public BottomPanel getBottomPanel(){
-        return (BottomPanel) this.bottomPanel;
-    }
-    
-
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -83,15 +72,27 @@ public class GamePanel extends JPanel {
         SwingUtilities.invokeLater(this::paintPieces);
     }
 
+    /**
+     * Main method that updates the gui of the game.
+     */
     public void update(){
-        //main function that updated the gui of the gameplay
-
-
         repaint();
         // scheduling the painting of the pieces on the next event on the event dispatch thread
         SwingUtilities.invokeLater(this::paintPieces);
     }
 
+    // this getter is mostly used to get its position, could probably be done in a better way.
+    public ArenaContainerPanel getArenaContainerPanel(){
+        return this.arenaContainerPanel;
+    }
+
+    public ArenaPanel getArenaPanel(){
+        return this.arenaPanel;
+    }
+
+    public BottomPanel getBottomPanel(){
+        return (BottomPanel) this.bottomPanel;
+    }
 }
 
 

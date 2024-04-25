@@ -30,12 +30,18 @@ public class Cell extends JPanel{
     private final int map_y;
 
 
-    // seperate border for shadow/3d effect
+    // separate border for shadow/3d effect
     private final Border topShadow = BorderFactory.createMatteBorder(5, 0, 0, 0, Colours.SHADOW);
     private final Border leftShadow = BorderFactory.createMatteBorder(0, 5, 0, 0, Colours.SHADOW);
     private final Border topLeftShadow = BorderFactory.createMatteBorder(5, 5, 0, 0, Colours.SHADOW);
 
-    public Cell(InstanceManager instanceManager ,int x_coord, int y_coord){
+    /**
+     * Constructor for the Cell class
+     * @param instanceManager instance that manages the game
+     * @param x x coordinate of the cell in the matrix
+     * @param y y coordinate of the cell in the matrix
+     */
+    public Cell(InstanceManager instanceManager , int x, int y){
         super();
 
         this.instanceManager = instanceManager;
@@ -44,14 +50,17 @@ public class Cell extends JPanel{
         this.setMaximumSize(new Dimension(GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE));
 
         // pixel coordinates are relative to the top left of the arena
-        this.pixelCoordinates = new IntCoordinates((x_coord * GuiConfig.CELL_SIZE), (y_coord * GuiConfig.CELL_SIZE));
-        this.map_x = x_coord;
-        this.map_y = y_coord;
+        this.pixelCoordinates = new IntCoordinates((x * GuiConfig.CELL_SIZE), (y * GuiConfig.CELL_SIZE));
+        this.map_x = x;
+        this.map_y = y;
 
         // inits the background of the cell
         updatePlayableCell();
     }
 
+    /**
+     * Method that update the coordinates and the size of the cell.
+     */
     public void updateCell(){
         int pixel_x = (int) (double) (map_x * GuiConfig.CELL_SIZE);
         int pixel_y = (int) (double) (map_y * GuiConfig.CELL_SIZE);
@@ -110,20 +119,4 @@ public class Cell extends JPanel{
             }
         }
     }
-
-    /** 
-     * @return IntCoordinates
-     */
-    public IntCoordinates getMapCoordinates() {
-        return new IntCoordinates(map_x, map_y);
-    }
-
-    /**
-     * @return Returns the coordinates in pixels RELATIVE to the top left of the arena Panel
-     */
-    public IntCoordinates getPixelCoordinates(){
-        return this.pixelCoordinates;
-    }
 }
-    
-
