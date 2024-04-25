@@ -1,17 +1,16 @@
 package src.com.java.main;
 
-import java.util.concurrent.*;
 import src.com.java.logic.*;
 
 import src.com.java.gui.*;
 
 public class Main {
     /** 
-     * @param args arguments passed in terminal
+     * @param args arguments passed in the terminal
      */
     public static void main(String[] args){
 
-        int level = 2;
+        int level = 4;
         /*
           Init the logic of the game
          */

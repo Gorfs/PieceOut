@@ -2,6 +2,7 @@ package src.com.java.gui.gamePlay;
 
 import src.com.java.geometry.IntCoordinates;
 import src.com.java.config.GuiConfig;
+import src.com.java.piece.decorator.Translation;
 import src.com.java.utils.Debug;
 import src.com.java.piece.decorator.Decorator;
 import src.com.java.gui.InstanceManager;
@@ -35,10 +36,10 @@ public class GuiPiece extends JPanel {
     }
 
     /**
-     * returns the pixel coordiantes of the cell relative to the top left of the
+     * returns the pixel coordinates of the cell relative to the top left of the
      * WINDOW
      * 
-     * @param cellCoords Coordinates of the cell
+     * @param cellCoords Coordinates of the cell in the game
      * @return IntCoordinates
      */
     private IntCoordinates getPixelCoordinates(IntCoordinates cellCoords) {
@@ -92,7 +93,7 @@ public class GuiPiece extends JPanel {
                     String action = piece.getActionType(j, i);
                     try{ // try to load the icon
                         // if the decorator has an action, load the icon
-                        if (!Objects.equals(action, "")){
+                        if (!Objects.equals(!Objects.equals(action, ""))){
                             img = ImageIO.read(new File(GuiConfig.resPath + "icons/" + action + ".png"));
                         }
                     } catch (Exception e) {
@@ -100,8 +101,10 @@ public class GuiPiece extends JPanel {
                     }
 
                     // paint the icon of the decorator
-                    // TODO change the translation ICON into a directional arrow
-                    if (img != null) {
+                    if (Objects.equals(action, "Translation")) {
+                            paintDirectional(g2d, cellCoords, (Translation) piece);
+                    }
+                        else if (img != null) {
                         int imageWidth = (int) (img.getWidth() * imgScale);
                         int imageHeight = (int) (img.getHeight() * imgScale);
                         int rectCenterX = cellCoords.getX() + (GuiConfig.CELL_SIZE / 2);
@@ -109,6 +112,46 @@ public class GuiPiece extends JPanel {
                         g2d.drawImage(img, rectCenterX - imageWidth / 2, rectCenterY - imageHeight / 2, imageWidth,
                                 imageHeight, null);
                         img = null;
+                    }
+
+                }
+            }
+        }
+    }
+
+
+    /**
+     * Method that paints the directional arrows of a Translation decorator as rectangles
+     * @param g2d 2D Graphics object
+     * @param cellCoords Coordinates of the cell in the game
+     * @param piece Translation we want to draw
+     */
+    private void paintDirectional(Graphics2D g2d, IntCoordinates cellCoords, Translation piece) {
+        int x = cellCoords.getX();
+        int y = cellCoords.getY();
+        int cellSize = GuiConfig.CELL_SIZE;
+        int lo = cellSize / 2, la = cellSize / 4;
+
+        g2d.setColor(Color.WHITE);
+        int x1, y1;
+        for (int i = 0; i < piece.getDirections().length; i++) {
+            if (piece.getDirections()[i]) {
+                switch (i) {
+                    case 0 -> {
+                        x1 = x + cellSize / 2 - lo / 2; y1 = y;
+                        g2d.fillPolygon(new int[]{x1, x1 + lo, x1 + la}, new int[]{y1 + la, y1 + la, y1}, 3);
+                    }
+                    case 1 -> {
+                        x1 = x + cellSize - la; y1 = y + cellSize / 2 - lo / 2;
+                        g2d.fillPolygon(new int[]{x1, x1 + la, x1}, new int[]{y1 + lo, y1 + la, y1}, 3);
+                    }
+                    case 2 -> {
+                        x1 = x + cellSize / 2 - lo / 2; y1 = y + cellSize - la;
+                        g2d.fillPolygon(new int[]{x1, x1 + lo, x1 + la}, new int[]{y1, y1, y1 + la}, 3);
+                    }
+                    case 3 -> {
+                        x1 = x; y1 = y + cellSize / 2 - lo / 2;
+                        g2d.fillPolygon(new int[]{x1 + la, x1, x1 + la}, new int[]{y1 + lo, y1 + la, y1}, 3);
                     }
                 }
             }

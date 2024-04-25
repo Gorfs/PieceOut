@@ -3,10 +3,8 @@ package src.com.java.piece.decorator;
 import src.com.java.utils.Debug;
 import src.com.java.piece.Piece;
 import src.com.java.piece.PieceBrute;
-import src.com.java.controllers.PlayerController;
 import src.com.java.geometry.IntCoordinates;
 import src.com.java.gui.InstanceManager;
-import src.com.java.logic.Arena;
 import src.com.java.logic.Move;
 import src.com.java.logic.MoveEdit;
 import src.com.java.logic.PieceLogic;
@@ -120,8 +118,7 @@ public abstract class Decorator extends Piece {
         this.getLast().setPos(new IntCoordinates(pos.getX() - xOffset, pos.getY() - yOffset));
     }
 
-    @Override
-    public void action(PieceLogic pieceLogic, InstanceManager instanceManager, int x, int y) {
+    public void action(PieceLogic pieceLogic, InstanceManager instanceManager, int x, int y, IntCoordinates mousePos) {
         // If it is the right action we pressed on, then do the action.
         // (deal with offset)
         if (this.actionPoint.getX() == x && this.actionPoint.getY() == y) {
@@ -136,7 +133,7 @@ public abstract class Decorator extends Piece {
             }
             // If not, then we check for the next decorator.
         } else {
-            this.prevPiece.action(pieceLogic, instanceManager, x, y);
+            this.prevPiece.action(pieceLogic, instanceManager, x, y, mousePos);
         }
 
     }

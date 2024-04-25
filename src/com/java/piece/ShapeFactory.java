@@ -89,7 +89,7 @@ public class ShapeFactory extends PieceBrute {
 
 
     @Override
-    public void action(PieceLogic pieceLogic, InstanceManager instanceManager, int x, int y) {
+    public void action(PieceLogic pieceLogic, InstanceManager instanceManager, int x, int y, IntCoordinates mousePos) {
         // Does nothing
     }
 }

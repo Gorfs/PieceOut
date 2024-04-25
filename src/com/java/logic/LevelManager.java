@@ -141,12 +141,10 @@ public class LevelManager {
     }
 
     public static Translation createTranslation(Piece piece, JSONObject decoratorJSON) {
-        Direction direction = switch (decoratorJSON.getString("direction")) {
-            case "up" -> Direction.NORTH;
-            case "down" -> Direction.SOUTH;
-            case "left" -> Direction.WEST;
-            default -> Direction.EAST;
-        };
+        boolean[] direction = new boolean[4];
+        for (int i = 0; i < 4; i++) {
+            direction[i] = decoratorJSON.getJSONArray("direction").getBoolean(i);
+        }
         JSONArray positionArray = decoratorJSON.getJSONArray("position");
         IntCoordinates position = new IntCoordinates(positionArray.getInt(0), positionArray.getInt(1));
         return new Translation(piece, direction, position);
