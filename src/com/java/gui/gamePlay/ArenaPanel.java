@@ -3,34 +3,33 @@ package src.com.java.gui.gamePlay;
 import javax.swing.*;
 import java.awt.*;
 
-import src.com.java.controllers.PlayerController;
 import src.com.java.gui.InstanceManager;
 import src.com.java.config.Colours;
-import src.com.java.config.*;
-import src.com.java.utils.Debug;
-import src.com.java.geometry.IntCoordinates;
-import src.com.java.logic.Arena;
 
+/**
+ * class that represents the panel that displays the 7x7 grid of cells that
+ * the game is played on
+ */
 public class ArenaPanel extends JPanel {
     /**
-     * class that represents the panel that displays the 7x7 grid of cells that
-     * the game is played on
+     * Instance that manages the game
      */
-
-    // the conainer panel that holds all the cells
     private final InstanceManager instanceManager;
 
+    /**
+     * Constructor for the ArenaPanel class
+     * @param instanceManager instance that manages the game
+     */
     public ArenaPanel(InstanceManager instanceManager) {
         super();
-        // this.setBackground(Colours.BACKGROUND);
+        // setting the background color
         this.setBackground(Colours.BACKGROUND_GREYED);
+        // initializing the instance manager
         this.instanceManager = instanceManager;
         int map_size = instanceManager.arena.getMatrix().length;
 
         this.setLayout(new GridLayout(map_size, map_size));
         this.setAlignmentY(CENTER_ALIGNMENT);
-        // this.setBorder(BorderFactory.createLineBorder(Color.BLUE, 3)); // Add thicker
-        // and blue border here
 
         // filling the map with cells
         for (int i = 0; i < map_size; i++) {
@@ -40,6 +39,9 @@ public class ArenaPanel extends JPanel {
         }
     }
 
+    /**
+     * @return the 2d array of cells that are displayed on the map
+     */
     public Cell[][] getCells() {
         // returns a 2d array of all the gui.gameplay.cell components drawn on the map
         boolean[][] matrix = instanceManager.arena.getMatrix();
@@ -50,8 +52,8 @@ public class ArenaPanel extends JPanel {
         Component[] component = this.getComponents();
         Cell[][] result = new Cell[height][width];
 
-        for (int i = 0; i < component.length; i++) {
-            result[y][x] = (Cell) component[i];
+        for (Component value : component) {
+            result[y][x] = (Cell) value;
             x++;
             if (x == width) {
                 x = 0;
@@ -61,10 +63,10 @@ public class ArenaPanel extends JPanel {
         return result;
     }
 
+    /**
+     * updates the cells to a new matrix state.
+     */
     public void updateArena() {
-        /*
-         * updates the cells to a new matrix state.
-         */
         boolean[][] matrix = instanceManager.arena.getMatrix();
         for (int i = 0; i < Math.pow(matrix.length, 2); i++) {
             Cell cell = (Cell) this.getComponent(i);

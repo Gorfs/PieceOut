@@ -9,17 +9,20 @@ import src.com.java.config.Colours;
 import src.com.java.config.*;
 import src.com.java.geometry.IntCoordinates;
 import src.com.java.gui.InstanceManager;
-import src.com.java.logic.Arena;
 
+/**
+ * class for the gui representation of the playable cells in the game.
+ */
 public class Cell extends JPanel{
+
     /**
-     * class for the gui representation of the playable cells in the game.
+     * Instance that manages the game
      */
+    private final InstanceManager instanceManager;
 
-
-     private final InstanceManager instanceManager;
-    
-    // pixel_x and pixel_y are the coordinates of the cell in pixels RELATIVE to the CONTAINER (ARENA PANEL)
+    /**
+     * Coordinates of the cell in the matrix
+     */
     private int pixel_x;
     private int pixel_y;
 
@@ -114,26 +117,6 @@ public class Cell extends JPanel{
         }
     }
 
-    
-    /** 
-     * @return int
-     * RELATIVE TO THE TOP LEFT OF THE CONTAINER
-     * (Arena Panel)
-     */
-    public int getPixel_x() {
-        return pixel_x;
-    }
-    
-    /** 
-     * @return int
-     * RELATIVE TO THE TOP LEFT OF THE CONTAINER
-     * (Arena panel)
-     */
-    public int getPixel_y() {
-        return pixel_y;
-    }
-
-    
     /** 
      * @return IntCoordinates
      */
@@ -142,8 +125,7 @@ public class Cell extends JPanel{
     }
 
     /**
-     * returns the coordinates in pixels RELATIVE to the top left of the arena Panel
-     * @return
+     * @return Returns the coordinates in pixels RELATIVE to the top left of the arena Panel
      */
     public IntCoordinates getPixelCoordinates(){
         return new IntCoordinates(pixel_x, pixel_y);

@@ -2,6 +2,10 @@ package src.com.java.config;
 
 import java.awt.*;
 
+
+/**
+ * Class that contains all the colors used in the game.
+ */
 public class Colours {
     public static Color BACKGROUND = new Color(110, 91, 194);
     public static Color BACKGROUND_GREYED = new Color(110, 110, 110, 128);

@@ -12,31 +12,49 @@ import java.awt.event.*;
 import javax.swing.JPanel;
 import javax.swing.undo.UndoManager;
 
-public class PlayerController extends JPanel implements MouseListener {
-    public static PlayerController INSTANCE;
 
+/**
+ * Class that controls the player's actions
+ */
+public class PlayerController extends JPanel implements MouseListener {
+    /**
+     * Variable used to manage the undo and redo actions
+     */
     public UndoManager um = new UndoManager();
 
+
+    /**
+     * Variable used to manage the pieces, it contains the pieces that are in the game
+     */
     protected final PieceLogic pieceLogic;
+    /**
+     * Variable used to link the instance manager to the controller
+     */
     protected final InstanceManager instanceManager;
 
     /**
      * Constructor of the PlayerController where we initialize the attribute
      * controlling
      * and add the MouseListener and KeyListener to the JPanel
+     * @param instanceManager Instance manager of the game we need to link to the player controller
+     * @param pieceLogic Logic of the pieces used to manage the pieces in the game
      */
     public PlayerController(InstanceManager instanceManager, PieceLogic pieceLogic) {
         this.instanceManager = instanceManager;
         this.pieceLogic = pieceLogic;
-        PlayerController.INSTANCE = this;
     }
 
+    /**
+     * Method to start the controller
+     * @param content Container where the controller will be added
+     */
     public void startController(Container content){
         content.addMouseListener(this);
     }
 
     /**
      * Method to activate or deactivate the control of the piece
+     * @param e MouseEvent that contains the position of the mouse
      */
     public void toggleControlManager(MouseEvent e) {
         // Get mouse position in the ArenaPanel
@@ -58,7 +76,7 @@ public class PlayerController extends JPanel implements MouseListener {
                         // If the mouse position is on the piece, the piece is now controlled
                         if (mousePos.equals(temp)) {
                             // triggering action at local coords of a shape array
-                            piece.action(this.pieceLogic,instanceManager, j, i);
+                            piece.action(this.pieceLogic, instanceManager, j, i);
                             Debug.out("triggering piece action");
                             return;
                         }
