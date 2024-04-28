@@ -26,7 +26,7 @@
                 {
                     "id": 0,
                     "position": [4, 2],
-                    "direction": "right",
+                    "rotations": "0",
                     "flip_x": false,
                     "flip_y": false
                 }
@@ -71,7 +71,7 @@
                 {
                     "id": 1,
                     "position": [4, 0],
-                    "direction": "right",
+                    "rotations": "0",
                     "flip_x": false,
                     "flip_y": false
                 }
@@ -103,8 +103,8 @@
             "targets": [
                 {
                     "id": 0,
-                    "position": [2, 1],
-                    "direction": "left",
+                    "position": [1, 0],
+                    "rotations": "3",
                     "flip_x": false,
                     "flip_y": false
                 }
@@ -145,7 +145,7 @@
                 {
                     "id": 1,
                     "position": [5, 0],
-                    "direction": "right",
+                    "rotations": "0",
                     "flip_x": false,
                     "flip_y": false
                 }
@@ -186,7 +186,7 @@
                 {
                     "id": 1,
                     "position": [4, 1],
-                    "direction": "right",
+                    "rotations": "0",
                     "flip_x": false,
                     "flip_y": false
                 }

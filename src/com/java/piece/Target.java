@@ -1,86 +1,53 @@
 package src.com.java.piece;
 
+import src.com.java.gui.InstanceManager;
+import src.com.java.piece.decorator.Decorator;
 import src.com.java.piece.decorator.Direction;
 import src.com.java.geometry.IntCoordinates;
+import src.com.java.piece.decorator.Flip;
+import src.com.java.piece.decorator.Rotation;
 
-/**
- * Class used to create the target of the piece.
- */
+public class Target {
 
-/**
- * Represents a target object with destination coordinates, rotation, and flip status.
- */
-public class Target {   
-    /**
-     * The destination coordinates of the target.
-     */
+    private Decorator piece;
     private IntCoordinates dest;
-    
-    /**
-     * The destination rotation of the target.
-     */
-    private Direction destRotation;
-    
-    /**
-     * Indicates whether the target is flipped horizontally.
-     */
-    private boolean isFlippedX;
-    
-    /**
-     * Indicates whether the target is flipped vertically.
-     */
-    private boolean isFlippedY;
-    
-    /**
-     * Constructs a new Target object with the specified destination, rotation, and flip status.
-     * 
-     * @param dest the destination coordinates of the target
-     * @param destRotation the destination rotation of the target
-     * @param isFlippedX indicates whether the target is flipped horizontally
-     * @param isFlippedY indicates whether the target is flipped vertically
-     */
-    public Target(IntCoordinates dest, Direction destRotation, boolean isFlippedX, boolean isFlippedY) {
-        this.dest = dest;
-        this.destRotation = destRotation;
-        this.isFlippedX = isFlippedX;
-        this.isFlippedY = isFlippedY;
-    }
-    
+    private  boolean[][] shape;
 
-    /**
-     * Returns the destination coordinates of the target.
-     * 
-     * @return the destination coordinates of the target
-     */
+    public InstanceManager guiManager;
+
+    public Target(Decorator piece, IntCoordinates dest, int rotations, boolean isFlippedX, boolean isFlippedY, InstanceManager guiManager) {
+        this.piece = piece;
+        this.dest = dest;
+        this.guiManager = guiManager;
+        this.shape = createShape(rotations, isFlippedX, isFlippedY);
+    }
+
+    private boolean[][] createShape(int rotations, boolean isFlippedX, boolean isFlippedY){
+        boolean[][] shape = new boolean[piece.getShape().length][piece.getShape()[0].length];
+        for (int i = 0; i < piece.getShape().length; i++) {
+            for (int j = 0; j < piece.getShape()[0].length; j++) {
+                shape[i][j] = piece.getShape()[i][j];
+            }
+        }
+
+        PieceBrute pieceBrute = new ShapeFactory();
+        pieceBrute.setShape(shape);
+        Decorator rotation = new Rotation(pieceBrute, new IntCoordinates(0,0));
+        Decorator flipX = new Flip(rotation, new IntCoordinates(0,0));
+        Decorator flipY = new Flip(flipX, new IntCoordinates(0,0), false);
+
+        for (int i = 0; i < rotations; i++) rotation.personalAction();
+        if (isFlippedX) flipX.personalAction();
+        if (isFlippedY) flipY.personalAction();
+
+        return flipY.getShape();
+    }
+
+    public boolean[][] getShape() {
+        return shape;
+    }
+
     public IntCoordinates getDest() {
         return dest;
     }
-
-    /**
-     * Returns the destination rotation of the target.
-     * 
-     * @return the destination rotation of the target
-     */
-    public Direction getDestRotation() {
-        return destRotation;
-    }
-
-    /**
-     * Checks whether the target is flipped horizontally.
-     * 
-     * @return true if the target is flipped horizontally, false otherwise
-     */
-    public boolean isFlippedX() {
-        return isFlippedX;
-    }
-
-    /**
-     * Checks whether the target is flipped vertically.
-     * 
-     * @return true if the target is flipped vertically, false otherwise
-     */
-    public boolean isFlippedY() {
-        return isFlippedY;
-    }
-
 }

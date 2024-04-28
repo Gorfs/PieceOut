@@ -64,9 +64,6 @@ public class GuiPiece extends JPanel {
         IntCoordinates offSet = this.piece.getLast().getOffset();
         IntCoordinates destOffSet = new IntCoordinates(0, 0);
         IntCoordinates destCoords;
-        if (this.piece.getLast().getTarget() != null) {
-            destOffSet = this.piece.getLast().getDestOffset();
-        }
         IntCoordinates cellCoords;
 
         for (int i = 0; i < shapeMatrix.length; i++) { // height
@@ -80,13 +77,6 @@ public class GuiPiece extends JPanel {
                         // " + offSet.toString());
                         g2d.fillRect(cellCoords.getX(), cellCoords.getY(), GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE);
 
-                        g2d.setColor(new Color(255, 0, 0, 75));
-                        if (this.piece.getLast().getTarget() != null) {
-                            destCoords = getPixelCoordinates(
-                                    new IntCoordinates(j + destOffSet.getX(), i + destOffSet.getY()));
-                            g2d.fillRect(destCoords.getX(), destCoords.getY(), GuiConfig.CELL_SIZE,
-                                    GuiConfig.CELL_SIZE);
-                        }
 
                         // load the icon for decorator into memory
                         String action = piece.getActionType(j, i);

@@ -2,6 +2,7 @@ package src.com.java.gui;
 
 import src.com.java.config.GuiConfig;
 import src.com.java.piece.Piece;
+import src.com.java.piece.Target;
 import src.com.java.piece.decorator.Decorator;
 import src.com.java.controllers.PlayerController;
 import src.com.java.gui.gamePlay.*;
@@ -31,6 +32,7 @@ public class InstanceManager {
     private final CardLayout layout = new CardLayout();
 
     private ArrayList<GuiPiece> guiPieces = new ArrayList<GuiPiece>();
+    private ArrayList<GuiTarget> guiTargets = new ArrayList<GuiTarget>();
     private final PieceLogic pieceLogic;
     public PlayerController playerController;
     public Arena arena;
@@ -65,6 +67,12 @@ public class InstanceManager {
 
         LevelManager.loadPiecesFromJson(this.pieceLogic, level, this);
 
+        for (Target target : this.pieceLogic.getTargets()) {
+            GuiTarget guiTarget = new GuiTarget(this, target);
+            guiTargets.add(guiTarget);
+            // guiTarget.repaint();
+        }
+
         for (Decorator piece : this.pieceLogic.getPieces()) {
             GuiPiece guiPiece = new GuiPiece(this, piece);
             guiPieces.add(guiPiece);
@@ -93,19 +101,7 @@ public class InstanceManager {
     public void update() {
         gamePanel.update();
         gamePanel.getBottomPanel().updateButtons();
-        for (Decorator piece : pieceLogic.getPieces()) {
-            if (piece.getLast().getTarget() != null) {
-                if (!piece.getLast().getTarget().getDest().equals(piece.getLast().getPos())) {
-                    // if the piece is not in the correct position, no need to call method won()
-                    Debug.out("Piece not in correct position");
-                    return;
-                }
-                // TODO: check for rotation and flip of the piece
-            }
-        }
-        // if all pieces are in the correct position, call method won()
-        Debug.out("Piece in correct position");
-        this.won();
+
     }
 
     public void won() {
