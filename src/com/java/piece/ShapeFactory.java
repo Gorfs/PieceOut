@@ -36,7 +36,6 @@ public class ShapeFactory extends PieceBrute {
      * @param color Color of the nextPiece.
      * @param fixturePoint point of the face.
      * @param pos Position of the piece.
-     * @param target Target of the piece.
      */
     public ShapeFactory(String filePath, Color color, IntCoordinates pos, IntCoordinates fixturePoint,  InstanceManager guiManager) {
         this.color = color;
