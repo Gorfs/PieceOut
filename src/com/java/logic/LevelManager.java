@@ -18,7 +18,7 @@ import src.com.java.geometry.IntCoordinates;
 import src.com.java.gui.InstanceManager;
 
 public class LevelManager {
-    
+
     /** Load a level from the levels.json file
      * @param id the id of the level to load
      * @return the map of the level
@@ -73,34 +73,30 @@ public class LevelManager {
             for (int i = 0; i < levels.length(); i++) {
                 JSONObject level = levels.getJSONObject(i);
                 if (level.getInt("id") == id) {
-                    JSONArray targets = level.getJSONArray("targets");
-                    Target target_to_add;
-                    int n = 0;
                     JSONArray pieces = level.getJSONArray("pieces");
                     for (int j = 0; j < pieces.length(); j++) {
-                        if (n < targets.length()) {
-                            JSONObject target = targets.getJSONObject(n);
-                            if (target.getInt("id") == j) {
-                                target_to_add = createTarget(target);
-                                n++;
-                            } else {
-                                target_to_add = null;
-                            }
-                        } else {
-                            target_to_add = null;
-                        }
                         JSONObject piece = pieces.getJSONObject(j);
-                        createPiece(piece, target_to_add, pieceLogic, guiManager);
+                        createPiece(piece, pieceLogic, guiManager);
                     }
-                    return;
                 }
             }
+            //Iterate over the targets
+            for (int i = 0; i < levels.length(); i++) {
+                JSONObject level = levels.getJSONObject(i);
+                if (level.getInt("id") == id) {
+                    JSONArray targets = level.getJSONArray("targets");
+                    for (int j = 0; j < targets.length(); j++) {
+                        JSONObject target = targets.getJSONObject(j);
+                        createTarget(target, pieceLogic, guiManager);
+                    }
+                }
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
-    public static void createPiece(JSONObject piece, Target target, PieceLogic pieceLogic, InstanceManager guiManager) {
+    public static void createPiece(JSONObject piece, PieceLogic pieceLogic, InstanceManager guiManager) {
 
         // Get the color
         Color color = switch (piece.getString("color")) {
@@ -113,8 +109,8 @@ public class LevelManager {
         JSONArray positionArray = piece.getJSONArray("position");
         IntCoordinates position = new IntCoordinates(positionArray.getInt(0), positionArray.getInt(1));
         // Create the piece
-        Piece piece_to_add = new ShapeFactory(piece.getString("shape"), color, position, new IntCoordinates(0, 0), target, guiManager);
-        
+        Piece piece_to_add = new ShapeFactory(piece.getString("shape"), color, position, new IntCoordinates(0, 0), guiManager);
+
 
         // Add the decorators
         JSONArray decorators = piece.getJSONArray("decorators");
@@ -167,17 +163,18 @@ public class LevelManager {
         return new Flip(piece, position, decoratorJSON.getBoolean("horizontal"));
     }
 
-    public static Target createTarget(JSONObject target) {
+    public static void createTarget(JSONObject target, PieceLogic pieceLogic, InstanceManager guiManager) {
         // Get the position
         JSONArray positionArray = target.getJSONArray("position");
         IntCoordinates position = new IntCoordinates(positionArray.getInt(0), positionArray.getInt(1));
-        Direction direction = switch (target.getString("direction")) {
-            case "up" -> Direction.NORTH;
-            case "down" -> Direction.SOUTH;
-            case "left" -> Direction.WEST;
-            default -> Direction.EAST;
-        };
+        // Get the rotations
+        int rotations = target.getInt("rotations");
+        // Get the flips
+        boolean isFlippedX = target.getBoolean("flip_x");
+        boolean isFlippedY = target.getBoolean("flip_y");
         // Create the target
-        return new Target(position, direction, target.getBoolean("flip_x"), target.getBoolean("flip_y"));
+        Target target_to_add = new Target(pieceLogic.getPieces().get(target.getInt("id")), position, rotations, isFlippedX, isFlippedY, guiManager);
+        // Add the target to the pieceLogic
+        pieceLogic.addTarget(target_to_add);
     }
 }
