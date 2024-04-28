@@ -10,6 +10,7 @@ import src.com.java.gui.InstanceManager;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.util.Objects;
 
 import javax.imageio.ImageIO;
@@ -68,9 +69,6 @@ public class GuiPiece extends JPanel {
         IntCoordinates offSet = this.piece.getLast().getOffset();
         IntCoordinates destOffSet = new IntCoordinates(0, 0);
         IntCoordinates destCoords;
-        if (this.piece.getLast().getTarget() != null) {
-            destOffSet = this.piece.getLast().getDestOffset();
-        }
         IntCoordinates cellCoords;
 
         for (int i = 0; i < shapeMatrix.length; i++) { // height
@@ -81,13 +79,6 @@ public class GuiPiece extends JPanel {
                     g2d.setColor(this.piece.getLast().getColor());
                     g2d.fillRect(cellCoords.getX(), cellCoords.getY(), GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE);
 
-                    g2d.setColor(new Color(255, 0, 0, 75));
-                    if (this.piece.getLast().getTarget() != null) {
-                        destCoords = getPixelCoordinates(new IntCoordinates(j + destOffSet.getX(),
-                                i + destOffSet.getY()));
-                        g2d.fillRect(destCoords.getX(), destCoords.getY(), GuiConfig.CELL_SIZE,
-                                GuiConfig.CELL_SIZE);
-                    }
 
                     // load the icon for decorator into memory
                     String action = piece.getActionType(j, i);
@@ -130,28 +121,36 @@ public class GuiPiece extends JPanel {
         int x = cellCoords.getX();
         int y = cellCoords.getY();
         int cellSize = GuiConfig.CELL_SIZE;
-        int lo = cellSize / 2, la = cellSize / 4;
 
         g2d.setColor(Color.WHITE);
-        int x1, y1;
+
+
+        Image[] images = new Image[4];
+        try {
+            images[0] = ImageIO.read(new File(GuiConfig.resPath + "icons/up.png"));
+            images[1] = ImageIO.read(new File(GuiConfig.resPath + "icons/right.png"));
+            images[2] = ImageIO.read(new File(GuiConfig.resPath + "icons/down.png"));
+            images[3] = ImageIO.read(new File(GuiConfig.resPath + "icons/left.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+
         for (int i = 0; i < piece.getDirections().length; i++) {
             if (piece.getDirections()[i]) {
                 switch (i) {
                     case 0 -> {
-                        x1 = x + cellSize / 2 - lo / 2; y1 = y;
-                        g2d.fillPolygon(new int[]{x1, x1 + lo, x1 + la}, new int[]{y1 + la, y1 + la, y1}, 3);
+                        g2d.drawImage(images[0], x, y, cellSize,cellSize, null);
                     }
                     case 1 -> {
-                        x1 = x + cellSize - la; y1 = y + cellSize / 2 - lo / 2;
-                        g2d.fillPolygon(new int[]{x1, x1 + la, x1}, new int[]{y1 + lo, y1 + la, y1}, 3);
+                        g2d.drawImage(images[1], x, y,cellSize,cellSize, null);
                     }
                     case 2 -> {
-                        x1 = x + cellSize / 2 - lo / 2; y1 = y + cellSize - la;
-                        g2d.fillPolygon(new int[]{x1, x1 + lo, x1 + la}, new int[]{y1, y1, y1 + la}, 3);
+                        g2d.drawImage(images[2], x, y,cellSize,cellSize, null);
                     }
                     case 3 -> {
-                        x1 = x; y1 = y + cellSize / 2 - lo / 2;
-                        g2d.fillPolygon(new int[]{x1 + la, x1, x1 + la}, new int[]{y1 + lo, y1 + la, y1}, 3);
+                        g2d.drawImage(images[3], x, y,cellSize,cellSize, null);
                     }
                 }
             }
