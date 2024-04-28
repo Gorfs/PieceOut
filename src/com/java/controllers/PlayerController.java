@@ -41,8 +41,9 @@ public class PlayerController extends JPanel implements MouseListener {
     public void toggleControlManager(MouseEvent e) {
         // Get mouse position in the ArenaPanel
         IntCoordinates mousePos = new IntCoordinates((e.getX() / CELL_SIZE), e.getY() / CELL_SIZE);
+        IntCoordinates mousePosInWindow = new IntCoordinates(e.getX() % CELL_SIZE, e.getY() % CELL_SIZE);
         // Print the mouse position
-        Debug.out(mousePos.toString());
+        Debug.out("Mouse pos: " + mousePosInWindow + " " + mousePos);
         // Initialize the position of the piece
         IntCoordinates piecePos;
 
@@ -58,7 +59,7 @@ public class PlayerController extends JPanel implements MouseListener {
                         // If the mouse position is on the piece, the piece is now controlled
                         if (mousePos.equals(temp)) {
                             // triggering action at local coords of a shape array
-                            piece.action(this.pieceLogic,instanceManager, j, i);
+                            piece.action(this.pieceLogic, instanceManager, j, i, mousePosInWindow);
                             Debug.out("triggering piece action");
                             return;
                         }

@@ -36,24 +36,26 @@ public class ShapeFactory extends PieceBrute {
      * @param color Color of the nextPiece.
      * @param fixturePoint point of the face.
      * @param pos Position of the piece.
+     * @param target Target of the piece.
      */
-    public ShapeFactory(String filePath, Color color, IntCoordinates pos, IntCoordinates fixturePoint, InstanceManager guiManager) {
+    public ShapeFactory(String filePath, Color color, IntCoordinates pos, IntCoordinates fixturePoint, Target target, InstanceManager guiManager) {
         this.color = color;
         this.setPos(pos);
         this.setFixturePoint(fixturePoint);
         this.setShape(generateShape(filePath));
+        this.setTarget(target); 
         this.guiManager = guiManager;
     }
 
     public ShapeFactory(String filePath, Color color, IntCoordinates pos, IntCoordinates fixturePoint) {
-        this(filePath, color, pos, fixturePoint, null);
+        this(filePath, color, pos, fixturePoint, null, null);
     }
 
     /**
      * used mostly for test purposes
      */
     public ShapeFactory(){
-        this(null, null, new IntCoordinates(0, 0), new IntCoordinates(0, 0),null);
+        this(null, null, null, null,null, null);
     }
 
     /**
@@ -92,7 +94,7 @@ public class ShapeFactory extends PieceBrute {
 
 
     @Override
-    public void action(PieceLogic pieceLogic, InstanceManager instanceManager, int x, int y) {
+    public void action(PieceLogic pieceLogic, InstanceManager instanceManager, int x, int y, IntCoordinates mousePos) {
         // Does nothing
     }
 }

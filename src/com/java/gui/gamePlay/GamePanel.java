@@ -9,9 +9,7 @@ import src.com.java.gui.UI.*;
 import src.com.java.logic.PieceLogic;
 import src.com.java.config.Colours;
 import src.com.java.config.*;
-import src.com.java.piece.Target;
 import src.com.java.piece.decorator.Decorator;
-import src.com.java.utils.Debug;
 
 import java.util.ArrayList;
 
@@ -73,14 +71,6 @@ public class GamePanel extends JPanel {
         }
     }
 
-    public void paintTargets(){
-        Graphics g = this.getGraphics();
-        for(Target target: this.pieceLogic.getTargets()){
-            GuiTarget guiTarget = new GuiTarget(this.guiManager, target);
-            guiTarget.paintComponent(g);
-        }
-    }
-
     public BottomPanel getBottomPanel(){
         return (BottomPanel) this.bottomPanel;
     }
@@ -90,7 +80,6 @@ public class GamePanel extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         //paint the arena
-        SwingUtilities.invokeLater(this::paintTargets);
         SwingUtilities.invokeLater(this::paintPieces);
     }
 
@@ -100,10 +89,7 @@ public class GamePanel extends JPanel {
 
         repaint();
         // scheduling the painting of the pieces on the next event on the event dispatch thread
-        SwingUtilities.invokeLater(this::paintTargets);
         SwingUtilities.invokeLater(this::paintPieces);
-
-
     }
 
 }
