@@ -5,5 +5,5 @@ package src.com.java.piece.decorator;
  * EAST, NORTH, SOUTH, WEST
  */
 public enum Direction {
-    NORTH, EAST, SOUTH, WEST
+    EAST, NORTH, SOUTH, WEST
 }

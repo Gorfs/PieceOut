@@ -20,7 +20,7 @@ public abstract class Piece {
     }
     public InstanceManager guiManager;
 
-    public abstract void action(PieceLogic pieceLogic, InstanceManager instanceManager, int x, int y, IntCoordinates mousePos);
+    public abstract void action(PieceLogic pieceLogic, InstanceManager instanceManager, int x, int y);
 
     /**
      * @param x local getX coordinates in shape array

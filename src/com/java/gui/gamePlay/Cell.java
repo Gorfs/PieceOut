@@ -15,7 +15,9 @@ public class Cell extends JPanel{
     /**
      * class for the gui representation of the playable cells in the game.
      */
-    private final InstanceManager instanceManager;
+
+
+     private final InstanceManager instanceManager;
     
     // pixel_x and pixel_y are the coordinates of the cell in pixels RELATIVE to the CONTAINER (ARENA PANEL)
     private int pixel_x;

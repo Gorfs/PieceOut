@@ -3,7 +3,6 @@ package src.com.java.utils;
 import src.com.java.piece.PieceBrute;
 import src.com.java.piece.decorator.Decorator;
 import src.com.java.geometry.IntCoordinates;
-import src.com.java.piece.decorator.Translation;
 
 /**
  * Utils packages for debugging
@@ -51,14 +50,6 @@ public class Debug {
 
     public static void printDecorator(Decorator d) {
         System.out.println("Decorator is : " + d.getClass().getName());
-        if (d.getClass().getName().equals("src.com.java.piece.decorator.Translation")) {
-            System.out.println("Direction is : ");
-            boolean[] directions = ((Translation) d).getDirections();
-            for (int i = 0; i < directions.length; i++) {
-                System.out.print(directions[i] ? new String[]{"North", "East", "South", "West"}[i] : " ");
-            }
-            System.out.println();
-        }
         System.out.println("Action point is : " + d.actionPoint.getX() + " " + d.actionPoint.getY());
         System.out.println("Position is : " + d.getLast().getPos().getX() + " " + d.getLast().getPos().getY());
         System.out.println("Shape is : ");
@@ -71,7 +62,7 @@ public class Debug {
                 if (d.actionPoint.getX() == (j) && d.actionPoint.getY() == (i)) {
                     System.out.print("X");
                 } else {
-                    System.out.print(shape[i][j] ? "O" : ".");
+                    System.out.print(shape[i][j] == true ? "O" : ".");
                 }
             }
             System.out.println();

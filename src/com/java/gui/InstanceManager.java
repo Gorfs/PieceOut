@@ -2,6 +2,7 @@ package src.com.java.gui;
 
 import src.com.java.config.GuiConfig;
 import src.com.java.piece.Piece;
+import src.com.java.piece.Target;
 import src.com.java.piece.decorator.Decorator;
 import src.com.java.controllers.PlayerController;
 import src.com.java.gui.gamePlay.*;
@@ -31,6 +32,7 @@ public class InstanceManager {
     private final CardLayout layout = new CardLayout();
 
     private ArrayList<GuiPiece> guiPieces = new ArrayList<GuiPiece>();
+    private ArrayList<GuiTarget> guiTargets = new ArrayList<GuiTarget>();
     private final PieceLogic pieceLogic;
     public PlayerController playerController;
     public Arena arena;
@@ -65,13 +67,20 @@ public class InstanceManager {
 
         LevelManager.loadPiecesFromJson(this.pieceLogic, level, this);
 
+        for (Target target : this.pieceLogic.getTargets()) {
+            GuiTarget guiTarget = new GuiTarget(this, target);
+            guiTargets.add(guiTarget);
+            // guiTarget.repaint();
+        }
+
         for (Decorator piece : this.pieceLogic.getPieces()) {
             GuiPiece guiPiece = new GuiPiece(this, piece);
             guiPieces.add(guiPiece);
             // guiPiece.repaint();
         }
 
-        this.mainFrame.addComponentListener(new ComponentAdapter() {
+
+             this.mainFrame.addComponentListener(new ComponentAdapter() {
             public void componentResized(ComponentEvent componentEvent) {
                 GuiConfig.width = mainFrame.getWidth();
                 GuiConfig.height = mainFrame.getHeight();
@@ -93,6 +102,7 @@ public class InstanceManager {
     public void update() {
         gamePanel.update();
         gamePanel.getBottomPanel().updateButtons();
+        /*
         for (Decorator piece : pieceLogic.getPieces()) {
             if (piece.getLast().getTarget() != null) {
                 if (!piece.getLast().getTarget().getDest().equals(piece.getLast().getPos())) {
@@ -103,8 +113,19 @@ public class InstanceManager {
                 // TODO: check for rotation and flip of the piece
             }
         }
+
+         */
         // if all pieces are in the correct position, call method won()
-        Debug.out("Piece in correct position");
+        if (pieceLogic.getTargets() == null) {
+            Debug.out("Targets are null");
+            Debug.out("PieceLogic: " + pieceLogic);
+            return;
+        } else {
+            Debug.out("Targets are not null");
+        }
+        for(Target target: pieceLogic.getTargets()){
+            Debug.out("Target position: " + target.getDest().toString());
+        }
         this.won();
     }
 
