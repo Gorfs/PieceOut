@@ -56,6 +56,8 @@ public class InstanceManager {
         /*
          * initiates the GUI window.
          */
+
+
         this.level = level;
         playerController = new PlayerController(this, pieceLogic);
         arena = new Arena(this);
@@ -90,6 +92,7 @@ public class InstanceManager {
                     for (Cell cell : cells) cell.updateCell();
             }
         });
+
     }
 
     public int getArenaPanelY() {
@@ -110,6 +113,11 @@ public class InstanceManager {
     public void nextLevel() {
         // TODO: implement level transition here
         Debug.out("You win!");
+        InstanceManager next = new InstanceManager(new PieceLogic());
+        level++;
+        next.start(level);
+        this.clear();
+
     }
 
 
@@ -127,5 +135,15 @@ public class InstanceManager {
 
     public int getHeight() {
         return this.mainFrame.getHeight();
+    }
+
+    private void clear(){
+        this.pieceLogic.clearPieces();
+        this.pieceLogic.clearTargets();
+        this.guiPieces.clear();
+        this.guiTargets.clear();
+        // close window
+        this.mainFrame.dispose();
+
     }
 }
