@@ -1,6 +1,7 @@
 package src.com.java.gui;
 
 import src.com.java.config.GuiConfig;
+import src.com.java.geometry.IntCoordinates;
 import src.com.java.piece.Piece;
 import src.com.java.piece.Target;
 import src.com.java.piece.decorator.Decorator;
@@ -102,11 +103,16 @@ public class InstanceManager {
         gamePanel.update();
         gamePanel.getBottomPanel().updateButtons();
 
+        if (pieceLogic.checkWin()) this.nextLevel();
+
     }
 
-    public void won() {
+    public void nextLevel() {
         // TODO: implement level transition here
+        Debug.out("You win!");
     }
+
+
 
     /**
      * changes the panel in the main frame to the panel with the name panelName
