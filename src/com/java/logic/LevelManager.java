@@ -16,12 +16,13 @@ import src.com.java.piece.Target;
 import src.com.java.piece.decorator.*;
 import src.com.java.geometry.IntCoordinates;
 import src.com.java.gui.InstanceManager;
+import src.com.java.utils.Debug;
 
 public class LevelManager {
 
     /** Load a level from the levels.json file
      * @param id the id of the level to load
-     * @return the map of the level
+     * @return the level as a String array
      */
     public static String[] loadLevelFromJson(int id){
         try {

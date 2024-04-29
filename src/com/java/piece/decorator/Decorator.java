@@ -59,7 +59,7 @@ public abstract class Decorator extends Piece {
 
     /**
      * rotates the action point of the piece
-     * @param clockwise
+     * @param clockwise boolean that true when we rotate clockwise
      */
     public void rotateActionPoint(boolean clockwise) {
         // rotate the action point of the piece
@@ -249,7 +249,7 @@ public abstract class Decorator extends Piece {
     /**
      * Method that sets the nextPiece it decorates.
      * 
-     * @param p
+     * @param p Piece that we want to set as the nextPiece.
      */
     public void setNextPiece(Piece p) {
         this.nextPiece = p;

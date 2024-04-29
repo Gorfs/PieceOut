@@ -81,7 +81,6 @@ public class Translation extends Decorator {
         // If it is the right action we pressed on, then do the action.
         // (deal with offset)
         if (this.actionPoint.getX() == x && this.actionPoint.getY() == y) {
-            // TODO: Create a box for each direction for multiple direction choice
             this.updateDir(mousePos);
             int temp = switch (dir) {
                 case NORTH -> 0;
@@ -125,14 +124,9 @@ public class Translation extends Decorator {
 
     @Override
     public void personalReverseAction() {
-        IntCoordinates pos = this.getLast().getPos();
-        // Switch to check for each direction
-        switch (dir) {
-            case NORTH -> this.getLast().setPos(new IntCoordinates(pos.getX(), pos.getY() + 1));
-            case EAST -> this.getLast().setPos(new IntCoordinates(pos.getX() - 1, pos.getY()));
-            case SOUTH -> this.getLast().setPos(new IntCoordinates(pos.getX(), pos.getY() - 1));
-            case WEST -> this.getLast().setPos(new IntCoordinates(pos.getX() + 1, pos.getY()));
-        }
+        applyFlip(dir == Direction.EAST || dir == Direction.WEST);
+        personalAction();
+        applyFlip(dir == Direction.EAST || dir == Direction.WEST);
     }
 
     public boolean[] getDirections() {
