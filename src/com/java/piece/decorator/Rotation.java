@@ -27,7 +27,7 @@ public class Rotation extends Decorator {
      */
     public Rotation(Piece p, IntCoordinates pp) {
         super(p, pp);
-        this.actionPoint = pp;
+        this.setActionPoint(pp);
     }
 
     @Override
@@ -55,11 +55,11 @@ public class Rotation extends Decorator {
     }
 
     public void setPivotPoint(IntCoordinates pp) {
-        this.actionPoint = pp;
+        this.setActionPoint(pp);
     }
 
     public IntCoordinates getPivotPoint() {
-        return this.actionPoint;
+        return this.getActionPoint();
     }
 
     /**
@@ -70,7 +70,7 @@ public class Rotation extends Decorator {
         boolean[][] initShape = this.getLast().getShape();
         boolean[][] rotatedShape = new boolean[initShape[0].length][initShape.length]; // new shape after rotation
 
-        this.offsetPosition(this.actionPoint);
+        this.offsetPosition(this.getActionPoint());
 
         // changing action point for all the decorators in the list
         Decorator piece = (Decorator) this.getFirst();
@@ -94,7 +94,7 @@ public class Rotation extends Decorator {
 
         // applying change to piece
         this.getLast().setShape(rotatedShape);
-        this.getLast().setFixturePoint(this.actionPoint);
+        this.getLast().setFixturePoint(this.getActionPoint());
     }
 
     @Override
