@@ -23,7 +23,7 @@ public abstract class Decorator extends Piece {
     protected IntCoordinates localCoord;
 
     // the point which we apply the action too
-    public IntCoordinates actionPoint;
+    private IntCoordinates actionPoint;
 
     /**
      * Constructor for the decorators.
@@ -44,6 +44,8 @@ public abstract class Decorator extends Piece {
         this.actionPoint = local;
         this.nextPiece = null;
     }
+
+    public IntCoordinates getActionPoint() {return this.actionPoint;}
 
     public void setActionPoint(IntCoordinates p) {
         this.actionPoint = p;

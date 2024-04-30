@@ -50,4 +50,8 @@ public class Target {
     public IntCoordinates getDest() {
         return dest;
     }
+
+    public Decorator getPiece(){
+        return this.piece;
+    }
 }

@@ -59,7 +59,7 @@ public class Debug {
             }
             System.out.println();
         }
-        System.out.println("Action point is : " + d.actionPoint.getX() + " " + d.actionPoint.getY());
+        System.out.println("Action point is : " + d.getActionPoint().getX() + " " + d.getActionPoint().getY());
         System.out.println("Position is : " + d.getLast().getPos().getX() + " " + d.getLast().getPos().getY());
         System.out.println("Shape is : ");
         boolean[][] shape = d.getLast().getShape();
@@ -68,7 +68,7 @@ public class Debug {
             for (int j = 0; j < shape[i].length; j++) {
                 // System.out.println(" i = " + i + " j = " + j + " fixturePoint.getX() = " +
                 // fixturePoint.getX() + " fixturePoint.getY() = " + fixturePoint.getY());
-                if (d.actionPoint.getX() == (j) && d.actionPoint.getY() == (i)) {
+                if (d.getActionPoint().getX() == (j) && d.getActionPoint().getY() == (i)) {
                     System.out.print("X");
                 } else {
                     System.out.print(shape[i][j] ? "O" : ".");

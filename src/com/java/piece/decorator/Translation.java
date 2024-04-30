@@ -80,7 +80,7 @@ public class Translation extends Decorator {
     public void action(PieceLogic pieceLogic, InstanceManager instanceManager, int x, int y, IntCoordinates mousePos) {
         // If it is the right action we pressed on, then do the action.
         // (deal with offset)
-        if (this.actionPoint.getX() == x && this.actionPoint.getY() == y) {
+        if (this.getActionPoint().getX() == x && this.getActionPoint().getY() == y) {
             this.updateDir(mousePos);
             int temp = switch (dir) {
                 case NORTH -> 0;

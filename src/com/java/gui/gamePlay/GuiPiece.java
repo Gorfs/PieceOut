@@ -81,7 +81,7 @@ public class GuiPiece extends JPanel {
 
                         // paint the icon of the decorator
                         if (Objects.equals(action, "Translation")) {
-                            paintDirectional(g2d, cellCoords, (Translation) piece);
+                            paintDirectional(g2d, cellCoords, (Translation) piece, i, j);
                         }
                         else if (img != null) {
                             int imageWidth = (int) (img.getWidth() * imgScale);
@@ -107,7 +107,7 @@ public class GuiPiece extends JPanel {
      * @param cellCoords Coordinates of the cell in the game
      * @param piece Translation we want to draw
      */
-    private void paintDirectional(Graphics2D g2d, IntCoordinates cellCoords, Translation piece) {
+    private void paintDirectional(Graphics2D g2d, IntCoordinates cellCoords, Translation piece, int a, int b) {
         int x = cellCoords.getX();
         int y = cellCoords.getY();
         int cellSize = GuiConfig.CELL_SIZE;
@@ -120,6 +120,25 @@ public class GuiPiece extends JPanel {
             images[3] = ImageIO.read(new File(GuiConfig.resPath + "icons/left.png"));
         } catch (IOException e) {
             System.out.println("Error in paintDirectional : " + e.getMessage());
+        }
+
+        // Find the decorator to draw here
+        Decorator tmp = piece;
+        while (!piece.getActionPoint().equals(new IntCoordinates(b, a))) {
+            // If the previous piece is a decorator, we need to find the translation
+            if (piece.getPrevPiece() instanceof Decorator) {
+                while (tmp.getPrevPiece() != null) {
+                    // If the previous piece is a translation, we found the translation
+                    if (tmp.getPrevPiece() instanceof Translation) {
+                        piece = (Translation) tmp.getPrevPiece();
+                        break;
+                    }
+                    // Check the next decorator
+                    tmp = (Decorator) tmp.getPrevPiece();
+                }
+            } else {
+                break;
+            }
         }
 
         for (int i = 0; i < piece.getDirections().length; i++) {
