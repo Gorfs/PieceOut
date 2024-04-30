@@ -81,7 +81,7 @@ public class GuiPiece extends JPanel {
                         // load the icon for decorator into memory
                         String action = piece.getActionType(j, i);
                         try{
-                            if (!Objects.equals(action, "")){
+                            if (!Objects.equals(action, "") && !Objects.equals(action, "Translation")){
                                 img = ImageIO.read(new File(GuiConfig.resourcePath + "icons/" + action + ".png"));
                             }
                         } catch (Exception e) {
@@ -91,8 +91,7 @@ public class GuiPiece extends JPanel {
                         // paint the icon of the decorator
                         if (Objects.equals(action, "Translation")) {
                             paintDirectional(g2d, cellCoords, (Translation) piece, i, j);
-                        }
-                        else if (img != null) {
+                        } else if (img != null) {
                             int imageWidth = (int) (img.getWidth() * imgScale);
                             int imageHeight = (int) (img.getHeight() * imgScale);
                             int rectCenterX = cellCoords.getX() + (GuiConfig.CELL_SIZE / 2);
