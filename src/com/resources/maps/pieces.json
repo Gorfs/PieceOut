@@ -87,15 +87,15 @@
                     "position": [1, 5],
                     "decorators":[
                         {
-                            "type": "translation",
-                            "direction": [false, true, false, false],
-                            "position": [2, 0]
-                        },
-                        {
                             "type": "rotation",
                             "clockwise": false,
                             "position": [1, 0],
                             "repeat": 2
+                        },
+                        {
+                            "type": "translation",
+                            "direction": [false, false, false, true],
+                            "position": [0, 1]
                         }
                     ]
                 }
@@ -103,8 +103,8 @@
             "targets": [
                 {
                     "id": 0,
-                    "position": [1, 0],
-                    "rotations": "3",
+                    "position": [1, 1],
+                    "rotations": "2",
                     "flip_x": false,
                     "flip_y": false
                 }

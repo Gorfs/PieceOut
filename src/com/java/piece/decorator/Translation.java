@@ -125,14 +125,9 @@ public class Translation extends Decorator {
 
     @Override
     public void personalReverseAction() {
-        IntCoordinates pos = this.getLast().getPos();
-        // Switch to check for each direction
-        switch (dir) {
-            case NORTH -> this.getLast().setPos(new IntCoordinates(pos.getX(), pos.getY() + 1));
-            case EAST -> this.getLast().setPos(new IntCoordinates(pos.getX() - 1, pos.getY()));
-            case SOUTH -> this.getLast().setPos(new IntCoordinates(pos.getX(), pos.getY() - 1));
-            case WEST -> this.getLast().setPos(new IntCoordinates(pos.getX() + 1, pos.getY()));
-        }
+        invertDir();
+        personalAction();
+        invertDir();
     }
 
     public boolean[] getDirections() {
@@ -156,6 +151,15 @@ public class Translation extends Decorator {
             dir = Direction.EAST;
         } else if (mousePos.getY() > GuiConfig.CELL_SIZE - GuiConfig.CELL_SIZE/4) {
             dir = Direction.SOUTH;
+        }
+    }
+
+    public void invertDir() {
+        switch (dir) {
+            case NORTH -> dir = Direction.SOUTH;
+            case EAST -> dir = Direction.WEST;
+            case SOUTH -> dir = Direction.NORTH;
+            case WEST -> dir = Direction.EAST;
         }
     }
 }
