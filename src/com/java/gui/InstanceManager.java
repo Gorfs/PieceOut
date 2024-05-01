@@ -6,6 +6,7 @@ import src.com.java.piece.Piece;
 import src.com.java.piece.Target;
 import src.com.java.piece.decorator.Decorator;
 import src.com.java.controllers.PlayerController;
+import src.com.java.gui.UI.LevelTransitionPanel;
 import src.com.java.gui.gamePlay.*;
 import src.com.java.logic.Arena;
 import src.com.java.logic.LevelManager;
@@ -21,6 +22,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
+import java.util.logging.Level;
 
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
@@ -40,7 +42,7 @@ public class InstanceManager {
 
     // layout to change panels in rootPanel
     private final CardLayout layout = new CardLayout();
-    private final JPanel levelTransitionPanel;
+    private final LevelTransitionPanel levelTransitionPanel = new LevelTransitionPanel(this);
 
     private ArrayList<GuiPiece> guiPieces = new ArrayList<GuiPiece>();
     private ArrayList<GuiTarget> guiTargets = new ArrayList<GuiTarget>();
@@ -60,9 +62,6 @@ public class InstanceManager {
          */
         mainFrame.setLayout(layout);
         this.pieceLogic = pieceLogic;
-        levelTransitionPanel = new JPanel();
-        levelTransitionPanel.setBackground(Color.BLACK);
-        levelTransitionPanel.setBounds(0, 0, GuiConfig.WINDOW_WIDTH, GuiConfig.WINDOW_HEIGHT);
     }
 
     public void start(int level) {
@@ -95,13 +94,12 @@ public class InstanceManager {
             guiTargets.add(guiTarget);
             // guiTarget.repaint();
         }
-
+        
         for (Decorator piece : this.pieceLogic.getPieces()) {
             GuiPiece guiPiece = new GuiPiece(this, piece);
             guiPieces.add(guiPiece);
             // guiPiece.repaint();
         }
-
         this.mainFrame.addComponentListener(new ComponentAdapter() {
             public void componentResized(ComponentEvent componentEvent) {
                 GuiConfig.width = mainFrame.getWidth();
@@ -112,7 +110,7 @@ public class InstanceManager {
                     for (Cell cell : cells) cell.updateCell();
             }
         });
-        this.animationOnStart();
+        levelTransitionPanel.animationOnStart();
     }
 
     public int getArenaPanelY() {
@@ -128,22 +126,6 @@ public class InstanceManager {
 
         if (pieceLogic.checkWin()) this.won();
 
-    }
-
-    public void animationOnStart() {
-        Timer timer = new Timer(10, null);
-        timer.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                int x = levelTransitionPanel.getLocation().x;
-                x += 10;
-                if (x >= GuiConfig.WINDOW_WIDTH) {
-                    x = GuiConfig.WINDOW_WIDTH;
-                    timer.stop();
-                }
-                levelTransitionPanel.setLocation(x, 0);
-            }
-        });
-        timer.start();
     }
 
     /*
@@ -176,6 +158,10 @@ public class InstanceManager {
         });
         timer1.start();
 
+    }
+
+    public boolean isTransitioning() {
+        return levelTransitionPanel.isTransitioning();
     }
 
     public void nextLevel() {

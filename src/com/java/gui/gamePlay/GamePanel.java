@@ -63,6 +63,9 @@ public class GamePanel extends JPanel {
      * paints the pieces from the Piece logic class to the gui
      */
     public void paintPieces(){
+        if (guiManager.isTransitioning()){
+            return;
+        }
         Graphics g = this.getGraphics();
         for(Decorator piece: this.pieceLogic.getPieces()){
             GuiPiece guiPiece = new GuiPiece(this.guiManager, piece);
@@ -71,6 +74,9 @@ public class GamePanel extends JPanel {
     }
 
     public void paintTargets(){
+        if (guiManager.isTransitioning()){
+            return;
+        }
         Graphics g = this.getGraphics();
         for(Target target: this.pieceLogic.getTargets()){
             GuiTarget guiTarget = new GuiTarget(this.guiManager, target);
@@ -94,7 +100,6 @@ public class GamePanel extends JPanel {
 
     public void update(){
         //main function that updated the gui of the gameplay
-
 
         repaint();
         // scheduling the painting of the pieces on the next event on the event dispatch thread
