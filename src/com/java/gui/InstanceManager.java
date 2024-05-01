@@ -1,7 +1,9 @@
 package src.com.java.gui;
 
 import src.com.java.config.GuiConfig;
+import src.com.java.geometry.IntCoordinates;
 import src.com.java.piece.Piece;
+import src.com.java.piece.Target;
 import src.com.java.piece.decorator.Decorator;
 import src.com.java.controllers.PlayerController;
 import src.com.java.gui.gamePlay.*;
@@ -41,6 +43,7 @@ public class InstanceManager {
     private final JPanel levelTransitionPanel;
 
     private ArrayList<GuiPiece> guiPieces = new ArrayList<GuiPiece>();
+    private ArrayList<GuiTarget> guiTargets = new ArrayList<GuiTarget>();
     private final PieceLogic pieceLogic;
     public PlayerController playerController;
     public Arena arena;
@@ -66,6 +69,8 @@ public class InstanceManager {
         /*
          * initiates the GUI window.
          */
+
+
         this.level = level;
         playerController = new PlayerController(this, pieceLogic);
         arena = new Arena(this);
@@ -84,6 +89,12 @@ public class InstanceManager {
 
 
         LevelManager.loadPiecesFromJson(this.pieceLogic, level, this);
+
+        for (Target target : this.pieceLogic.getTargets()) {
+            GuiTarget guiTarget = new GuiTarget(this, target);
+            guiTargets.add(guiTarget);
+            // guiTarget.repaint();
+        }
 
         for (Decorator piece : this.pieceLogic.getPieces()) {
             GuiPiece guiPiece = new GuiPiece(this, piece);
@@ -104,17 +115,6 @@ public class InstanceManager {
         this.animationOnStart();
     }
 
-    /*
-     * method that is called when the player wants to change level
-     */
-
-    public void changeLevel(){
-        //TODO: Implement this :
-        //1. We remove everything that we have set on start
-        //2. We load the new level
-        //3. We do a new start with the new level
-    }
-
     public int getArenaPanelY() {
         return this.gamePanel.getArenaPanel().getY() + this.gamePanel.getArenaContainerPanel().getY();
     }
@@ -125,19 +125,9 @@ public class InstanceManager {
     public void update() {
         gamePanel.update();
         gamePanel.getBottomPanel().updateButtons();
-        for (Decorator piece : pieceLogic.getPieces()) {
-            if (piece.getLast().getTarget() != null) {
-                if (!piece.getLast().getTarget().getDest().equals(piece.getLast().getPos())) {
-                    // if the piece is not in the correct position, no need to call method won()
-                    Debug.out("Piece not in correct position");
-                    return;
-                }
-                // TODO: check for rotation and flip of the piece
-            }
-        }
-        // if all pieces are in the correct position, call method won()
-        Debug.out("Piece in correct position");
-        this.won();
+
+        if (pieceLogic.checkWin()) this.won();
+
     }
 
     public void animationOnStart() {
@@ -175,7 +165,7 @@ public class InstanceManager {
                     timer2.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent e) {
                             timer2.stop();
-                            changeLevel();
+                            nextLevel();
                         }
                     });
                     timer2.setRepeats(false);
@@ -185,7 +175,20 @@ public class InstanceManager {
             }
         });
         timer1.start();
+
     }
+
+    public void nextLevel() {
+        // TODO: implement level transition here
+        Debug.out("You win!");
+        InstanceManager next = new InstanceManager(new PieceLogic());
+        level++;
+        next.start(level);
+        this.clear();
+
+    }
+
+
 
     /**
      * changes the panel in the main frame to the panel with the name panelName
@@ -200,5 +203,15 @@ public class InstanceManager {
 
     public int getHeight() {
         return this.mainFrame.getHeight();
+    }
+
+    private void clear(){
+        this.pieceLogic.clearPieces();
+        this.pieceLogic.clearTargets();
+        this.guiPieces.clear();
+        this.guiTargets.clear();
+        // close window
+        this.mainFrame.dispose();
+
     }
 }

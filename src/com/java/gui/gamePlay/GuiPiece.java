@@ -2,6 +2,7 @@ package src.com.java.gui.gamePlay;
 
 import src.com.java.geometry.IntCoordinates;
 import src.com.java.config.GuiConfig;
+import src.com.java.piece.decorator.Translation;
 import src.com.java.utils.Debug;
 import src.com.java.piece.decorator.Decorator;
 import src.com.java.gui.InstanceManager;
@@ -9,43 +10,41 @@ import src.com.java.gui.InstanceManager;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
+import java.util.Objects;
 
 import javax.imageio.ImageIO;
 
 import javax.swing.JPanel;
 
 public class GuiPiece extends JPanel {
-    private final InstanceManager guiManager;
-    // ! assumes that the nextPiece is in a valid place in the arena
+    private final InstanceManager instanceManager;
 
-    private Color colour = Color.black;
-    private boolean[][] shapeMatrix = new boolean[4][];
-    private IntCoordinates pos;
+    private final Color colour;
     public boolean hasBeenPainted = false;
 
-    private Decorator piece;
+    private final Decorator piece;
 
-    public GuiPiece(InstanceManager guiManager, Decorator piece) {
-        this.guiManager = guiManager;
+    public GuiPiece(InstanceManager instanceManager, Decorator piece) {
+        this.instanceManager = instanceManager;
         this.piece = piece;
         this.colour = piece.getLast().getColor();
-        this.shapeMatrix = piece.getShape();
     }
 
     /**
-     * returns the pixel coordiantes of the cell relative to the top left of the
+     * returns the pixel coordinates of the cell relative to the top left of the
      * WINDOW
      * 
-     * @param cellCoords
+     * @param cellCoords Coordinates of the cell int the game
      * @return IntCoordinates
      */
     private IntCoordinates getPixelCoordinates(IntCoordinates cellCoords) {
-        ArenaPanel arenaPanel = this.guiManager.getGamePanel().getArenaPanel();
+        ArenaPanel arenaPanel = this.instanceManager.getGamePanel().getArenaPanel();
         try {
             Cell[][] cells = arenaPanel.getCells();
             Cell cell = cells[cellCoords.getY()][cellCoords.getX()];
             int xOffSet = arenaPanel.getX();
-            int yOffSet = guiManager.getArenaPanelY();
+            int yOffSet = instanceManager.getArenaPanelY();
             return new IntCoordinates(cell.getX() + xOffSet, cell.getY() + yOffSet);
         } catch (Exception e) {
             Debug.out("Error in getPixelCoordinates : " + e.getMessage());
@@ -53,9 +52,6 @@ public class GuiPiece extends JPanel {
         }
     }
 
-    /**
-     * @param g
-     */
     @Override
     public void paintComponent(Graphics g) {
         this.hasBeenPainted = true;
@@ -68,9 +64,6 @@ public class GuiPiece extends JPanel {
         IntCoordinates offSet = this.piece.getLast().getOffset();
         IntCoordinates destOffSet = new IntCoordinates(0, 0);
         IntCoordinates destCoords;
-        if (this.piece.getLast().getTarget() != null) {
-            destOffSet = this.piece.getLast().getDestOffset();
-        }
         IntCoordinates cellCoords;
 
         for (int i = 0; i < shapeMatrix.length; i++) { // height
@@ -84,18 +77,11 @@ public class GuiPiece extends JPanel {
                         // " + offSet.toString());
                         g2d.fillRect(cellCoords.getX(), cellCoords.getY(), GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE);
 
-                        g2d.setColor(new Color(255, 0, 0, 75));
-                        if (this.piece.getLast().getTarget() != null) {
-                            destCoords = getPixelCoordinates(
-                                    new IntCoordinates(j + destOffSet.getX(), i + destOffSet.getY()));
-                            g2d.fillRect(destCoords.getX(), destCoords.getY(), GuiConfig.CELL_SIZE,
-                                    GuiConfig.CELL_SIZE);
-                        }
 
                         // load the icon for decorator into memory
                         String action = piece.getActionType(j, i);
                         try{
-                            if (action != ""){
+                            if (!Objects.equals(action, "") && !Objects.equals(action, "Translation")){
                                 img = ImageIO.read(new File(GuiConfig.resourcePath + "icons/" + action + ".png"));
                             }
                         } catch (Exception e) {
@@ -103,8 +89,9 @@ public class GuiPiece extends JPanel {
                         }
 
                         // paint the icon of the decorator
-                        // TODO change the translation ICON into a directional arrow
-                        if (img != null) {
+                        if (Objects.equals(action, "Translation")) {
+                            paintDirectional(g2d, cellCoords, (Translation) piece, i, j);
+                        } else if (img != null) {
                             int imageWidth = (int) (img.getWidth() * imgScale);
                             int imageHeight = (int) (img.getHeight() * imgScale);
                             int rectCenterX = cellCoords.getX() + (GuiConfig.CELL_SIZE / 2);
@@ -117,6 +104,69 @@ public class GuiPiece extends JPanel {
                         Debug.out("Error in paintComponent : " + e.getMessage());
                     }
 
+                }
+            }
+        }
+    }
+
+
+    /**
+     * Method that paints the directional arrows of a Translation decorator as rectangles
+     * @param g2d 2D Graphics object
+     * @param cellCoords Coordinates of the cell in the game
+     * @param piece Translation we want to draw
+     */
+    private void paintDirectional(Graphics2D g2d, IntCoordinates cellCoords, Translation piece, int a, int b) {
+        int x = cellCoords.getX();
+        int y = cellCoords.getY();
+        int cellSize = GuiConfig.CELL_SIZE;
+
+        g2d.setColor(Color.WHITE);
+
+        Image[] images = new Image[4];
+        try {
+            images[0] = ImageIO.read(new File(GuiConfig.resourcePath + "icons/up.png"));
+            images[1] = ImageIO.read(new File(GuiConfig.resourcePath + "icons/right.png"));
+            images[2] = ImageIO.read(new File(GuiConfig.resourcePath + "icons/down.png"));
+            images[3] = ImageIO.read(new File(GuiConfig.resourcePath + "icons/left.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Find the decorator to draw here
+        Decorator tmp = piece;
+        while (!piece.getActionPoint().equals(new IntCoordinates(b, a))) {
+            // If the previous piece is a decorator, we need to find the translation
+            if (piece.getPrevPiece() instanceof Decorator) {
+                while (tmp.getPrevPiece() != null) {
+                    // If the previous piece is a translation, we found the translation
+                    if (tmp.getPrevPiece() instanceof Translation) {
+                        piece = (Translation) tmp.getPrevPiece();
+                        break;
+                    }
+                    // Check the next decorator
+                    tmp = (Decorator) tmp.getPrevPiece();
+                }
+            } else {
+                break;
+            }
+        }
+
+        for (int i = 0; i < piece.getDirections().length; i++) {
+            if (piece.getDirections()[i]) {
+                switch (i) {
+                    case 0 -> {
+                        g2d.drawImage(images[0], x, y, cellSize,cellSize, null);
+                    }
+                    case 1 -> {
+                        g2d.drawImage(images[1], x, y,cellSize,cellSize, null);
+                    }
+                    case 2 -> {
+                        g2d.drawImage(images[2], x, y,cellSize,cellSize, null);
+                    }
+                    case 3 -> {
+                        g2d.drawImage(images[3], x, y,cellSize,cellSize, null);
+                    }
                 }
             }
         }

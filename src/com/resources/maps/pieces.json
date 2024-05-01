@@ -11,12 +11,12 @@
                     "decorators":[
                         {
                             "type": "translation",
-                            "direction": "left",
+                            "direction": [false, false, false, true],
                             "position": [0, 0]
                         },
                         {
                             "type": "translation",
-                            "direction": "right",
+                            "direction": [false, true, false, false],
                             "position": [1, 0]
                         }
                     ]
@@ -26,7 +26,7 @@
                 {
                     "id": 0,
                     "position": [4, 2],
-                    "direction": "right",
+                    "rotations": "0",
                     "flip_x": false,
                     "flip_y": false
                 }
@@ -43,12 +43,12 @@
                     "decorators":[
                         {
                             "type": "translation",
-                            "direction": "left",
+                            "direction": [false, false, false, true],
                             "position": [0, 0]
                         },
                         {
                             "type": "translation",
-                            "direction": "right",
+                            "direction": [false, true, false, false],
                             "position": [1, 0]
                         }
                     ]
@@ -61,7 +61,7 @@
                     "decorators":[
                         {
                             "type": "translation",
-                            "direction": "up",
+                            "direction": [true, false, false, false],
                             "position": [0, 0]
                         }
                     ]
@@ -71,7 +71,7 @@
                 {
                     "id": 1,
                     "position": [4, 0],
-                    "direction": "right",
+                    "rotations": "0",
                     "flip_x": false,
                     "flip_y": false
                 }
@@ -87,15 +87,15 @@
                     "position": [1, 5],
                     "decorators":[
                         {
-                            "type": "translation",
-                            "direction": "right",
-                            "position": [2, 0]
-                        },
-                        {
                             "type": "rotation",
                             "clockwise": false,
                             "position": [1, 0],
                             "repeat": 2
+                        },
+                        {
+                            "type": "translation",
+                            "direction": [false, false, false, true],
+                            "position": [0, 1]
                         }
                     ]
                 }
@@ -103,8 +103,8 @@
             "targets": [
                 {
                     "id": 0,
-                    "position": [2, 1],
-                    "direction": "left",
+                    "position": [1, 1],
+                    "rotations": "2",
                     "flip_x": false,
                     "flip_y": false
                 }
@@ -135,7 +135,7 @@
                     "decorators":[
                         {
                             "type": "translation",
-                            "direction": "up",
+                            "direction": [true, false, false, false],
                             "position": [0, 0]
                         }
                     ]
@@ -145,7 +145,7 @@
                 {
                     "id": 1,
                     "position": [5, 0],
-                    "direction": "right",
+                    "rotations": "0",
                     "flip_x": false,
                     "flip_y": false
                 }
@@ -176,13 +176,8 @@
                     "decorators":[
                         {
                             "type": "translation",
-                            "direction": "right",
+                            "direction": [true, true, false, false],
                             "position": [0, 0]
-                        },
-                        {
-                            "type": "translation",
-                            "direction": "up",
-                            "position": [0, 1]
                         }
                     ]
                 }
@@ -191,11 +186,208 @@
                 {
                     "id": 1,
                     "position": [4, 1],
-                    "direction": "right",
+                    "rotations": "0",
                     "flip_x": false,
                     "flip_y": false
                 }
             ]
+        },
+        {
+            "id": 5,
+            "pieces": [
+                {
+                    "id": 0,
+                    "shape": "JShape",
+                    "color": "purple",
+                    "position": [2, 4],
+                    "decorators":[
+                        {
+                            "type": "flip",
+                            "horizontal": false,
+                            "position": [1, 1]
+                        },
+                        {
+                            "type": "translation",
+                            "direction": [true, false, false, false],
+                            "position": [1, 0]
+                        },
+                        {
+                            "type": "translation",
+                            "direction": [false, false, true, false],
+                            "position": [1, 2]
+                        }
+                    ]
+                }
+            ],
+            "targets": [
+                {
+                    "id": 0,
+                    "position": [3, 0],
+                    "rotations": "0",
+                    "flip_x": false,
+                    "flip_y": true
+                }
+            ]
+
+        },
+        {
+            "id": 6,
+            "pieces": [
+                {
+                    "id": 0,
+                    "shape": "JShape",
+                    "color": "purple",
+                    "position": [2, 4],
+                    "decorators":[
+                        {
+                            "type": "flip",
+                            "horizontal": true,
+                            "position": [1, 1]
+                        },
+                        {
+                            "type": "translation",
+                            "direction": [true, false, false, false],
+                            "position": [1, 0]
+                        },
+                        {
+                            "type": "translation",
+                            "direction": [false, false, true, false],
+                            "position": [1, 2]
+                        }
+                    ]
+                }
+            ],
+            "targets": [
+                {
+                    "id": 0,
+                    "position": [2, 0],
+                    "rotations": "0",
+                    "flip_x": true,
+                    "flip_y": false
+                }
+            ]
+        },
+        {
+            "id": 7,
+            "pieces": [
+                {
+                    "id": 0,
+                    "shape": "IShape",
+                    "color": "red",
+                    "position": [
+                        1,
+                        0
+                    ],
+                    "decorators": [
+                        {
+                            "type": "rotation",
+                            "clockwise": false,
+                            "position": [0, 1],
+                            "repeat": 0
+                        },
+                        {
+                            "type": "translation",
+                            "direction": [
+                                true,
+                                false,
+                                false,
+                                false
+                            ],
+                            "position": [
+                                0,
+                                0
+                            ]
+                        },
+                        {
+                            "type": "translation",
+                            "direction": [
+                                false,
+                                false,
+                                true,
+                                false
+                            ],
+                            "position": [
+                                0,
+                                2
+                            ]
+                        }
+
+                    ]
+                },
+
+                {
+                    "id": 1,
+                    "shape": "JShape",
+                    "color": "blue",
+                    "position": [1, 0],
+                    "decorators":[
+                        {
+                            "type": "rotation",
+                            "clockwise": false,
+                            "position": [1, 1],
+                            "repeat": 2
+                        },
+                        {
+                            "type": "translation",
+                            "direction": [true, false, false, false],
+                            "position": [0, 0]
+                        },
+                        {
+                            "type": "translation",
+                            "direction": [false, false, true, false],
+                            "position": [0, 2]
+                        }
+                    ]
+
+                },
+                {
+                    "id": 2,
+                    "shape": "TShape",
+                    "color": "green",
+                    "position": [3, 1],
+                    "decorators":[
+                        {
+                            "type": "rotation",
+                            "clockwise": false,
+                            "position": [1, 0],
+                            "repeat": 3
+                        },
+                        {
+                            "type": "translation",
+                            "direction": [true, false, false, false],
+                            "position": [1, 0]
+                        },
+                        {
+                            "type": "translation",
+                            "direction": [false, false, true, false],
+                            "position": [1, 2]
+                        }
+                    ]
+                }
+            ],
+                "targets": [
+                    {
+                        "id": 0,
+                        "position": [4, 4],
+                        "rotations": "0",
+                        "flip_x": false,
+                        "flip_y": false
+                    },
+                    {
+                        "id": 1,
+                        "position": [2, 4],
+                        "rotations": "2",
+                        "flip_x": false,
+                        "flip_y": false
+                    },
+                    {
+                        "id": 2,
+                        "position": [1, 4],
+                        "rotations": "2",
+                        "flip_x": false,
+                        "flip_y": false
+                    }
+                ]
         }
     ]
 }
