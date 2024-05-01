@@ -11,12 +11,15 @@ import java.awt.*;
 
 public class GuiTarget extends JPanel {
     private final InstanceManager guiManager;
-    public boolean hasBeenPainted = false;
-    private Target target;
+    private final Target target;
+    private final Color color;
 
     public GuiTarget(InstanceManager guiManager, Target target) {
         this.guiManager = guiManager;
         this.target = target;
+        // make the color less opaque
+        Color color = target.getPiece().getLast().getColor();
+        this.color = new Color(color.getRed(), color.getGreen(), color.getBlue(), 70);
     }
 
     public IntCoordinates getPixelCoordinates(IntCoordinates cellCoords) {
@@ -35,9 +38,8 @@ public class GuiTarget extends JPanel {
 
     @Override
     public void paintComponent(Graphics g) {
-        this.hasBeenPainted = true;
         Graphics2D g2d = (Graphics2D) g;
-        g2d.setColor(Color.decode("#ff8a8a"));
+        g2d.setColor(color);
 
         boolean[][] shape = target.getShape();
         IntCoordinates cellCoords;
