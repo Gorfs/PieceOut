@@ -29,7 +29,7 @@ public class ArenaPanel extends JPanel {
 
         this.setLayout(new GridLayout(map_size, map_size));
         this.setAlignmentY(CENTER_ALIGNMENT);
-        // this.setBorder(BorderFactory.createLineBorder(Color.BLUE, 3)); // Add thicker
+        // this.setBorder(BorderFactory.createLineBorder(Color.BLUE, 1)); // Add thicker
         // and blue border here
 
         // filling the map with cells

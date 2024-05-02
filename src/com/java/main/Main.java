@@ -10,7 +10,7 @@ public class Main {
      */
     public static void main(String[] args){
 
-        int level = 2;
+        int level = 0;
         /*
           Init the logic of the game
          */

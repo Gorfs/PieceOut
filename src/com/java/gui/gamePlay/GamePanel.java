@@ -3,6 +3,7 @@ package src.com.java.gui.gamePlay;
 import java.awt.Graphics;
 
 import javax.swing.*;
+import java.awt.*;
 
 import src.com.java.gui.InstanceManager;
 import src.com.java.gui.UI.*;
@@ -44,25 +45,29 @@ public class GamePanel extends JPanel {
         this.guiManager = guiManager;
         this.pieceLogic = pieceLogic;
 
-        this.setLayout(null);
+        // this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.setLayout(new BorderLayout());
         this.setBackground(Colours.BACKGROUND);
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         this.topPanel = new TopPanel(guiManager);
-        this.add(topPanel);
+        this.add(topPanel, BorderLayout.NORTH);
 
         this.arenaContainerPanel = new ArenaContainerPanel(guiManager);
         this.arenaPanel = arenaContainerPanel.getArenaPanel();
-        this.add(arenaContainerPanel);
+        this.add(arenaContainerPanel, BorderLayout.CENTER);
 
         this.bottomPanel = new BottomPanel(guiManager);
-        this.add(bottomPanel);
+        this.add(bottomPanel, BorderLayout.SOUTH);
+        // this.setMaximumSize(new Dimension(GuiConfig.width, GuiConfig.height - 200));
     }
 
     /**
      * paints the pieces from the Piece logic class to the gui
      */
     public void paintPieces(){
+        if (guiManager.isTransitioning()){
+            return;
+        }
         Graphics g = this.getGraphics();
         for(Decorator piece: this.pieceLogic.getPieces()){
             GuiPiece guiPiece = new GuiPiece(this.guiManager, piece);
@@ -71,6 +76,9 @@ public class GamePanel extends JPanel {
     }
 
     public void paintTargets(){
+        if (guiManager.isTransitioning()){
+            return;
+        }
         Graphics g = this.getGraphics();
         for(Target target: this.pieceLogic.getTargets()){
             GuiTarget guiTarget = new GuiTarget(this.guiManager, target);
@@ -94,7 +102,6 @@ public class GamePanel extends JPanel {
 
     public void update(){
         //main function that updated the gui of the gameplay
-
 
         repaint();
         // scheduling the painting of the pieces on the next event on the event dispatch thread

@@ -8,7 +8,7 @@ public class GuiConfig {
     public static int WINDOW_HEIGHT = 800;
 
     public static int width = WINDOW_WIDTH;
-    public static int height = WINDOW_HEIGHT;
+    public static int height = WINDOW_HEIGHT - 30;
     
     public static double arenaScale = 0.75;
     public static int CELL_SIZE = (int) Math.floor(100 * arenaScale);
