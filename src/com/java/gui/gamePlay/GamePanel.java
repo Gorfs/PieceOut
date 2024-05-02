@@ -3,6 +3,7 @@ package src.com.java.gui.gamePlay;
 import java.awt.Graphics;
 
 import javax.swing.*;
+import java.awt.*;
 
 import src.com.java.gui.InstanceManager;
 import src.com.java.gui.UI.*;
@@ -44,19 +45,20 @@ public class GamePanel extends JPanel {
         this.guiManager = guiManager;
         this.pieceLogic = pieceLogic;
 
-        this.setLayout(null);
+        // this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.setLayout(new BorderLayout());
         this.setBackground(Colours.BACKGROUND);
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         this.topPanel = new TopPanel(guiManager);
-        this.add(topPanel);
+        this.add(topPanel, BorderLayout.NORTH);
 
         this.arenaContainerPanel = new ArenaContainerPanel(guiManager);
         this.arenaPanel = arenaContainerPanel.getArenaPanel();
-        this.add(arenaContainerPanel);
+        this.add(arenaContainerPanel, BorderLayout.CENTER);
 
         this.bottomPanel = new BottomPanel(guiManager);
-        this.add(bottomPanel);
+        this.add(bottomPanel, BorderLayout.SOUTH);
+        // this.setMaximumSize(new Dimension(GuiConfig.width, GuiConfig.height - 200));
     }
 
     /**
