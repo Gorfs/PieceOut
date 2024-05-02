@@ -109,6 +109,7 @@ public class InstanceManager {
                 for (Cell[] cells : gamePanel.getArenaPanel().getCells())
                     for (Cell cell : cells) cell.updateCell();
                 gamePanel.setBounds(0, 0, GuiConfig.width, GuiConfig.height);
+                levelTransitionPanel.setBounds(0, 0, GuiConfig.width, GuiConfig.height);
                 levelTransitionPanel.setLocation(GuiConfig.width, 0);
             }
         });

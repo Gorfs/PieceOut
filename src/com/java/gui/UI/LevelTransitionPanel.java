@@ -3,6 +3,7 @@ package src.com.java.gui.UI;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.logging.Level;
 
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -32,6 +33,7 @@ public class LevelTransitionPanel extends JPanel{
                 if (x >= GuiConfig.WINDOW_WIDTH) {
                     x = GuiConfig.WINDOW_WIDTH;
                     isTransitioning = false;
+                    LevelTransitionPanel.this.setVisible(false);
                     instanceManager.update();
                     timer.stop();
                 }
@@ -39,10 +41,12 @@ public class LevelTransitionPanel extends JPanel{
             }
         });
         timer.start();
+
     }
 
     public void animationAtEnd() {
         setLocation(-GuiConfig.WINDOW_WIDTH, 0);
+        setVisible(true);
         Timer timer1 = new Timer(10, null);
         timer1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
