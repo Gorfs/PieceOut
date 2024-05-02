@@ -78,8 +78,8 @@ public class InstanceManager {
         playerController.startController(gamePanel.getArenaPanel());
         
         JLayeredPane layeredPane = new JLayeredPane();
-        layeredPane.setPreferredSize(new Dimension(GuiConfig.WINDOW_WIDTH, GuiConfig.WINDOW_HEIGHT));
-        gamePanel.setBounds(0, 0, GuiConfig.WINDOW_WIDTH, GuiConfig.WINDOW_HEIGHT);
+        layeredPane.setPreferredSize(new Dimension(GuiConfig.width, GuiConfig.height));
+        gamePanel.setBounds(0, 0, GuiConfig.width, GuiConfig.height);
         layeredPane.add(gamePanel, JLayeredPane.DEFAULT_LAYER);
         layeredPane.add(levelTransitionPanel, JLayeredPane.PALETTE_LAYER);
     
@@ -108,6 +108,8 @@ public class InstanceManager {
 
                 for (Cell[] cells : gamePanel.getArenaPanel().getCells())
                     for (Cell cell : cells) cell.updateCell();
+                gamePanel.setBounds(0, 0, GuiConfig.width, GuiConfig.height);
+                levelTransitionPanel.setLocation(GuiConfig.width, 0);
             }
         });
         levelTransitionPanel.animationOnStart();
