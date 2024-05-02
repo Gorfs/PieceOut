@@ -103,7 +103,7 @@ public class InstanceManager {
         this.mainFrame.addComponentListener(new ComponentAdapter() {
             public void componentResized(ComponentEvent componentEvent) {
                 GuiConfig.width = mainFrame.getWidth();
-                GuiConfig.height = mainFrame.getHeight();
+                GuiConfig.height = mainFrame.getHeight() - 30; // TODO don't hardcode like this
                 GuiConfig.updateArenaScale();
 
                 for (Cell[] cells : gamePanel.getArenaPanel().getCells())
@@ -125,7 +125,7 @@ public class InstanceManager {
     */
     public void update() {
         gamePanel.update();
-        gamePanel.getBottomPanel().updateButtons();
+        gamePanel.getBottomPanel().updateButtons(); //TODO move this call to inside the gamePanel.update() function
 
         if (pieceLogic.checkWin()) levelTransitionPanel.animationAtEnd();
 
