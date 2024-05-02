@@ -126,7 +126,7 @@ public class InstanceManager {
         gamePanel.update();
         gamePanel.getBottomPanel().updateButtons();
 
-        if (pieceLogic.checkWin()) this.won();
+        if (pieceLogic.checkWin()) levelTransitionPanel.animationAtEnd();
 
     }
 
@@ -134,33 +134,7 @@ public class InstanceManager {
      * method that is called when the player has won the level
      */
 
-    public void won() {
-        levelTransitionPanel.setLocation(-GuiConfig.WINDOW_WIDTH, 0);
-        Timer timer1 = new Timer(10, null);
-        timer1.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                int x = levelTransitionPanel.getLocation().x;
-                x += 10;
-                if (x >= 0) {
-                    x = 0;
-                    timer1.stop();
 
-                    Timer timer2 = new Timer(1000, null);
-                    timer2.addActionListener(new ActionListener() {
-                        public void actionPerformed(ActionEvent e) {
-                            timer2.stop();
-                            nextLevel();
-                        }
-                    });
-                    timer2.setRepeats(false);
-                    timer2.start();
-                }
-                levelTransitionPanel.setLocation(x, 0);
-            }
-        });
-        timer1.start();
-
-    }
 
     public boolean isTransitioning() {
         return levelTransitionPanel.isTransitioning();
