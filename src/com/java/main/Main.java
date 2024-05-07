@@ -3,6 +3,7 @@ package src.com.java.main;
 import src.com.java.logic.*;
 
 import src.com.java.gui.*;
+import src.com.java.gui.UI.Launcher;
 
 public class Main {
     /** 
@@ -17,8 +18,11 @@ public class Main {
         // App.run();
 
         // init the GUI manager
-        InstanceManager instanceManager = new InstanceManager(new PieceLogic());
-        instanceManager.start(level);
+        //InstanceManager instanceManager = new InstanceManager(new PieceLogic());
+        //instanceManager.start(level);
+
+        Launcher launcher = new Launcher();
+        launcher.launch();
         
     }
 }

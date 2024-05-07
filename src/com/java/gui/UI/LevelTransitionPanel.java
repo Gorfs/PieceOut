@@ -23,6 +23,11 @@ public class LevelTransitionPanel extends JPanel{
         this.setBounds(0, 0, GuiConfig.WINDOW_WIDTH, GuiConfig.WINDOW_HEIGHT);
     }
 
+    /*
+     * This method is called when the level begins
+     * It moves the panel to the right
+     */
+
     public void animationOnStart() {
         isTransitioning = true;
         Timer timer = new Timer(10, null);
@@ -43,6 +48,12 @@ public class LevelTransitionPanel extends JPanel{
         timer.start();
 
     }
+
+    /*
+     * This method is called when the level is completed
+     * It moves the panel to the left to the center of the screen
+     * Then it waits for 0.2 seconds and calls the next level
+     */
 
     public void animationAtEnd() {
         setLocation(-GuiConfig.WINDOW_WIDTH, 0);
