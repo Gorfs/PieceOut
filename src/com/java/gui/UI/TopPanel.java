@@ -31,8 +31,7 @@ public class TopPanel extends JPanel{
         returnButton.setFocusable(false);
 
         returnButton.addActionListener(e -> {
-            // TODO remove testing button and make it return to main menu
-            guiManager.update();
+            guiManager.returnToMainMenu();
         });
 
 

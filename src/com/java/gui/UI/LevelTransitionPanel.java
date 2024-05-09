@@ -33,8 +33,9 @@ public class LevelTransitionPanel extends JPanel{
         Timer timer = new Timer(10, null);
         timer.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                System.out.println(LevelTransitionPanel.this.getLocation().x);
                 int x = LevelTransitionPanel.this.getLocation().x;
-                x += 40;
+                x += 30;
                 if (x >= GuiConfig.WINDOW_WIDTH) {
                     x = GuiConfig.WINDOW_WIDTH;
                     isTransitioning = false;

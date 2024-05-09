@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
@@ -27,11 +28,12 @@ public class Launcher {
     private final GameWindow mainFrame;
     private final CardLayout layout;
 
-    public Launcher(){
+    public Launcher(Point location) {
         mainFrame = new GameWindow();
         launcherPanel = new LauncherPanel();
         layout = new CardLayout();
         mainFrame.setLayout(layout);
+        mainFrame.setLocation(location);
     }
 
     /*
@@ -49,9 +51,22 @@ public class Launcher {
     public void startGame(int players){
         //TODO: implement the logic to start the game with the number of players specified
         mainFrame.dispose();
-        int level = 0;
-        InstanceManager instanceManager = new InstanceManager(new PieceLogic());
-        instanceManager.start(level);
+        if (players == 1) {
+            int level = 0;
+            Point location = mainFrame.getLocation();
+            InstanceManager instanceManager = new InstanceManager(new PieceLogic(), location);
+            instanceManager.start(level);
+        }
+        else{
+            int level = 0;
+            Point location2 = mainFrame.getLocation();
+            location2.setLocation(location2.getX() + GuiConfig.WINDOW_WIDTH + 10, location2.getY());
+            InstanceManager instanceManager2 = new InstanceManager(new PieceLogic(), location2, null);
+            instanceManager2.start(level);
+            Point location = mainFrame.getLocation();
+            InstanceManager instanceManager = new InstanceManager(new PieceLogic(), location, instanceManager2);
+            instanceManager.start(level);
+        }
     }
     
     
