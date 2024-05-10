@@ -92,9 +92,8 @@ public class GuiPiece extends JPanel {
             g2d.setColor(this.colour);
             int imageWidth = (int) (piece.getLast().getShape().length * GuiConfig.CELL_SIZE);
             int imageHeight = (int) (piece.getLast().getShape()[0].length * GuiConfig.CELL_SIZE);
-            int x_coord = offSet.getX() * GuiConfig.CELL_SIZE + instanceManager.getGamePanel().getArenaContainerPanel().getArenaPanel().getX(); 
-            int y_coord = ((offSet.getY()) * GuiConfig.CELL_SIZE) + instanceManager.getGamePanel().getArenaContainerPanel().getArenaPanel().getY();
-            g2d.drawImage(shapeIcon.getImage(), x_coord, y_coord, imageHeight, imageWidth, null);
+            IntCoordinates coords = getPixelCoordinates(new IntCoordinates(offSet.getX(),offSet.getY())); 
+            g2d.drawImage(shapeIcon.getImage(), coords.getX(), coords.getY(), imageHeight, imageWidth, null);
         }
         
 
