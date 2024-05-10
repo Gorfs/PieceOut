@@ -72,7 +72,7 @@ public class Launcher {
             this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
             try {
-                BufferedImage bufferedImage = ImageIO.read(new File(GuiConfig.resourcePath + "icons/titleImage.png"));
+                BufferedImage bufferedImage = ImageIO.read(new File(GuiConfig.resPath + "icons/titleImage.png"));
                 titleImage = new JLabel(new ImageIcon(bufferedImage));
                 int marginHeightBetweenUpAndImage = 50;
                 this.add(Box.createVerticalStrut(marginHeightBetweenUpAndImage));
