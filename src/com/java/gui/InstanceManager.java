@@ -1,11 +1,13 @@
 package src.com.java.gui;
 
 import src.com.java.config.GuiConfig;
+import src.com.java.config.LogicConstants;
 import src.com.java.geometry.IntCoordinates;
 import src.com.java.piece.Piece;
 import src.com.java.piece.Target;
 import src.com.java.piece.decorator.Decorator;
 import src.com.java.controllers.PlayerController;
+import src.com.java.gui.UI.Launcher;
 import src.com.java.gui.UI.LevelTransitionPanel;
 import src.com.java.gui.gamePlay.*;
 import src.com.java.logic.Arena;
@@ -49,26 +51,41 @@ public class InstanceManager {
     private final PieceLogic pieceLogic;
     public PlayerController playerController;
     public Arena arena;
+    private InstanceManager secondPlayer;
 
     public int level;
+    private int players;
 
     public GamePanel getGamePanel() {
         return gamePanel;
     }
 
-    public InstanceManager(PieceLogic pieceLogic) {
+    public InstanceManager(PieceLogic pieceLogic, Point location) {
         /*
          * init of instance
          */
         mainFrame.setLayout(layout);
         this.pieceLogic = pieceLogic;
+        mainFrame.setLocation(location);
+        this.secondPlayer = this;
+        players = 1;
+    }
+
+    public InstanceManager(PieceLogic pieceLogic, Point location, InstanceManager secondPlayer) {
+        /*
+         * init of instance
+         */
+        mainFrame.setLayout(layout);
+        this.pieceLogic = pieceLogic;
+        mainFrame.setLocation(location);
+        this.secondPlayer = secondPlayer;
+        players = 2;
     }
 
     public void start(int level) {
         /*
          * initiates the GUI window.
          */
-
 
         this.level = level;
         playerController = new PlayerController(this, pieceLogic);
@@ -110,7 +127,9 @@ public class InstanceManager {
                     for (Cell cell : cells) cell.updateCell();
                 gamePanel.setBounds(0, 0, GuiConfig.width, GuiConfig.height);
                 levelTransitionPanel.setBounds(0, 0, GuiConfig.width, GuiConfig.height);
-                levelTransitionPanel.setLocation(GuiConfig.width, 0);
+                if (!levelTransitionPanel.isTransitioning()){
+                    levelTransitionPanel.setLocation(GuiConfig.width, 0);
+                }
             }
         });
         levelTransitionPanel.animationOnStart();
@@ -142,12 +161,17 @@ public class InstanceManager {
     }
 
     public void nextLevel() {
-        // TODO: implement level transition here
-        Debug.out("You win!");
-        InstanceManager next = new InstanceManager(new PieceLogic());
-        level++;
-        next.start(level);
-        this.clear();
+        if (level + 1 != LogicConstants.NUMBER_OF_LEVELS){
+            Debug.out("You win!");
+            Point location = mainFrame.getLocation();
+            InstanceManager next = new InstanceManager(new PieceLogic(), location, secondPlayer);
+            level++;
+            next.start(level);
+            this.clear();
+        }
+        else{
+            this.returnToMainMenu();
+        }
 
     }
 
@@ -176,5 +200,18 @@ public class InstanceManager {
         // close window
         this.mainFrame.dispose();
 
+    }
+
+    public void returnToMainMenu() {
+        if (secondPlayer == null && players == 2) {
+            return;
+        }
+        this.clear();
+        if (players == 2){
+            secondPlayer.clear();
+        }
+        Point location = mainFrame.getLocation();
+        Launcher launcher = new Launcher(location);
+        launcher.launch();
     }
 }

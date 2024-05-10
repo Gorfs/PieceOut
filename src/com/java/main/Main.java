@@ -2,6 +2,11 @@ package src.com.java.main;
 
 import src.com.java.logic.*;
 
+import java.awt.Dimension;
+import java.awt.Point;
+import java.awt.Toolkit;
+
+import src.com.java.config.GuiConfig;
 import src.com.java.gui.*;
 import src.com.java.gui.UI.Launcher;
 
@@ -10,8 +15,6 @@ public class Main {
      * @param args arguments passed in the terminal
      */
     public static void main(String[] args){
-
-        int level = 0;
         /*
           Init the logic of the game
          */
@@ -20,8 +23,12 @@ public class Main {
         // init the GUI manager
         //InstanceManager instanceManager = new InstanceManager(new PieceLogic());
         //instanceManager.start(level);
-
-        Launcher launcher = new Launcher();
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        double width = screenSize.getWidth();
+        double height = screenSize.getHeight();
+        
+        Point location = new Point((int) width / 2 - GuiConfig.WINDOW_WIDTH / 2, (int) height / 2 - GuiConfig.WINDOW_HEIGHT / 2);
+        Launcher launcher = new Launcher(location);
         launcher.launch();
         
     }
