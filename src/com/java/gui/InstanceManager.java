@@ -6,17 +6,28 @@ import src.com.java.piece.Piece;
 import src.com.java.piece.Target;
 import src.com.java.piece.decorator.Decorator;
 import src.com.java.controllers.PlayerController;
+import src.com.java.gui.UI.LevelTransitionPanel;
 import src.com.java.gui.gamePlay.*;
 import src.com.java.logic.Arena;
 import src.com.java.logic.LevelManager;
 import src.com.java.logic.PieceLogic;
 import src.com.java.utils.Debug;
 
-import java.awt.*;
+import static src.com.java.config.GuiConfig.height;
 
+import static src.com.java.config.GuiConfig.width;
+
+import java.awt.*;
+import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
+import java.util.logging.Level;
+
+import javax.swing.JLayeredPane;
+import javax.swing.JPanel;
+import javax.swing.Timer;
+import java.awt.event.ActionEvent; // Import the ActionEvent class
 
 /**
  * GUIManager class that is responsible for creating, changing,
@@ -31,6 +42,7 @@ public class InstanceManager {
 
     // layout to change panels in rootPanel
     private final CardLayout layout = new CardLayout();
+    private final LevelTransitionPanel levelTransitionPanel = new LevelTransitionPanel(this);
 
     private ArrayList<GuiPiece> guiPieces = new ArrayList<GuiPiece>();
     private ArrayList<GuiTarget> guiTargets = new ArrayList<GuiTarget>();
@@ -64,9 +76,16 @@ public class InstanceManager {
 
         this.gamePanel = new GamePanel(pieceLogic, this);
         playerController.startController(gamePanel.getArenaPanel());
-
-        mainFrame.add(gamePanel, "arena");
+        
+        JLayeredPane layeredPane = new JLayeredPane();
+        layeredPane.setPreferredSize(new Dimension(GuiConfig.width, GuiConfig.height));
+        gamePanel.setBounds(0, 0, GuiConfig.width, GuiConfig.height);
+        layeredPane.add(gamePanel, JLayeredPane.DEFAULT_LAYER);
+        layeredPane.add(levelTransitionPanel, JLayeredPane.PALETTE_LAYER);
+    
+        mainFrame.add(layeredPane);
         mainFrame.setVisible(true);
+
 
         LevelManager.loadPiecesFromJson(this.pieceLogic, level, this);
 
@@ -75,24 +94,26 @@ public class InstanceManager {
             guiTargets.add(guiTarget);
             // guiTarget.repaint();
         }
-
+        
         for (Decorator piece : this.pieceLogic.getPieces()) {
             GuiPiece guiPiece = new GuiPiece(this, piece);
             guiPieces.add(guiPiece);
             // guiPiece.repaint();
         }
-
         this.mainFrame.addComponentListener(new ComponentAdapter() {
             public void componentResized(ComponentEvent componentEvent) {
                 GuiConfig.width = mainFrame.getWidth();
-                GuiConfig.height = mainFrame.getHeight();
+                GuiConfig.height = mainFrame.getHeight() - 30; // TODO don't hardcode like this
                 GuiConfig.updateArenaScale();
 
                 for (Cell[] cells : gamePanel.getArenaPanel().getCells())
                     for (Cell cell : cells) cell.updateCell();
+                gamePanel.setBounds(0, 0, GuiConfig.width, GuiConfig.height);
+                levelTransitionPanel.setBounds(0, 0, GuiConfig.width, GuiConfig.height);
+                levelTransitionPanel.setLocation(GuiConfig.width, 0);
             }
         });
-
+        levelTransitionPanel.animationOnStart();
     }
 
     public int getArenaPanelY() {
@@ -104,10 +125,20 @@ public class InstanceManager {
     */
     public void update() {
         gamePanel.update();
-        gamePanel.getBottomPanel().updateButtons();
+        gamePanel.getBottomPanel().updateButtons(); //TODO move this call to inside the gamePanel.update() function
 
-        if (pieceLogic.checkWin()) this.nextLevel();
+        if (pieceLogic.checkWin()) levelTransitionPanel.animationAtEnd();
 
+    }
+
+    /*
+     * method that is called when the player has won the level
+     */
+
+
+
+    public boolean isTransitioning() {
+        return levelTransitionPanel.isTransitioning();
     }
 
     public void nextLevel() {

@@ -39,12 +39,20 @@ public class Translation extends Decorator {
 
     @Override
     public void applyFlip(boolean xAxis){
-        for (int i = 0; i < directions.length; i++) {
-            if (directions[i]) {
-                directions[i] = false;
-                directions[(i + 2) % 4] = true;
+        if (xAxis)
+            for (int i = 0; i < directions.length; i = i + 2) {
+                if (directions[i]) {
+                    directions[i] = false;
+                    directions[(i + 2) % 4] = true;
+                }
             }
-        }
+        else
+            for (int i = 1; i < directions.length; i = i + 2) {
+                if (directions[i]) {
+                    directions[i] = false;
+                    directions[(i + 2) % 4] = true;
+                }
+            }
         this.flipActionPoint(xAxis);
         // recursively apply flip to the rest of the list
         if (this.getPrevPiece() instanceof Decorator){
@@ -124,9 +132,9 @@ public class Translation extends Decorator {
 
     @Override
     public void personalReverseAction() {
-        applyFlip(dir == Direction.EAST || dir == Direction.WEST);
+        invertDir();
         personalAction();
-        applyFlip(dir == Direction.EAST || dir == Direction.WEST);
+        invertDir();
     }
 
     public boolean[] getDirections() {
@@ -150,6 +158,15 @@ public class Translation extends Decorator {
             dir = Direction.EAST;
         } else if (mousePos.getY() > GuiConfig.CELL_SIZE - GuiConfig.CELL_SIZE/4) {
             dir = Direction.SOUTH;
+        }
+    }
+
+    public void invertDir() {
+        switch (dir) {
+            case NORTH -> dir = Direction.SOUTH;
+            case EAST -> dir = Direction.WEST;
+            case SOUTH -> dir = Direction.NORTH;
+            case WEST -> dir = Direction.EAST;
         }
     }
 }

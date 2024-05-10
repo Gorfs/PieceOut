@@ -6,7 +6,8 @@
             "height": 1,
             "form": [
                 [1]
-            ]
+            ],
+            "link": "src/com/resources/shapes/SingleShape.png"
         },
         {
             "type": "HoShape",
@@ -14,7 +15,8 @@
             "height": 1,
             "form": [
                 [1, 1]
-            ]
+            ],
+            "link": "src/com/resources/shapes/HoShape.png"
         },
         {
             "type": "JShape",
@@ -24,7 +26,8 @@
                 [0, 1],
                 [0, 1],
                 [1, 1]
-            ]
+            ],
+            "link": "src/com/resources/shapes/JShape.png"
         },
         {
             "type": "LShape",
@@ -34,7 +37,8 @@
                 [1, 0],
                 [1, 0],
                 [1, 1]
-            ]
+            ],
+            "link": "src/com/resources/shapes/LShape.png"
         },
         {
             "type": "0Shape",
@@ -43,7 +47,8 @@
             "form": [
                 [1, 1],
                 [1, 1]
-            ]
+            ],
+            "link": "src/com/resources/shapes/0Shape.png"
         },
         {
             "type": "TShape",
@@ -52,16 +57,29 @@
             "form": [
                 [1, 1, 1],
                 [0, 1, 0]
-            ]
+            ],
+            "link": "src/com/resources/shapes/TShape.png"
         },
         {
             "type": "VeShape",
             "width": 1,
             "height": 2,
-              "form": [
-                  [1],
-                  [1]
-              ]
+            "form": [
+              [1],
+              [1]
+            ],
+            "link": "src/com/resources/shapes/VeShape.png"
+        },
+        {
+            "type": "IShape",
+            "width": 1,
+            "height": 3,
+            "form": [
+                [1],
+                [1],
+                [1]
+            ],
+            "link": "src/com/resources/shapes/IShape.png"
         }
     ]
 }

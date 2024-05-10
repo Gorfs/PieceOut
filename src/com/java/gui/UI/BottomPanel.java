@@ -33,7 +33,7 @@ public class BottomPanel extends JPanel {
 
     public PlayerController playerController;
 
-    public BottomPanel(InstanceManager guiManager) {
+    public BottomPanel(InstanceManager instanceManager) {
         /**
          * main constructur of the bottom panel
          */
@@ -43,9 +43,9 @@ public class BottomPanel extends JPanel {
         JPanel buttonContainer = new JPanel();
 
         // setting up the undoManager
-        this.playerController = guiManager.playerController;
+        this.playerController = instanceManager.playerController;
 
-        Debug.out("Plyaer controller: " + playerController);
+        Debug.out("Player controller: " + playerController);
 
         buttonContainer.setLayout(new BoxLayout(buttonContainer, BoxLayout.X_AXIS));
         buttonContainer.setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
@@ -64,7 +64,7 @@ public class BottomPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 // testing undo
                 playerController.um.undo();
-                guiManager.update();
+                instanceManager.update();
                 updateButtons();
             }
         });
@@ -82,7 +82,7 @@ public class BottomPanel extends JPanel {
         redoButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 playerController.um.redo();
-                guiManager.update();
+                instanceManager.update();
                 updateButtons();
             }
         });
@@ -97,9 +97,12 @@ public class BottomPanel extends JPanel {
         btnList.add(undoButton);
         btnList.add(redoButton);
         updateButtons();
+        // Add a border to the bottom panel
+        // this.setBorder(BorderFactory.createLineBorder(Color.BLUE));
 
         // making the main bottom panel take up the whole width
-        this.setMaximumSize(new Dimension(Integer.MAX_VALUE, 20));
+        this.setMaximumSize(new Dimension(Integer.MAX_VALUE, 100));
+        // this.setMinimumSize(new Dimension(Integer.MAX_VALUE, 300));
 
     }
 
