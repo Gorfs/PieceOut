@@ -1,10 +1,7 @@
 package src.com.java.gui;
 
 import java.awt.Dimension;
-
 import javax.swing.JFrame;
-
-import src.com.java.config.Colours;
 import src.com.java.config.*;
 
 

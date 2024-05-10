@@ -76,6 +76,7 @@ public class PieceLogic {
         return true;
     }
 
+    
     public void clearTargets() {
         targets.clear();
     }

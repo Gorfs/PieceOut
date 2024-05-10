@@ -69,7 +69,6 @@ public class InstanceManager {
          * initiates the GUI window.
          */
 
-
         this.level = level;
         playerController = new PlayerController(this, pieceLogic);
         arena = new Arena(this);
@@ -77,6 +76,7 @@ public class InstanceManager {
         this.gamePanel = new GamePanel(pieceLogic, this);
         playerController.startController(gamePanel.getArenaPanel());
         
+        // Pane used for level transition
         JLayeredPane layeredPane = new JLayeredPane();
         layeredPane.setPreferredSize(new Dimension(GuiConfig.width, GuiConfig.height));
         gamePanel.setBounds(0, 0, GuiConfig.width, GuiConfig.height);
@@ -87,6 +87,7 @@ public class InstanceManager {
         mainFrame.setVisible(true);
 
 
+        // loading piece models
         LevelManager.loadPiecesFromJson(this.pieceLogic, level, this);
 
         for (Target target : this.pieceLogic.getTargets()) {
@@ -103,6 +104,7 @@ public class InstanceManager {
         this.mainFrame.addComponentListener(new ComponentAdapter() {
             public void componentResized(ComponentEvent componentEvent) {
                 GuiConfig.width = mainFrame.getWidth();
+                // the -30 is due to the height of the top Panel in the gamePanel
                 GuiConfig.height = mainFrame.getHeight() - 30; // TODO don't hardcode like this
                 GuiConfig.updateArenaScale();
 
@@ -117,6 +119,7 @@ public class InstanceManager {
     }
 
     public int getArenaPanelY() {
+        //! this is pretty ugly way of doing this
         return this.gamePanel.getArenaPanel().getY() + this.gamePanel.getArenaContainerPanel().getY();
     }
 
@@ -134,16 +137,12 @@ public class InstanceManager {
     /*
      * method that is called when the player has won the level
      */
-
-
-
     public boolean isTransitioning() {
         return levelTransitionPanel.isTransitioning();
     }
 
     public void nextLevel() {
-        // TODO: implement level transition here
-        Debug.out("You win!");
+        // Debug.out("You win!");
         InstanceManager next = new InstanceManager(new PieceLogic());
         level++;
         next.start(level);
