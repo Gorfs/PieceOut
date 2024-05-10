@@ -1,26 +1,26 @@
 package src.com.java.gui.gamePlay;
 
-import src.com.java.geometry.IntCoordinates;
 import src.com.java.config.GuiConfig;
+import src.com.java.geometry.IntCoordinates;
+import src.com.java.gui.InstanceManager;
+import src.com.java.piece.decorator.Decorator;
 import src.com.java.piece.decorator.Translation;
 import src.com.java.utils.Debug;
-import src.com.java.piece.decorator.Decorator;
-import src.com.java.gui.InstanceManager;
 
+import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
-import javax.imageio.ImageIO;
-
-import javax.swing.JPanel;
-
+/**
+ * This class is responsible for painting the pieces in the game
+ */
 public class GuiPiece extends JPanel {
-    private final InstanceManager instanceManager;
     // ! assumes that the nextPiece is in a valid place in the arena
-    public boolean hasBeenPainted = false;
+    private final InstanceManager instanceManager;
     private final Decorator piece;
 
     public GuiPiece(InstanceManager instanceManager, Decorator piece) {
@@ -29,8 +29,7 @@ public class GuiPiece extends JPanel {
     }
 
     /**
-     * returns the pixel coordinates of the cell relative to the top left of the
-     * WINDOW
+     * returns the pixel coordinates of the cell relative to the top left of the window
      * @param cellCoords Coordinates of the cell int the game
      * @return IntCoordinates
      */
@@ -50,7 +49,6 @@ public class GuiPiece extends JPanel {
 
     @Override
     public void paintComponent(Graphics g) {
-        this.hasBeenPainted = true;
         Graphics2D g2d = (Graphics2D) g;
 
         BufferedImage img = null;

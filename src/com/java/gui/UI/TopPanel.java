@@ -7,12 +7,15 @@ import src.com.java.gui.InstanceManager;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ This panel contains the return to main menu button as well as the label
+ which indicates the current level
+ */
 public class TopPanel extends JPanel{
     /**
-     This panel contains the return to main menu button as well as the label
-     which indicates current level
+     * Constructor for the TopPanel class
+     * @param guiManager InstanceManager instance that manages the game
      */
-
     public TopPanel(InstanceManager guiManager){
         super();
         this.setOpaque(false);
@@ -33,7 +36,6 @@ public class TopPanel extends JPanel{
             // TODO remove testing button and make it return to main menu
             guiManager.update();
         });
-
 
         this.setBorder(BorderFactory.createEmptyBorder(3,3,3,3));
         this.setMinimumSize(new Dimension(Integer.MAX_VALUE, 30));

@@ -1,19 +1,5 @@
 package src.com.java.gui.UI;
 
-import java.awt.CardLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Font;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import javax.imageio.ImageIO;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 import src.com.java.config.Colours;
 import src.com.java.config.GuiConfig;
@@ -21,20 +7,37 @@ import src.com.java.gui.GameWindow;
 import src.com.java.gui.InstanceManager;
 import src.com.java.logic.PieceLogic;
 
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+
+
+/**
+ * This class is responsible for the launcher of the game
+ */
 public class Launcher {
-
+    /**
+     * Panel that contains the launcher panel
+     */
     private final LauncherPanel launcherPanel;
+    /**
+     * Main frame of the game
+     */
     private final GameWindow mainFrame;
-    private final CardLayout layout;
 
+    /**
+     * Main constructor of the launcher
+     */
     public Launcher(){
         mainFrame = new GameWindow();
         launcherPanel = new LauncherPanel();
-        layout = new CardLayout();
+        CardLayout layout = new CardLayout();
         mainFrame.setLayout(layout);
     }
 
-    /*
+    /**
      * This method is called to initialize the launcher panel and make it visible
      */
     public void launch(){
@@ -42,9 +45,9 @@ public class Launcher {
         mainFrame.setVisible(true);
     }
 
-
-    /*
+    /**
      * This method is called to start the game with the number of players specified
+     * @param players Number of players that will play the game
      */
     public void startGame(int players){
         //TODO: implement the logic to start the game with the number of players specified
@@ -53,27 +56,24 @@ public class Launcher {
         InstanceManager instanceManager = new InstanceManager(new PieceLogic());
         instanceManager.start(level);
     }
-    
-    
+
+
+    /**
+     * This subclass is responsible for the launcher panel.
+     * This panel contains the title image and the buttons to start
+     * the game with one or two players or to exit the game.
+     */
     class LauncherPanel extends JPanel {
-
-        private JLabel titleImage;
-        private JButton startOnePlayerButton;
-        private JButton startTwoPlayerButton;
-        private JButton exitButton;
-        
-
-        /*
-         * This panel contains the title image and the buttons to start the game with 1 or 2 players or to exit the game
+        /**
+         * Constructor of the LauncherPanel, it initializes the attributes and sets the background color
          */
-
         public LauncherPanel() {
             this.setBackground(Colours.BACKGROUND);
             this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
             try {
                 BufferedImage bufferedImage = ImageIO.read(new File(GuiConfig.resPath + "icons/titleImage.png"));
-                titleImage = new JLabel(new ImageIcon(bufferedImage));
+                JLabel titleImage = new JLabel(new ImageIcon(bufferedImage));
                 int marginHeightBetweenUpAndImage = 50;
                 this.add(Box.createVerticalStrut(marginHeightBetweenUpAndImage));
     
@@ -83,61 +83,90 @@ public class Launcher {
                 imagePanel.add(titleImage);
                 this.add(imagePanel);
             } catch (Exception e) {
-                e.printStackTrace();
+                System.out.println("Image not found");
+                System.out.println("Error in LauncherPanel : " + e.getMessage());
             }
 
             Font buttonFont = new Font("Arial", Font.BOLD, 15);
 
-            startOnePlayerButton = new JButton("Play with 1 Player");
+            // Get the buttons
+            JButton startOnePlayerButton = getStartOnePlayerButton(buttonFont);
+            JButton startTwoPlayerButton = getStartTwoPlayerButton(buttonFont);
+            JButton exitButton = getExitButton(buttonFont);
+
+            // Create a JPanel with a BoxLayout and add the buttons to it
+            JPanel buttonPanel = new JPanel();
+            buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
+            buttonPanel.setOpaque(false);
+    
+            // Wrap each button in a JPanel with a FlowLayout
+            // One player button
+            JPanel onePlayerPanel = new JPanel(new FlowLayout());
+            onePlayerPanel.setOpaque(false);
+            onePlayerPanel.add(startOnePlayerButton);
+            buttonPanel.add(onePlayerPanel);
+            // Two player button
+            JPanel twoPlayerPanel = new JPanel(new FlowLayout());
+            twoPlayerPanel.setOpaque(false);
+            twoPlayerPanel.add(startTwoPlayerButton);
+            buttonPanel.add(twoPlayerPanel);
+            // Exit button
+            JPanel exitPanel = new JPanel(new FlowLayout());
+            exitPanel.setOpaque(false);
+            exitPanel.add(exitButton);
+            buttonPanel.add(exitPanel);
+            // Add the button panel to the launcher panel
+            this.add(buttonPanel);
+
+        }
+
+        /**
+         * This method creates the "Start a game for one player" button
+         * @param buttonFont Font to use for the button
+         * @return "Start a game for one player" button
+         */
+        private JButton getStartOnePlayerButton(Font buttonFont) {
+            JButton startOnePlayerButton = new JButton("Play with 1 Player");
             startOnePlayerButton.setBackground(Colours.BACKGROUND.darker());
             startOnePlayerButton.setForeground(Color.WHITE);
             startOnePlayerButton.setFocusable(false);
             startOnePlayerButton.setPreferredSize(new Dimension(250, 50));
             startOnePlayerButton.setFont(buttonFont);
-            startOnePlayerButton.addActionListener(e -> {
-                Launcher.this.startGame(1);
-            });
-    
-            startTwoPlayerButton = new JButton("Play with 2 Players");
+            startOnePlayerButton.addActionListener(e -> Launcher.this.startGame(1));
+            return startOnePlayerButton;
+        }
+
+        /**
+         * This method creates the "Start a game for two players" button
+         * @param buttonFont Font to use for the button
+         * @return "Start a game for two players" button
+         */
+        private JButton getStartTwoPlayerButton(Font buttonFont) {
+            JButton startTwoPlayerButton = new JButton("Play with 2 Players");
             startTwoPlayerButton.setBackground(Colours.BACKGROUND.darker());
             startTwoPlayerButton.setForeground(Color.WHITE);
             startTwoPlayerButton.setFocusable(false);
             startTwoPlayerButton.setPreferredSize(new Dimension(200, 50));
             startTwoPlayerButton.setFont(buttonFont);
-            startTwoPlayerButton.addActionListener(e -> {
-                Launcher.this.startGame(2);
-            });
-    
-            exitButton = new JButton("Exit");
+            startTwoPlayerButton.addActionListener(e -> Launcher.this.startGame(2));
+            return startTwoPlayerButton;
+        }
+
+        /**
+         * This method creates the exit button
+         * @param buttonFont Font to use for the button
+         * @return Exit button
+         */
+        private JButton getExitButton(Font buttonFont) {
+            JButton exitButton = new JButton("Exit");
             exitButton.setBackground(Colours.BACKGROUND.darker());
             exitButton.setForeground(Color.WHITE);
             exitButton.setFocusable(false);
             exitButton.setPreferredSize(new Dimension(150, 25));
             exitButton.setFont(buttonFont);
             exitButton.addActionListener(e -> System.exit(0));
-    
-            JPanel buttonPanel = new JPanel();
-            buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
-            buttonPanel.setOpaque(false);
-    
-            // Wrap each button in a JPanel with a FlowLayout
-            JPanel onePlayerPanel = new JPanel(new FlowLayout());
-            onePlayerPanel.setOpaque(false);
-            onePlayerPanel.add(startOnePlayerButton);
-            buttonPanel.add(onePlayerPanel);
-    
-            JPanel twoPlayerPanel = new JPanel(new FlowLayout());
-            twoPlayerPanel.setOpaque(false);
-            twoPlayerPanel.add(startTwoPlayerButton);
-            buttonPanel.add(twoPlayerPanel);
-    
-            JPanel exitPanel = new JPanel(new FlowLayout());
-            exitPanel.setOpaque(false);
-            exitPanel.add(exitButton);
-            buttonPanel.add(exitPanel);
-    
-            this.add(buttonPanel);
 
+            return exitButton;
         }
     }
 }

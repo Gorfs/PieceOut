@@ -14,45 +14,44 @@ import src.com.java.logic.PieceLogic;
  * method of 'decorator design pattern'.
  */
 public abstract class Decorator extends Piece {
-
     /**
-     * nextPiece on which we add the decorator.
+     * Previous piece in the decorator pattern.
      */
-    protected Piece nextPiece;
+    protected Decorator nextPiece;
+    /**
+     * Previous piece in the decorator pattern.
+     */
     protected Piece prevPiece;
-    protected IntCoordinates localCoord;
-
-    // the point which we apply the action too
+    /**
+     * Local position of the decorator.
+     */
+    protected IntCoordinates localPos;
+    /**
+     * the point which we apply the action too
+     */
     private IntCoordinates actionPoint;
 
     /**
      * Constructor for the decorators.
-     * 
      * @param p Piece on which we add the decorator.
      */
-    public Decorator(Piece p, IntCoordinates local) {
+    public Decorator(Piece p, IntCoordinates pos) {
         // if the piece is a decorator, setting the next piece to allow for getting of
         // the first element of the list
         try {
             Decorator p1 = (Decorator) p;
             p1.setNextPiece(this);
         } catch (Exception e) {
-            // TODO handle this exception to make it look prettier
+            // TODO handle this exception to make it look prettier, should not be a problem
         }
         this.prevPiece = p;
-        this.localCoord = local;
-        this.actionPoint = local;
+        this.localPos = pos;
+        this.actionPoint = pos;
         this.nextPiece = null;
     }
 
-    public IntCoordinates getActionPoint() {return this.actionPoint;}
-
-    public void setActionPoint(IntCoordinates p) {
-        this.actionPoint = p;
-    }
-
     /**
-     * applys the necessary actions for the movement to be adjusted to a new
+     * apply the necessary actions for the movement to be adjusted to a new
      * rotation
      */
     public void applyRotation(boolean clockwise) {
@@ -100,9 +99,9 @@ public abstract class Decorator extends Piece {
      */
     public void applyFlip(boolean xAxis) {
         // default applyFlip
-        // updating the decorator's action points for a flip depending on axis of flip
+        // updating the decorator's action points for a flip depending on the axis of flip
         this.flipActionPoint(xAxis);
-        // recursively apply flip to rest of the list
+        // recursively apply flip to the rest of the list
         if (this.getPrevPiece() instanceof Decorator) {
             ((Decorator) this.getPrevPiece()).applyFlip(xAxis);
         }
@@ -142,10 +141,9 @@ public abstract class Decorator extends Piece {
 
     /**
      * Method that returns the action type of the correct Piece.
-     * 
-     * @param x local getX coordinates in shape array
-     * @param y local getY coordinates in shape array
-     * @return Returns a String of the action type of the Piece.
+     * @param x local getX coordinates in a shape array
+     * @param y local getY coordinates in a shape array
+     * @return Returns a String that represents the action of the decorator.
      */
     public String getActionType(int x, int y) {
         if (this.actionPoint.getX() == x && this.actionPoint.getY() == y) {
@@ -253,8 +251,14 @@ public abstract class Decorator extends Piece {
      * 
      * @param p Piece that we want to set as the nextPiece.
      */
-    public void setNextPiece(Piece p) {
+    public void setNextPiece(Decorator p) {
         this.nextPiece = p;
+    }
+
+    public IntCoordinates getActionPoint() {return this.actionPoint;}
+
+    public void setActionPoint(IntCoordinates p) {
+        this.actionPoint = p;
     }
 
     /**

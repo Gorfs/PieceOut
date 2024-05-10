@@ -1,89 +1,83 @@
 package src.com.java.gui.gamePlay;
 
-import java.awt.Graphics;
+import src.com.java.config.Colours;
+import src.com.java.gui.InstanceManager;
+import src.com.java.gui.UI.BottomPanel;
+import src.com.java.gui.UI.TopPanel;
+import src.com.java.logic.PieceLogic;
+import src.com.java.piece.Target;
+import src.com.java.piece.decorator.Decorator;
 
 import javax.swing.*;
 import java.awt.*;
 
-import src.com.java.gui.InstanceManager;
-import src.com.java.gui.UI.*;
-import src.com.java.logic.PieceLogic;
-import src.com.java.config.Colours;
-import src.com.java.piece.Target;
-import src.com.java.piece.decorator.Decorator;
-
 
 /**
- * This Panel is the main panel that is the player sees when completing the puzzle
- * Contains the arena, the pieces, the UI, etc.
+ * This Panel is the main panel that's what the player sees playing.
+ * It contains the arena, the pieces, the UI, etc.
  */
 public class GamePanel extends JPanel {
-    private final JPanel topPanel;
     private final ArenaContainerPanel arenaContainerPanel;
     private final ArenaPanel arenaPanel;
     private final JPanel bottomPanel;
 
     private final PieceLogic pieceLogic;
 
-    protected final InstanceManager guiManager;
+    protected final InstanceManager instanceManager;
 
     /**
      * Constructor for the GamePanel class, it initializes the attributes, sets the background color and
      * set up the layout and the panels.
      * @param pieceLogic PieceLogic instance that manages the pieces
-     * @param guiManager InstanceManager instance that manages the game
+     * @param iManager InstanceManager instance that manages the game
      */
-    public GamePanel(PieceLogic pieceLogic, InstanceManager guiManager){
+    public GamePanel(PieceLogic pieceLogic, InstanceManager iManager){
         super();
         // initializing the attributes
-        this.guiManager = guiManager;
+        this.instanceManager = iManager;
         this.pieceLogic = pieceLogic;
         // setting the background color and the layout
         this.setLayout(new BorderLayout());
         this.setBackground(Colours.BACKGROUND);
 
-        this.topPanel = new TopPanel(guiManager);
+        JPanel topPanel = new TopPanel(iManager);
         this.add(topPanel, BorderLayout.NORTH);
 
-        this.arenaContainerPanel = new ArenaContainerPanel(guiManager);
+        this.arenaContainerPanel = new ArenaContainerPanel(iManager);
         this.arenaPanel = arenaContainerPanel.getArenaPanel();
         this.add(arenaContainerPanel, BorderLayout.CENTER);
 
-        this.bottomPanel = new BottomPanel(guiManager);
+        this.bottomPanel = new BottomPanel(iManager);
         this.add(bottomPanel, BorderLayout.SOUTH);
-        // this.setMaximumSize(new Dimension(GuiConfig.width, GuiConfig.height - 200));
     }
 
     /**
      * paints the pieces from the Piece logic class to the gui
      */
     public void paintPieces(){
-        if (guiManager.isTransitioning()){
+        if (instanceManager.isTransitioning()){
             return;
         }
         Graphics g = this.getGraphics();
         for(Decorator piece: this.pieceLogic.getPieces()){
-            GuiPiece guiPiece = new GuiPiece(this.guiManager, piece);
+            GuiPiece guiPiece = new GuiPiece(this.instanceManager, piece);
             guiPiece.paintComponent(g);
         }
     }
 
+    /**
+     * paints the targets from the Piece logic class to the gui.
+     */
     public void paintTargets(){
-        if (guiManager.isTransitioning()){
+        if (instanceManager.isTransitioning()){
             return;
         }
         Graphics g = this.getGraphics();
         for(Target target: this.pieceLogic.getTargets()){
-            GuiTarget guiTarget = new GuiTarget(this.guiManager, target);
+            GuiTarget guiTarget = new GuiTarget(this.instanceManager, target);
             guiTarget.paintComponent(g);
         }
     }
-
-
-    public BottomPanel getBottomPanel(){
-        return (BottomPanel) this.bottomPanel;
-    }
-    
 
     @Override
     protected void paintComponent(Graphics g) {
@@ -103,13 +97,26 @@ public class GamePanel extends JPanel {
         SwingUtilities.invokeLater(this::paintPieces);
     }
 
+    /**
+     * @return the arena container panel.
+     */
     // this getter is mostly used to get its position, could probably be done in a better way.
     public ArenaContainerPanel getArenaContainerPanel(){
         return this.arenaContainerPanel;
     }
 
+    /**
+     * @return the arena panel.
+     */
     public ArenaPanel getArenaPanel(){
         return this.arenaPanel;
+    }
+
+    /**
+     * @return the bottom panel of the game
+     */
+    public BottomPanel getBottomPanel(){
+        return (BottomPanel) this.bottomPanel;
     }
 }
 

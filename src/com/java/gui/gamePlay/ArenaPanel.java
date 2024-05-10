@@ -1,10 +1,10 @@
 package src.com.java.gui.gamePlay;
 
+import src.com.java.config.Colours;
+import src.com.java.gui.InstanceManager;
+
 import javax.swing.*;
 import java.awt.*;
-
-import src.com.java.gui.InstanceManager;
-import src.com.java.config.Colours;
 
 /**
  * class that represents the panel that displays the 7x7 grid of cells that

@@ -1,14 +1,12 @@
 package src.com.java.gui.gamePlay;
 
+import src.com.java.config.Colours;
+import src.com.java.config.GuiConfig;
+import src.com.java.gui.InstanceManager;
+
 import javax.swing.*;
 import javax.swing.border.Border;
-
 import java.awt.*;
-
-import src.com.java.config.Colours;
-import src.com.java.config.*;
-import src.com.java.geometry.IntCoordinates;
-import src.com.java.gui.InstanceManager;
 
 /**
  * class for the gui representation of the playable cells in the game.
@@ -19,11 +17,6 @@ public class Cell extends JPanel{
      * Instance that manages the game
      */
     private final InstanceManager instanceManager;
-
-    /**
-     * Coordinates of the cell in the matrix
-     */
-    private IntCoordinates pixelCoordinates;
 
     // map_x and map_y are the coordinates of the cell in the matrix
     private final int map_x;
@@ -50,7 +43,6 @@ public class Cell extends JPanel{
         this.setMaximumSize(new Dimension(GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE));
 
         // pixel coordinates are relative to the top left of the arena
-        this.pixelCoordinates = new IntCoordinates((x * GuiConfig.CELL_SIZE), (y * GuiConfig.CELL_SIZE));
         this.map_x = x;
         this.map_y = y;
 
@@ -62,10 +54,6 @@ public class Cell extends JPanel{
      * Method that update the coordinates and the size of the cell.
      */
     public void updateCell(){
-        int pixel_x = (int) (double) (map_x * GuiConfig.CELL_SIZE);
-        int pixel_y = (int) (double) (map_y * GuiConfig.CELL_SIZE);
-        this.pixelCoordinates = new IntCoordinates(pixel_x, pixel_y);
-
         this.setSize(new Dimension(GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE));
         this.setMinimumSize(new Dimension(GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE));
         this.setPreferredSize(new Dimension(GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE));

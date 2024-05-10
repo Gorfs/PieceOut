@@ -30,51 +30,77 @@ import javax.swing.Timer;
 import java.awt.event.ActionEvent; // Import the ActionEvent class
 
 /**
- * GUIManager class that is responsible for creating, changing,
+ * InstanceManager class that is responsible for creating, changing,
  * updating and general management of the GUI.
  */
 public class InstanceManager {
     /**
-     * mains panels and windows for the game
+     * main frame and window of the game
      */
     private final GameWindow mainFrame = new GameWindow();
+    /**
+     * Game panel of the game seen by the player
+     */
     private GamePanel gamePanel;
 
-    // layout to change panels in rootPanel
+    /**
+     * layout to change panels in rootPanel
+     */
     private final CardLayout layout = new CardLayout();
-    private final LevelTransitionPanel levelTransitionPanel = new LevelTransitionPanel(this);
+    /**
+     * Panel that contains the level transition panel, that is shown when the level is completed
+     */
+    private final LevelTransitionPanel levelTransitionPanel = new LevelTransitionPanel();
 
+    /**
+     * List of the pieces in the GUI
+     */
     private ArrayList<GuiPiece> guiPieces = new ArrayList<GuiPiece>();
+    /**
+     * List of the targets in the GUI
+     */
     private ArrayList<GuiTarget> guiTargets = new ArrayList<GuiTarget>();
+    /**
+     * Piece logic of the game, where the pieces are stocked
+     */
     private final PieceLogic pieceLogic;
+    /**
+     * Player controller of the game, that manages the player actions
+     */
     public PlayerController playerController;
+    /**
+     * Arena of the game, where the pieces are placed
+     */
     public Arena arena;
-
+    /**
+     * level of the puzzle we are currently playing
+     */
     public int level;
 
-    public GamePanel getGamePanel() {
-        return gamePanel;
-    }
-
+    /**
+     * Constructor of the InstanceManager
+     * @param pieceLogic the piece logic of the game
+     */
     public InstanceManager(PieceLogic pieceLogic) {
-        /*
-         * init of instance
-         */
         mainFrame.setLayout(layout);
         this.pieceLogic = pieceLogic;
     }
 
+    /**
+     * Initiates the GUI window.
+     * It creates the game panel, the player controller, the arena and the pieces and targets
+     * @param level the level of the puzzle we are currently playing
+     *              (0 for the first level, 1 for the second, etc.)
+     */
     public void start(int level) {
-        /*
-         * initiates the GUI window.
-         */
-
-
+        // Initialize the level and the player controller
         this.level = level;
-        playerController = new PlayerController(this, pieceLogic);
-        arena = new Arena(this);
-
+        // Initialize the arena
+        this.arena = new Arena(this);
+        // Initialize the game panel
         this.gamePanel = new GamePanel(pieceLogic, this);
+        // Initialize the player controller
+        playerController = new PlayerController(this, pieceLogic);
         playerController.startController(gamePanel.getArenaPanel());
         
         JLayeredPane layeredPane = new JLayeredPane();
@@ -86,21 +112,25 @@ public class InstanceManager {
         mainFrame.add(layeredPane);
         mainFrame.setVisible(true);
 
-
+        // Load the pieces from the json file
         LevelManager.loadPiecesFromJson(this.pieceLogic, level, this);
 
+        // paint the targets before the pieces so that the pieces are drawn on top
         for (Target target : this.pieceLogic.getTargets()) {
             GuiTarget guiTarget = new GuiTarget(this, target);
             guiTargets.add(guiTarget);
-            // guiTarget.repaint();
         }
-        
+        // paint the pieces on the game
         for (Decorator piece : this.pieceLogic.getPieces()) {
             GuiPiece guiPiece = new GuiPiece(this, piece);
             guiPieces.add(guiPiece);
-            // guiPiece.repaint();
         }
+        // Listener for resizing the window
         this.mainFrame.addComponentListener(new ComponentAdapter() {
+            /**
+             * Invoked when the component's size changes. This method is used to update the size of the arena
+             * @param componentEvent the event to be processed by the listener
+             */
             public void componentResized(ComponentEvent componentEvent) {
                 GuiConfig.width = mainFrame.getWidth();
                 GuiConfig.height = mainFrame.getHeight() - 30; // TODO don't hardcode like this
@@ -113,11 +143,7 @@ public class InstanceManager {
                 levelTransitionPanel.setLocation(GuiConfig.width, 0);
             }
         });
-        levelTransitionPanel.animationOnStart();
-    }
-
-    public int getArenaPanelY() {
-        return this.gamePanel.getArenaPanel().getY() + this.gamePanel.getArenaContainerPanel().getY();
+        levelTransitionPanel.animationOnStart(this);
     }
 
     /** 
@@ -127,31 +153,31 @@ public class InstanceManager {
         gamePanel.update();
         gamePanel.getBottomPanel().updateButtons(); //TODO move this call to inside the gamePanel.update() function
 
-        if (pieceLogic.checkWin()) levelTransitionPanel.animationAtEnd();
-
+        if (pieceLogic.checkWin()) levelTransitionPanel.animationAtEnd(this);
     }
 
-    /*
-     * method that is called when the player has won the level
+    /**
+     * Method that is called when the level is completed
      */
-
-
-
-    public boolean isTransitioning() {
-        return levelTransitionPanel.isTransitioning();
-    }
-
     public void nextLevel() {
-        // TODO: implement level transition here
         Debug.out("You win!");
         InstanceManager next = new InstanceManager(new PieceLogic());
         level++;
         next.start(level);
         this.clear();
-
     }
 
-
+    /**
+     * Method used to clear the GUI
+     */
+    private void clear(){
+        this.pieceLogic.clearPieces();
+        this.pieceLogic.clearTargets();
+        this.guiPieces.clear();
+        this.guiTargets.clear();
+        // close window
+        this.mainFrame.dispose();
+    }
 
     /**
      * changes the panel in the main frame to the panel with the name panelName
@@ -160,21 +186,38 @@ public class InstanceManager {
         layout.show(mainFrame, panelName);
     }
 
+    /**
+     * @return the game panel
+     */
+    public GamePanel getGamePanel() {
+        return gamePanel;
+    }
+
+    /**
+     * @return the piece logic of the game, where the pieces are stocked
+     */
     public PieceLogic getPieceLogic() {
         return pieceLogic;
     }
 
+    /**
+     * @return the height of the main frame
+     */
     public int getHeight() {
         return this.mainFrame.getHeight();
     }
 
-    private void clear(){
-        this.pieceLogic.clearPieces();
-        this.pieceLogic.clearTargets();
-        this.guiPieces.clear();
-        this.guiTargets.clear();
-        // close window
-        this.mainFrame.dispose();
+    /**
+     * @return the width of the game panel
+     */
+    public int getArenaPanelY() {
+        return this.gamePanel.getArenaPanel().getY() + this.gamePanel.getArenaContainerPanel().getY();
+    }
 
+    /**
+     * @return if the level transition panel is transitioning
+     */
+    public boolean isTransitioning() {
+        return levelTransitionPanel.isTransitioning();
     }
 }
