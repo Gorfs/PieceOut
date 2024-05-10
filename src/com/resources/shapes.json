@@ -41,14 +41,14 @@
             "link": "src/com/resources/shapes/LShape.png"
         },
         {
-            "type": "0Shape",
+            "type": "OShape",
             "width": 2,
             "height": 2,
             "form": [
                 [1, 1],
                 [1, 1]
             ],
-            "link": "src/com/resources/shapes/0Shape.png"
+            "link": "src/com/resources/shapes/OShape.png"
         },
         {
             "type": "TShape",

@@ -66,6 +66,8 @@ public class GuiPiece extends JPanel {
         IntCoordinates destCoords;
         IntCoordinates cellCoords;
 
+        
+
         for (int i = 0; i < shapeMatrix.length; i++) { // height
             for (int j = 0; j < shapeMatrix[0].length; j++) { // width
                 if (shapeMatrix[i][j]) {

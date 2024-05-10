@@ -12,6 +12,12 @@ public abstract class Piece {
      */
     public abstract boolean[][] getShape();
 
+
+    public String type;
+    public void setType(String str){
+        type = str;
+    }
+
     /**
      * @return Returns a String that represents the nextPiece.
      */

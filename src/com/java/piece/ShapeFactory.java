@@ -66,10 +66,18 @@ public class ShapeFactory extends PieceBrute {
             String content = new String(Files.readAllBytes(Paths.get(GuiConfig.resourcePath + "shapes.json")));
             JSONObject jsonObject = new JSONObject(content);
             JSONArray shapeArray = jsonObject.getJSONArray("shapes");
+
+
             for (int i = 0; i < shapeArray.length(); i++) {
                 JSONObject type = shapeArray.getJSONObject(i);
                 // If the shape is found, get the shape
                 if (type.getString("type").equals(filePath)) {
+
+                    // adding the type of the shape to the piece itself
+                    String shapeType = type.getString("type");
+                    this.setType(shapeType);
+
+
                     JSONArray form = type.getJSONArray("form");
                     // Create the shape
                     boolean[][] shape = new boolean[type.getInt("height")][type.getInt("width")];
