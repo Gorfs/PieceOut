@@ -97,7 +97,6 @@ public class LevelManager {
         }
     }
     public static void createPiece(JSONObject piece, PieceLogic pieceLogic, InstanceManager guiManager) {
-
         // Get the color
         Color color = switch (piece.getString("color")) {
             case "green" -> Colours.PIECE_GREEN;
@@ -111,14 +110,15 @@ public class LevelManager {
         // Create the piece
         Piece piece_to_add = new ShapeFactory(piece.getString("shape"), color, position, new IntCoordinates(0, 0), guiManager);
 
-
         // Add the decorators
         JSONArray decorators = piece.getJSONArray("decorators");
         Decorator decorator = null;
         String type;
-        Piece prevPiece = decorator == null ? piece_to_add : decorator;
+        Piece prevPiece;
+
         for (int k = 0; k < decorators.length(); k++) {
             JSONObject decoratorJSON = decorators.getJSONObject(k);
+            prevPiece = decorator == null ? piece_to_add : decorator;
             type = decoratorJSON.getString("type");
                 decorator = switch (type) {
                     case "rotation" -> createRotation(prevPiece, decoratorJSON);
