@@ -1,7 +1,7 @@
 package src.com.java.gui.gamePlay;
 
 import src.com.java.geometry.IntCoordinates;
-import src.com.java.config.GuiConfig;
+import src.com.java.config.*;
 import src.com.java.piece.decorator.Translation;
 import src.com.java.utils.Debug;
 import src.com.java.piece.decorator.Decorator;
@@ -9,12 +9,13 @@ import src.com.java.gui.InstanceManager;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.awt.image.WritableRaster;
 import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
 import javax.imageio.ImageIO;
-
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 public class GuiPiece extends JPanel {
@@ -66,6 +67,35 @@ public class GuiPiece extends JPanel {
         IntCoordinates destCoords;
         IntCoordinates cellCoords;
 
+        // determine the type of image to use
+        ImageIcon shapeIcon = switch(piece.getLast().type){
+            case "OShape" -> GuiPieceImages.OImage;
+            case "HoShape" -> GuiPieceImages.HoImage;
+            case "IShape" -> GuiPieceImages.IImage;
+            case "JShape" -> GuiPieceImages.JImage;
+            case "LShape" -> GuiPieceImages.LImage;
+            case "SingleShape" -> GuiPieceImages.SingleImage;
+            case "TShape" -> GuiPieceImages.TImage;
+            case "VeShape" -> GuiPieceImages.VeImage;
+            default -> null;
+        };
+
+        if (shapeIcon != null) {
+
+            // changing the colour of the image
+
+
+
+
+            GuiPieceImages.changeColour(shapeIcon, this.colour);
+            // g.setColor(this.colour);
+            g2d.setColor(this.colour);
+            int imageWidth = (int) (piece.getLast().getShape().length * GuiConfig.CELL_SIZE);
+            int imageHeight = (int) (piece.getLast().getShape()[0].length * GuiConfig.CELL_SIZE);
+            int x_coord = offSet.getX() * GuiConfig.CELL_SIZE + instanceManager.getGamePanel().getArenaContainerPanel().getArenaPanel().getX(); 
+            int y_coord = ((offSet.getY()) * GuiConfig.CELL_SIZE) + instanceManager.getGamePanel().getArenaContainerPanel().getArenaPanel().getY();
+            g2d.drawImage(shapeIcon.getImage(), x_coord, y_coord, imageHeight, imageWidth, null);
+        }
         
 
         for (int i = 0; i < shapeMatrix.length; i++) { // height
@@ -74,10 +104,8 @@ public class GuiPiece extends JPanel {
                     try {
                         cellCoords = getPixelCoordinates(new IntCoordinates(j + offSet.getX(), i + offSet.getY()));
                         g2d.setColor(this.colour);
-                        // Debug.out("coords are: " + cellCoords.toString() + " x : " + j + " y : " + i
-                        // + "nextPiece positions : " + piece.getLast().getPos().toString() + " offset :
-                        // " + offSet.toString());
-                        g2d.fillRect(cellCoords.getX(), cellCoords.getY(), GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE);
+
+                        // g2d.fillRect(cellCoords.getX(), cellCoords.getY(), GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE);
 
 
                         // load the icon for decorator into memory

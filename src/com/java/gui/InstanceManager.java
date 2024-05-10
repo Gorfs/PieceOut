@@ -1,6 +1,6 @@
 package src.com.java.gui;
 
-import src.com.java.config.GuiConfig;
+import src.com.java.config.*;
 import src.com.java.geometry.IntCoordinates;
 import src.com.java.piece.Piece;
 import src.com.java.piece.Target;
@@ -73,6 +73,9 @@ public class InstanceManager {
         playerController = new PlayerController(this, pieceLogic);
         arena = new Arena(this);
 
+        // ! YOU MUST PRELOAD IMAGES EARLIER THAN LOADING THE MODELS OF THE PIECES.
+        GuiPieceImages.preLoadImages();
+        
         this.gamePanel = new GamePanel(pieceLogic, this);
         playerController.startController(gamePanel.getArenaPanel());
         
@@ -88,6 +91,7 @@ public class InstanceManager {
 
 
         // loading piece models
+        // ! MUST BE DONE AFTER IMAGE PRELOAD, see src.com.java.config.GuiPieceImages.java
         LevelManager.loadPiecesFromJson(this.pieceLogic, level, this);
 
         for (Target target : this.pieceLogic.getTargets()) {
