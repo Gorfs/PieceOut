@@ -67,7 +67,7 @@ public class PlayerController extends JPanel implements MouseListener {
 
         for (var piece : this.pieceLogic.getPieces()) {
             // Get the position of the piece
-            piecePos = piece.getLast().getOffset();
+            piecePos = piece.getPiece().getOffset();
             // Look into the shape of the piece
             for (int i = 0; i < piece.getShape().length; i++) {
                 for (int j = 0; j < piece.getShape()[i].length; j++) {

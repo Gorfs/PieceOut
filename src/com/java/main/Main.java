@@ -23,7 +23,8 @@ public class Main {
         double width = screenSize.getWidth();
         double height = screenSize.getHeight();
 
-        Point location = new Point((int) width / 2 - GuiConfig.WINDOW_WIDTH / 2, (int) height / 2 - GuiConfig.WINDOW_HEIGHT / 2);
+        Point location = new Point((int) width / 2 - GuiConfig.WINDOW_WIDTH / 2,
+                (int) height / 2 - GuiConfig.WINDOW_HEIGHT / 2);
         Launcher launcher = new Launcher(location);
         launcher.launch();
     }

@@ -24,7 +24,10 @@ import java.nio.file.Paths;
  */
 public class LevelManager {
 
-    /** Load a level from the levels.json file
+    /**
+     * Load a level from the levels.json file.
+     * It returns the map as a String array with '0'
+     * representing non-playable space and '1' representing playable space.
      * @param id the id of the level to load
      * @return the level as a String array
      */
@@ -64,7 +67,8 @@ public class LevelManager {
     }
 
     /**
-     * Load the pieces from the pieces.json file
+     * Load the pieces from the pieces.json file.
+     * It creates the pieces and the targets and adds them to the pieceLogic.
      * @param pieceLogic the pieceLogic to add the pieces to
      * @param id the id of the level to load
      * @param iManager the instance manager that contains the level data
@@ -109,7 +113,8 @@ public class LevelManager {
     }
 
     /**
-     * Create a piece from a JSONObject and add it to the pieceLogic
+     * Create a piece from a JSONObject and add it to the pieceLogic.
+     * It also creates the decorators and adds them to the piece.
      * @param piece the piece to create
      * @param pieceLogic the pieceLogic to add the piece to
      * @param iManager the instance manager that contains the level data

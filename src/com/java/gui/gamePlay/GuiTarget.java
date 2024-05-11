@@ -56,7 +56,7 @@ public class GuiTarget extends JPanel {
         // get the graphics object
         Graphics2D g2d = (Graphics2D) g;
         // make the color less opaque
-        Color color = target.getPiece().getLast().getColor();
+        Color color = target.getPiece().getPiece().getColor();
         color = new Color(color.getRed(), color.getGreen(), color.getBlue(), 70);
         g2d.setColor(color);
 

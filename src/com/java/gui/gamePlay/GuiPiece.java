@@ -55,7 +55,7 @@ public class GuiPiece extends JPanel {
         double imgScale = 0.05;
 
         boolean[][] shapeMatrix = piece.getShape();
-        IntCoordinates offSet = this.piece.getLast().getOffset();
+        IntCoordinates offSet = this.piece.getPiece().getOffset();
         IntCoordinates cellCoords;
 
         for (int i = 0; i < shapeMatrix.length; i++) { // height
@@ -63,7 +63,7 @@ public class GuiPiece extends JPanel {
                 if (shapeMatrix[i][j]) {
                     try {
                         cellCoords = getPixelCoordinates(new IntCoordinates(j + offSet.getX(), i + offSet.getY()));
-                        g2d.setColor(piece.getLast().getColor());
+                        g2d.setColor(piece.getPiece().getColor());
 
                         g2d.fillRect(cellCoords.getX(), cellCoords.getY(), GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE);
 

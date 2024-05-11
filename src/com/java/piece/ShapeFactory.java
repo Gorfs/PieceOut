@@ -20,11 +20,6 @@ import src.com.java.logic.PieceLogic;
  * Class factory for shapes, each shape can be imported from the files.
  */
 public class ShapeFactory extends PieceBrute {
-
-    public void action(int a, int b){
-        return;
-    }
-
     /**
      * Constructor of ShapeFactory
      * @param filePath File name like "OShape".
@@ -32,7 +27,8 @@ public class ShapeFactory extends PieceBrute {
      * @param fixturePoint point of the face.
      * @param pos Position of the piece.
      */
-    public ShapeFactory(String filePath, Color color, IntCoordinates pos, IntCoordinates fixturePoint,  InstanceManager guiManager) {
+    public ShapeFactory(String filePath, Color color, IntCoordinates pos, IntCoordinates fixturePoint,
+                        InstanceManager guiManager) {
         this.color = color;
         this.setPos(pos);
         this.setFixturePoint(fixturePoint);
@@ -85,9 +81,8 @@ public class ShapeFactory extends PieceBrute {
         return null;
     }
 
-
     @Override
     public void action(PieceLogic pieceLogic, InstanceManager instanceManager, int x, int y, IntCoordinates mousePos) {
-        // Does nothing
+        // Does nothing, we went through all the decorator pattern
     }
 }

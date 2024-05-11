@@ -3,6 +3,7 @@ package src.com.java.gui.UI;
 import src.com.java.config.Colours;
 import src.com.java.config.GuiConfig;
 import src.com.java.gui.InstanceManager;
+import src.com.java.utils.Debug;
 
 import javax.swing.*;
 
@@ -31,7 +32,8 @@ public class LevelTransitionPanel extends JPanel{
         isTransitioning = true;
         Timer timer = new Timer(10, null);
         timer.addActionListener(e -> {
-            System.out.println(LevelTransitionPanel.this.getLocation().x);int x = LevelTransitionPanel.this.getLocation().x;
+            Debug.out(LevelTransitionPanel.this.getLocation().x + "");
+            int x = LevelTransitionPanel.this.getLocation().x;
             x += 30;
             if (x >= GuiConfig.WINDOW_WIDTH) {
                 x = GuiConfig.WINDOW_WIDTH;

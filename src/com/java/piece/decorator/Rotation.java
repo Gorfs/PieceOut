@@ -1,28 +1,21 @@
 package src.com.java.piece.decorator;
 
-import src.com.java.utils.Debug;
 import src.com.java.piece.Piece;
 import src.com.java.geometry.IntCoordinates;
 
 /**
  * Class that represent the decorator pattern for the clockwise rotation.
+ * The rotation is done by rotating the shape of the piece 90 degrees clockwise if the direction (clockwise) is true,
+ * or 90 degrees anti-clockwise if the direction (clockwise) is false.
  */
 public class Rotation extends Decorator {
-
-    // rotation direction is -1 for clockwise and 1 for anti-clockwise
-    private boolean rotationDirectionClockwise = true;
-
-    public boolean getRotationDirection() {
-        return this.rotationDirectionClockwise;
-    }
-
-    public void flipDirection() {
-        this.rotationDirectionClockwise = !this.rotationDirectionClockwise;
-    }
+    /**
+     * Direction of the rotation, true for clockwise, false for anti-clockwise.
+     */
+    private boolean clockwise = true;
 
     /**
      * Constructor for the decorator RotateClock.
-     * 
      * @param p Piece on which we add the decorator.
      */
     public Rotation(Piece p, IntCoordinates pp) {
@@ -30,15 +23,14 @@ public class Rotation extends Decorator {
         this.setActionPoint(pp);
     }
 
-    @Override
-    public void applyFlip(boolean xAxis) {
-        // updating the decorator's action points for a flip depending on axis of flip
-        this.rotationDirectionClockwise = !this.rotationDirectionClockwise;
-        this.flipActionPoint(xAxis);
-        // recursively apply flip to the rest of the list
-        if (this.getPrevPiece() instanceof Decorator) {
-            ((Decorator) this.getPrevPiece()).applyFlip(xAxis);
-        }
+    /**
+     * Constructor for the decorator RotateClock.
+     * @param p Piece on which we add the decorator.
+     * @param clockwise boolean that represents the direction of the rotation.
+     */
+    public Rotation(Piece p, IntCoordinates pp, boolean clockwise) {
+        this(p, pp);
+        this.clockwise = clockwise;
     }
 
     @Override
@@ -49,59 +41,64 @@ public class Rotation extends Decorator {
         }
     }
 
-    public Rotation(Piece p, IntCoordinates pp, boolean directionIsClockwise) {
-        super(p, pp);
-        this.rotationDirectionClockwise = directionIsClockwise;
-    }
-
-    public void setPivotPoint(IntCoordinates pp) {
-        this.setActionPoint(pp);
-    }
-
-    public IntCoordinates getPivotPoint() {
-        return this.getActionPoint();
+    @Override
+    public void applyFlip(boolean xAxis) {
+        // updating the decorator's action points for a flip depending on the axis of flip
+        this.clockwise = !this.clockwise;
+        this.flipActionPoint(xAxis);
+        // recursively apply flip to the rest of the list
+        if (this.getPrevPiece() instanceof Decorator) {
+            ((Decorator) this.getPrevPiece()).applyFlip(xAxis);
+        }
     }
 
     /**
-     * Action of rotating clockwise the nextPiece.
+     * Action of rotating the piece.
+     * The rotation is done by rotating the shape of the piece 90 degrees clockwise or anti-clockwise.
      */
     @Override
     public void personalAction() {
-        boolean[][] initShape = this.getLast().getShape();
+        boolean[][] initShape = this.getPiece().getShape();
         boolean[][] rotatedShape = new boolean[initShape[0].length][initShape.length]; // new shape after rotation
 
         this.offsetPosition(this.getActionPoint());
 
         // changing action point for all the decorators in the list
-        Decorator piece = (Decorator) this.getFirst();
-        piece.applyRotation(this.rotationDirectionClockwise);
+        Decorator piece = this.getLast();
+        piece.applyRotation(this.clockwise);
 
         // rotating matrix 90 degrees clockwise
         for (int i = 0; i < initShape.length; i++) {
             for (int j = 0; j < initShape[0].length; j++) {
-                if (!this.rotationDirectionClockwise) {
-                    // rotating the shape anti-clockwise
-
-                    rotatedShape[initShape[0].length - j - 1][i] = initShape[i][j]; // rotating the shape
-
-                } else {
+                if (this.clockwise) {
                     // the rotation is clockwise
                     rotatedShape[j][initShape.length - i - 1] = initShape[i][j]; // rotating the shape
-
+                } else {
+                    // rotating the shape anti-clockwise
+                    rotatedShape[initShape[0].length - j - 1][i] = initShape[i][j]; // rotating the shape
                 }
             }
         }
 
         // applying change to piece
-        this.getLast().setShape(rotatedShape);
-        this.getLast().setFixturePoint(this.getActionPoint());
+        this.getPiece().setShape(rotatedShape);
+        this.getPiece().setFixturePoint(this.getActionPoint());
     }
 
+    /**
+     * Action of rotating the piece in the opposite direction.
+     */
     @Override
     public void personalReverseAction() {
-        this.rotationDirectionClockwise = !this.rotationDirectionClockwise;
+        this.clockwise = !this.clockwise;
         personalAction();
-        this.rotationDirectionClockwise = !this.rotationDirectionClockwise;
+        this.clockwise = !this.clockwise;
     }
 
+    /**
+     * @return the direction of the rotation. True for clockwise, false for anti-clockwise.
+     */
+    public boolean getRotationDirection() {
+        return this.clockwise;
+    }
 }

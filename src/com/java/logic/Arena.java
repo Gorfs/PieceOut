@@ -7,16 +7,22 @@ import src.com.java.gui.InstanceManager;
  * Max width and height are 7.
  */
 public class Arena {
-    // The width and height of the arena
+    /**
+     * The width of the arena
+     */
     private final int width;
+    /**
+     * The height of the arena
+     */
     private final int height;
-    // The matrix representing the arena
+    /**
+     * The matrix representing the arena
+     */
     private final boolean[][] matrix;
 
     /**
      * Represents an arena in the game.
      * The arena is responsible for managing the dimensions and loading the arena from a file.
-     *
      * @param iManager the instance manager that contains the level data.
      */
     public Arena(InstanceManager iManager){
@@ -32,7 +38,6 @@ public class Arena {
      * Loads the arena with the given binary string.
      * The binary string represents the state of each cell in the arena.
      * '0' represents an empty cell, while any other character represents a filled cell.
-     * 
      * @param binary the binary string representing the arena state
      */
     public void loadArena(String binary) {

@@ -1,14 +1,10 @@
 package src.com.java.logic;
 
 
-import src.com.java.config.GuiConfig;
 import src.com.java.geometry.IntCoordinates;
 import src.com.java.piece.Target;
-import src.com.java.piece.decorator.*;
-import src.com.java.gui.InstanceManager;
-import src.com.java.utils.Debug;
+import src.com.java.piece.decorator.Decorator;
 
-import javax.swing.undo.UndoableEditSupport;
 import java.util.ArrayList;
 
 /**
@@ -42,13 +38,13 @@ public class PieceLogic {
         for (Target target : targets) {
             // check position
             IntCoordinates dest = target.getDest();
-            IntCoordinates piecePos = target.getPiece().getLast().getOffset();
+            IntCoordinates piecePos = target.getPiece().getPiece().getOffset();
 
             if (!dest.equals(piecePos)) return false;
 
             // check shape
             boolean[][] targetShape = target.getShape();
-            boolean[][] pieceShape = target.getPiece().getLast().getShape();
+            boolean[][] pieceShape = target.getPiece().getPiece().getShape();
 
             if (targetShape.length != pieceShape.length) return false;
             if (targetShape[0].length != pieceShape[0].length) return false;

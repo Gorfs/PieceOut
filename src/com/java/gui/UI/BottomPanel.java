@@ -44,7 +44,7 @@ public class BottomPanel extends JPanel {
         undoButton.setFocusable(false);
 
         // Load the image for the undo button
-        Image image = new ImageIcon(GuiConfig.resPath + "icons/redo.png")
+        Image image = new ImageIcon(GuiConfig.resPath + "icons/undo.png")
                 .getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
         ImageIcon undoIcon = new ImageIcon(image);
         // Initialize the undo button
