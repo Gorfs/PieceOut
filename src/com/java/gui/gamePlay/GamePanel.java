@@ -40,14 +40,14 @@ public class GamePanel extends JPanel {
         this.setLayout(new BorderLayout());
         this.setBackground(Colours.BACKGROUND);
 
-        JPanel topPanel = new TopPanel(iManager);
+        JPanel topPanel = new TopPanel(this.instanceManager);
         this.add(topPanel, BorderLayout.NORTH);
 
-        this.arenaContainerPanel = new ArenaContainerPanel(iManager);
+        this.arenaContainerPanel = new ArenaContainerPanel(this.instanceManager);
         this.arenaPanel = arenaContainerPanel.getArenaPanel();
         this.add(arenaContainerPanel, BorderLayout.CENTER);
 
-        this.bottomPanel = new BottomPanel(iManager);
+        this.bottomPanel = new BottomPanel(this.instanceManager);
         this.add(bottomPanel, BorderLayout.SOUTH);
     }
 

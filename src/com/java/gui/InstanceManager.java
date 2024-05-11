@@ -112,12 +112,12 @@ public class InstanceManager {
     public void start(int level) {
         // Initialize the level and the player controller
         this.level = level;
+        // Initialize the player controller
+        playerController = new PlayerController(this, pieceLogic);
         // Initialize the arena
         this.arena = new Arena(this);
         // Initialize the game panel
         this.gamePanel = new GamePanel(pieceLogic, this);
-        // Initialize the player controller
-        playerController = new PlayerController(this, pieceLogic);
         playerController.startController(gamePanel.getArenaPanel());
         
         JLayeredPane layeredPane = new JLayeredPane();
