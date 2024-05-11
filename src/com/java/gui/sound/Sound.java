@@ -19,17 +19,14 @@ public class Sound {
         soundFiles[3] = new File(GuiConfig.resourcePath + "sfx/move3.wav");
         soundFiles[4] = new File(GuiConfig.resourcePath + "sfx/move4.wav");
         soundFiles[5] = new File(GuiConfig.resourcePath + "sfx/move5.wav");
-        soundFiles[6] = new File(GuiConfig.resourcePath + "sfx/win1.wav");
-        soundFiles[7] = new File(GuiConfig.resourcePath + "sfx/win2.wav");
-        soundFiles[8] = new File(GuiConfig.resourcePath + "sfx/win3.wav");
-        soundFiles[9] = new File(GuiConfig.resourcePath + "sfx/collision1.wav");
-        soundFiles[10] = new File(GuiConfig.resourcePath + "sfx/collision2.wav");
-        soundFiles[11] = new File(GuiConfig.resourcePath + "sfx/collision3.wav");
-        soundFiles[12] = new File(GuiConfig.resourcePath + "sfx/win1.wav");
-        soundFiles[13] = new File(GuiConfig.resourcePath + "sfx/win2.wav");
-        soundFiles[14] = new File(GuiConfig.resourcePath + "sfx/win3.wav");
-        soundFiles[15] = new File(GuiConfig.resourcePath + "sfx/win4.wav");
-        soundFiles[16] = new File(GuiConfig.resourcePath + "sfx/win5.wav");
+        soundFiles[6] = new File(GuiConfig.resourcePath + "sfx/collision1.wav");
+        soundFiles[7] = new File(GuiConfig.resourcePath + "sfx/collision2.wav");
+        soundFiles[8] = new File(GuiConfig.resourcePath + "sfx/collision3.wav");
+        soundFiles[9] = new File(GuiConfig.resourcePath + "sfx/win1.wav");
+        soundFiles[10] = new File(GuiConfig.resourcePath + "sfx/win2.wav");
+        soundFiles[11] = new File(GuiConfig.resourcePath + "sfx/win3.wav");
+        soundFiles[12] = new File(GuiConfig.resourcePath + "sfx/win4.wav");
+        soundFiles[13] = new File(GuiConfig.resourcePath + "sfx/win5.wav");
 
     }
 
@@ -74,14 +71,14 @@ public class Sound {
 
 
     public void playCollisionSound() {
-        int i = (int) (Math.random() * 3) + 9;
+        int i = (int) (Math.random() * 3) + 6;
         Sound soundEffect = new Sound();
         soundEffect.setFile(i);
         soundEffect.play();
     }
 
     public void playNote() {
-        int i = (int) (Math.random() * 5) + 12;
+        int i = (int) (Math.random() * 5) + 9;
         Sound soundEffect = new Sound();
         soundEffect.setFile(i);
         soundEffect.play();
