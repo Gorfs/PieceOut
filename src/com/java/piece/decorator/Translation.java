@@ -4,7 +4,6 @@ import src.com.java.config.GuiConfig;
 import src.com.java.geometry.IntCoordinates;
 import src.com.java.gui.InstanceManager;
 import src.com.java.logic.Move;
-import src.com.java.logic.MoveEdit;
 import src.com.java.logic.PieceLogic;
 import src.com.java.piece.Piece;
 import src.com.java.utils.Debug;
@@ -50,7 +49,7 @@ public class Translation extends Decorator {
                 } else {
                     // If not, then we add the move to the undo manager.
                     Debug.out("No collision detected");
-                    instanceManager.playerController.um.addEdit(new MoveEdit(new Move(this)));
+                    instanceManager.playerController.um.addEdit(new Move(this));
                 }
             }
         } else {

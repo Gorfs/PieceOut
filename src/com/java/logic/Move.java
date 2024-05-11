@@ -4,11 +4,13 @@ import src.com.java.piece.decorator.Decorator;
 import src.com.java.piece.decorator.Direction;
 import src.com.java.piece.decorator.Translation;
 
+import javax.swing.undo.AbstractUndoableEdit;
+
 /**
  * The Move class represents a move that can be done by a piece.
  * It contains the piece that will be moved and the direction of the move.
  */
-public class Move {
+public class Move extends AbstractUndoableEdit {
     /**
      * The piece that will be moved.
      */
@@ -16,7 +18,7 @@ public class Move {
     /**
      * The direction of the move.
      */
-    private Direction dir = Direction.NORTH;
+    private final Direction dir;
 
     /**
      * Creates a new Move object with the given piece.
@@ -26,15 +28,21 @@ public class Move {
         // Initialize the piece
         this.piece = piece;
         // If the piece is a Translation, get the direction
-        if (this.piece instanceof Translation) {
+        if (piece instanceof Translation) {
             this.dir = ((Translation) piece).getDir();
+        } else {
+            this.dir = null;
         }
     }
 
     /**
      * Executes the move.
      */
-    public void doit(){
+    public void redo(){
+        super.redo();
+        if (dir != null) {
+            ((Translation) piece).setDir(dir);
+        }
         piece.personalAction();
     }
 
@@ -42,7 +50,8 @@ public class Move {
      * Undoes the move.
      */
     public void undo(){
-        if (piece instanceof Translation) {
+        super.undo();
+        if (dir != null) {
             ((Translation) piece).setDir(dir);
         }
         piece.personalReverseAction();
