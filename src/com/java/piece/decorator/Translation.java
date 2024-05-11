@@ -161,4 +161,12 @@ public class Translation extends Decorator {
             case WEST -> dir = Direction.EAST;
         }
     }
+
+    public Direction getDir() {
+        return dir;
+    }
+
+    public void setDir(Direction dir) {
+        this.dir = dir;
+    }
 }
