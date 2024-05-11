@@ -82,21 +82,23 @@ public class GuiPiece extends JPanel {
 
         if (shapeIcon != null) {
 
-            // changing the colour of the image
-
-
 
 
             GuiPieceImages.changeColour(shapeIcon, this.colour);
             for ( int i = 0 ; i < piece.getLast().rotations; i++){
                 shapeIcon = GuiPieceImages.rotateImage(shapeIcon);
             }
-            int imageHeight = (int) (Math.floor(shapeIcon.getIconHeight() * GuiConfig.arenaScale));
-            int imageWidth = (int) (Math.ceil(shapeIcon.getIconWidth() * GuiConfig.arenaScale));
+            int imageHeight = (int) (Math.floor(shapeIcon.getImage().getWidth(null) / 120 * GuiConfig.CELL_SIZE));
+            int imageWidth = (int) (Math.floor(shapeIcon.getImage().getHeight(null) /120 *  GuiConfig.CELL_SIZE));
             // g.setColor(this.colour);
             g2d.setColor(this.colour);
+            Debug.out("WIDTH : " + imageWidth + " HEIGHT : " + imageHeight);
             IntCoordinates PieceCoords = getPixelCoordinates(new IntCoordinates(offSet.getX() ,offSet.getY())); 
-            g2d.drawImage(shapeIcon.getImage(), PieceCoords.getX(), PieceCoords.getY(), imageHeight, imageWidth, null);
+            if (piece.rotations % 2 != 0){
+                g2d.drawImage(shapeIcon.getImage(), PieceCoords.getX(), PieceCoords.getY(), imageWidth, imageHeight, null);
+            }else{
+                g2d.drawImage(shapeIcon.getImage(), PieceCoords.getX(), PieceCoords.getY(), imageHeight, imageWidth, null);
+            }
         }
         
 
