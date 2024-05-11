@@ -65,6 +65,7 @@ public class BottomPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 // testing undo
                 playerController.um.undo();
+                instanceManager.getSound().playMoveSound();
                 instanceManager.update();
                 updateButtons();
             }
@@ -83,6 +84,7 @@ public class BottomPanel extends JPanel {
         redoButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 playerController.um.redo();
+                instanceManager.getSound().playMoveSound();
                 instanceManager.update();
                 updateButtons();
             }

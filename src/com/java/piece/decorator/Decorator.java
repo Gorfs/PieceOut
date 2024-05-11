@@ -128,9 +128,11 @@ public abstract class Decorator extends Piece {
             if (checkCollision(pieceLogic)) {
                 Debug.out("Collision detected");
                 personalReverseAction();
+                instanceManager.getSound().playCollisionSound();
             } else {
                 Debug.out("No collision detected");
                 instanceManager.playerController.um.addEdit(new Move(this));
+                instanceManager.getSound().playMoveSound();
             }
             // If not, then we check for the next decorator.
         } else {
