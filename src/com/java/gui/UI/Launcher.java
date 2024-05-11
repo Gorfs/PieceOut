@@ -49,7 +49,7 @@ public class Launcher {
     public void startGame(int players){
         //TODO: implement the logic to start the game with the number of players specified
         mainFrame.dispose();
-        int level = 0;
+        int level = 2;
         InstanceManager instanceManager = new InstanceManager(new PieceLogic());
         instanceManager.start(level);
     }

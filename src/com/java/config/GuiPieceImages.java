@@ -5,9 +5,12 @@ import java.awt.image.BufferedImage;
 import java.awt.image.WritableRaster;
 import java.io.File;
 import java.io.IOException;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import javax.swing.*;
 import src.com.java.utils.Debug;
 import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 /**
  * class to help manage the png and images used for the pieces in the game.
  */
@@ -59,6 +62,23 @@ public class GuiPieceImages {
         }
         bufferedImage.setData(raster);
         icon.setImage(bufferedImage);
+    }
+    public static ImageIcon rotateImage(ImageIcon icon){
+        // get the buffered image
+        BufferedImage img = (BufferedImage) icon.getImage();
+        int angle = 90; // the angle in degrees that we wish to rotate by
+        
+        double rotationRequired = Math.toRadians (angle);
+        double locationX = img.getWidth() / 2;
+        double locationY = img.getHeight() / 2;
+        AffineTransform tx = AffineTransform.getRotateInstance(rotationRequired, locationX, locationY); 
+        AffineTransformOp op = new AffineTransformOp(tx,AffineTransformOp.TYPE_BILINEAR);
+        tx.rotate(angle, img.getWidth()/2, img.getHeight()/2);
+        BufferedImage newImage =new BufferedImage(img.getWidth(), img.getHeight(), img.getType()); 
+        op.filter(img, newImage);
+
+        return new ImageIcon(newImage);
+        
     }
 
 }

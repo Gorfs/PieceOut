@@ -8,6 +8,7 @@ import src.com.java.piece.decorator.Decorator;
 import src.com.java.gui.InstanceManager;
 
 import java.awt.*;
+import java.awt.geom.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.WritableRaster;
 import java.io.File;
@@ -15,8 +16,7 @@ import java.io.IOException;
 import java.util.Objects;
 
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 public class GuiPiece extends JPanel {
     private final InstanceManager instanceManager;
@@ -88,12 +88,15 @@ public class GuiPiece extends JPanel {
 
 
             GuiPieceImages.changeColour(shapeIcon, this.colour);
+            for ( int i = 0 ; i < piece.getLast().rotations; i++){
+                shapeIcon = GuiPieceImages.rotateImage(shapeIcon);
+            }
+            int imageHeight = (int) (Math.floor(shapeIcon.getIconHeight() * GuiConfig.arenaScale));
+            int imageWidth = (int) (Math.ceil(shapeIcon.getIconWidth() * GuiConfig.arenaScale));
             // g.setColor(this.colour);
             g2d.setColor(this.colour);
-            int imageWidth = (int) (piece.getLast().getShape().length * GuiConfig.CELL_SIZE);
-            int imageHeight = (int) (piece.getLast().getShape()[0].length * GuiConfig.CELL_SIZE);
-            IntCoordinates coords = getPixelCoordinates(new IntCoordinates(offSet.getX(),offSet.getY())); 
-            g2d.drawImage(shapeIcon.getImage(), coords.getX(), coords.getY(), imageHeight, imageWidth, null);
+            IntCoordinates PieceCoords = getPixelCoordinates(new IntCoordinates(offSet.getX() ,offSet.getY())); 
+            g2d.drawImage(shapeIcon.getImage(), PieceCoords.getX(), PieceCoords.getY(), imageHeight, imageWidth, null);
         }
         
 

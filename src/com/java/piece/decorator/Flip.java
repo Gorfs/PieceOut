@@ -56,6 +56,24 @@ public class Flip extends Decorator {
     public void personalAction() {
         boolean[][] initShape = this.getLast().getShape();
         boolean[][] rotatedShape = new boolean[initShape.length][initShape[0].length];
+        this.flipActionPoint(!this.xFlip);
+        if (this.xFlip){
+            this.xflip = !this.xflip;
+        }else{
+            this.yflip = !this.yflip;
+        }
+        // switch(this.getLast().type){
+        //     case "JShape" -> {
+        //         this.getLast().setType("LShape");
+        //     }
+        //     case "LShape" -> {
+        //         this.getLast().setType("JShape");
+        //     }
+        //     default ->{
+        //         this.getLast().addRotation(true);
+        //         this.getLast().addRotation(true);
+        //     }
+        // }
 
         // changing the position on the map to offset change of fixturePoint
         this.offsetPosition(this.getActionPoint());
