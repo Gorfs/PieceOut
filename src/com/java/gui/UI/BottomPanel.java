@@ -19,8 +19,12 @@ import java.util.ArrayList;
 import src.com.java.config.Colours;
 import src.com.java.config.GuiConfig;
 import src.com.java.utils.Debug;
+import src.com.java.piece.decorator.Decorator;
 import src.com.java.gui.InstanceManager;
-
+import src.com.java.logic.Move;
+import src.com.java.logic.MoveEdit;
+import src.com.java.logic.PieceLogic;
+import src.com.java.logic.Player;
 import src.com.java.controllers.PlayerController;
 
 public class BottomPanel extends JPanel {

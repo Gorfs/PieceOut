@@ -3,6 +3,7 @@ package src.com.java.piece.decorator;
 import src.com.java.config.GuiConfig;
 import src.com.java.gui.InstanceManager;
 import src.com.java.logic.Move;
+import src.com.java.logic.MoveEdit;
 import src.com.java.logic.PieceLogic;
 import src.com.java.piece.Piece;
 import src.com.java.geometry.IntCoordinates;
@@ -104,7 +105,7 @@ public class Translation extends Decorator {
                     personalReverseAction();
                 } else {
                     Debug.out("No collision detected");
-                    instanceManager.playerController.um.addEdit(new Move(this));
+                    instanceManager.playerController.um.addEdit(new MoveEdit(new Move(this)));
                 }
             }
 

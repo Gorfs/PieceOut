@@ -4,11 +4,9 @@ import src.com.java.piece.decorator.Decorator;
 import src.com.java.piece.decorator.Direction;
 import src.com.java.piece.decorator.Translation;
 
-import javax.swing.undo.AbstractUndoableEdit;
-
-public class Move extends AbstractUndoableEdit {
+public class Move {
     private final Decorator piece;
-    Direction dir = Direction.NORTH;
+    private Direction dir = Direction.NORTH;
 
     public Move(Decorator piece) {
         this.piece = piece;
@@ -17,13 +15,11 @@ public class Move extends AbstractUndoableEdit {
         }
     }
 
-    public void redo(){
-        super.redo();
+    public void doit(){
         piece.personalAction();
     }
 
     public void undo(){
-        super.undo();
         if (piece instanceof Translation) {
             ((Translation) piece).setDir(dir);
         }
