@@ -20,6 +20,7 @@ import src.com.java.config.Colours;
 import src.com.java.config.GuiConfig;
 import src.com.java.gui.GameWindow;
 import src.com.java.gui.InstanceManager;
+import src.com.java.gui.sound.Sound;
 import src.com.java.logic.PieceLogic;
 
 public class Launcher {
@@ -76,6 +77,8 @@ public class Launcher {
         private JButton startOnePlayerButton;
         private JButton startTwoPlayerButton;
         private JButton exitButton;
+
+        private final Sound sound = new Sound();
         
 
         /*
@@ -85,6 +88,8 @@ public class Launcher {
         public LauncherPanel() {
             this.setBackground(Colours.BACKGROUND);
             this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
+            sound.playOST();
 
             try {
                 BufferedImage bufferedImage = ImageIO.read(new File(GuiConfig.resourcePath + "icons/titleImage.png"));
@@ -101,6 +106,7 @@ public class Launcher {
                 e.printStackTrace();
             }
 
+
             Font buttonFont = new Font("Arial", Font.BOLD, 15);
 
             startOnePlayerButton = new JButton("Play with 1 Player");
@@ -110,6 +116,7 @@ public class Launcher {
             startOnePlayerButton.setPreferredSize(new Dimension(250, 50));
             startOnePlayerButton.setFont(buttonFont);
             startOnePlayerButton.addActionListener(e -> {
+                sound.playNote();
                 Launcher.this.startGame(1);
             });
     
@@ -120,6 +127,7 @@ public class Launcher {
             startTwoPlayerButton.setPreferredSize(new Dimension(200, 50));
             startTwoPlayerButton.setFont(buttonFont);
             startTwoPlayerButton.addActionListener(e -> {
+                sound.playNote();
                 Launcher.this.startGame(2);
             });
     

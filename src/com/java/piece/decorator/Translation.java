@@ -102,9 +102,11 @@ public class Translation extends Decorator {
                 if (checkCollision(pieceLogic)) {
                     Debug.out("Collision detected");
                     personalReverseAction();
+                    instanceManager.getSound().playCollisionSound();
                 } else {
                     Debug.out("No collision detected");
                     instanceManager.playerController.um.addEdit(new Move(this));
+                    instanceManager.getSound().playMoveSound();
                 }
             }
 
