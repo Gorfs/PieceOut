@@ -1,11 +1,13 @@
 package src.com.java.gui;
 
 import src.com.java.config.GuiConfig;
+import src.com.java.config.LogicConstants;
 import src.com.java.geometry.IntCoordinates;
 import src.com.java.piece.Piece;
 import src.com.java.piece.Target;
 import src.com.java.piece.decorator.Decorator;
 import src.com.java.controllers.PlayerController;
+import src.com.java.gui.UI.Launcher;
 import src.com.java.gui.UI.LevelTransitionPanel;
 import src.com.java.gui.gamePlay.*;
 import src.com.java.logic.Arena;
@@ -72,18 +74,33 @@ public class InstanceManager {
      * Arena of the game, where the pieces are placed
      */
     public Arena arena;
+
     /**
      * level of the puzzle we are currently playing
      */
     public int level;
+    private int players;
+    private InstanceManager secondPlayer;
+
 
     /**
      * Constructor of the InstanceManager
      * @param pieceLogic the piece logic of the game
      */
-    public InstanceManager(PieceLogic pieceLogic) {
+    public InstanceManager(PieceLogic pieceLogic, Point location) {
         mainFrame.setLayout(layout);
         this.pieceLogic = pieceLogic;
+        mainFrame.setLocation(location);
+        this.secondPlayer = this;
+        players = 1;
+    }
+
+    public InstanceManager(PieceLogic pieceLogic, Point location, InstanceManager secondPlayer) {
+        mainFrame.setLayout(layout);
+        this.pieceLogic = pieceLogic;
+        mainFrame.setLocation(location);
+        this.secondPlayer = secondPlayer;
+        players = 2;
     }
 
     /**
@@ -140,7 +157,9 @@ public class InstanceManager {
                     for (Cell cell : cells) cell.updateCell();
                 gamePanel.setBounds(0, 0, GuiConfig.width, GuiConfig.height);
                 levelTransitionPanel.setBounds(0, 0, GuiConfig.width, GuiConfig.height);
-                levelTransitionPanel.setLocation(GuiConfig.width, 0);
+                if (!levelTransitionPanel.isTransitioning()){
+                    levelTransitionPanel.setLocation(GuiConfig.width, 0);
+                }
             }
         });
         levelTransitionPanel.animationOnStart(this);
@@ -160,11 +179,18 @@ public class InstanceManager {
      * Method that is called when the level is completed
      */
     public void nextLevel() {
-        Debug.out("You win!");
-        InstanceManager next = new InstanceManager(new PieceLogic());
-        level++;
-        next.start(level);
-        this.clear();
+        if (level + 1 != LogicConstants.NUMBER_OF_LEVELS){
+            Debug.out("You win!");
+            Point location = mainFrame.getLocation();
+            InstanceManager next = new InstanceManager(new PieceLogic(), location, secondPlayer);
+            level++;
+            next.start(level);
+            this.clear();
+        }
+        else{
+            this.returnToMainMenu();
+        }
+
     }
 
     /**
@@ -186,6 +212,18 @@ public class InstanceManager {
         layout.show(mainFrame, panelName);
     }
 
+    public void returnToMainMenu() {
+        if (secondPlayer == null && players == 2) {
+            return;
+        }
+        this.clear();
+        if (players == 2){
+            secondPlayer.clear();
+        }
+        Point location = mainFrame.getLocation();
+        Launcher launcher = new Launcher(location);
+        launcher.launch();
+    }
     /**
      * @return the game panel
      */

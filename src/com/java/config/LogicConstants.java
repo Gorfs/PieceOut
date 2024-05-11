@@ -7,5 +7,5 @@ public class LogicConstants {
     /**
      * Constant value for the number of levels.
      */
-    public static int NUMBER_OF_LEVELS = 3;
+    public static int NUMBER_OF_LEVELS = 8;
 }
