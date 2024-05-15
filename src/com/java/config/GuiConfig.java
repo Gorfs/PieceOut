@@ -10,13 +10,13 @@ public class GuiConfig {
     public static int width = WINDOW_WIDTH;
     public static int height = WINDOW_HEIGHT - 30;
     
-    public static final double initArenaScale = 1;
+    public static final double initArenaScale = 0.60;
     public static double arenaScale = initArenaScale;
     public static int CELL_SIZE = (int) Math.floor(100 * arenaScale);
     public static String resourcePath = "src/com/resources/";
 
     public static void updateArenaScale(){
-        arenaScale = arenaScale * min(((double) width /(double) WINDOW_WIDTH), ((double)height /(double) WINDOW_HEIGHT));
+        arenaScale = initArenaScale * min(((double) width /(double) WINDOW_WIDTH), ((double)height /(double) WINDOW_HEIGHT));
         CELL_SIZE = (int) Math.floor(100 * arenaScale);
     }
 }

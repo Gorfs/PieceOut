@@ -10,6 +10,7 @@ import src.com.java.config.*;
 import src.com.java.geometry.IntCoordinates;
 import src.com.java.gui.InstanceManager;
 import src.com.java.logic.Arena;
+import src.com.java.utils.Debug;
 
 public class Cell extends JPanel{
     /**
@@ -55,6 +56,7 @@ public class Cell extends JPanel{
     }
 
     public void updateCell(){
+        this.removeAll();
         this.pixel_x = (int) (double) (map_x * GuiConfig.CELL_SIZE);
         this.pixel_y = (int) (double) (map_y * GuiConfig.CELL_SIZE);
 
@@ -62,6 +64,9 @@ public class Cell extends JPanel{
         this.setMinimumSize(new Dimension(GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE));
         this.setPreferredSize(new Dimension(GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE));
         this.setMaximumSize(new Dimension(GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE));
+        if (Debug.isDeubgging()){
+            this.add(new JLabel("x : " +  this.pixel_x + " y : " + this.pixel_y)).setFont(new Font("Arial", Font.PLAIN, 7));
+        }
         updatePlayableCell();
     }
 

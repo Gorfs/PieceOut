@@ -4,6 +4,7 @@ import src.com.java.geometry.IntCoordinates;
 import src.com.java.config.*;
 import src.com.java.piece.decorator.Translation;
 import src.com.java.utils.Debug;
+import src.com.java.piece.Piece;
 import src.com.java.piece.decorator.Decorator;
 import src.com.java.gui.InstanceManager;
 
@@ -26,10 +27,35 @@ public class GuiPiece extends JPanel {
 
     private final Decorator piece;
 
+    private ImageIcon shapeIcon;
+    private ImageIcon[] iconList = new ImageIcon[4];
+
+
     public GuiPiece(InstanceManager instanceManager, Decorator piece) {
         this.instanceManager = instanceManager;
         this.piece = piece;
         this.colour = piece.getLast().getColor();
+        shapeIcon = switch(piece.getLast().type){
+            case "OShape" -> GuiPieceImages.OImage;
+            case "HoShape" -> GuiPieceImages.HoImage;
+            case "IShape" -> GuiPieceImages.IImage;
+            case "JShape" -> GuiPieceImages.JImage;
+            case "LShape" -> GuiPieceImages.LImage;
+            case "SingleShape" -> GuiPieceImages.SingleImage;
+            case "TShape" -> GuiPieceImages.TImage;
+            case "VeShape" -> GuiPieceImages.VeImage;
+            default -> null;
+        };
+        // pre loading all the rotated icon shapes
+            ImageIcon shape0 = shapeIcon;// no rotation
+            ImageIcon shape1 = GuiPieceImages.rotateImage(shapeIcon); // 1 clockwise rotation
+            ImageIcon shape2 = GuiPieceImages.rotateImage(shape1); // 2 clockwise rotations
+            ImageIcon shape3 = GuiPieceImages.rotateImage(shape2); // 3 clock wise rotations
+            iconList = new ImageIcon[4];
+            iconList[0] = shape0;
+            iconList[1] = shape1;
+            iconList[2] = shape2;
+            iconList[3] = shape3;
     }
 
     /**
@@ -63,42 +89,39 @@ public class GuiPiece extends JPanel {
 
         boolean[][] shapeMatrix = piece.getShape();
         IntCoordinates offSet = this.piece.getLast().getOffset();
-        IntCoordinates destOffSet = new IntCoordinates(0, 0);
-        IntCoordinates destCoords;
         IntCoordinates cellCoords;
-
+        IntCoordinates pieceCoords;
         // determine the type of image to use
-        ImageIcon shapeIcon = switch(piece.getLast().type){
-            case "OShape" -> GuiPieceImages.OImage;
-            case "HoShape" -> GuiPieceImages.HoImage;
-            case "IShape" -> GuiPieceImages.IImage;
-            case "JShape" -> GuiPieceImages.JImage;
-            case "LShape" -> GuiPieceImages.LImage;
-            case "SingleShape" -> GuiPieceImages.SingleImage;
-            case "TShape" -> GuiPieceImages.TImage;
-            case "VeShape" -> GuiPieceImages.VeImage;
-            default -> null;
-        };
 
         if (shapeIcon != null) {
+        
+            // pre loading all the rotated icon shapes
 
-
-
+            pieceCoords = getPixelCoordinates(new IntCoordinates(offSet.getX() ,offSet.getY())); 
             GuiPieceImages.changeColour(shapeIcon, this.colour);
-            for ( int i = 0 ; i < piece.getLast().rotations; i++){
-                shapeIcon = GuiPieceImages.rotateImage(shapeIcon);
-            }
-            int imageHeight = (int) (Math.floor(shapeIcon.getImage().getWidth(null) / 120 * GuiConfig.CELL_SIZE));
-            int imageWidth = (int) (Math.floor(shapeIcon.getImage().getHeight(null) /120 *  GuiConfig.CELL_SIZE));
+            shapeIcon = iconList[piece.getLast().rotations];
+            int imageWidth = (int) (Math.floor(shapeIcon.getImage().getWidth(null) / 120 * GuiConfig.CELL_SIZE));
+            int imageHeight = (int) (Math.floor(shapeIcon.getImage().getHeight(null) /120 *  GuiConfig.CELL_SIZE));
             // g.setColor(this.colour);
             g2d.setColor(this.colour);
             Debug.out("WIDTH : " + imageWidth + " HEIGHT : " + imageHeight);
-            IntCoordinates PieceCoords = getPixelCoordinates(new IntCoordinates(offSet.getX() ,offSet.getY())); 
-            if (piece.rotations % 2 != 0){
-                g2d.drawImage(shapeIcon.getImage(), PieceCoords.getX(), PieceCoords.getY(), imageWidth, imageHeight, null);
-            }else{
-                g2d.drawImage(shapeIcon.getImage(), PieceCoords.getX(), PieceCoords.getY(), imageHeight, imageWidth, null);
-            }
+            Debug.out("Position is " + piece.getLast().getPos().getX() +  " and the y : " + piece.getLast().getPos().getY());
+            // if (piece.getLast().rotations  % 2 == 0){
+            //     // switch the height and width
+            //     int temp = imageHeight;
+            //     imageHeight = imageWidth;
+            //     imageWidth = temp;
+            // }
+            g2d.drawImage(shapeIcon.getImage(), pieceCoords.getX(), pieceCoords.getY(), imageWidth, imageHeight, null);
+            
+
+            // Debugging
+            g2d.setColor(Color.black);
+            g2d.drawString("x:" + pieceCoords.getX() + " y: " + pieceCoords.getY(),pieceCoords.getX() ,pieceCoords.getY() );
+            int circleRadius = 5;
+            g2d.setColor(Color.red);
+            g2d.drawOval(pieceCoords.getX(), pieceCoords.getY(), circleRadius * 2, circleRadius * 2);
+            g2d.drawRect(pieceCoords.getX(), pieceCoords.getY(), imageWidth, imageHeight);
         }
         
 
