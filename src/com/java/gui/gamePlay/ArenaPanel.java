@@ -22,15 +22,12 @@ public class ArenaPanel extends JPanel {
 
     public ArenaPanel(InstanceManager instanceManager) {
         super();
-        // this.setBackground(Colours.BACKGROUND);
         this.setBackground(Colours.BACKGROUND_GREYED);
         this.instanceManager = instanceManager;
         int map_size = instanceManager.arena.getMatrix().length;
 
         this.setLayout(new GridLayout(map_size, map_size));
         this.setAlignmentY(CENTER_ALIGNMENT);
-        // this.setBorder(BorderFactory.createLineBorder(Color.BLUE, 1)); // Add thicker
-        // and blue border here
 
         // filling the map with cells
         for (int i = 0; i < map_size; i++) {
