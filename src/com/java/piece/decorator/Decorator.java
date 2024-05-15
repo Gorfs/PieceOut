@@ -6,7 +6,6 @@ import src.com.java.piece.PieceBrute;
 import src.com.java.geometry.IntCoordinates;
 import src.com.java.gui.InstanceManager;
 import src.com.java.logic.Move;
-import src.com.java.logic.MoveEdit;
 import src.com.java.logic.PieceLogic;
 
 /**
@@ -128,9 +127,11 @@ public abstract class Decorator extends Piece {
             if (checkCollision(pieceLogic)) {
                 Debug.out("Collision detected");
                 personalReverseAction();
+                instanceManager.getSound().playCollisionSound();
             } else {
                 Debug.out("No collision detected");
-                instanceManager.playerController.um.addEdit(new MoveEdit(new Move(this)));
+                instanceManager.playerController.um.addEdit(new Move(this));
+                instanceManager.getSound().playMoveSound();
             }
             // If not, then we check for the next decorator.
         } else {

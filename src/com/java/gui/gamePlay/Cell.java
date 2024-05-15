@@ -95,21 +95,21 @@ public class Cell extends JPanel{
             this.setBorder(topLeftShadow);
         }else if(map_x == 0){
             if(!matrix[map_y-1][map_x]){
+                this.setBorder(topLeftShadow);
+            }else{
+                this.setBorder(leftShadow);
+            }
+        }else if (map_y == 0){
+            if(matrix[map_y][map_x-1]){
                 this.setBorder(topShadow);
             }else{
                 this.setBorder(topLeftShadow);
             }
-        }else if (map_y == 0){
-            if(matrix[map_y][map_x-1]){
-                this.setBorder(leftShadow);
-            }else{
-                this.setBorder(topLeftShadow);
-            }
             
-        }else{
+        }else{ // we know x > 0 and y > 0
             if(!matrix[map_y-1][map_x] && !matrix[map_y][map_x-1]){
                 this.setBorder(topLeftShadow);
-            }else if(!matrix[map_y-1][map_x]){
+            }else if(!matrix[map_y-1][map_x]){ // we know here that either [y-1][x] is true or [y][x-1] is true
                 this.setBorder(topShadow);
             }else if(!matrix[map_y][map_x-1]){
                 this.setBorder(leftShadow);

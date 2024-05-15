@@ -1,11 +1,13 @@
 package src.com.java.gui;
 
 import src.com.java.config.*;
-import src.com.java.geometry.IntCoordinates;
-import src.com.java.piece.Piece;
+import src.com.java.config.GuiConfig;
+import src.com.java.config.LogicConstants;
+import src.com.java.gui.sound.Sound;
 import src.com.java.piece.Target;
 import src.com.java.piece.decorator.Decorator;
 import src.com.java.controllers.PlayerController;
+import src.com.java.gui.UI.Launcher;
 import src.com.java.gui.UI.LevelTransitionPanel;
 import src.com.java.gui.gamePlay.*;
 import src.com.java.logic.Arena;
@@ -13,21 +15,12 @@ import src.com.java.logic.LevelManager;
 import src.com.java.logic.PieceLogic;
 import src.com.java.utils.Debug;
 
-import static src.com.java.config.GuiConfig.height;
-
-import static src.com.java.config.GuiConfig.width;
-
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
-import java.util.logging.Level;
 
 import javax.swing.JLayeredPane;
-import javax.swing.JPanel;
-import javax.swing.Timer;
-import java.awt.event.ActionEvent; // Import the ActionEvent class
 
 /**
  * GUIManager class that is responsible for creating, changing,
@@ -40,6 +33,7 @@ public class InstanceManager {
     private final GameWindow mainFrame = new GameWindow();
     private GamePanel gamePanel;
 
+
     // layout to change panels in rootPanel
     private final CardLayout layout = new CardLayout();
     private final LevelTransitionPanel levelTransitionPanel = new LevelTransitionPanel(this);
@@ -49,20 +43,43 @@ public class InstanceManager {
     private final PieceLogic pieceLogic;
     public PlayerController playerController;
     public Arena arena;
+    private Sound sound;
+    private InstanceManager secondPlayer;
 
     public int level;
+    private int players;
 
     public GamePanel getGamePanel() {
         return gamePanel;
     }
 
-    public InstanceManager(PieceLogic pieceLogic) {
+    public InstanceManager(PieceLogic pieceLogic, Point location) {
         /*
          * init of instance
          */
         mainFrame.setLayout(layout);
         this.pieceLogic = pieceLogic;
+        mainFrame.setLocation(location);
+        this.secondPlayer = this;
+        sound = new Sound();
+        players = 1;
+
+
     }
+
+    public InstanceManager(PieceLogic pieceLogic, Point location, InstanceManager secondPlayer) {
+        /*
+         * init of instance
+         */
+        mainFrame.setLayout(layout);
+        this.pieceLogic = pieceLogic;
+        mainFrame.setLocation(location);
+        this.secondPlayer = secondPlayer;
+        sound = new Sound();
+        players = 2;
+    }
+
+
 
     public void start(int level) {
         /*
@@ -116,10 +133,18 @@ public class InstanceManager {
                     for (Cell cell : cells) cell.updateCell();
                 gamePanel.setBounds(0, 0, GuiConfig.width, GuiConfig.height);
                 levelTransitionPanel.setBounds(0, 0, GuiConfig.width, GuiConfig.height);
-                levelTransitionPanel.setLocation(GuiConfig.width, 0);
+                if (!levelTransitionPanel.isTransitioning()){
+                    levelTransitionPanel.setLocation(GuiConfig.width, 0);
+                }
             }
         });
+
         levelTransitionPanel.animationOnStart();
+
+    }
+
+    public Sound getSound() {
+        return sound;
     }
 
     public int getArenaPanelY() {
@@ -134,7 +159,10 @@ public class InstanceManager {
         gamePanel.update();
         gamePanel.getBottomPanel().updateButtons(); //TODO move this call to inside the gamePanel.update() function
 
-        if (pieceLogic.checkWin()) levelTransitionPanel.animationAtEnd();
+        if (pieceLogic.checkWin()) {
+            sound.playNote();
+            levelTransitionPanel.animationAtEnd();
+        }
 
     }
 
@@ -146,11 +174,17 @@ public class InstanceManager {
     }
 
     public void nextLevel() {
-        // Debug.out("You win!");
-        InstanceManager next = new InstanceManager(new PieceLogic());
-        level++;
-        next.start(level);
-        this.clear();
+        if (level + 1 != LogicConstants.NUMBER_OF_LEVELS){
+            Debug.out("You win!");
+            Point location = mainFrame.getLocation();
+            InstanceManager next = new InstanceManager(new PieceLogic(), location, secondPlayer);
+            level++;
+            next.start(level);
+            this.clear();
+        }
+        else{
+            this.returnToMainMenu();
+        }
 
     }
 
@@ -180,4 +214,21 @@ public class InstanceManager {
         this.mainFrame.dispose();
 
     }
+
+    public void returnToMainMenu() {
+        if (secondPlayer == null && players == 2) {
+            return;
+        }
+        sound.playNote();
+        this.clear();
+        if (players == 2){
+            for (Frame frame : Frame.getFrames()) {
+                frame.dispose();
+            }
+        }
+        Point location = mainFrame.getLocation();
+        Launcher launcher = new Launcher(location);
+        launcher.launch();
+    }
+
 }

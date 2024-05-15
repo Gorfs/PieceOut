@@ -3,7 +3,6 @@ package src.com.java.piece.decorator;
 import src.com.java.config.GuiConfig;
 import src.com.java.gui.InstanceManager;
 import src.com.java.logic.Move;
-import src.com.java.logic.MoveEdit;
 import src.com.java.logic.PieceLogic;
 import src.com.java.piece.Piece;
 import src.com.java.geometry.IntCoordinates;
@@ -103,9 +102,11 @@ public class Translation extends Decorator {
                 if (checkCollision(pieceLogic)) {
                     Debug.out("Collision detected");
                     personalReverseAction();
+                    instanceManager.getSound().playCollisionSound();
                 } else {
                     Debug.out("No collision detected");
-                    instanceManager.playerController.um.addEdit(new MoveEdit(new Move(this)));
+                    instanceManager.playerController.um.addEdit(new Move(this));
+                    instanceManager.getSound().playMoveSound();
                 }
             }
 
@@ -142,14 +143,6 @@ public class Translation extends Decorator {
         return directions;
     }
 
-    public Direction getDir() {
-        return dir;
-    }
-
-    public void setDir(Direction dir) {
-        this.dir = dir;
-    }
-
     public void updateDir(IntCoordinates mousePos) {
         if (mousePos.getX() < GuiConfig.CELL_SIZE/4) {
             dir = Direction.WEST;
@@ -169,5 +162,13 @@ public class Translation extends Decorator {
             case SOUTH -> dir = Direction.NORTH;
             case WEST -> dir = Direction.EAST;
         }
+    }
+
+    public Direction getDir() {
+        return dir;
+    }
+
+    public void setDir(Direction dir) {
+        this.dir = dir;
     }
 }
