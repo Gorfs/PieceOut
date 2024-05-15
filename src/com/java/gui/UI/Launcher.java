@@ -8,6 +8,8 @@ import java.awt.Font;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.InputStream;
+
 import javax.imageio.ImageIO;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -78,6 +80,8 @@ public class Launcher {
         private JButton startTwoPlayerButton;
         private JButton exitButton;
 
+
+
         private final Sound sound = new Sound();
         
 
@@ -106,8 +110,14 @@ public class Launcher {
                 e.printStackTrace();
             }
 
+            Font buttonFont = null;
 
-            Font buttonFont = new Font("Arial", Font.BOLD, 15);
+            try{
+                buttonFont = Font.createFont(Font.TRUETYPE_FONT, new File(GuiConfig.resourcePath + "fonts/Lentariso-Bd.ttf")).deriveFont(Font.BOLD,18f);
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
 
             startOnePlayerButton = new JButton("Play with 1 Player");
             startOnePlayerButton.setBackground(Colours.BACKGROUND.darker());
