@@ -217,7 +217,9 @@ public class InstanceManager {
         sound.playNote();
         this.clear();
         if (players == 2){
-            secondPlayer.clear();
+            for (Frame frame : Frame.getFrames()) {
+                frame.dispose();
+            }
         }
         Point location = mainFrame.getLocation();
         Launcher launcher = new Launcher(location);
