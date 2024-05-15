@@ -56,7 +56,6 @@ public class Flip extends Decorator {
     public void personalAction() {
         boolean[][] initShape = this.getLast().getShape();
         boolean[][] rotatedShape = new boolean[initShape.length][initShape[0].length];
-        this.flipActionPoint(!this.xFlip);
         this.getLast().addFlip(this.xFlip);
         if (this.xFlip){
             this.xflip = !this.xflip;
