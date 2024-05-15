@@ -64,86 +64,41 @@ public class GuiPieceImages {
         bufferedImage.setData(raster);
         icon.setImage(bufferedImage);
     }
-    // public static ImageIcon rotateImage(ImageIcon icon){
-    //     // get the buffered image
-    //     BufferedImage img = (BufferedImage) icon.getImage();
-    //     int angle = 90; // the angle in degrees that we wish to rotate by
+    public static ImageIcon rotateImage(ImageIcon img) {
+
+        BufferedImage image = (BufferedImage) img.getImage();
         
-    //     double rotationRequired = Math.toRadians (angle);
-    //     double locationX = img.getWidth() / 2;
-    //     double locationY = img.getHeight() / 2;
-    //     AffineTransform tx = AffineTransform.getRotateInstance(rotationRequired, locationX, locationY); 
-    //     AffineTransformOp op = new AffineTransformOp(tx,AffineTransformOp.TYPE_BILINEAR);
-    //     tx.rotate(angle, img.getWidth()/2, img.getHeight()/2);
-    //     BufferedImage newImage =new BufferedImage(img.getWidth(), img.getHeight(), img.getType()); 
-    //     op.filter(img, newImage);
-
-    //     return new ImageIcon(newImage);
-        
-    // }
-    public static ImageIcon rotateImage(ImageIcon icon) {
-        // get the buffered image
-        BufferedImage img = (BufferedImage) icon.getImage();
-        // int angle = 90; // the angle in degrees that we wish to rotate by
-
-        // double rotationRequired = Math.toRadians(angle);
-        // double locationX = img.getWidth() / 2.0;
-        // double locationY = img.getHeight() / 2.0;
-        // AffineTransform tx = AffineTransform.getRotateInstance(rotationRequired, locationX, locationY); 
-        // AffineTransformOp op = new AffineTransformOp(tx, 2);
-        BufferedImage newImage = new BufferedImage(img.getHeight(), img.getWidth(), img.getType()); 
-        newImage = rotateImage(img, 90);
-        try {
-            BufferedImage bi = newImage;  // retrieve image
-            BufferedImage bi2 = img;  // retrieve image
-            File outputfile = new File("pre.png");
-            File outputfile2 = new File("post.png");
-            ImageIO.write(bi2, "png", outputfile2);
-            ImageIO.write(bi, "png", outputfile);
-        } catch (IOException e) {
-            Debug.out(" problem with exporting the image");
-        }
-
-        return new ImageIcon(newImage);
-    }
-
-    public static BufferedImage rotateImage(BufferedImage image, double angle) {
-
         int w0 = image.getWidth();
         int h0 = image.getHeight();
-        angle = Math.toRadians(angle);
+        double angle = Math.toRadians(90);
                 int centerX = w0 / 2;
         int centerY = h0 / 2;
-        // quadrants =(int) (Math.floor(angle / 90));
-
-        // if ( angle > 90 && angle < 180) {
-        //     centerX = h0 / 2;
-        //     centerY = h0 / 2;
-        // } else if (angle > 180 && angle < 270) {
-        //     centerX = w0 / 2;
-        //     centerY = w0 / 2;
-        // }
         centerX = h0 / 2;
         centerY = h0 / 2;
-
-    //     if (quadrants % 4 == 1) {
-    //     centerX = h0 / 2;
-    //     centerY = h0 / 2;
-    // } else if (quadrants % 4 == 3) {
-    //     centerX = w0 / 2;
-    //     centerY = w0 / 2;
-    // }
-
         AffineTransform affineTransform = new AffineTransform();
-        // affineTransform.setToQuadrantRotation(quadrants, centerX, centerY);
         affineTransform.setToRotation(angle, centerX, centerY);
         AffineTransformOp opRotated = new AffineTransformOp(affineTransform,
                 AffineTransformOp.TYPE_BILINEAR);
-
-        BufferedImage newImage = new BufferedImage(image.getHeight(), image.getWidth(), image.getType()); 
         BufferedImage transformedImage = opRotated.filter(image,null);
-        return transformedImage;
+        return new ImageIcon(transformedImage);
 
+    }
+
+    public static ImageIcon flipImage(ImageIcon img, boolean xAxis){
+        BufferedImage image = (BufferedImage) img.getImage();
+        AffineTransform tx = AffineTransform.getScaleInstance(1, -1);
+        if(xAxis){
+            tx.translate(0, -image.getHeight());
+            AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+            return new ImageIcon(op.filter(image, null));
+
+        }else{
+            tx = AffineTransform.getScaleInstance(-1, 1);
+            tx.translate(-image.getWidth(null), 0);
+            AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+            image = op.filter(image, null);
+            return new ImageIcon(image);
+        } 
     }
 
 

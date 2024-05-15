@@ -30,6 +30,11 @@ public abstract class Piece {
         rotations %= 4;
     }
 
+    public void addFlip(boolean xAxis){
+        if (xAxis) xflip = !xflip;
+        else yflip = !yflip;
+    }
+
 
     public String type;
     public void setType(String str){

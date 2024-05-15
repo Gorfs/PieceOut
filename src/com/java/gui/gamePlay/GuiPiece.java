@@ -46,16 +46,6 @@ public class GuiPiece extends JPanel {
             case "VeShape" -> GuiPieceImages.VeImage;
             default -> null;
         };
-        // pre loading all the rotated icon shapes
-            ImageIcon shape0 = shapeIcon;// no rotation
-            ImageIcon shape1 = GuiPieceImages.rotateImage(shapeIcon); // 1 clockwise rotation
-            ImageIcon shape2 = GuiPieceImages.rotateImage(shape1); // 2 clockwise rotations
-            ImageIcon shape3 = GuiPieceImages.rotateImage(shape2); // 3 clock wise rotations
-            iconList = new ImageIcon[4];
-            iconList[0] = shape0;
-            iconList[1] = shape1;
-            iconList[2] = shape2;
-            iconList[3] = shape3;
     }
 
     /**
@@ -96,22 +86,24 @@ public class GuiPiece extends JPanel {
         if (shapeIcon != null) {
         
             // pre loading all the rotated icon shapes
+            for( int i = 0 ; i < piece.getLast().rotations; i++){
+                // this should only execute a maximum of 3 times
+                shapeIcon = GuiPieceImages.rotateImage(shapeIcon);
+            }
+            if(piece.getLast().xflip){
+                shapeIcon = GuiPieceImages.flipImage(shapeIcon, true);
+            }
+            if(piece.getLast().yflip){
+                shapeIcon = GuiPieceImages.flipImage(shapeIcon, false);
+            }
 
             pieceCoords = getPixelCoordinates(new IntCoordinates(offSet.getX() ,offSet.getY())); 
             GuiPieceImages.changeColour(shapeIcon, this.colour);
-            shapeIcon = iconList[piece.getLast().rotations];
             int imageWidth = (int) (Math.floor(shapeIcon.getImage().getWidth(null) / 120 * GuiConfig.CELL_SIZE));
             int imageHeight = (int) (Math.floor(shapeIcon.getImage().getHeight(null) /120 *  GuiConfig.CELL_SIZE));
-            // g.setColor(this.colour);
             g2d.setColor(this.colour);
-            Debug.out("WIDTH : " + imageWidth + " HEIGHT : " + imageHeight);
-            Debug.out("Position is " + piece.getLast().getPos().getX() +  " and the y : " + piece.getLast().getPos().getY());
-            // if (piece.getLast().rotations  % 2 == 0){
-            //     // switch the height and width
-            //     int temp = imageHeight;
-            //     imageHeight = imageWidth;
-            //     imageWidth = temp;
-            // }
+            // Debug.out("WIDTH : " + imageWidth + " HEIGHT : " + imageHeight);
+            // Debug.out("Position is " + piece.getLast().getPos().getX() +  " and the y : " + piece.getLast().getPos().getY());
             g2d.drawImage(shapeIcon.getImage(), pieceCoords.getX(), pieceCoords.getY(), imageWidth, imageHeight, null);
             
 
