@@ -132,6 +132,7 @@ public abstract class Decorator extends Piece {
             } else {
                 Debug.out("No collision detected");
                 instanceManager.playerController.um.addEdit(new Move(this));
+                instanceManager.incMoves();
                 instanceManager.getSound().playMoveSound();
             }
             // If not, then we check for the next decorator.

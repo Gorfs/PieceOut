@@ -106,6 +106,7 @@ public class Translation extends Decorator {
                 } else {
                     Debug.out("No collision detected");
                     instanceManager.playerController.um.addEdit(new Move(this));
+                    instanceManager.incMoves();
                     instanceManager.getSound().playMoveSound();
                 }
             }
