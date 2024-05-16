@@ -158,7 +158,6 @@ public class Launcher {
             startOnePlayerButton.setFocusable(false);
             startOnePlayerButton.setPreferredSize(new Dimension(250, 50));
             startOnePlayerButton.setFont(buttonFont);
-            startOnePlayerButton.addActionListener(e -> Launcher.this.startGame(1));
             startOnePlayerButton.addActionListener(e -> {
                 sound.playNote();
                 Launcher.this.startGame(1);
@@ -180,7 +179,7 @@ public class Launcher {
             startTwoPlayerButton.setFont(buttonFont);
             startTwoPlayerButton.addActionListener(e -> {
                 sound.playNote();
-                Launcher.this.startGame(1);
+                Launcher.this.startGame(2);
             });
             return startTwoPlayerButton;
         }
