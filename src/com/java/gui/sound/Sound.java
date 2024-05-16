@@ -13,20 +13,20 @@ public class Sound {
     File[] soundFiles = new File[20];
 
     public Sound() {
-        soundFiles[0] = new File(GuiConfig.resourcePath + "sfx/bg.wav");
-        soundFiles[1] = new File(GuiConfig.resourcePath + "sfx/move1.wav");
-        soundFiles[2] = new File(GuiConfig.resourcePath + "sfx/move2.wav");
-        soundFiles[3] = new File(GuiConfig.resourcePath + "sfx/move3.wav");
-        soundFiles[4] = new File(GuiConfig.resourcePath + "sfx/move4.wav");
-        soundFiles[5] = new File(GuiConfig.resourcePath + "sfx/move5.wav");
-        soundFiles[6] = new File(GuiConfig.resourcePath + "sfx/collision1.wav");
-        soundFiles[7] = new File(GuiConfig.resourcePath + "sfx/collision2.wav");
-        soundFiles[8] = new File(GuiConfig.resourcePath + "sfx/collision3.wav");
-        soundFiles[9] = new File(GuiConfig.resourcePath + "sfx/win1.wav");
-        soundFiles[10] = new File(GuiConfig.resourcePath + "sfx/win2.wav");
-        soundFiles[11] = new File(GuiConfig.resourcePath + "sfx/win3.wav");
-        soundFiles[12] = new File(GuiConfig.resourcePath + "sfx/win4.wav");
-        soundFiles[13] = new File(GuiConfig.resourcePath + "sfx/win5.wav");
+        soundFiles[0] = new File(GuiConfig.resPath + "sfx/bg.wav");
+        soundFiles[1] = new File(GuiConfig.resPath + "sfx/move1.wav");
+        soundFiles[2] = new File(GuiConfig.resPath + "sfx/move2.wav");
+        soundFiles[3] = new File(GuiConfig.resPath + "sfx/move3.wav");
+        soundFiles[4] = new File(GuiConfig.resPath + "sfx/move4.wav");
+        soundFiles[5] = new File(GuiConfig.resPath + "sfx/move5.wav");
+        soundFiles[6] = new File(GuiConfig.resPath + "sfx/collision1.wav");
+        soundFiles[7] = new File(GuiConfig.resPath + "sfx/collision2.wav");
+        soundFiles[8] = new File(GuiConfig.resPath + "sfx/collision3.wav");
+        soundFiles[9] = new File(GuiConfig.resPath + "sfx/win1.wav");
+        soundFiles[10] = new File(GuiConfig.resPath + "sfx/win2.wav");
+        soundFiles[11] = new File(GuiConfig.resPath + "sfx/win3.wav");
+        soundFiles[12] = new File(GuiConfig.resPath + "sfx/win4.wav");
+        soundFiles[13] = new File(GuiConfig.resPath + "sfx/win5.wav");
 
     }
 

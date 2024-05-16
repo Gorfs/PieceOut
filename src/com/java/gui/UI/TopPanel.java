@@ -26,8 +26,8 @@ public class TopPanel extends JPanel{
         Font subTitleFont = null;
 
         try{
-            titleFont = Font.createFont(Font.TRUETYPE_FONT, new File(GuiConfig.resourcePath + "fonts/Lentariso-Bd.ttf")).deriveFont(Font.BOLD, 30f);
-            subTitleFont = Font.createFont(Font.TRUETYPE_FONT, new File(GuiConfig.resourcePath + "fonts/Lentariso-Bd.ttf")).deriveFont(Font.BOLD, 14f);
+            titleFont = Font.createFont(Font.TRUETYPE_FONT, new File(GuiConfig.resPath + "fonts/Lentariso-Bd.ttf")).deriveFont(Font.BOLD, 30f);
+            subTitleFont = Font.createFont(Font.TRUETYPE_FONT, new File(GuiConfig.resPath + "fonts/Lentariso-Bd.ttf")).deriveFont(Font.BOLD, 14f);
         }
         catch (Exception e) {
             e.printStackTrace();
