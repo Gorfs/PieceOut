@@ -24,7 +24,7 @@ public class GuiConfig {
     /**
      * Value of the window height.
      */
-    public static int height = WINDOW_HEIGHT - 30;
+    public static int height = WINDOW_HEIGHT;
 
     /**
      * Scale of the arena. By default, it's 0.75

@@ -73,5 +73,4 @@ public class ArenaPanel extends JPanel {
             cell.updatePlayableCell();
         }
     }
-
 }

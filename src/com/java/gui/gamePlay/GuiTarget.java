@@ -4,7 +4,6 @@ import src.com.java.config.GuiConfig;
 import src.com.java.geometry.IntCoordinates;
 import src.com.java.gui.InstanceManager;
 import src.com.java.piece.Target;
-import src.com.java.utils.Debug;
 
 import javax.swing.*;
 import java.awt.*;
@@ -32,25 +31,6 @@ public class GuiTarget extends JPanel {
         this.target = target;
     }
 
-    /**
-     * returns the pixel coordinates of the cell relative to the top left of the window
-     * @param cellCoords Coordinates of the cell int the game
-     * @return IntCoordinates returns the pixel coordinates of the cell relative to the top left of the window
-     */
-    public IntCoordinates getPixelCoordinates(IntCoordinates cellCoords) {
-        ArenaPanel arenaPanel = this.instanceManager.getGamePanel().getArenaPanel();
-        try {
-            Cell[][] cells = arenaPanel.getCells();
-            Cell cell = cells[cellCoords.getY()][cellCoords.getX()];
-            int xOffSet = arenaPanel.getX();
-            int yOffSet = instanceManager.getArenaPanelY();
-            return new IntCoordinates(cell.getX() + xOffSet, cell.getY() + yOffSet);
-        } catch (Exception e) {
-            Debug.out("Error in getPixelCoordinates : " + e.getMessage());
-            return new IntCoordinates(-100, 0);
-        }
-    }
-
     @Override
     public void paintComponent(Graphics g) {
         // get the graphics object
@@ -68,8 +48,8 @@ public class GuiTarget extends JPanel {
         for (int y = 0; y < shape.length; y++) {
             for (int x = 0; x < shape[y].length; x++) {
                 if (shape[y][x]) {
-                    cellCoords = getPixelCoordinates(new IntCoordinates(target.getDest().getX() + x,
-                            target.getDest().getY() + y));
+                    cellCoords = new IntCoordinates(target.getDest().getX() + x, target.getDest().getY() + y);
+                    cellCoords = this.instanceManager.getPixelCoordinates(cellCoords);
                     g2d.fillRect(cellCoords.getX(), cellCoords.getY(), GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE);
                 }
             }

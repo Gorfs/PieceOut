@@ -106,13 +106,16 @@ public class Launcher {
                 System.out.println("Error in LauncherPanel : " + e.getMessage());
             }
 
-            Font buttonFont = null;
+            Font buttonFont;
 
             try{
-                buttonFont = Font.createFont(Font.TRUETYPE_FONT, new File(GuiConfig.resPath + "fonts/Lentariso-Bd.ttf")).deriveFont(Font.BOLD,18f);
+                File file = new File(GuiConfig.resPath + "fonts/Lentariso-Bd.ttf");
+                buttonFont = Font.createFont(Font.TRUETYPE_FONT, file).deriveFont(Font.BOLD,18f);
             }
             catch (Exception e) {
-                e.printStackTrace();
+                System.out.println("Error in LauncherPanel: \nFont not found, file either not found or doesn't exist.");
+                // If the font is not found, we use the default font
+                buttonFont = new Font("Arial", Font.BOLD, 18);
             }
 
             // Get the buttons

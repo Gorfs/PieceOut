@@ -66,7 +66,7 @@ public class Cell extends JPanel{
     public void updatePlayableCell(){
         boolean[][] matrix = instanceManager.arena.getMatrix();
         if (matrix[map_y][map_x]){
-            this.setBackground(Colours.CELLCOLOUR);
+            this.setBackground(Colours.CELL_COLOUR);
             applyShadow();
                         
         }else{

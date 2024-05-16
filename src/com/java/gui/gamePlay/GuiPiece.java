@@ -28,25 +28,6 @@ public class GuiPiece extends JPanel {
         this.piece = piece;
     }
 
-    /**
-     * returns the pixel coordinates of the cell relative to the top left of the window
-     * @param cellCoords Coordinates of the cell int the game
-     * @return IntCoordinates
-     */
-    private IntCoordinates getPixelCoordinates(IntCoordinates cellCoords) {
-        ArenaPanel arenaPanel = this.instanceManager.getGamePanel().getArenaPanel();
-        try {
-            Cell[][] cells = arenaPanel.getCells();
-            Cell cell = cells[cellCoords.getY()][cellCoords.getX()];
-            int xOffSet = arenaPanel.getX();
-            int yOffSet = instanceManager.getArenaPanelY();
-            return new IntCoordinates(cell.getX() + xOffSet, cell.getY() + yOffSet);
-        } catch (Exception e) {
-            Debug.out("Error in getPixelCoordinates : " + e.getMessage());
-            return new IntCoordinates(-100, 0);
-        }
-    }
-
     @Override
     public void paintComponent(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
@@ -62,7 +43,8 @@ public class GuiPiece extends JPanel {
             for (int j = 0; j < shapeMatrix[0].length; j++) { // width
                 if (shapeMatrix[i][j]) {
                     try {
-                        cellCoords = getPixelCoordinates(new IntCoordinates(j + offSet.getX(), i + offSet.getY()));
+                        cellCoords = new IntCoordinates(j + offSet.getX(), i + offSet.getY());
+                        cellCoords = this.instanceManager.getPixelCoordinates(cellCoords);
                         g2d.setColor(piece.getPiece().getColor());
 
                         g2d.fillRect(cellCoords.getX(), cellCoords.getY(), GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE);

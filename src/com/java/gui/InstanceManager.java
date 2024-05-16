@@ -2,25 +2,23 @@ package src.com.java.gui;
 
 import src.com.java.config.GuiConfig;
 import src.com.java.config.LogicConstants;
-import src.com.java.gui.sound.Sound;
-import src.com.java.piece.Target;
-import src.com.java.piece.decorator.Decorator;
 import src.com.java.controllers.PlayerController;
+import src.com.java.geometry.IntCoordinates;
 import src.com.java.gui.UI.Launcher;
 import src.com.java.gui.UI.LevelTransitionPanel;
 import src.com.java.gui.gamePlay.*;
+import src.com.java.gui.sound.Sound;
 import src.com.java.logic.Arena;
 import src.com.java.logic.LevelManager;
 import src.com.java.logic.PieceLogic;
+import src.com.java.piece.Target;
+import src.com.java.piece.decorator.Decorator;
 import src.com.java.utils.Debug;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.util.ArrayList;
-
-import javax.swing.JLayeredPane;
-import javax.swing.Timer;
 
 /**
  * InstanceManager class that is responsible for creating, changing,
@@ -44,15 +42,6 @@ public class InstanceManager {
      * Panel that contains the level transition panel, that is shown when the level is completed
      */
     private final LevelTransitionPanel levelTransitionPanel = new LevelTransitionPanel();
-
-    /**
-     * List of the pieces in the GUI
-     */
-    private ArrayList<GuiPiece> guiPieces = new ArrayList<GuiPiece>();
-    /**
-     * List of the targets in the GUI
-     */
-    private ArrayList<GuiTarget> guiTargets = new ArrayList<GuiTarget>();
     /**
      * Piece logic of the game, where the pieces are stocked
      */
@@ -65,13 +54,13 @@ public class InstanceManager {
      * Arena of the game, where the pieces are placed
      */
     public Arena arena;
-    private Sound sound;
+    private final Sound sound;
     /**
      * level of the puzzle we are currently playing
      */
     public int level;
-    private int players;
-    private InstanceManager secondPlayer;
+    private final int players;
+    private final InstanceManager secondPlayer;
 
 
     /**
@@ -85,8 +74,6 @@ public class InstanceManager {
         this.secondPlayer = this;
         sound = new Sound();
         players = 1;
-
-
     }
 
     public InstanceManager(PieceLogic pieceLogic, Point location, InstanceManager secondPlayer) {
@@ -129,13 +116,11 @@ public class InstanceManager {
 
         // paint the targets before the pieces so that the pieces are drawn on top
         for (Target target : this.pieceLogic.getTargets()) {
-            GuiTarget guiTarget = new GuiTarget(this, target);
-            guiTargets.add(guiTarget);
+            new GuiTarget(this, target);
         }
         // paint the pieces on the game
         for (Decorator piece : this.pieceLogic.getPieces()) {
-            GuiPiece guiPiece = new GuiPiece(this, piece);
-            guiPieces.add(guiPiece);
+            new GuiPiece(this, piece);
         }
         // Listener for resizing the window
         this.mainFrame.addComponentListener(new ComponentAdapter() {
@@ -145,7 +130,7 @@ public class InstanceManager {
              */
             public void componentResized(ComponentEvent componentEvent) {
                 GuiConfig.width = mainFrame.getWidth();
-                GuiConfig.height = mainFrame.getHeight() - 30; // TODO don't hardcode like this
+                GuiConfig.height = mainFrame.getHeight() - getGamePanel().getBottomPanel().getHeight()/2;
                 GuiConfig.updateArenaScale();
 
                 for (Cell[] cells : gamePanel.getArenaPanel().getCells())
@@ -159,6 +144,29 @@ public class InstanceManager {
         });
         levelTransitionPanel.animationOnStart(this);
     }
+
+    /**
+     * returns the pixel coordinates of the cell relative to the top left of the window
+     * @param cellCoords Coordinates of the cell int the game
+     * @return IntCoordinates
+     */
+    public IntCoordinates getPixelCoordinates(IntCoordinates cellCoords) {
+        ArenaPanel arenaPanel = this.getGamePanel().getArenaPanel();
+        ArenaContainerPanel arenaContainerPanel = this.getGamePanel().getArenaContainerPanel();
+        try {
+            Cell[][] cells = arenaPanel.getCells();
+            Cell cell = cells[cellCoords.getY()][cellCoords.getX()];
+
+            int xOffSet = arenaContainerPanel.getX() + arenaPanel.getX();
+            int yOffSet = arenaContainerPanel.getY() + arenaPanel.getY();
+
+            return new IntCoordinates(cell.getX() + xOffSet, cell.getY() + yOffSet);
+        } catch (Exception e) {
+            Debug.out("Error in getPixelCoordinates : " + e.getMessage());
+            return new IntCoordinates(-100, 0);
+        }
+    }
+
 
     /** 
      * updates the GUI
@@ -198,8 +206,6 @@ public class InstanceManager {
     private void clear(){
         this.pieceLogic.clearPieces();
         this.pieceLogic.clearTargets();
-        this.guiPieces.clear();
-        this.guiTargets.clear();
         // close window
         this.mainFrame.dispose();
     }
@@ -245,13 +251,6 @@ public class InstanceManager {
      */
     public int getHeight() {
         return this.mainFrame.getHeight();
-    }
-
-    /**
-     * @return the width of the game panel
-     */
-    public int getArenaPanelY() {
-        return this.gamePanel.getArenaPanel().getY() + this.gamePanel.getArenaContainerPanel().getY();
     }
 
     /**
