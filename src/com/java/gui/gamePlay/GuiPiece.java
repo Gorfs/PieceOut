@@ -66,6 +66,8 @@ public class GuiPiece extends JPanel {
         IntCoordinates destCoords;
         IntCoordinates cellCoords;
 
+        GuiConfig guiConfig = this.instanceManager.getGuiConfig();
+
         for (int i = 0; i < shapeMatrix.length; i++) { // height
             for (int j = 0; j < shapeMatrix[0].length; j++) { // width
                 if (shapeMatrix[i][j]) {
@@ -75,7 +77,7 @@ public class GuiPiece extends JPanel {
                         // Debug.out("coords are: " + cellCoords.toString() + " x : " + j + " y : " + i
                         // + "nextPiece positions : " + piece.getLast().getPos().toString() + " offset :
                         // " + offSet.toString());
-                        g2d.fillRect(cellCoords.getX(), cellCoords.getY(), GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE);
+                        g2d.fillRect(cellCoords.getX(), cellCoords.getY(), guiConfig.CELL_SIZE, guiConfig.CELL_SIZE);
 
 
                         // load the icon for decorator into memory
@@ -94,8 +96,8 @@ public class GuiPiece extends JPanel {
                         } else if (img != null) {
                             int imageWidth = (int) (img.getWidth() * imgScale);
                             int imageHeight = (int) (img.getHeight() * imgScale);
-                            int rectCenterX = cellCoords.getX() + (GuiConfig.CELL_SIZE / 2);
-                            int rectCenterY = cellCoords.getY() + (GuiConfig.CELL_SIZE / 2);
+                            int rectCenterX = cellCoords.getX() + (guiConfig.CELL_SIZE / 2);
+                            int rectCenterY = cellCoords.getY() + (guiConfig.CELL_SIZE / 2);
                             g2d.drawImage(img, rectCenterX - imageWidth / 2, rectCenterY - imageHeight / 2, imageWidth,
                                     imageHeight, null);
                             img = null;
@@ -117,9 +119,10 @@ public class GuiPiece extends JPanel {
      * @param piece Translation we want to draw
      */
     private void paintDirectional(Graphics2D g2d, IntCoordinates cellCoords, Translation piece, int a, int b) {
+        GuiConfig guiConfig = this.instanceManager.getGuiConfig();
         int x = cellCoords.getX();
         int y = cellCoords.getY();
-        int cellSize = GuiConfig.CELL_SIZE;
+        int cellSize = guiConfig.CELL_SIZE;
 
         g2d.setColor(Color.WHITE);
 

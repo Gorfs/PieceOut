@@ -89,7 +89,7 @@ public class Translation extends Decorator {
         // (deal with offset)
         if (this.getActionPoint().getX() == x && this.getActionPoint().getY() == y) {
             // TODO: Create a box for each direction for multiple direction choice
-            this.updateDir(mousePos);
+            this.updateDir(mousePos, instanceManager);
             int temp = switch (dir) {
                 case NORTH -> 0;
                 case EAST -> 1;
@@ -143,14 +143,15 @@ public class Translation extends Decorator {
         return directions;
     }
 
-    public void updateDir(IntCoordinates mousePos) {
-        if (mousePos.getX() < GuiConfig.CELL_SIZE/4) {
+    public void updateDir(IntCoordinates mousePos, InstanceManager instanceManager) {
+        GuiConfig guiConfig = instanceManager.getGuiConfig();
+        if (mousePos.getX() < guiConfig.CELL_SIZE/4) {
             dir = Direction.WEST;
-        } else if (mousePos.getY() < GuiConfig.CELL_SIZE/4) {
+        } else if (mousePos.getY() < guiConfig.CELL_SIZE/4) {
             dir = Direction.NORTH;
-        } else if (mousePos.getX() > GuiConfig.CELL_SIZE - GuiConfig.CELL_SIZE/4) {
+        } else if (mousePos.getX() > guiConfig.CELL_SIZE - guiConfig.CELL_SIZE/4) {
             dir = Direction.EAST;
-        } else if (mousePos.getY() > GuiConfig.CELL_SIZE - GuiConfig.CELL_SIZE/4) {
+        } else if (mousePos.getY() > guiConfig.CELL_SIZE - guiConfig.CELL_SIZE/4) {
             dir = Direction.SOUTH;
         }
     }

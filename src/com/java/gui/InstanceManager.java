@@ -20,7 +20,6 @@ import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
 
 import javax.swing.JLayeredPane;
-import javax.swing.Timer;
 
 /**
  * GUIManager class that is responsible for creating, changing,
@@ -33,6 +32,7 @@ public class InstanceManager {
     private final GameWindow mainFrame = new GameWindow();
     private GamePanel gamePanel;
 
+    private final GuiConfig guiConfig = new GuiConfig();
 
     // layout to change panels in rootPanel
     private final CardLayout layout = new CardLayout();
@@ -87,15 +87,15 @@ public class InstanceManager {
          */
 
         this.level = level;
-        playerController = new PlayerController(this, pieceLogic);
+        playerController = new PlayerController(this, pieceLogic, guiConfig);
         arena = new Arena(this);
 
         this.gamePanel = new GamePanel(pieceLogic, this);
         playerController.startController(gamePanel.getArenaPanel());
         
         JLayeredPane layeredPane = new JLayeredPane();
-        layeredPane.setPreferredSize(new Dimension(GuiConfig.width, GuiConfig.height));
-        gamePanel.setBounds(0, 0, GuiConfig.width, GuiConfig.height);
+        layeredPane.setPreferredSize(new Dimension(guiConfig.width, guiConfig.height));
+        gamePanel.setBounds(0, 0, guiConfig.width, guiConfig.height);
         layeredPane.add(gamePanel, JLayeredPane.DEFAULT_LAYER);
         layeredPane.add(levelTransitionPanel, JLayeredPane.PALETTE_LAYER);
     
@@ -119,20 +119,19 @@ public class InstanceManager {
         }
         this.mainFrame.addComponentListener(new ComponentAdapter() {
             public void componentResized(ComponentEvent componentEvent) {
-                GuiConfig.width = mainFrame.getWidth();
-                GuiConfig.height = mainFrame.getHeight() - 30; // TODO don't hardcode like this
-                GuiConfig.updateArenaScale();
+                guiConfig.width = mainFrame.getWidth();
+                guiConfig.height = mainFrame.getHeight() - 30; // TODO don't hardcode like this
+                guiConfig.updateArenaScale();
 
                 for (Cell[] cells : gamePanel.getArenaPanel().getCells())
                     for (Cell cell : cells) cell.updateCell();
-                gamePanel.setBounds(0, 0, GuiConfig.width, GuiConfig.height);
-                levelTransitionPanel.setBounds(0, 0, GuiConfig.width, GuiConfig.height);
+                gamePanel.setBounds(0, 0, guiConfig.width, guiConfig.height);
+                levelTransitionPanel.setBounds(0, 0, guiConfig.width, guiConfig.height);
                 if (!levelTransitionPanel.isTransitioning()){
-                    levelTransitionPanel.setLocation(GuiConfig.width, 0);
+                    levelTransitionPanel.setLocation(guiConfig.width, 0);
                 }
             }
         });
-
         levelTransitionPanel.animationOnStart();
     }
 
@@ -183,8 +182,6 @@ public class InstanceManager {
 
     }
 
-
-
     /**
      * changes the panel in the main frame to the panel with the name panelName
      */
@@ -226,4 +223,7 @@ public class InstanceManager {
         launcher.launch();
     }
 
+    public GuiConfig getGuiConfig() {
+        return guiConfig;
+    }
 }

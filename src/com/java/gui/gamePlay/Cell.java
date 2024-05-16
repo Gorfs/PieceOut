@@ -8,10 +8,8 @@ import src.com.java.config.GuiConfig;
 import java.awt.*;
 
 import src.com.java.config.Colours;
-import src.com.java.config.*;
 import src.com.java.geometry.IntCoordinates;
 import src.com.java.gui.InstanceManager;
-import src.com.java.logic.Arena;
 
 public class Cell extends JPanel{
     /**
@@ -38,15 +36,16 @@ public class Cell extends JPanel{
     public Cell(InstanceManager instanceManager ,int x_coord, int y_coord){
         super();
         this.instanceManager = instanceManager;
-        this.setMinimumSize(new Dimension((int) (GuiConfig.CELL_SIZE ), (int) (GuiConfig.CELL_SIZE )));
-        this.setPreferredSize(new Dimension(GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE));
-        this.setMaximumSize(new Dimension((int) (GuiConfig.CELL_SIZE ), (int) (GuiConfig.CELL_SIZE )));
+        GuiConfig guiConfig = instanceManager.getGuiConfig();
+        this.setMinimumSize(new Dimension(guiConfig.CELL_SIZE, guiConfig.CELL_SIZE));
+        this.setPreferredSize(new Dimension(guiConfig.CELL_SIZE, guiConfig.CELL_SIZE));
+        this.setMaximumSize(new Dimension(guiConfig.CELL_SIZE, guiConfig.CELL_SIZE));
         // For debugging purposes
         // this.setBorder(BorderFactory.createLineBorder(Color.black, 1));
 
         // pixel coordinates are relative to the top left of the arena
-        this.pixel_x = (int) Math.floor(x_coord * GuiConfig.CELL_SIZE);
-        this.pixel_y = (int) Math.floor(y_coord * GuiConfig.CELL_SIZE);
+        this.pixel_x = x_coord * guiConfig.CELL_SIZE;
+        this.pixel_y = y_coord * guiConfig.CELL_SIZE;
         this.map_x = x_coord;
         this.map_y = y_coord;
 
@@ -56,13 +55,14 @@ public class Cell extends JPanel{
     }
 
     public void updateCell(){
-        this.pixel_x = (int) (double) (map_x * GuiConfig.CELL_SIZE);
-        this.pixel_y = (int) (double) (map_y * GuiConfig.CELL_SIZE);
+        GuiConfig guiConfig = instanceManager.getGuiConfig();
+        this.pixel_x = (int) (double) (map_x * guiConfig.CELL_SIZE);
+        this.pixel_y = (int) (double) (map_y * guiConfig.CELL_SIZE);
 
-        this.setSize(new Dimension(GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE));
-        this.setMinimumSize(new Dimension(GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE));
-        this.setPreferredSize(new Dimension(GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE));
-        this.setMaximumSize(new Dimension(GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE));
+        this.setSize(new Dimension(guiConfig.CELL_SIZE, guiConfig.CELL_SIZE));
+        this.setMinimumSize(new Dimension(guiConfig.CELL_SIZE, guiConfig.CELL_SIZE));
+        this.setPreferredSize(new Dimension(guiConfig.CELL_SIZE, guiConfig.CELL_SIZE));
+        this.setMaximumSize(new Dimension(guiConfig.CELL_SIZE, guiConfig.CELL_SIZE));
         updatePlayableCell();
     }
 
