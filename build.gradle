@@ -1,0 +1,28 @@
+apply plugin: 'java'
+
+repositories {
+    mavenCentral()
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src']
+            exclude '**/tests/**'
+        }
+    }
+}
+
+dependencies {
+    implementation 'org.json:json:20240205'
+}
+
+jar {
+
+    manifest {
+        attributes 'Main-Class': 'src.com.java.main.Main'
+    }
+    from {
+        configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}

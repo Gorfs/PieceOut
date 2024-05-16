@@ -61,10 +61,12 @@ public abstract class Decorator extends Piece {
                 // If the piece is colliding with the walls, then we reverse the action.
                 Debug.out("Collision detected");
                 personalReverseAction();
+                instanceManager.getSound().playCollisionSound();
             } else {
                 // If not, then we add the move to the undo manager.
                 Debug.out("No collision detected");
                 instanceManager.playerController.um.addEdit(new Move(this));
+                instanceManager.getSound().playMoveSound();
             }
         } else {
             // If not, then we check for the next decorator.

@@ -45,10 +45,12 @@ public class Translation extends Decorator {
                 if (checkCollision(pieceLogic)) {
                     // If the piece is colliding with the walls, then we reverse the action.
                     Debug.out("Collision detected");
+                    instanceManager.getSound().playCollisionSound();
                     personalReverseAction();
                 } else {
                     // If not, then we add the move to the undo manager.
                     Debug.out("No collision detected");
+                    instanceManager.getSound().playMoveSound();
                     instanceManager.playerController.um.addEdit(new Move(this));
                 }
             }

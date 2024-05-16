@@ -5,6 +5,7 @@ import src.com.java.config.Colours;
 import src.com.java.config.GuiConfig;
 import src.com.java.gui.GameWindow;
 import src.com.java.gui.InstanceManager;
+import src.com.java.gui.sound.Sound;
 import src.com.java.logic.PieceLogic;
 
 import javax.imageio.ImageIO;
@@ -78,12 +79,16 @@ public class Launcher {
      * the game with one or two players or to exit the game.
      */
     class LauncherPanel extends JPanel {
+        private final Sound sound = new Sound();
+
         /**
          * Constructor of the LauncherPanel, it initializes the attributes and sets the background color
          */
         public LauncherPanel() {
             this.setBackground(Colours.BACKGROUND);
             this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
+            sound.playOST();
 
             try {
                 BufferedImage bufferedImage = ImageIO.read(new File(GuiConfig.resPath + "icons/titleImage.png"));
@@ -101,7 +106,14 @@ public class Launcher {
                 System.out.println("Error in LauncherPanel : " + e.getMessage());
             }
 
-            Font buttonFont = new Font("Arial", Font.BOLD, 15);
+            Font buttonFont = null;
+
+            try{
+                buttonFont = Font.createFont(Font.TRUETYPE_FONT, new File(GuiConfig.resPath + "fonts/Lentariso-Bd.ttf")).deriveFont(Font.BOLD,18f);
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
 
             // Get the buttons
             JButton startOnePlayerButton = getStartOnePlayerButton(buttonFont);
@@ -147,6 +159,10 @@ public class Launcher {
             startOnePlayerButton.setPreferredSize(new Dimension(250, 50));
             startOnePlayerButton.setFont(buttonFont);
             startOnePlayerButton.addActionListener(e -> Launcher.this.startGame(1));
+            startOnePlayerButton.addActionListener(e -> {
+                sound.playNote();
+                Launcher.this.startGame(1);
+            });
             return startOnePlayerButton;
         }
 
@@ -162,7 +178,10 @@ public class Launcher {
             startTwoPlayerButton.setFocusable(false);
             startTwoPlayerButton.setPreferredSize(new Dimension(200, 50));
             startTwoPlayerButton.setFont(buttonFont);
-            startTwoPlayerButton.addActionListener(e -> Launcher.this.startGame(2));
+            startTwoPlayerButton.addActionListener(e -> {
+                sound.playNote();
+                Launcher.this.startGame(1);
+            });
             return startTwoPlayerButton;
         }
 

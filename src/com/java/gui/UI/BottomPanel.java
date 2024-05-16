@@ -51,7 +51,7 @@ public class BottomPanel extends JPanel {
         undoButton.setIcon(undoIcon);
         undoButton.addActionListener(e -> {
             playerController.um.undo();
-            instanceManager.update();
+            instanceManager.getSound().playMoveSound();instanceManager.update();
             updateButtons();
         });
 
@@ -67,7 +67,7 @@ public class BottomPanel extends JPanel {
         redoButton.setIcon(redoIcon);
         redoButton.addActionListener(e -> {
             playerController.um.redo();
-            instanceManager.update();
+            instanceManager.getSound().playMoveSound();instanceManager.update();
             updateButtons();
         });
 

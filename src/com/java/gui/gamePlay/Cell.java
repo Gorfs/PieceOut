@@ -36,7 +36,6 @@ public class Cell extends JPanel{
      */
     public Cell(InstanceManager instanceManager , int x, int y){
         super();
-
         this.instanceManager = instanceManager;
         this.setMinimumSize(new Dimension(GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE));
         this.setPreferredSize(new Dimension(GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE));
