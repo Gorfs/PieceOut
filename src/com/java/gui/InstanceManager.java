@@ -20,6 +20,7 @@ import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
 
 import javax.swing.JLayeredPane;
+import javax.swing.Timer;
 
 /**
  * GUIManager class that is responsible for creating, changing,
@@ -133,7 +134,6 @@ public class InstanceManager {
         });
 
         levelTransitionPanel.animationOnStart();
-
     }
 
     public Sound getSound() {

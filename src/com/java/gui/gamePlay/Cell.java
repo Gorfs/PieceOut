@@ -3,6 +3,8 @@ package src.com.java.gui.gamePlay;
 import javax.swing.*;
 import javax.swing.border.Border;
 
+import src.com.java.config.GuiConfig;
+
 import java.awt.*;
 
 import src.com.java.config.Colours;
@@ -35,7 +37,6 @@ public class Cell extends JPanel{
     
     public Cell(InstanceManager instanceManager ,int x_coord, int y_coord){
         super();
-
         this.instanceManager = instanceManager;
         this.setMinimumSize(new Dimension((int) (GuiConfig.CELL_SIZE ), (int) (GuiConfig.CELL_SIZE )));
         this.setPreferredSize(new Dimension(GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE));

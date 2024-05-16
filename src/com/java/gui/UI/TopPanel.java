@@ -7,6 +7,7 @@ import src.com.java.logic.Arena;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 
 public class TopPanel extends JPanel{
     /**
@@ -19,16 +20,28 @@ public class TopPanel extends JPanel{
         this.setOpaque(false);
         this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 
+        Font titleFont = null;
+        Font subTitleFont = null;
+
+        try{
+            titleFont = Font.createFont(Font.TRUETYPE_FONT, new File(GuiConfig.resourcePath + "fonts/Lentariso-Bd.ttf")).deriveFont(Font.BOLD, 30f);
+            subTitleFont = Font.createFont(Font.TRUETYPE_FONT, new File(GuiConfig.resourcePath + "fonts/Lentariso-Bd.ttf")).deriveFont(Font.BOLD, 14f);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
         JLabel levelLabel = new JLabel("Level : " + guiManager.level);
         levelLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        levelLabel.setFont(new Font("Arial", Font.BOLD, 20));
         levelLabel.setForeground(Color.WHITE);
+        levelLabel.setFont(titleFont);
         JButton returnButton = new JButton("Return to Main Menu");
         ImageIcon mainMenuIcon = new ImageIcon(new ImageIcon(GuiConfig.resourcePath + "icons/mainmenu.png").getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH));
         returnButton.setIcon(mainMenuIcon);
         returnButton.setBackground(Colours.BACKGROUND.darker());
         returnButton.setForeground(Color.WHITE);
         returnButton.setFocusable(false);
+        returnButton.setFont(subTitleFont);
 
         returnButton.addActionListener(e -> {
             guiManager.returnToMainMenu();

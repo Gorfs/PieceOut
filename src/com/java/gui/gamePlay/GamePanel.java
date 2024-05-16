@@ -96,14 +96,15 @@ public class GamePanel extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         //paint the arena
+
         SwingUtilities.invokeLater(this::paintTargets);
         SwingUtilities.invokeLater(this::paintPieces);
     }
 
-    public void update(){
+    public void update() {
         //main function that updated the gui of the gameplay
-
         repaint();
+
         // scheduling the painting of the pieces on the next event on the event dispatch thread
         SwingUtilities.invokeLater(this::paintTargets);
         SwingUtilities.invokeLater(this::paintPieces);
