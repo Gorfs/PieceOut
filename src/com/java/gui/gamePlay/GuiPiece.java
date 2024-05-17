@@ -96,11 +96,11 @@ public class GuiPiece extends JPanel {
             if(piece.getLast().yflip){
                 shapeIcon = GuiPieceImages.flipImage(shapeIcon, false);
             }
-
+            GuiConfig guiConfig = this.instanceManager.getGuiConfig();
             pieceCoords = getPixelCoordinates(new IntCoordinates(offSet.getX() ,offSet.getY()));
             GuiPieceImages.changeColour(shapeIcon, this.colour);
-            int imageWidth = (int) (Math.floor(shapeIcon.getImage().getWidth(null) / 120 * GuiConfig.CELL_SIZE));
-            int imageHeight = (int) (Math.floor(shapeIcon.getImage().getHeight(null) /120 *  GuiConfig.CELL_SIZE));
+            int imageWidth = shapeIcon.getImage().getWidth(null) / 120 * guiConfig.CELL_SIZE;
+            int imageHeight =shapeIcon.getImage().getHeight(null) /120 * guiConfig.CELL_SIZE;
             g2d.setColor(this.colour);
             // Debug.out("WIDTH : " + imageWidth + " HEIGHT : " + imageHeight);
             // Debug.out("Position is " + piece.getLast().getPos().getX() +  " and the y : " + piece.getLast().getPos().getY());
