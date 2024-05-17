@@ -1,11 +1,10 @@
 package src.com.java.controllers;
 
+import src.com.java.config.GuiConfig;
 import src.com.java.utils.Debug;
 import src.com.java.geometry.IntCoordinates;
 import src.com.java.gui.InstanceManager;
 import src.com.java.logic.PieceLogic;
-
-import static src.com.java.config.GuiConfig.CELL_SIZE;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -19,15 +18,17 @@ public class PlayerController extends JPanel implements MouseListener {
 
     protected final PieceLogic pieceLogic;
     protected final InstanceManager instanceManager;
+    protected final GuiConfig guiConfig;
 
     /**
      * Constructor of the PlayerController where we initialize the attribute
      * controlling
      * and add the MouseListener and KeyListener to the JPanel
      */
-    public PlayerController(InstanceManager instanceManager, PieceLogic pieceLogic) {
+    public PlayerController(InstanceManager instanceManager, PieceLogic pieceLogic, GuiConfig guiConfig) {
         this.instanceManager = instanceManager;
         this.pieceLogic = pieceLogic;
+        this.guiConfig = guiConfig;
         PlayerController.INSTANCE = this;
     }
 
@@ -40,8 +41,8 @@ public class PlayerController extends JPanel implements MouseListener {
      */
     public void toggleControlManager(MouseEvent e) {
         // Get mouse position in the ArenaPanel
-        IntCoordinates mousePos = new IntCoordinates((e.getX() / CELL_SIZE), e.getY() / CELL_SIZE);
-        IntCoordinates mousePosInWindow = new IntCoordinates(e.getX() % CELL_SIZE, e.getY() % CELL_SIZE);
+        IntCoordinates mousePos = new IntCoordinates((e.getX() / guiConfig.CELL_SIZE), e.getY() / guiConfig.CELL_SIZE);
+        IntCoordinates mousePosInWindow = new IntCoordinates(e.getX() % guiConfig.CELL_SIZE, e.getY() % guiConfig.CELL_SIZE);
         // Print the mouse position
         Debug.out("Mouse pos: " + mousePosInWindow + " " + mousePos);
         // Initialize the position of the piece

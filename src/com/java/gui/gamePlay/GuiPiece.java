@@ -84,7 +84,7 @@ public class GuiPiece extends JPanel {
         // determine the type of image to use
 
         if (shapeIcon != null) {
-        
+
             // pre loading all the rotated icon shapes
             for( int i = 0 ; i < piece.getLast().rotations; i++){
                 // this should only execute a maximum of 3 times
@@ -96,16 +96,16 @@ public class GuiPiece extends JPanel {
             if(piece.getLast().yflip){
                 shapeIcon = GuiPieceImages.flipImage(shapeIcon, false);
             }
-
-            pieceCoords = getPixelCoordinates(new IntCoordinates(offSet.getX() ,offSet.getY())); 
+            GuiConfig guiConfig = this.instanceManager.getGuiConfig();
+            pieceCoords = getPixelCoordinates(new IntCoordinates(offSet.getX() ,offSet.getY()));
             GuiPieceImages.changeColour(shapeIcon, this.colour);
-            int imageWidth = (int) (Math.floor(shapeIcon.getImage().getWidth(null) / 120 * GuiConfig.CELL_SIZE));
-            int imageHeight = (int) (Math.floor(shapeIcon.getImage().getHeight(null) /120 *  GuiConfig.CELL_SIZE));
+            int imageWidth = shapeIcon.getImage().getWidth(null) / 120 * guiConfig.CELL_SIZE;
+            int imageHeight =shapeIcon.getImage().getHeight(null) /120 * guiConfig.CELL_SIZE;
             g2d.setColor(this.colour);
             // Debug.out("WIDTH : " + imageWidth + " HEIGHT : " + imageHeight);
             // Debug.out("Position is " + piece.getLast().getPos().getX() +  " and the y : " + piece.getLast().getPos().getY());
             g2d.drawImage(shapeIcon.getImage(), pieceCoords.getX(), pieceCoords.getY(), imageWidth, imageHeight, null);
-            
+
 
             // Debugging
             g2d.setColor(Color.black);
@@ -115,7 +115,9 @@ public class GuiPiece extends JPanel {
             g2d.drawOval(pieceCoords.getX(), pieceCoords.getY(), circleRadius * 2, circleRadius * 2);
             g2d.drawRect(pieceCoords.getX(), pieceCoords.getY(), imageWidth, imageHeight);
         }
-        
+
+
+        GuiConfig guiConfig = this.instanceManager.getGuiConfig();
 
         for (int i = 0; i < shapeMatrix.length; i++) { // height
             for (int j = 0; j < shapeMatrix[0].length; j++) { // width
@@ -124,7 +126,7 @@ public class GuiPiece extends JPanel {
                         cellCoords = getPixelCoordinates(new IntCoordinates(j + offSet.getX(), i + offSet.getY()));
                         g2d.setColor(this.colour);
 
-                        // g2d.fillRect(cellCoords.getX(), cellCoords.getY(), GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE);
+                        // g2d.fillRect(cellCoords.getX(), cellCoords.getY(), guiConfig.CELL_SIZE, guiConfig.CELL_SIZE);
 
 
                         // load the icon for decorator into memory
@@ -143,8 +145,8 @@ public class GuiPiece extends JPanel {
                         } else if (img != null) {
                             int imageWidth = (int) (img.getWidth() * imgScale);
                             int imageHeight = (int) (img.getHeight() * imgScale);
-                            int rectCenterX = cellCoords.getX() + (GuiConfig.CELL_SIZE / 2);
-                            int rectCenterY = cellCoords.getY() + (GuiConfig.CELL_SIZE / 2);
+                            int rectCenterX = cellCoords.getX() + (guiConfig.CELL_SIZE / 2);
+                            int rectCenterY = cellCoords.getY() + (guiConfig.CELL_SIZE / 2);
                             g2d.drawImage(img, rectCenterX - imageWidth / 2, rectCenterY - imageHeight / 2, imageWidth,
                                     imageHeight, null);
                             img = null;
@@ -166,9 +168,10 @@ public class GuiPiece extends JPanel {
      * @param piece Translation we want to draw
      */
     private void paintDirectional(Graphics2D g2d, IntCoordinates cellCoords, Translation piece, int a, int b) {
+        GuiConfig guiConfig = this.instanceManager.getGuiConfig();
         int x = cellCoords.getX();
         int y = cellCoords.getY();
-        int cellSize = GuiConfig.CELL_SIZE;
+        int cellSize = guiConfig.CELL_SIZE;
 
         g2d.setColor(Color.WHITE);
 

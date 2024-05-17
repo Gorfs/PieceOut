@@ -38,6 +38,7 @@ public class GuiTarget extends JPanel {
 
     @Override
     public void paintComponent(Graphics g) {
+        GuiConfig guiConfig = this.guiManager.getGuiConfig();
         Graphics2D g2d = (Graphics2D) g;
         g2d.setColor(color);
 
@@ -48,7 +49,7 @@ public class GuiTarget extends JPanel {
             for (int x = 0; x < shape[y].length; x++) {
                 if (shape[y][x]) {
                     cellCoords = getPixelCoordinates( new IntCoordinates(target.getDest().getX() + x, target.getDest().getY() + y));
-                    g2d.fillRect(cellCoords.getX(), cellCoords.getY(), GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE);
+                    g2d.fillRect(cellCoords.getX(), cellCoords.getY(), guiConfig.CELL_SIZE, guiConfig.CELL_SIZE);
                 }
             }
         }
