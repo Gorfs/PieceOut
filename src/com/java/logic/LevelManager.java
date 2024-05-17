@@ -97,7 +97,6 @@ public class LevelManager {
         }
     }
     public static void createPiece(JSONObject piece, PieceLogic pieceLogic, InstanceManager guiManager) {
-
         // Get the color
         Color color = switch (piece.getString("color")) {
             case "green" -> Colours.PIECE_GREEN;
@@ -111,26 +110,23 @@ public class LevelManager {
         // Create the piece
         Piece piece_to_add = new ShapeFactory(piece.getString("shape"), color, position, new IntCoordinates(0, 0), guiManager);
 
-
         // Add the decorators
         JSONArray decorators = piece.getJSONArray("decorators");
         Decorator decorator = null;
+        String type;
+        Piece prevPiece;
+
         for (int k = 0; k < decorators.length(); k++) {
             JSONObject decoratorJSON = decorators.getJSONObject(k);
-            if (decorator == null) {
-                decorator = switch (decoratorJSON.getString("type")) {
-                    case "rotation" -> createRotation(piece_to_add, decoratorJSON);
-                    case "flip" -> createFlip(piece_to_add, decoratorJSON);
-                    default -> createTranslation(piece_to_add, decoratorJSON);
-                };
-            } else {
-                decorator = switch (decoratorJSON.getString("type")) {
-                    case "rotation" -> createRotation(decorator, decoratorJSON);
-                    case "flip" -> createFlip(decorator, decoratorJSON);
-                    default -> createTranslation(decorator, decoratorJSON);
+            prevPiece = decorator == null ? piece_to_add : decorator;
+            type = decoratorJSON.getString("type");
+                decorator = switch (type) {
+                    case "rotation" -> createRotation(prevPiece, decoratorJSON);
+                    case "flip" -> createFlip(prevPiece, decoratorJSON);
+                    default -> createTranslation(prevPiece, decoratorJSON);
                 };
             }
-        }
+        
 
         // Add the piece to the arena
         pieceLogic.addPiece(decorator);

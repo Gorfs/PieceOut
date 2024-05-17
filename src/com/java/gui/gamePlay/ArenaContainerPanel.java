@@ -19,9 +19,7 @@ public class ArenaContainerPanel extends JPanel {
         super();
         this.setBackground(src.com.java.config.Colours.BACKGROUND);
         this.arenaPanel = new ArenaPanel(instanceManager);
-        // this.setMaximumSize(new Dimension(Integer.MAX_VALUE, arenaPanel.getPreferredSize().height));
         this.add(arenaPanel);
-        // this.setBorder(BorderFactory.createLineBorder(Color.BLACK));
     }
 
     public ArenaPanel getArenaPanel() {
