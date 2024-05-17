@@ -1,21 +1,23 @@
 package src.com.java.gui.gamePlay;
 
 import src.com.java.geometry.IntCoordinates;
-import src.com.java.config.GuiConfig;
+import src.com.java.config.*;
 import src.com.java.piece.decorator.Translation;
 import src.com.java.utils.Debug;
+import src.com.java.piece.Piece;
 import src.com.java.piece.decorator.Decorator;
 import src.com.java.gui.InstanceManager;
 
 import java.awt.*;
+import java.awt.geom.*;
 import java.awt.image.BufferedImage;
+import java.awt.image.WritableRaster;
 import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
 import javax.imageio.ImageIO;
-
-import javax.swing.JPanel;
+import javax.swing.*;
 
 public class GuiPiece extends JPanel {
     private final InstanceManager instanceManager;
@@ -25,10 +27,25 @@ public class GuiPiece extends JPanel {
 
     private final Decorator piece;
 
+    private ImageIcon shapeIcon;
+    private ImageIcon[] iconList = new ImageIcon[4];
+
+
     public GuiPiece(InstanceManager instanceManager, Decorator piece) {
         this.instanceManager = instanceManager;
         this.piece = piece;
         this.colour = piece.getLast().getColor();
+        shapeIcon = switch(piece.getLast().type){
+            case "OShape" -> GuiPieceImages.OImage;
+            case "HoShape" -> GuiPieceImages.HoImage;
+            case "IShape" -> GuiPieceImages.IImage;
+            case "JShape" -> GuiPieceImages.JImage;
+            case "LShape" -> GuiPieceImages.LImage;
+            case "SingleShape" -> GuiPieceImages.SingleImage;
+            case "TShape" -> GuiPieceImages.TImage;
+            case "VeShape" -> GuiPieceImages.VeImage;
+            default -> null;
+        };
     }
 
     /**
@@ -62,9 +79,43 @@ public class GuiPiece extends JPanel {
 
         boolean[][] shapeMatrix = piece.getShape();
         IntCoordinates offSet = this.piece.getLast().getOffset();
-        IntCoordinates destOffSet = new IntCoordinates(0, 0);
-        IntCoordinates destCoords;
         IntCoordinates cellCoords;
+        IntCoordinates pieceCoords;
+        // determine the type of image to use
+
+        if (shapeIcon != null) {
+        
+            // pre loading all the rotated icon shapes
+            for( int i = 0 ; i < piece.getLast().rotations; i++){
+                // this should only execute a maximum of 3 times
+                shapeIcon = GuiPieceImages.rotateImage(shapeIcon);
+            }
+            if(piece.getLast().xflip){
+                shapeIcon = GuiPieceImages.flipImage(shapeIcon, true);
+            }
+            if(piece.getLast().yflip){
+                shapeIcon = GuiPieceImages.flipImage(shapeIcon, false);
+            }
+
+            pieceCoords = getPixelCoordinates(new IntCoordinates(offSet.getX() ,offSet.getY())); 
+            GuiPieceImages.changeColour(shapeIcon, this.colour);
+            int imageWidth = (int) (Math.floor(shapeIcon.getImage().getWidth(null) / 120 * GuiConfig.CELL_SIZE));
+            int imageHeight = (int) (Math.floor(shapeIcon.getImage().getHeight(null) /120 *  GuiConfig.CELL_SIZE));
+            g2d.setColor(this.colour);
+            // Debug.out("WIDTH : " + imageWidth + " HEIGHT : " + imageHeight);
+            // Debug.out("Position is " + piece.getLast().getPos().getX() +  " and the y : " + piece.getLast().getPos().getY());
+            g2d.drawImage(shapeIcon.getImage(), pieceCoords.getX(), pieceCoords.getY(), imageWidth, imageHeight, null);
+            
+
+            // Debugging
+            g2d.setColor(Color.black);
+            g2d.drawString("x:" + pieceCoords.getX() + " y: " + pieceCoords.getY(),pieceCoords.getX() ,pieceCoords.getY() );
+            int circleRadius = 5;
+            g2d.setColor(Color.red);
+            g2d.drawOval(pieceCoords.getX(), pieceCoords.getY(), circleRadius * 2, circleRadius * 2);
+            g2d.drawRect(pieceCoords.getX(), pieceCoords.getY(), imageWidth, imageHeight);
+        }
+        
 
         for (int i = 0; i < shapeMatrix.length; i++) { // height
             for (int j = 0; j < shapeMatrix[0].length; j++) { // width
@@ -72,10 +123,8 @@ public class GuiPiece extends JPanel {
                     try {
                         cellCoords = getPixelCoordinates(new IntCoordinates(j + offSet.getX(), i + offSet.getY()));
                         g2d.setColor(this.colour);
-                        // Debug.out("coords are: " + cellCoords.toString() + " x : " + j + " y : " + i
-                        // + "nextPiece positions : " + piece.getLast().getPos().toString() + " offset :
-                        // " + offSet.toString());
-                        g2d.fillRect(cellCoords.getX(), cellCoords.getY(), GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE);
+
+                        // g2d.fillRect(cellCoords.getX(), cellCoords.getY(), GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE);
 
 
                         // load the icon for decorator into memory

@@ -12,6 +12,7 @@ import src.com.java.config.*;
 import src.com.java.geometry.IntCoordinates;
 import src.com.java.gui.InstanceManager;
 import src.com.java.logic.Arena;
+import src.com.java.utils.Debug;
 
 public class Cell extends JPanel{
     /**
@@ -56,6 +57,7 @@ public class Cell extends JPanel{
     }
 
     public void updateCell(){
+        this.removeAll();
         this.pixel_x = (int) (double) (map_x * GuiConfig.CELL_SIZE);
         this.pixel_y = (int) (double) (map_y * GuiConfig.CELL_SIZE);
 
@@ -63,6 +65,9 @@ public class Cell extends JPanel{
         this.setMinimumSize(new Dimension(GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE));
         this.setPreferredSize(new Dimension(GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE));
         this.setMaximumSize(new Dimension(GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE));
+        if (Debug.isDeubgging()){
+            this.add(new JLabel("x : " +  this.pixel_x + " y : " + this.pixel_y)).setFont(new Font("Arial", Font.PLAIN, 7));
+        }
         updatePlayableCell();
     }
 
@@ -91,21 +96,21 @@ public class Cell extends JPanel{
             this.setBorder(topLeftShadow);
         }else if(map_x == 0){
             if(!matrix[map_y-1][map_x]){
+                this.setBorder(topLeftShadow);
+            }else{
+                this.setBorder(leftShadow);
+            }
+        }else if (map_y == 0){
+            if(matrix[map_y][map_x-1]){
                 this.setBorder(topShadow);
             }else{
                 this.setBorder(topLeftShadow);
             }
-        }else if (map_y == 0){
-            if(matrix[map_y][map_x-1]){
-                this.setBorder(leftShadow);
-            }else{
-                this.setBorder(topLeftShadow);
-            }
             
-        }else{
+        }else{ // we know x > 0 and y > 0
             if(!matrix[map_y-1][map_x] && !matrix[map_y][map_x-1]){
                 this.setBorder(topLeftShadow);
-            }else if(!matrix[map_y-1][map_x]){
+            }else if(!matrix[map_y-1][map_x]){ // we know here that either [y-1][x] is true or [y][x-1] is true
                 this.setBorder(topShadow);
             }else if(!matrix[map_y][map_x-1]){
                 this.setBorder(leftShadow);

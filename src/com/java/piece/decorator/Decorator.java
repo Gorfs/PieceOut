@@ -100,7 +100,7 @@ public abstract class Decorator extends Piece {
     public void applyFlip(boolean xAxis) {
         // default applyFlip
         // updating the decorator's action points for a flip depending on axis of flip
-        this.flipActionPoint(xAxis);
+        
         // recursively apply flip to rest of the list
         if (this.getPrevPiece() instanceof Decorator) {
             ((Decorator) this.getPrevPiece()).applyFlip(xAxis);
@@ -121,7 +121,6 @@ public abstract class Decorator extends Piece {
 
     public void action(PieceLogic pieceLogic, InstanceManager instanceManager, int x, int y, IntCoordinates mousePos) {
         // If it is the right action we pressed on, then do the action.
-        // (deal with offset)
         if (this.actionPoint.getX() == x && this.actionPoint.getY() == y) {
             personalAction();
             Debug.printDecorator(this);
