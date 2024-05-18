@@ -6,6 +6,8 @@ import src.com.java.config.GuiConfig;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
+
 import java.io.File;
 
 public class Sound {
@@ -57,8 +59,16 @@ public class Sound {
         if (clip != null) clip.loop(Clip.LOOP_CONTINUOUSLY);
     }
 
+    public void setVolume(float volume) {
+        if (clip != null) {
+            FloatControl volumeControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+            volumeControl.setValue(volume);
+        }
+    }
+
     public void playMusic(int i) {
         setFile(i);
+        setVolume(-10.0f);
         play();
         loop();
     }
