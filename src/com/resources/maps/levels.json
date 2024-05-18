@@ -4,6 +4,7 @@
             "id": 0,
             "name": "Level 1",
             "difficulty": 0,
+            "moves": 4,
             "map": {
                 "width": 7,
                 "height": 7,
@@ -22,6 +23,7 @@
             "id": 1,
             "name": "Level 2",
             "difficulty": 0,
+            "moves": 4,
             "map": {
                 "width": 7,
                 "height": 7,
@@ -40,6 +42,7 @@
             "id": 2,
             "name": "Level 3",
             "difficulty": 0,
+            "moves": 4,
             "map": {
                 "width": 7,
                 "height": 7,
@@ -58,6 +61,7 @@
             "id": 3,
             "name": "Level 4",
             "difficulty": 1,
+            "moves": 4,
             "map": {
                 "width": 7,
                 "height": 7,
@@ -76,6 +80,7 @@
             "id": 4,
             "name": "Level 5",
             "difficulty": 1,
+            "moves": 4,
             "map": {
                 "width": 7,
                 "height": 7,
@@ -94,6 +99,7 @@
             "id": 5,
             "name": "Level 6",
             "difficulty": 1,
+            "moves": 4,
             "map": {
                 "width": 7,
                 "height": 7,
@@ -112,6 +118,7 @@
             "id": 6,
             "name": "Level 7",
             "difficulty": 2,
+            "moves": 4,
             "map": {
                 "width": 7,
                 "height": 7,
@@ -130,6 +137,7 @@
             "id": 7,
             "name": "Level 8",
             "difficulty": 2,
+            "moves": 4,
             "map": {
                 "width": 7,
                 "height": 7,

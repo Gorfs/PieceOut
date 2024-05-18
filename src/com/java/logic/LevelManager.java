@@ -13,9 +13,12 @@ import src.com.java.config.GuiConfig;
 import src.com.java.piece.Piece;
 import src.com.java.piece.ShapeFactory;
 import src.com.java.piece.Target;
-import src.com.java.piece.decorator.*;
 import src.com.java.geometry.IntCoordinates;
 import src.com.java.gui.InstanceManager;
+import src.com.java.piece.decorator.Decorator;
+import src.com.java.piece.decorator.Flip;
+import src.com.java.piece.decorator.Rotation;
+import src.com.java.piece.decorator.Translation;
 
 public class LevelManager {
 
@@ -54,6 +57,34 @@ public class LevelManager {
         } catch (IOException e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    public static int NumMovesFromJson(int id){
+        try {
+            // Read the .json file
+            String content = new String(Files.readAllBytes(Paths.get(GuiConfig.resourcePath + "maps/levels.json")));
+
+            // Parse the content into a JSONObject
+            JSONObject obj = new JSONObject(content);
+
+            // Get the levels JSONArray
+            JSONArray levels = obj.getJSONArray("levels");
+
+            // Iterate over the levels
+            for (int i = 0; i < levels.length(); i++) {
+                JSONObject level = levels.getJSONObject(i);
+                if (level.getInt("id") == id) {
+                    // If the id matches, return the map
+                    return level.getInt("moves");
+                }
+            }
+
+            // If no matching id is found, return null
+            return -1;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return -1;
         }
     }
 

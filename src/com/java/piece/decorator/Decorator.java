@@ -119,7 +119,7 @@ public abstract class Decorator extends Piece {
         this.getLast().setPos(new IntCoordinates(pos.getX() - xOffset, pos.getY() - yOffset));
     }
 
-    public void action(PieceLogic pieceLogic, InstanceManager instanceManager, int x, int y, IntCoordinates mousePos) {
+    public boolean action(PieceLogic pieceLogic, InstanceManager instanceManager, int x, int y, IntCoordinates mousePos) {
         // If it is the right action we pressed on, then do the action.
         if (this.actionPoint.getX() == x && this.actionPoint.getY() == y) {
             personalAction();
@@ -128,14 +128,17 @@ public abstract class Decorator extends Piece {
                 Debug.out("Collision detected");
                 personalReverseAction();
                 instanceManager.getSound().playCollisionSound();
+                return false;
             } else {
                 Debug.out("No collision detected");
                 instanceManager.playerController.um.addEdit(new Move(this));
+                instanceManager.incMoves();
                 instanceManager.getSound().playMoveSound();
+                return true;
             }
             // If not, then we check for the next decorator.
         } else {
-            this.prevPiece.action(pieceLogic, instanceManager, x, y, mousePos);
+            return this.prevPiece.action(pieceLogic, instanceManager, x, y, mousePos);
         }
 
     }
@@ -193,7 +196,7 @@ public abstract class Decorator extends Piece {
      * 
      * @return true if the piece is colliding with the walls
      */
-    protected boolean checkCollision(PieceLogic pieceLogic) {
+    public boolean checkCollision(PieceLogic pieceLogic) {
         // Get the position of the piece
         IntCoordinates piecePos = this.getLast().getOffset();
         boolean[][] matrix = this.getLast().guiManager.arena.getMatrix();

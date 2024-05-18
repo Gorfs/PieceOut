@@ -50,6 +50,10 @@ public class InstanceManager {
     public int level;
     private int players;
 
+
+    private int numMoves = 0;
+    private final int minNumMoves = LevelManager.NumMovesFromJson(level);
+
     public GamePanel getGamePanel() {
         return gamePanel;
     }
@@ -160,6 +164,7 @@ public class InstanceManager {
 
         if (pieceLogic.checkWin()) {
             sound.playNote();
+            Debug.out("Result : " + rating() + " stars!");
             levelTransitionPanel.animationAtEnd();
         }
 
@@ -186,6 +191,18 @@ public class InstanceManager {
         }
 
     }
+
+
+    public int rating() {
+        if (numMoves <= minNumMoves) {
+            return 3;
+        } else if (numMoves <= minNumMoves + 2) {
+            return 2;
+        } else {
+            return 1;
+        }
+    }
+
 
     /**
      * changes the panel in the main frame to the panel with the name panelName
@@ -226,6 +243,18 @@ public class InstanceManager {
         Point location = mainFrame.getLocation();
         Launcher launcher = new Launcher(location);
         launcher.launch();
+    }
+
+    public void incMoves() {
+        numMoves++;
+    }
+
+    public void decMoves() {
+        numMoves--;
+    }
+
+    public int getNumMoves() {
+        return numMoves;
     }
 
     public GuiConfig getGuiConfig() {
