@@ -215,6 +215,14 @@ public class InstanceManager {
     public void show_rating(int rating) {
         BufferedImage starsImage = null;
         switch (rating) {
+            case 0:
+                try{
+                    starsImage = ImageIO.read(new File(guiConfig.resourcePath + "icons/0stars.png"));
+                }
+                catch (Exception e){
+                    Debug.out("Error loading stars image");
+                }
+                break;
             case 1:
                 try{
                     starsImage = ImageIO.read(new File(guiConfig.resourcePath + "icons/1stars.png"));
