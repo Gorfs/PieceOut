@@ -2,6 +2,7 @@ package src.com.java.piece.decorator;
 
 import src.com.java.config.GuiConfig;
 import src.com.java.gui.InstanceManager;
+import src.com.java.logic.Move;
 import src.com.java.logic.PieceLogic;
 import src.com.java.piece.Piece;
 import src.com.java.geometry.IntCoordinates;
@@ -101,9 +102,13 @@ public class Translation extends Decorator {
                 if (checkCollision(pieceLogic)) {
                     Debug.out("Collision detected");
                     personalReverseAction();
+                    instanceManager.getSound().playCollisionSound();
                     return false;
                 } else {
                     Debug.out("No collision detected");
+                    instanceManager.playerController.um.addEdit(new Move(this));
+                    instanceManager.incMoves();
+                    instanceManager.getSound().playMoveSound();
                     return true;
                 }
             }
@@ -116,6 +121,22 @@ public class Translation extends Decorator {
         return false;
     }
 
+
+    public void action(PieceLogic pieceLogic, InstanceManager instanceManager) {
+
+        personalAction();
+
+        if (checkCollision(pieceLogic)) {
+            Debug.out("Collision detected");
+            personalReverseAction();
+            instanceManager.getSound().playCollisionSound();
+        } else {
+            Debug.out("No collision detected");
+            instanceManager.playerController.um.addEdit(new Move(this));
+            instanceManager.incMoves();
+            instanceManager.getSound().playMoveSound();
+        }
+    }
 
     /**
      * Translation action of the nextPiece.
