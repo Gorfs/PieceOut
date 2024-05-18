@@ -47,6 +47,11 @@ public class PlayerController extends JPanel implements MouseListener, MouseMoti
         content.addMouseMotionListener(this);
     }
 
+    public void stopController(Container content){
+        content.removeMouseListener(this);
+        content.removeMouseMotionListener(this);
+    }
+
     /**
      * Method to activate or deactivate the control of the piece
      */

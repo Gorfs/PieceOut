@@ -163,6 +163,7 @@ public class InstanceManager {
         gamePanel.getBottomPanel().updateButtons(); //TODO move this call to inside the gamePanel.update() function
 
         if (pieceLogic.checkWin()) {
+            playerController.stopController(gamePanel.getArenaPanel());
             sound.playNote();
             Debug.out("Result : " + rating() + " stars!");
             levelTransitionPanel.animationAtEnd();
