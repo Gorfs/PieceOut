@@ -70,9 +70,6 @@ public class Launcher {
 
 
 
-        private final Sound sound = new Sound();
-        
-
         /*
          * This panel contains the title image and the buttons to start the game with 1 or 2 players or to exit the game
          */
@@ -81,6 +78,7 @@ public class Launcher {
             this.setBackground(Colours.BACKGROUND);
             this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
+            Sound sound = new Sound();
             sound.playOST();
 
             try {
@@ -114,6 +112,7 @@ public class Launcher {
             startOnePlayerButton.setPreferredSize(new Dimension(250, 50));
             startOnePlayerButton.setFont(buttonFont);
             startOnePlayerButton.addActionListener(e -> {
+                sound.playNote();
                 Launcher.this.startGame(1);
             });
     
@@ -124,6 +123,7 @@ public class Launcher {
             startTwoPlayerButton.setPreferredSize(new Dimension(200, 50));
             startTwoPlayerButton.setFont(buttonFont);
             startTwoPlayerButton.addActionListener(e -> {
+                sound.playNote();
                 Launcher.this.startGame(2);
             });
     

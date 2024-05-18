@@ -22,11 +22,16 @@ public class Sound {
         soundFiles[6] = new File(GuiConfig.resourcePath + "sfx/collision1.wav");
         soundFiles[7] = new File(GuiConfig.resourcePath + "sfx/collision2.wav");
         soundFiles[8] = new File(GuiConfig.resourcePath + "sfx/collision3.wav");
-        soundFiles[9] = new File(GuiConfig.resourcePath + "sfx/win1.wav");
-        soundFiles[10] = new File(GuiConfig.resourcePath + "sfx/win2.wav");
-        soundFiles[11] = new File(GuiConfig.resourcePath + "sfx/win3.wav");
-        soundFiles[12] = new File(GuiConfig.resourcePath + "sfx/win4.wav");
-        soundFiles[13] = new File(GuiConfig.resourcePath + "sfx/win5.wav");
+        soundFiles[9] = new File(GuiConfig.resourcePath + "sfx/note1.wav");
+        soundFiles[10] = new File(GuiConfig.resourcePath + "sfx/note2.wav");
+        soundFiles[11] = new File(GuiConfig.resourcePath + "sfx/note3.wav");
+        soundFiles[12] = new File(GuiConfig.resourcePath + "sfx/note4.wav");
+        soundFiles[13] = new File(GuiConfig.resourcePath + "sfx/note5.wav");
+        soundFiles[14] = new File(GuiConfig.resourcePath + "sfx/note6.wav");
+        soundFiles[15] = new File(GuiConfig.resourcePath + "sfx/note7.wav");
+        soundFiles[16] = new File(GuiConfig.resourcePath + "sfx/note8.wav");
+        soundFiles[17] = new File(GuiConfig.resourcePath + "sfx/note9.wav");
+        soundFiles[18] = new File(GuiConfig.resourcePath + "sfx/note10.wav");
 
     }
 
@@ -78,7 +83,7 @@ public class Sound {
     }
 
     public void playNote() {
-        int i = (int) (Math.random() * 5) + 9;
+        int i = (int) (Math.random() * 10) + 9;
         Sound soundEffect = new Sound();
         soundEffect.setFile(i);
         soundEffect.play();

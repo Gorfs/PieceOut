@@ -10,10 +10,8 @@ import java.awt.Insets;
 import java.awt.Point;
 import java.io.File;
 
-import javax.imageio.ImageIO;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -30,6 +28,7 @@ public class SelectLevelMenu {
     private final GameWindow mainFrame;
     private final CardLayout layout;
     private final int players;
+    private final Sound sound = new Sound();
 
     public SelectLevelMenu(Point location, int players) {
         mainFrame = new GameWindow();
@@ -130,26 +129,10 @@ public class SelectLevelMenu {
             JPanel column1 = new JPanel();
             JPanel column2 = new JPanel();
             column1.setLayout(new BoxLayout(column1, BoxLayout.Y_AXIS));
-            column1.add(Box.createVerticalStrut(10));
-            column1.add(button1);
-            column1.add(Box.createVerticalStrut(10));
-            column1.add(button4);
-            column1.add(Box.createVerticalStrut(10));
-            column1.add(button5);
-            column1.add(Box.createVerticalStrut(10));
-            column1.add(button7);
-            column1.setOpaque(false);
+            add(button1, button4, button5, button7, column1);
 
             column2.setLayout(new BoxLayout(column2, BoxLayout.Y_AXIS));
-            column2.add(Box.createVerticalStrut(10));
-            column2.add(button2);
-            column2.add(Box.createVerticalStrut(10));
-            column2.add(button3);
-            column2.add(Box.createVerticalStrut(10));
-            column2.add(button6);
-            column2.add(Box.createVerticalStrut(10));
-            column2.add(button8);
-            column2.setOpaque(false);
+            add(button2, button3, button6, button8, column2);
 
             GridBagConstraints  gbc = new GridBagConstraints();
             gbc.anchor = GridBagConstraints.CENTER;
@@ -165,6 +148,18 @@ public class SelectLevelMenu {
 
 
 
+        }
+
+        private void add(SelectButton button1, SelectButton button4, SelectButton button5, SelectButton button7, JPanel column1) {
+            column1.add(Box.createVerticalStrut(10));
+            column1.add(button1);
+            column1.add(Box.createVerticalStrut(10));
+            column1.add(button4);
+            column1.add(Box.createVerticalStrut(10));
+            column1.add(button5);
+            column1.add(Box.createVerticalStrut(10));
+            column1.add(button7);
+            column1.setOpaque(false);
         }
 
         class SelectButton extends JButton {
