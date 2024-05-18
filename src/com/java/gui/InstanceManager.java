@@ -23,10 +23,10 @@ import java.util.ArrayList;
 
 import javax.swing.JLayeredPane;
 
-import src.com.java.gui.gamePlay.Cell;
-import src.com.java.gui.gamePlay.GamePanel;
-import src.com.java.gui.gamePlay.GuiPiece;
-import src.com.java.gui.gamePlay.GuiTarget;
+import com.java.gui.gamePlay.Cell;
+import com.java.gui.gamePlay.GamePanel;
+import com.java.gui.gamePlay.GuiPiece;
+import com.java.gui.gamePlay.GuiTarget;
 
 /**
  * GUIManager class that is responsible for creating, changing,
