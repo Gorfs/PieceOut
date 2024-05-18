@@ -65,9 +65,6 @@ public class TopPanel extends JPanel{
         this.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
         this.setAlignmentX(Component.LEFT_ALIGNMENT);
         this.add(returnButton);
-        //TODO set the rigid area to a dynamic size and not just divided by 5
-        int spacing = GuiConfig.WINDOW_WIDTH / 10;
-        this.add(returnButton);
         this.add(Box.createHorizontalGlue());
         this.add(levelLabel);
         this.add(Box.createHorizontalGlue());
