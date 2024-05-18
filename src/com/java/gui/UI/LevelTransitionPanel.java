@@ -58,6 +58,8 @@ public class LevelTransitionPanel extends JPanel{
     public void animationAtEnd() {
         setLocation(-GuiConfig.WINDOW_WIDTH, 0);
         setVisible(true);
+
+
         Timer timer1 = new Timer(10, null);
         timer1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {

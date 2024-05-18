@@ -1,8 +1,6 @@
 package src.com.java.gui;
 
 import src.com.java.config.*;
-import src.com.java.config.GuiConfig;
-import src.com.java.config.LogicConstants;
 import src.com.java.gui.sound.Sound;
 import src.com.java.piece.Target;
 import src.com.java.piece.decorator.Decorator;
@@ -18,9 +16,19 @@ import src.com.java.utils.Debug;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
+
+import src.com.java.gui.gamePlay.Cell;
+import src.com.java.gui.gamePlay.GamePanel;
+import src.com.java.gui.gamePlay.GuiPiece;
+import src.com.java.gui.gamePlay.GuiTarget;
 
 /**
  * GUIManager class that is responsible for creating, changing,
@@ -38,6 +46,7 @@ public class InstanceManager {
     // layout to change panels in rootPanel
     private final CardLayout layout = new CardLayout();
     private final LevelTransitionPanel levelTransitionPanel = new LevelTransitionPanel(this);
+    private final JLayeredPane layeredPane = new JLayeredPane();
 
     private ArrayList<GuiPiece> guiPieces = new ArrayList<GuiPiece>();
     private ArrayList<GuiTarget> guiTargets = new ArrayList<GuiTarget>();
@@ -102,7 +111,6 @@ public class InstanceManager {
         playerController.startController(gamePanel.getArenaPanel());
         
         // Pane used for level transition
-        JLayeredPane layeredPane = new JLayeredPane();
         layeredPane.setPreferredSize(new Dimension(guiConfig.width, guiConfig.height));
         gamePanel.setBounds(0, 0, guiConfig.width, guiConfig.height);
         layeredPane.add(gamePanel, JLayeredPane.DEFAULT_LAYER);
@@ -165,6 +173,7 @@ public class InstanceManager {
         if (pieceLogic.checkWin()) {
             sound.playNote();
             Debug.out("Result : " + rating() + " stars!");
+            show_rating(rating());
             levelTransitionPanel.animationAtEnd();
         }
 
@@ -201,6 +210,40 @@ public class InstanceManager {
         } else {
             return 1;
         }
+    }
+
+    public void show_rating(int rating) {
+        BufferedImage starsImage = null;
+        switch (rating) {
+            case 1:
+                try{
+                    starsImage = ImageIO.read(new File(guiConfig.resourcePath + "icons/1stars.png"));
+                }
+                catch (Exception e){
+                    Debug.out("Error loading stars image");
+                }
+                break;
+            case 2:
+                try{
+                    starsImage = ImageIO.read(new File(guiConfig.resourcePath + "icons/2stars.png"));
+                }
+                catch (Exception e){
+                    Debug.out("Error loading stars image");
+                }
+                break;
+            case 3:
+                try{
+                    starsImage = ImageIO.read(new File(guiConfig.resourcePath + "icons/3stars.png"));
+                }
+                catch (Exception e){
+                    Debug.out("Error loading stars image");
+                }
+                break;
+
+        }
+        JLabel starsLabel = new JLabel(new ImageIcon(starsImage));
+        starsLabel.setBounds(0, 0, guiConfig.width, guiConfig.height);
+        layeredPane.add(starsLabel, JLayeredPane.MODAL_LAYER);
     }
 
 
