@@ -31,7 +31,7 @@ public class TopPanel extends JPanel{
             e.printStackTrace();
         }
 
-        JLabel levelLabel = new JLabel("Level : " + guiManager.level);
+        JLabel levelLabel = new JLabel("Level : " + (guiManager.level + 1));
         levelLabel.setHorizontalAlignment(SwingConstants.CENTER);
         levelLabel.setForeground(Color.WHITE);
         levelLabel.setFont(titleFont);
