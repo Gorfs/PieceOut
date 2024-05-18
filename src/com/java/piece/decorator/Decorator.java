@@ -1,12 +1,12 @@
-package src.com.java.piece.decorator;
+package com.java.piece.decorator;
 
-import src.com.java.utils.Debug;
-import src.com.java.piece.Piece;
-import src.com.java.piece.PieceBrute;
-import src.com.java.geometry.IntCoordinates;
-import src.com.java.gui.InstanceManager;
-import src.com.java.logic.Move;
-import src.com.java.logic.PieceLogic;
+import com.java.utils.Debug;
+import com.java.piece.Piece;
+import com.java.piece.PieceBrute;
+import com.java.geometry.IntCoordinates;
+import com.java.gui.InstanceManager;
+import com.java.logic.Move;
+import com.java.logic.PieceLogic;
 
 /**
  * Abstract class for the decorators. It extends 'Piece' because it uses the

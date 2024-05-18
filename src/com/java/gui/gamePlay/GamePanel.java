@@ -1,17 +1,17 @@
-package src.com.java.gui.gamePlay;
+package com.java.gui.gamePlay;
 
 import java.awt.Graphics;
 
 import javax.swing.*;
 import java.awt.*;
 
-import src.com.java.gui.InstanceManager;
-import src.com.java.gui.UI.*;
-import src.com.java.logic.PieceLogic;
-import src.com.java.config.Colours;
-import src.com.java.config.*;
-import src.com.java.piece.Target;
-import src.com.java.piece.decorator.Decorator;
+import com.java.gui.InstanceManager;
+import com.java.gui.UI.*;
+import com.java.logic.PieceLogic;
+import com.java.config.Colours;
+import com.java.config.*;
+import com.java.piece.Target;
+import com.java.piece.decorator.Decorator;
 
 import java.util.ArrayList;
 

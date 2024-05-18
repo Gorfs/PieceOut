@@ -1,10 +1,10 @@
-package src.com.java.gui.gamePlay;
+package com.java.gui.gamePlay;
 
-import src.com.java.config.GuiConfig;
-import src.com.java.geometry.IntCoordinates;
-import src.com.java.gui.InstanceManager;
-import src.com.java.piece.Target;
-import src.com.java.utils.Debug;
+import com.java.config.GuiConfig;
+import com.java.geometry.IntCoordinates;
+import com.java.gui.InstanceManager;
+import com.java.piece.Target;
+import com.java.utils.Debug;
 
 import javax.swing.*;
 import java.awt.*;

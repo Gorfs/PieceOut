@@ -1,13 +1,13 @@
-package src.com.java.logic;
+package com.java.logic;
 
 import java.util.ArrayList;
 
-import src.com.java.config.GuiConfig;
-import src.com.java.geometry.IntCoordinates;
-import src.com.java.piece.Target;
-import src.com.java.piece.decorator.*;
-import src.com.java.gui.InstanceManager;
-import src.com.java.utils.Debug;
+import com.java.config.GuiConfig;
+import com.java.geometry.IntCoordinates;
+import com.java.piece.Target;
+import com.java.piece.decorator.*;
+import com.java.gui.InstanceManager;
+import com.java.utils.Debug;
 
 import javax.swing.undo.UndoableEditSupport;
 

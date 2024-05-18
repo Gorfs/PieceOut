@@ -1,6 +1,6 @@
-package src.com.java.logic;
+package com.java.logic;
 
-import src.com.java.gui.InstanceManager;
+import com.java.gui.InstanceManager;
 
 /**
  * The Arena class represents a game arena with a specified width and height.

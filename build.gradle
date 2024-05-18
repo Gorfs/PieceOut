@@ -20,7 +20,7 @@ dependencies {
 jar {
 
     manifest {
-        attributes 'Main-Class': 'src.com.java.main.Main'
+        attributes 'Main-Class': 'com.java.main.Main'
     }
     from {
         configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it) }

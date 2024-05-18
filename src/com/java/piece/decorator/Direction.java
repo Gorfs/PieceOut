@@ -1,4 +1,4 @@
-package src.com.java.piece.decorator;
+package com.java.piece.decorator;
 
 /**
  * Class enum for the four directions:

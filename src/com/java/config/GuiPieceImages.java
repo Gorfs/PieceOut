@@ -1,4 +1,4 @@
-package src.com.java.config;
+package com.java.config;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
@@ -9,7 +9,7 @@ import java.util.Random;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import javax.swing.*;
-import src.com.java.utils.Debug;
+import com.java.utils.Debug;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 /**

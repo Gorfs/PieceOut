@@ -1,4 +1,4 @@
-package src.com.java.gui.UI;
+package com.java.gui.UI;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -8,9 +8,9 @@ import java.util.logging.Level;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-import src.com.java.config.Colours;
-import src.com.java.config.GuiConfig;
-import src.com.java.gui.InstanceManager;
+import com.java.config.Colours;
+import com.java.config.GuiConfig;
+import com.java.gui.InstanceManager;
 
 public class LevelTransitionPanel extends JPanel{
     

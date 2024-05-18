@@ -1,18 +1,21 @@
-package src.com.java.piece;
+package com.java.piece;
 
 import java.awt.Color;
 
-import src.com.java.config.GuiConfig;
-import src.com.java.geometry.IntCoordinates;
-import src.com.java.gui.InstanceManager;
+import com.java.piece.Target;
+import com.java.config.GuiConfig;
+import com.java.geometry.IntCoordinates;
+import com.java.gui.InstanceManager;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import com.java.geometry.IntCoordinates;
+import com.java.gui.InstanceManager;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import src.com.java.logic.PieceLogic;
+import com.java.logic.PieceLogic;
 
 
 

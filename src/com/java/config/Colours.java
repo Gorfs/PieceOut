@@ -1,4 +1,4 @@
-package src.com.java.config;
+package com.java.config;
 
 import java.awt.*;
 
