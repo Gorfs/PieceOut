@@ -29,6 +29,7 @@ public class PlayerController extends JPanel implements MouseListener, MouseMoti
     int i, j; // local coords of a shape array
 
     Decorator selectedPiece = null;
+    IntCoordinates pressPos = null;
 
     /**
      * Constructor of the PlayerController where we initialize the attribute
@@ -45,6 +46,11 @@ public class PlayerController extends JPanel implements MouseListener, MouseMoti
     public void startController(Container content){
         content.addMouseListener(this);
         content.addMouseMotionListener(this);
+    }
+
+    public void stopController(Container content){
+        content.removeMouseListener(this);
+        content.removeMouseMotionListener(this);
     }
 
     /**
@@ -84,6 +90,55 @@ public class PlayerController extends JPanel implements MouseListener, MouseMoti
         return null;
     }
 
+    private Direction dragDirection(IntCoordinates newPos){
+        Direction dragDir = switch (newPos.getX() - pressPos.getX()) {
+            case 1, 2 -> Direction.EAST;
+            case -1, -2 -> Direction.WEST;
+            default -> switch (newPos.getY() - pressPos.getY()) {
+                case 1, 2 -> Direction.SOUTH;
+                case -1, -2 -> Direction.NORTH;
+                default -> null;
+            };
+        };
+        pressPos = newPos;
+        return dragDir;
+    }
+
+
+    private void slidePiece(Direction dragDir){
+        // go through the decorators of the piece and check if it matches the drag direction
+        var temp = selectedPiece;
+        Debug.out("temp : " + temp.getClass().getSimpleName());
+        while (temp != null) {
+            if (temp instanceof Translation t) {
+                Debug.out("t : " + t.getDirection());
+                for (int k=0; k<4; k++) {
+                    if (t.getDirections()[k] && Direction.values()[k] == dragDir) {
+
+                        t.updateDir(Direction.values()[k]);
+                        t.personalAction();
+                        if (t.checkCollision(pieceLogic)) {
+                            t.personalReverseAction();
+                            instanceManager.getSound().playCollisionSound();
+                            selectedPiece = null;
+                            break;
+                        } else {
+                            um.addEdit(new Move(t));
+                            instanceManager.incMoves();
+                            instanceManager.getSound().playMoveSound();
+                            instanceManager.update();
+                        }
+                        Debug.out("actioned");
+                        break;
+
+                    }
+                }
+            }
+            if (!(temp.getPrevPiece() instanceof Decorator)) break;
+            temp =  (Decorator) temp.getPrevPiece();
+        }
+    }
+
     @Override
     public void mouseClicked(MouseEvent e) {
         selectedPiece = isMouseOnPiece(e);
@@ -99,6 +154,9 @@ public class PlayerController extends JPanel implements MouseListener, MouseMoti
     @Override
     public void mousePressed(MouseEvent e) {
         selectedPiece = isMouseOnPiece(e);
+        if (selectedPiece != null) {
+            pressPos = new IntCoordinates((e.getX() / guiConfig.CELL_SIZE), e.getY() / guiConfig.CELL_SIZE);
+        }
     }
 
     @Override
@@ -120,68 +178,16 @@ public class PlayerController extends JPanel implements MouseListener, MouseMoti
         if (selectedPiece == null) return;
 
         IntCoordinates newPos = new IntCoordinates((e.getX() / guiConfig.CELL_SIZE), e.getY() / guiConfig.CELL_SIZE);
-        IntCoordinates piecePos = selectedPiece.getLast().getOffset();
-
-
-//        if (piecePos.getX()+j == newPos.getX() && piecePos.getY()+i == newPos.getY()) return;
-//        Debug.out ("clicked: " + piecePos.getX()+j + " " + piecePos.getY()+i);
-
-//        Debug.out("newPos : " + newPos);
-//        Debug.out("piecePosBefore : " + selectedPiece.getLast().getOffset());
-
 
         // get drag direction
-        Direction dragDir;
-        switch (newPos.getX() - piecePos.getX()) {
-            case 1:
-                dragDir = Direction.EAST;
-                break;
-            case -1:
-                dragDir = Direction.WEST;
-                break;
-            default:
-                switch (newPos.getY() - piecePos.getY()) {
-                    case 1:
-                        dragDir = Direction.SOUTH;
-                        break;
-                    case -1:
-                        dragDir = Direction.NORTH;
-                        break;
-                    default:
-                        return;
-                }
-        }
-        Debug.out("dragDir : " + dragDir);
+        Direction dragDir = dragDirection(newPos);
 
-        // go through the decorators of the piece and check if it matches the drag direction
-        var temp = selectedPiece;
-        Debug.out("temp : " + temp.getClass().getSimpleName());
-        while (temp != null) {
-            if (temp instanceof Translation t) {
-                Debug.out("t : " + t.getDirection());
-                if (t.getDirection() == dragDir) {
-                    t.updateDir(t.getDirection());
-                    t.personalAction();
-                    if (t.checkCollision(pieceLogic)) {
-                        t.personalReverseAction();
-                        instanceManager.getSound().playCollisionSound();
-                        selectedPiece = null;
-                        break;
-                    } else {
-                        instanceManager.playerController.um.addEdit(new Move(t));
-                        instanceManager.incMoves();
-                        instanceManager.getSound().playMoveSound();
-                    }
-                    Debug.out("actioned");
-                    break;
-                }
-            }
-            if (!(temp.getPrevPiece() instanceof Decorator)) break;
-            temp =  (Decorator) temp.getPrevPiece();
-        }
+//        Debug.out("dragDir : " + dragDir);
+
+        //slide the piece
+        slidePiece(dragDir);
 
 
-        this.instanceManager.update();
     }
 
     @Override

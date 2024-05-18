@@ -20,7 +20,13 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
 
+
 import javax.swing.JLayeredPane;
+
+import src.com.java.gui.gamePlay.Cell;
+import src.com.java.gui.gamePlay.GamePanel;
+import src.com.java.gui.gamePlay.GuiPiece;
+import src.com.java.gui.gamePlay.GuiTarget;
 
 /**
  * GUIManager class that is responsible for creating, changing,
@@ -38,6 +44,7 @@ public class InstanceManager {
     // layout to change panels in rootPanel
     private final CardLayout layout = new CardLayout();
     private final LevelTransitionPanel levelTransitionPanel = new LevelTransitionPanel(this);
+    private final JLayeredPane layeredPane = new JLayeredPane();
 
     private ArrayList<GuiPiece> guiPieces = new ArrayList<GuiPiece>();
     private ArrayList<GuiTarget> guiTargets = new ArrayList<GuiTarget>();
@@ -102,7 +109,6 @@ public class InstanceManager {
         playerController.startController(gamePanel.getArenaPanel());
         
         // Pane used for level transition
-        JLayeredPane layeredPane = new JLayeredPane();
         layeredPane.setPreferredSize(new Dimension(guiConfig.width, guiConfig.height));
         gamePanel.setBounds(0, 0, guiConfig.width, guiConfig.height);
         layeredPane.add(gamePanel, JLayeredPane.DEFAULT_LAYER);
@@ -163,8 +169,10 @@ public class InstanceManager {
         gamePanel.getBottomPanel().updateButtons(); //TODO move this call to inside the gamePanel.update() function
 
         if (pieceLogic.checkWin()) {
+            playerController.stopController(gamePanel.getArenaPanel());
             sound.playNote();
             Debug.out("Result : " + rating() + " stars!");
+            levelTransitionPanel.showRating(rating(), layeredPane, guiConfig);
             levelTransitionPanel.animationAtEnd();
         }
 
