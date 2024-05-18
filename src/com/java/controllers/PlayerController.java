@@ -29,6 +29,7 @@ public class PlayerController extends JPanel implements MouseListener, MouseMoti
     int i, j; // local coords of a shape array
 
     Decorator selectedPiece = null;
+    IntCoordinates pressPos = null;
 
     /**
      * Constructor of the PlayerController where we initialize the attribute
@@ -104,6 +105,9 @@ public class PlayerController extends JPanel implements MouseListener, MouseMoti
     @Override
     public void mousePressed(MouseEvent e) {
         selectedPiece = isMouseOnPiece(e);
+        if (selectedPiece != null) {
+            pressPos = new IntCoordinates((e.getX() / guiConfig.CELL_SIZE), e.getY() / guiConfig.CELL_SIZE);
+        }
     }
 
     @Override
@@ -125,37 +129,34 @@ public class PlayerController extends JPanel implements MouseListener, MouseMoti
         if (selectedPiece == null) return;
 
         IntCoordinates newPos = new IntCoordinates((e.getX() / guiConfig.CELL_SIZE), e.getY() / guiConfig.CELL_SIZE);
-        IntCoordinates piecePos = selectedPiece.getLast().getOffset();
-
-
-//        if (piecePos.getX()+j == newPos.getX() && piecePos.getY()+i == newPos.getY()) return;
-//        Debug.out ("clicked: " + piecePos.getX()+j + " " + piecePos.getY()+i);
-
-//        Debug.out("newPos : " + newPos);
-//        Debug.out("piecePosBefore : " + selectedPiece.getLast().getOffset());
 
 
         // get drag direction
         Direction dragDir;
-        switch (newPos.getX() - piecePos.getX()) {
+        switch (newPos.getX() - pressPos.getX()) {
             case 1:
+            case 2:
                 dragDir = Direction.EAST;
                 break;
             case -1:
+            case -2:
                 dragDir = Direction.WEST;
                 break;
             default:
-                switch (newPos.getY() - piecePos.getY()) {
+                switch (newPos.getY() - pressPos.getY()) {
                     case 1:
+                        case 2:
                         dragDir = Direction.SOUTH;
                         break;
                     case -1:
+                        case -2:
                         dragDir = Direction.NORTH;
                         break;
                     default:
                         return;
                 }
         }
+        pressPos = newPos;
         Debug.out("dragDir : " + dragDir);
 
         // go through the decorators of the piece and check if it matches the drag direction
