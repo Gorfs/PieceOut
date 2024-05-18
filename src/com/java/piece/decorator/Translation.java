@@ -84,7 +84,7 @@ public class Translation extends Decorator {
     }
 
     @Override
-    public void action(PieceLogic pieceLogic, InstanceManager instanceManager, int x, int y, IntCoordinates mousePos) {
+    public boolean action(PieceLogic pieceLogic, InstanceManager instanceManager, int x, int y, IntCoordinates mousePos) {
         // If it is the right action we pressed on, then do the action.
         // (deal with offset)
         if (this.getActionPoint().getX() == x && this.getActionPoint().getY() == y) {
@@ -103,18 +103,39 @@ public class Translation extends Decorator {
                     Debug.out("Collision detected");
                     personalReverseAction();
                     instanceManager.getSound().playCollisionSound();
+                    return false;
                 } else {
                     Debug.out("No collision detected");
                     instanceManager.playerController.um.addEdit(new Move(this));
+                    instanceManager.incMoves();
                     instanceManager.getSound().playMoveSound();
+                    return true;
                 }
             }
 
             // If not, then we check for the next decorator.
         } else {
-            this.prevPiece.action(pieceLogic, instanceManager, x, y, mousePos);
+            return this.prevPiece.action(pieceLogic, instanceManager, x, y, mousePos);
         }
 
+        return false;
+    }
+
+
+    public void action(PieceLogic pieceLogic, InstanceManager instanceManager) {
+
+        personalAction();
+
+        if (checkCollision(pieceLogic)) {
+            Debug.out("Collision detected");
+            personalReverseAction();
+            instanceManager.getSound().playCollisionSound();
+        } else {
+            Debug.out("No collision detected");
+            instanceManager.playerController.um.addEdit(new Move(this));
+            instanceManager.incMoves();
+            instanceManager.getSound().playMoveSound();
+        }
     }
 
     /**
@@ -154,6 +175,18 @@ public class Translation extends Decorator {
         } else if (mousePos.getY() > guiConfig.CELL_SIZE - guiConfig.CELL_SIZE/4) {
             dir = Direction.SOUTH;
         }
+    }
+
+    public void updateDir(Direction dir) {
+        this.dir = dir;
+    }
+
+    public Direction getDirection() {
+        if (directions[0]) return Direction.NORTH;
+        if (directions[1]) return Direction.EAST;
+        if (directions[2]) return Direction.SOUTH;
+        if (directions[3]) return Direction.WEST;
+        return null;
     }
 
     public void invertDir() {

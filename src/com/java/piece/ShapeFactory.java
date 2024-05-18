@@ -2,17 +2,12 @@ package src.com.java.piece;
 
 import java.awt.Color;
 
-import src.com.java.piece.Target;
 import src.com.java.config.GuiConfig;
 import src.com.java.geometry.IntCoordinates;
 import src.com.java.gui.InstanceManager;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import src.com.java.geometry.IntCoordinates;
-import src.com.java.gui.InstanceManager;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -100,7 +95,8 @@ public class ShapeFactory extends PieceBrute {
 
 
     @Override
-    public void action(PieceLogic pieceLogic, InstanceManager instanceManager, int x, int y, IntCoordinates mousePos) {
+    public boolean action(PieceLogic pieceLogic, InstanceManager instanceManager, int x, int y, IntCoordinates mousePos) {
         // Does nothing
+        return false;
     }
 }

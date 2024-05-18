@@ -46,7 +46,6 @@ public class BottomPanel extends JPanel {
         // setting up the undoManager
         this.playerController = instanceManager.playerController;
 
-        Debug.out("Player controller: " + playerController);
 
         buttonContainer.setLayout(new BoxLayout(buttonContainer, BoxLayout.X_AXIS));
         buttonContainer.setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
@@ -65,6 +64,8 @@ public class BottomPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 // testing undo
                 playerController.um.undo();
+                instanceManager.decMoves();
+                Debug.out("numMoves: " + instanceManager.getNumMoves());
                 instanceManager.getSound().playMoveSound();
                 instanceManager.update();
                 updateButtons();
@@ -84,6 +85,8 @@ public class BottomPanel extends JPanel {
         redoButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 playerController.um.redo();
+                instanceManager.incMoves();
+                Debug.out("numMoves: " + instanceManager.getNumMoves());
                 instanceManager.getSound().playMoveSound();
                 instanceManager.update();
                 updateButtons();
