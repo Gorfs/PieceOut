@@ -129,10 +129,10 @@ public class SelectLevelMenu {
             JPanel column1 = new JPanel();
             JPanel column2 = new JPanel();
             column1.setLayout(new BoxLayout(column1, BoxLayout.Y_AXIS));
-            add(button1, button4, button5, button7, column1);
+            add(button1, button3, button5, button7, column1);
 
             column2.setLayout(new BoxLayout(column2, BoxLayout.Y_AXIS));
-            add(button2, button3, button6, button8, column2);
+            add(button2, button4, button6, button8, column2);
 
             GridBagConstraints  gbc = new GridBagConstraints();
             gbc.anchor = GridBagConstraints.CENTER;
