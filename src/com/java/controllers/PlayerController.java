@@ -164,21 +164,25 @@ public class PlayerController extends JPanel implements MouseListener, MouseMoti
         while (temp != null) {
             if (temp instanceof Translation t) {
                 Debug.out("t : " + t.getDirection());
-                if (t.getDirection() == dragDir) {
-                    t.updateDir(t.getDirection());
-                    t.personalAction();
-                    if (t.checkCollision(pieceLogic)) {
-                        t.personalReverseAction();
-                        instanceManager.getSound().playCollisionSound();
-                        selectedPiece = null;
-                        break;
-                    } else {
-                        instanceManager.playerController.um.addEdit(new Move(t));
-                        instanceManager.incMoves();
-                        instanceManager.getSound().playMoveSound();
+                for (int k=0; k<4; k++) {
+                    if (t.getDirections()[k] && Direction.values()[k] == dragDir) {
+
+                            t.updateDir(Direction.values()[k]);
+                            t.personalAction();
+                            if (t.checkCollision(pieceLogic)) {
+                                t.personalReverseAction();
+                                instanceManager.getSound().playCollisionSound();
+                                selectedPiece = null;
+                                break;
+                            } else {
+                                instanceManager.playerController.um.addEdit(new Move(t));
+                                instanceManager.incMoves();
+                                instanceManager.getSound().playMoveSound();
+                            }
+                            Debug.out("actioned");
+                            break;
+
                     }
-                    Debug.out("actioned");
-                    break;
                 }
             }
             if (!(temp.getPrevPiece() instanceof Decorator)) break;
