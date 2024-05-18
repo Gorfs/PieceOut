@@ -7,7 +7,6 @@ import src.com.java.piece.decorator.Decorator;
 import src.com.java.controllers.PlayerController;
 import src.com.java.gui.UI.Launcher;
 import src.com.java.gui.UI.LevelTransitionPanel;
-import src.com.java.gui.gamePlay.*;
 import src.com.java.logic.Arena;
 import src.com.java.logic.LevelManager;
 import src.com.java.logic.PieceLogic;
@@ -16,13 +15,9 @@ import src.com.java.utils.Debug;
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.util.ArrayList;
 
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
+
 import javax.swing.JLayeredPane;
 
 import src.com.java.gui.gamePlay.Cell;
@@ -173,7 +168,7 @@ public class InstanceManager {
         if (pieceLogic.checkWin()) {
             sound.playNote();
             Debug.out("Result : " + rating() + " stars!");
-            levelTransitionPanel.show_rating(rating(), layeredPane, guiConfig);
+            levelTransitionPanel.showRating(rating(), layeredPane, guiConfig);
             levelTransitionPanel.animationAtEnd();
         }
 

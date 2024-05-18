@@ -77,7 +77,7 @@ public class LevelTransitionPanel extends JPanel{
                     x = 0;
                     timer1.stop();
 
-                    Timer timer2 = new Timer(200, null);
+                    Timer timer2 = new Timer(800, null);
                     timer2.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent e) {
                             timer2.stop();
@@ -98,12 +98,12 @@ public class LevelTransitionPanel extends JPanel{
         return isTransitioning;
     }
 
-    public void show_rating(int rating, JLayeredPane layeredPane, GuiConfig guiConfig) {
+    public void showRating(int rating, JLayeredPane layeredPane, GuiConfig guiConfig) {
         BufferedImage starsImage = null;
         switch (rating) {
             case 0:
                 try{
-                    starsImage = ImageIO.read(new File(guiConfig.resourcePath + "icons/0stars.png"));
+                    starsImage = ImageIO.read(new File(GuiConfig.resourcePath + "icons/0stars.png"));
                 }
                 catch (Exception e){
                     Debug.out("Error loading stars image");
@@ -111,7 +111,7 @@ public class LevelTransitionPanel extends JPanel{
                 break;
             case 1:
                 try{
-                    starsImage = ImageIO.read(new File(guiConfig.resourcePath + "icons/1stars.png"));
+                    starsImage = ImageIO.read(new File(GuiConfig.resourcePath + "icons/1stars.png"));
                 }
                 catch (Exception e){
                     Debug.out("Error loading stars image");
@@ -119,7 +119,7 @@ public class LevelTransitionPanel extends JPanel{
                 break;
             case 2:
                 try{
-                    starsImage = ImageIO.read(new File(guiConfig.resourcePath + "icons/2stars.png"));
+                    starsImage = ImageIO.read(new File(GuiConfig.resourcePath + "icons/2stars.png"));
                 }
                 catch (Exception e){
                     Debug.out("Error loading stars image");
@@ -127,7 +127,7 @@ public class LevelTransitionPanel extends JPanel{
                 break;
             case 3:
                 try{
-                    starsImage = ImageIO.read(new File(guiConfig.resourcePath + "icons/3stars.png"));
+                    starsImage = ImageIO.read(new File(GuiConfig.resourcePath + "icons/3stars.png"));
                 }
                 catch (Exception e){
                     Debug.out("Error loading stars image");
