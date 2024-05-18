@@ -91,30 +91,15 @@ public class PlayerController extends JPanel implements MouseListener, MouseMoti
     }
 
     private Direction dragDirection(IntCoordinates newPos){
-        Direction dragDir;
-        switch (newPos.getX() - pressPos.getX()) {
-            case 1:
-            case 2:
-                dragDir = Direction.EAST;
-                break;
-            case -1:
-            case -2:
-                dragDir = Direction.WEST;
-                break;
-            default:
-                switch (newPos.getY() - pressPos.getY()) {
-                    case 1:
-                    case 2:
-                        dragDir = Direction.SOUTH;
-                        break;
-                    case -1:
-                    case -2:
-                        dragDir = Direction.NORTH;
-                        break;
-                    default:
-                        dragDir = null;
-                }
-        }
+        Direction dragDir = switch (newPos.getX() - pressPos.getX()) {
+            case 1, 2 -> Direction.EAST;
+            case -1, -2 -> Direction.WEST;
+            default -> switch (newPos.getY() - pressPos.getY()) {
+                case 1, 2 -> Direction.SOUTH;
+                case -1, -2 -> Direction.NORTH;
+                default -> null;
+            };
+        };
         pressPos = newPos;
         return dragDir;
     }
