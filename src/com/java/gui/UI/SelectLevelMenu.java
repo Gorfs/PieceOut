@@ -85,8 +85,6 @@ public class SelectLevelMenu {
             this.setBackground(Colours.BACKGROUND);
             this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-            sound.playOST();
-
             Font buttonFont = null;
             Font titleFont = null;
 
@@ -173,6 +171,7 @@ public class SelectLevelMenu {
                 this.setPreferredSize(size);
                 this.setMaximumSize(size);
                 this.addActionListener(e -> {
+                    sound.playNote();
                     startGame(players, level);
                 });
             }
