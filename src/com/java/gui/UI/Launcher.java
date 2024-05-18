@@ -22,6 +22,7 @@ import src.com.java.config.Colours;
 import src.com.java.config.GuiConfig;
 import src.com.java.gui.GameWindow;
 import src.com.java.gui.InstanceManager;
+import src.com.java.gui.UI.SelectLevelMenu;
 import src.com.java.gui.sound.Sound;
 import src.com.java.logic.PieceLogic;
 
@@ -54,22 +55,9 @@ public class Launcher {
     public void startGame(int players){
         //TODO: implement the logic to start the game with the number of players specified
         mainFrame.dispose();
-        if (players == 1) {
-            int level = 0;
-            Point location = mainFrame.getLocation();
-            InstanceManager instanceManager = new InstanceManager(new PieceLogic(), location);
-            instanceManager.start(level);
-        }
-        else{
-            int level = 0;
-            Point location2 = mainFrame.getLocation();
-            location2.setLocation(location2.getX() + GuiConfig.WINDOW_WIDTH + 10, location2.getY());
-            InstanceManager instanceManager2 = new InstanceManager(new PieceLogic(), location2, null);
-            instanceManager2.start(level);
-            Point location = mainFrame.getLocation();
-            InstanceManager instanceManager = new InstanceManager(new PieceLogic(), location, instanceManager2);
-            instanceManager.start(level);
-        }
+        Point location = mainFrame.getLocation();
+        SelectLevelMenu selectLevelMenu = new SelectLevelMenu(location, players);
+        selectLevelMenu.launch();
     }
     
     
