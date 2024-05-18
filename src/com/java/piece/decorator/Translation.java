@@ -38,7 +38,7 @@ public class Translation extends Decorator {
 
     @Override
     public void applyFlip(boolean xAxis){
-        boolean[] temp = directions; // used to avoid directions flipping on x-axis flip
+        boolean[] temp = directions.clone();
         int startValue = 0;
         if (!xAxis) startValue = 1;
         for (int i = startValue; i < directions.length; i = i + 2) {
