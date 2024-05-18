@@ -38,21 +38,17 @@ public class Translation extends Decorator {
 
     @Override
     public void applyFlip(boolean xAxis){
-        if (xAxis)
-            for (int i = 0; i < directions.length; i = i + 2) {
-                if (directions[i]) {
-                    directions[i] = false;
-                    directions[(i + 2) % 4] = true;
-                }
+        boolean[] temp = directions; // used to avoid directions flipping on x-axis flip
+        int startValue = 0;
+        if (!xAxis) startValue = 1;
+        for (int i = startValue; i < directions.length; i = i + 2) {
+            if (temp[i]) {
+                directions[i] = false;
+                directions[(i + 2) % 4] = true;
             }
-        else
-            for (int i = 1; i < directions.length; i = i + 2) {
-                if (directions[i]) {
-                    directions[i] = false;
-                    directions[(i + 2) % 4] = true;
-                }
-            }
+        }
         this.flipActionPoint(xAxis);
+
         // recursively apply flip to the rest of the list
         if (this.getPrevPiece() instanceof Decorator){
             ((Decorator) this.getPrevPiece()).applyFlip(xAxis);

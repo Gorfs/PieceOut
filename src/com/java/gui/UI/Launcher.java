@@ -52,7 +52,6 @@ public class Launcher {
      * This method is called to start the game with the number of players specified
      */
     public void startGame(int players){
-        //TODO: implement the logic to start the game with the number of players specified
         mainFrame.dispose();
         if (players == 1) {
             int level = 0;
@@ -61,7 +60,7 @@ public class Launcher {
             instanceManager.start(level);
         }
         else{
-            int level = 0;
+            int level =0;
             Point location2 = mainFrame.getLocation();
             location2.setLocation(location2.getX() + GuiConfig.WINDOW_WIDTH + 10, location2.getY());
             InstanceManager instanceManager2 = new InstanceManager(new PieceLogic(), location2, null);

@@ -90,7 +90,7 @@ public abstract class Decorator extends Piece {
         if (!xAxis) {
             this.actionPoint = new IntCoordinates(shape[0].length - this.actionPoint.getX() - 1, this.actionPoint.getY());
         } else {
-            this.actionPoint = new IntCoordinates(this.actionPoint.getX(), shape.length - this.actionPoint.getY() - 1);
+            this.actionPoint = new IntCoordinates(this.actionPoint.getX(), shape.length - this.actionPoint.getY() -1);
         }
     }
 
