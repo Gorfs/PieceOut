@@ -47,7 +47,7 @@ public abstract class Piece {
     public String toString() {
         return "";
     }
-    public InstanceManager guiManager;
+    public InstanceManager instanceManager;
 
     public abstract boolean action(PieceLogic pieceLogic, InstanceManager instanceManager, int x, int y, IntCoordinates mousePos);
 

@@ -199,7 +199,7 @@ public abstract class Decorator extends Piece {
     public boolean checkCollision(PieceLogic pieceLogic) {
         // Get the position of the piece
         IntCoordinates piecePos = this.getLast().getOffset();
-        boolean[][] matrix = this.getLast().guiManager.arena.getMatrix();
+        boolean[][] matrix = this.getLast().instanceManager.arena.getMatrix();
         // Variable to store the last piece
         PieceBrute last;
         for (int i = 0; i < this.getShape().length; i++) {

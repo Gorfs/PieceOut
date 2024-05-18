@@ -85,7 +85,7 @@ public class LevelManager {
         }
     }
 
-    public static void loadPiecesFromJson(PieceLogic pieceLogic, int id, InstanceManager guiManager) {
+    public static void loadPiecesFromJson(PieceLogic pieceLogic, int id, InstanceManager instanceManager) {
         try {
             // Read the .json file
             String content = new String(Files.readAllBytes(Paths.get(GuiConfig.resourcePath + "maps/pieces.json")));
@@ -104,7 +104,7 @@ public class LevelManager {
                     JSONArray pieces = level.getJSONArray("pieces");
                     for (int j = 0; j < pieces.length(); j++) {
                         JSONObject piece = pieces.getJSONObject(j);
-                        createPiece(piece, pieceLogic, guiManager);
+                        createPiece(piece, pieceLogic, instanceManager);
                     }
                 }
             }
@@ -115,7 +115,7 @@ public class LevelManager {
                     JSONArray targets = level.getJSONArray("targets");
                     for (int j = 0; j < targets.length(); j++) {
                         JSONObject target = targets.getJSONObject(j);
-                        createTarget(target, pieceLogic, guiManager);
+                        createTarget(target, pieceLogic, instanceManager);
                     }
                 }
             }
@@ -124,7 +124,7 @@ public class LevelManager {
             e.printStackTrace();
         }
     }
-    public static void createPiece(JSONObject piece, PieceLogic pieceLogic, InstanceManager guiManager) {
+    public static void createPiece(JSONObject piece, PieceLogic pieceLogic, InstanceManager instanceManager) {
         // Get the color
         Color color = switch (piece.getString("color")) {
             case "green" -> Colours.PIECE_GREEN;
@@ -136,7 +136,7 @@ public class LevelManager {
         JSONArray positionArray = piece.getJSONArray("position");
         IntCoordinates position = new IntCoordinates(positionArray.getInt(0), positionArray.getInt(1));
         // Create the piece
-        Piece piece_to_add = new ShapeFactory(piece.getString("shape"), color, position, new IntCoordinates(0, 0), guiManager);
+        Piece piece_to_add = new ShapeFactory(piece.getString("shape"), color, position, new IntCoordinates(0, 0), instanceManager);
 
         // Add the decorators
         JSONArray decorators = piece.getJSONArray("decorators");
@@ -187,7 +187,7 @@ public class LevelManager {
         return new Flip(piece, position, decoratorJSON.getBoolean("horizontal"));
     }
 
-    public static void createTarget(JSONObject target, PieceLogic pieceLogic, InstanceManager guiManager) {
+    public static void createTarget(JSONObject target, PieceLogic pieceLogic, InstanceManager instanceManager) {
         // Get the position
         JSONArray positionArray = target.getJSONArray("position");
         IntCoordinates position = new IntCoordinates(positionArray.getInt(0), positionArray.getInt(1));
@@ -197,7 +197,7 @@ public class LevelManager {
         boolean isFlippedX = target.getBoolean("flip_x");
         boolean isFlippedY = target.getBoolean("flip_y");
         // Create the target
-        Target target_to_add = new Target(pieceLogic.getPieces().get(target.getInt("id")), position, rotations, isFlippedX, isFlippedY, guiManager);
+        Target target_to_add = new Target(pieceLogic.getPieces().get(target.getInt("id")), position, rotations, isFlippedX, isFlippedY, instanceManager);
         // Add the target to the pieceLogic
         pieceLogic.addTarget(target_to_add);
     }

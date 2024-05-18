@@ -13,12 +13,12 @@ public class Target {
     private IntCoordinates dest;
     private  boolean[][] shape;
 
-    public InstanceManager guiManager;
+    public InstanceManager instanceManager;
 
-    public Target(Decorator piece, IntCoordinates dest, int rotations, boolean isFlippedX, boolean isFlippedY, InstanceManager guiManager) {
+    public Target(Decorator piece, IntCoordinates dest, int rotations, boolean isFlippedX, boolean isFlippedY, InstanceManager instanceManager) {
         this.piece = piece;
         this.dest = dest;
-        this.guiManager = guiManager;
+        this.instanceManager = instanceManager;
         this.shape = createShape(rotations, isFlippedX, isFlippedY);
     }
 

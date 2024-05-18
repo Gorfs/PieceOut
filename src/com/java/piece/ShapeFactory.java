@@ -35,12 +35,12 @@ public class ShapeFactory extends PieceBrute {
      * @param fixturePoint point of the face.
      * @param pos Position of the piece.
      */
-    public ShapeFactory(String filePath, Color color, IntCoordinates pos, IntCoordinates fixturePoint,  InstanceManager guiManager) {
+    public ShapeFactory(String filePath, Color color, IntCoordinates pos, IntCoordinates fixturePoint,  InstanceManager instanceManager) {
         this.color = color;
         this.setPos(pos);
         this.setFixturePoint(fixturePoint);
         this.setShape(generateShape(filePath));
-        this.guiManager = guiManager;
+        this.instanceManager = instanceManager;
     }
 
     public ShapeFactory(String filePath, Color color, IntCoordinates pos, IntCoordinates fixturePoint) {
