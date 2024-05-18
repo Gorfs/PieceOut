@@ -38,6 +38,7 @@ public class LevelTransitionPanel extends JPanel{
 
     public void animationOnStart() {
         isTransitioning = true;
+        instanceManager.getSound().playNote();
         Timer timer = new Timer(10, null);
         timer.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -77,7 +78,7 @@ public class LevelTransitionPanel extends JPanel{
                     x = 0;
                     timer1.stop();
 
-                    Timer timer2 = new Timer(800, null);
+                    Timer timer2 = new Timer(1000, null);
                     timer2.addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent e) {
                             timer2.stop();

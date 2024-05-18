@@ -126,7 +126,6 @@ public class Launcher {
             startOnePlayerButton.setPreferredSize(new Dimension(250, 50));
             startOnePlayerButton.setFont(buttonFont);
             startOnePlayerButton.addActionListener(e -> {
-                sound.playNote();
                 Launcher.this.startGame(1);
             });
     
@@ -137,7 +136,6 @@ public class Launcher {
             startTwoPlayerButton.setPreferredSize(new Dimension(200, 50));
             startTwoPlayerButton.setFont(buttonFont);
             startTwoPlayerButton.addActionListener(e -> {
-                sound.playNote();
                 Launcher.this.startGame(2);
             });
     
