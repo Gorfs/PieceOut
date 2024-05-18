@@ -173,7 +173,7 @@ public class InstanceManager {
         if (pieceLogic.checkWin()) {
             sound.playNote();
             Debug.out("Result : " + rating() + " stars!");
-            show_rating(rating());
+            levelTransitionPanel.show_rating(rating(), layeredPane, guiConfig);
             levelTransitionPanel.animationAtEnd();
         }
 
@@ -210,48 +210,6 @@ public class InstanceManager {
         } else {
             return 1;
         }
-    }
-
-    public void show_rating(int rating) {
-        BufferedImage starsImage = null;
-        switch (rating) {
-            case 0:
-                try{
-                    starsImage = ImageIO.read(new File(guiConfig.resourcePath + "icons/0stars.png"));
-                }
-                catch (Exception e){
-                    Debug.out("Error loading stars image");
-                }
-                break;
-            case 1:
-                try{
-                    starsImage = ImageIO.read(new File(guiConfig.resourcePath + "icons/1stars.png"));
-                }
-                catch (Exception e){
-                    Debug.out("Error loading stars image");
-                }
-                break;
-            case 2:
-                try{
-                    starsImage = ImageIO.read(new File(guiConfig.resourcePath + "icons/2stars.png"));
-                }
-                catch (Exception e){
-                    Debug.out("Error loading stars image");
-                }
-                break;
-            case 3:
-                try{
-                    starsImage = ImageIO.read(new File(guiConfig.resourcePath + "icons/3stars.png"));
-                }
-                catch (Exception e){
-                    Debug.out("Error loading stars image");
-                }
-                break;
-
-        }
-        JLabel starsLabel = new JLabel(new ImageIcon(starsImage));
-        starsLabel.setBounds(0, 0, guiConfig.width, guiConfig.height);
-        layeredPane.add(starsLabel, JLayeredPane.MODAL_LAYER);
     }
 
 
