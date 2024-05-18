@@ -90,6 +90,70 @@ public class PlayerController extends JPanel implements MouseListener, MouseMoti
         return null;
     }
 
+    private Direction dragDirection(IntCoordinates newPos){
+        Direction dragDir;
+        switch (newPos.getX() - pressPos.getX()) {
+            case 1:
+            case 2:
+                dragDir = Direction.EAST;
+                break;
+            case -1:
+            case -2:
+                dragDir = Direction.WEST;
+                break;
+            default:
+                switch (newPos.getY() - pressPos.getY()) {
+                    case 1:
+                    case 2:
+                        dragDir = Direction.SOUTH;
+                        break;
+                    case -1:
+                    case -2:
+                        dragDir = Direction.NORTH;
+                        break;
+                    default:
+                        dragDir = null;
+                }
+        }
+        pressPos = newPos;
+        return dragDir;
+    }
+
+
+    private void slidePiece(Direction dragDir){
+        // go through the decorators of the piece and check if it matches the drag direction
+        var temp = selectedPiece;
+        Debug.out("temp : " + temp.getClass().getSimpleName());
+        while (temp != null) {
+            if (temp instanceof Translation t) {
+                Debug.out("t : " + t.getDirection());
+                for (int k=0; k<4; k++) {
+                    if (t.getDirections()[k] && Direction.values()[k] == dragDir) {
+
+                        t.updateDir(Direction.values()[k]);
+                        t.personalAction();
+                        if (t.checkCollision(pieceLogic)) {
+                            t.personalReverseAction();
+                            instanceManager.getSound().playCollisionSound();
+                            selectedPiece = null;
+                            break;
+                        } else {
+                            um.addEdit(new Move(t));
+                            instanceManager.incMoves();
+                            instanceManager.getSound().playMoveSound();
+                            instanceManager.update();
+                        }
+                        Debug.out("actioned");
+                        break;
+
+                    }
+                }
+            }
+            if (!(temp.getPrevPiece() instanceof Decorator)) break;
+            temp =  (Decorator) temp.getPrevPiece();
+        }
+    }
+
     @Override
     public void mouseClicked(MouseEvent e) {
         selectedPiece = isMouseOnPiece(e);
@@ -130,68 +194,15 @@ public class PlayerController extends JPanel implements MouseListener, MouseMoti
 
         IntCoordinates newPos = new IntCoordinates((e.getX() / guiConfig.CELL_SIZE), e.getY() / guiConfig.CELL_SIZE);
 
-
         // get drag direction
-        Direction dragDir;
-        switch (newPos.getX() - pressPos.getX()) {
-            case 1:
-            case 2:
-                dragDir = Direction.EAST;
-                break;
-            case -1:
-            case -2:
-                dragDir = Direction.WEST;
-                break;
-            default:
-                switch (newPos.getY() - pressPos.getY()) {
-                    case 1:
-                        case 2:
-                        dragDir = Direction.SOUTH;
-                        break;
-                    case -1:
-                        case -2:
-                        dragDir = Direction.NORTH;
-                        break;
-                    default:
-                        return;
-                }
-        }
-        pressPos = newPos;
-        Debug.out("dragDir : " + dragDir);
+        Direction dragDir = dragDirection(newPos);
 
-        // go through the decorators of the piece and check if it matches the drag direction
-        var temp = selectedPiece;
-        Debug.out("temp : " + temp.getClass().getSimpleName());
-        while (temp != null) {
-            if (temp instanceof Translation t) {
-                Debug.out("t : " + t.getDirection());
-                for (int k=0; k<4; k++) {
-                    if (t.getDirections()[k] && Direction.values()[k] == dragDir) {
+//        Debug.out("dragDir : " + dragDir);
 
-                            t.updateDir(Direction.values()[k]);
-                            t.personalAction();
-                            if (t.checkCollision(pieceLogic)) {
-                                t.personalReverseAction();
-                                instanceManager.getSound().playCollisionSound();
-                                selectedPiece = null;
-                                break;
-                            } else {
-                                instanceManager.playerController.um.addEdit(new Move(t));
-                                instanceManager.incMoves();
-                                instanceManager.getSound().playMoveSound();
-                            }
-                            Debug.out("actioned");
-                            break;
-
-                    }
-                }
-            }
-            if (!(temp.getPrevPiece() instanceof Decorator)) break;
-            temp =  (Decorator) temp.getPrevPiece();
-        }
+        //slide the piece
+        slidePiece(dragDir);
 
 
-        this.instanceManager.update();
     }
 
     @Override
