@@ -1,8 +1,8 @@
-package src.com.java.logic;
+package com.java.logic;
 
-import src.com.java.piece.decorator.Decorator;
-import src.com.java.piece.decorator.Direction;
-import src.com.java.piece.decorator.Translation;
+import com.java.piece.decorator.Decorator;
+import com.java.piece.decorator.Direction;
+import com.java.piece.decorator.Translation;
 
 import javax.swing.undo.AbstractUndoableEdit;
 

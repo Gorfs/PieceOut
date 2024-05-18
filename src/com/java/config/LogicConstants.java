@@ -1,4 +1,4 @@
-package src.com.java.config;
+package com.java.config;
 
 public class LogicConstants {
     public static int NUMBER_OF_LEVELS = 8;

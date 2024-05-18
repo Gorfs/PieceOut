@@ -1,9 +1,8 @@
-package src.com.java.gui.UI;
+package com.java.gui.UI;
 
-import src.com.java.config.Colours;
-import src.com.java.config.GuiConfig;
-import src.com.java.gui.InstanceManager;
-import src.com.java.logic.Arena;
+import com.java.config.Colours;
+import com.java.config.GuiConfig;
+import com.java.gui.InstanceManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,8 +13,11 @@ public class TopPanel extends JPanel{
      This panel contains the return to main menu button as well as the label
      which indicates current level
      */
+    JLabel levelLabel;
+    JButton returnButton;
+    JLabel movesLabel;
 
-    public TopPanel(InstanceManager guiManager){
+    public TopPanel(InstanceManager instanceManager){
         super();
         this.setOpaque(false);
         this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
@@ -31,12 +33,22 @@ public class TopPanel extends JPanel{
             e.printStackTrace();
         }
 
-        JLabel levelLabel = new JLabel("Level : " + guiManager.level);
+        ImageIcon mainMenuIcon = new ImageIcon(new ImageIcon(GuiConfig.resourcePath + "icons/mainmenu.png").getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH));
+
+        levelLabel = new JLabel("Level : " + instanceManager.level);
+        returnButton = new JButton("Return to Main Menu");
+        movesLabel = new JLabel("Moves : " + instanceManager.getNumMoves());
+
+
         levelLabel.setHorizontalAlignment(SwingConstants.CENTER);
         levelLabel.setForeground(Color.WHITE);
         levelLabel.setFont(titleFont);
-        JButton returnButton = new JButton("Return to Main Menu");
-        ImageIcon mainMenuIcon = new ImageIcon(new ImageIcon(GuiConfig.resourcePath + "icons/mainmenu.png").getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH));
+
+        movesLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        movesLabel.setForeground(Color.WHITE);
+        levelLabel.setFont(subTitleFont);
+
+
         returnButton.setIcon(mainMenuIcon);
         returnButton.setBackground(Colours.BACKGROUND.darker());
         returnButton.setForeground(Color.WHITE);
@@ -44,7 +56,7 @@ public class TopPanel extends JPanel{
         returnButton.setFont(subTitleFont);
 
         returnButton.addActionListener(e -> {
-            guiManager.returnToMainMenu();
+            instanceManager.returnToMainMenu();
         });
 
 
@@ -53,8 +65,15 @@ public class TopPanel extends JPanel{
         this.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
         this.setAlignmentX(Component.LEFT_ALIGNMENT);
         this.add(returnButton);
-        //TODO set the rigid area to a dynamic size and not just divided by 5
-        this.add(Box.createRigidArea(new Dimension(GuiConfig.WINDOW_WIDTH / 5, 0)));
+        this.add(Box.createHorizontalGlue());
         this.add(levelLabel);
+        this.add(Box.createHorizontalGlue());
+        this.add(movesLabel);
+        this.add(Box.createHorizontalGlue());
+    }
+
+
+    public void updateCount(InstanceManager instanceManager){
+        movesLabel.setText("Moves : " + instanceManager.getNumMoves());
     }
 }

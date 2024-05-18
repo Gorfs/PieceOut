@@ -1,15 +1,15 @@
-package src.com.java.gui.gamePlay;
+package com.java.gui.gamePlay;
 
 import javax.swing.*;
 import java.awt.*;
 
-import src.com.java.controllers.PlayerController;
-import src.com.java.gui.InstanceManager;
-import src.com.java.config.Colours;
-import src.com.java.config.*;
-import src.com.java.utils.Debug;
-import src.com.java.geometry.IntCoordinates;
-import src.com.java.logic.Arena;
+import com.java.controllers.PlayerController;
+import com.java.gui.InstanceManager;
+import com.java.config.Colours;
+import com.java.config.*;
+import com.java.utils.Debug;
+import com.java.geometry.IntCoordinates;
+import com.java.logic.Arena;
 
 public class ArenaPanel extends JPanel {
     /**

@@ -1,8 +1,8 @@
-package src.com.java.logic;
+package com.java.logic;
 
 import java.util.List;
 
-import src.com.java.config.LogicConstants;
+import com.java.config.LogicConstants;
 
 public class Player {
     private List<Integer> nbMovesPerLevel; //number of moves per level

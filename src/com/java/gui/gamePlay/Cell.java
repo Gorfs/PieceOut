@@ -1,17 +1,18 @@
-package src.com.java.gui.gamePlay;
+package com.java.gui.gamePlay;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 
-import src.com.java.config.GuiConfig;
+import com.java.config.GuiConfig;
 
 import java.awt.*;
 
-import src.com.java.config.Colours;
-import src.com.java.geometry.IntCoordinates;
-import src.com.java.gui.InstanceManager;
-import src.com.java.logic.Arena;
-import src.com.java.utils.Debug;
+import com.java.config.Colours;
+import com.java.config.*;
+import com.java.geometry.IntCoordinates;
+import com.java.gui.InstanceManager;
+import com.java.logic.Arena;
+import com.java.utils.Debug;
 
 public class Cell extends JPanel{
     /**

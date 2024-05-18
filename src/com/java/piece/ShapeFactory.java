@@ -1,18 +1,21 @@
-package src.com.java.piece;
+package com.java.piece;
 
 import java.awt.Color;
 
-import src.com.java.config.GuiConfig;
-import src.com.java.geometry.IntCoordinates;
-import src.com.java.gui.InstanceManager;
+import com.java.piece.Target;
+import com.java.config.GuiConfig;
+import com.java.geometry.IntCoordinates;
+import com.java.gui.InstanceManager;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import com.java.geometry.IntCoordinates;
+import com.java.gui.InstanceManager;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import src.com.java.logic.PieceLogic;
+import com.java.logic.PieceLogic;
 
 
 
@@ -32,12 +35,12 @@ public class ShapeFactory extends PieceBrute {
      * @param fixturePoint point of the face.
      * @param pos Position of the piece.
      */
-    public ShapeFactory(String filePath, Color color, IntCoordinates pos, IntCoordinates fixturePoint,  InstanceManager guiManager) {
+    public ShapeFactory(String filePath, Color color, IntCoordinates pos, IntCoordinates fixturePoint,  InstanceManager instanceManager) {
         this.color = color;
         this.setPos(pos);
         this.setFixturePoint(fixturePoint);
         this.setShape(generateShape(filePath));
-        this.guiManager = guiManager;
+        this.instanceManager = instanceManager;
     }
 
     public ShapeFactory(String filePath, Color color, IntCoordinates pos, IntCoordinates fixturePoint) {

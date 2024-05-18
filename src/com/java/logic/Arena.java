@@ -1,6 +1,6 @@
-package src.com.java.logic;
+package com.java.logic;
 
-import src.com.java.gui.InstanceManager;
+import com.java.gui.InstanceManager;
 
 /**
  * The Arena class represents a game arena with a specified width and height.
@@ -17,8 +17,8 @@ public class Arena {
      *
      * @param binary is a string of 49 chars that represents the arena.
      */
-    public Arena(InstanceManager guiManager){
-        String[] data = LevelManager.loadLevelFromJson(guiManager.level);
+    public Arena(InstanceManager instanceManager){
+        String[] data = LevelManager.loadLevelFromJson(instanceManager.level);
         width = Integer.parseInt(data[1]);
         height = Integer.parseInt(data[2]);
         matrix = new boolean[height][width];

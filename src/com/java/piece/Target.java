@@ -1,11 +1,11 @@
-package src.com.java.piece;
+package com.java.piece;
 
-import src.com.java.gui.InstanceManager;
-import src.com.java.piece.decorator.Decorator;
-import src.com.java.piece.decorator.Direction;
-import src.com.java.geometry.IntCoordinates;
-import src.com.java.piece.decorator.Flip;
-import src.com.java.piece.decorator.Rotation;
+import com.java.gui.InstanceManager;
+import com.java.piece.decorator.Decorator;
+import com.java.piece.decorator.Direction;
+import com.java.geometry.IntCoordinates;
+import com.java.piece.decorator.Flip;
+import com.java.piece.decorator.Rotation;
 
 public class Target {
 
@@ -13,12 +13,12 @@ public class Target {
     private IntCoordinates dest;
     private  boolean[][] shape;
 
-    public InstanceManager guiManager;
+    public InstanceManager instanceManager;
 
-    public Target(Decorator piece, IntCoordinates dest, int rotations, boolean isFlippedX, boolean isFlippedY, InstanceManager guiManager) {
+    public Target(Decorator piece, IntCoordinates dest, int rotations, boolean isFlippedX, boolean isFlippedY, InstanceManager instanceManager) {
         this.piece = piece;
         this.dest = dest;
-        this.guiManager = guiManager;
+        this.instanceManager = instanceManager;
         this.shape = createShape(rotations, isFlippedX, isFlippedY);
     }
 

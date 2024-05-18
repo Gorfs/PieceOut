@@ -1,12 +1,12 @@
-package src.com.java.gui.gamePlay;
+package com.java.gui.gamePlay;
 
-import src.com.java.geometry.IntCoordinates;
-import src.com.java.config.*;
-import src.com.java.piece.decorator.Translation;
-import src.com.java.utils.Debug;
-import src.com.java.piece.Piece;
-import src.com.java.piece.decorator.Decorator;
-import src.com.java.gui.InstanceManager;
+import com.java.geometry.IntCoordinates;
+import com.java.config.*;
+import com.java.piece.decorator.Translation;
+import com.java.utils.Debug;
+import com.java.piece.Piece;
+import com.java.piece.decorator.Decorator;
+import com.java.gui.InstanceManager;
 
 import java.awt.*;
 import java.awt.geom.*;

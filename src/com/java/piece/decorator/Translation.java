@@ -1,12 +1,12 @@
-package src.com.java.piece.decorator;
+package com.java.piece.decorator;
 
-import src.com.java.config.GuiConfig;
-import src.com.java.gui.InstanceManager;
-import src.com.java.logic.Move;
-import src.com.java.logic.PieceLogic;
-import src.com.java.piece.Piece;
-import src.com.java.geometry.IntCoordinates;
-import src.com.java.utils.Debug;
+import com.java.config.GuiConfig;
+import com.java.gui.InstanceManager;
+import com.java.logic.Move;
+import com.java.logic.PieceLogic;
+import com.java.piece.Piece;
+import com.java.geometry.IntCoordinates;
+import com.java.utils.Debug;
 
 /**
  * Class that represent the decorator pattern for the translation.
@@ -38,21 +38,17 @@ public class Translation extends Decorator {
 
     @Override
     public void applyFlip(boolean xAxis){
-        if (xAxis)
-            for (int i = 0; i < directions.length; i = i + 2) {
-                if (directions[i]) {
-                    directions[i] = false;
-                    directions[(i + 2) % 4] = true;
-                }
+        boolean[] temp = directions.clone();
+        int startValue = 0;
+        if (!xAxis) startValue = 1;
+        for (int i = startValue; i < directions.length; i = i + 2) {
+            if (temp[i]) {
+                directions[i] = false;
+                directions[(i + 2) % 4] = true;
             }
-        else
-            for (int i = 1; i < directions.length; i = i + 2) {
-                if (directions[i]) {
-                    directions[i] = false;
-                    directions[(i + 2) % 4] = true;
-                }
-            }
+        }
         this.flipActionPoint(xAxis);
+
         // recursively apply flip to the rest of the list
         if (this.getPrevPiece() instanceof Decorator){
             ((Decorator) this.getPrevPiece()).applyFlip(xAxis);

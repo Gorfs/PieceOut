@@ -1,4 +1,4 @@
-package src.com.java.gui.UI;
+package com.java.gui.UI;
 
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -18,12 +18,12 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import src.com.java.config.Colours;
-import src.com.java.config.GuiConfig;
-import src.com.java.gui.GameWindow;
-import src.com.java.gui.InstanceManager;
-import src.com.java.gui.sound.Sound;
-import src.com.java.logic.PieceLogic;
+import com.java.config.Colours;
+import com.java.config.GuiConfig;
+import com.java.gui.GameWindow;
+import com.java.gui.InstanceManager;
+import com.java.gui.sound.Sound;
+import com.java.logic.PieceLogic;
 
 public class Launcher {
 
@@ -52,7 +52,6 @@ public class Launcher {
      * This method is called to start the game with the number of players specified
      */
     public void startGame(int players){
-        //TODO: implement the logic to start the game with the number of players specified
         mainFrame.dispose();
         if (players == 1) {
             int level = 0;
@@ -61,7 +60,7 @@ public class Launcher {
             instanceManager.start(level);
         }
         else{
-            int level = 0;
+            int level =0;
             Point location2 = mainFrame.getLocation();
             location2.setLocation(location2.getX() + GuiConfig.WINDOW_WIDTH + 10, location2.getY());
             InstanceManager instanceManager2 = new InstanceManager(new PieceLogic(), location2, null);
