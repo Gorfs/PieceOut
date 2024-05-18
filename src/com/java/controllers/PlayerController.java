@@ -145,8 +145,12 @@ public class PlayerController extends JPanel implements MouseListener, MouseMoti
         if (selectedPiece != null) {
             boolean actionSuccess = selectedPiece.action(this.pieceLogic, instanceManager, j, i, mousePosInWindow);
             if (actionSuccess) {
-                Debug.out("triggering piece action");
+                um.addEdit(new Move(selectedPiece));
+                instanceManager.incMoves();
+                instanceManager.getSound().playMoveSound();
                 this.instanceManager.update();
+            } else {
+                instanceManager.getSound().playCollisionSound();
             }
         }
     }
