@@ -63,23 +63,33 @@ public class TopPanel extends JPanel{
             instanceManager.returnToMainMenu();
         });
 
+//        boolean isMusicMuted = instanceManager.getSound().isMusicMuted();
+//        ImageIcon musicIcon = new ImageIcon(new ImageIcon(GuiConfig.resourcePath + (isMusicMuted ? "icons/musicoff.png" : "icons/musicon.png")).getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH));
 
+        muteMusicButton.setIcon(getMusicIcon(instanceManager));
         muteMusicButton.setBackground(Colours.BACKGROUND.darker());
         muteMusicButton.setForeground(Color.WHITE);
         muteMusicButton.setFocusable(false);
         muteMusicButton.setFont(subTitleFont);
         muteMusicButton.addActionListener(e -> {
             instanceManager.getSound().toggleMute();
+            muteMusicButton.setIcon(getMusicIcon(instanceManager));
         });
 
 
+
+        muteSoundEffects.setIcon(getSoundEffectsIcon(instanceManager));
         muteSoundEffects.setBackground(Colours.BACKGROUND.darker());
         muteSoundEffects.setForeground(Color.WHITE);
         muteSoundEffects.setFocusable(false);
         muteSoundEffects.setFont(subTitleFont);
         muteSoundEffects.addActionListener(e -> {
             instanceManager.getSound().toggleSoundEffects();
+            muteSoundEffects.setIcon(getSoundEffectsIcon(instanceManager));
         });
+
+
+
 
 
 
@@ -96,6 +106,18 @@ public class TopPanel extends JPanel{
         this.add(muteMusicButton);
         this.add(muteSoundEffects);
 
+    }
+
+    ImageIcon getMusicIcon(InstanceManager instanceManager){
+        boolean isMusicMuted = instanceManager.getSound().isMusicMuted();
+        ImageIcon musicIcon = new ImageIcon(new ImageIcon(GuiConfig.resourcePath + (isMusicMuted ? "icons/musicoff.png" : "icons/musicon.png")).getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH));
+        return musicIcon;
+    }
+
+    ImageIcon getSoundEffectsIcon(InstanceManager instanceManager){
+        boolean isSoundEffectsMuted = instanceManager.getSound().isSoundEffectsMuted();
+        ImageIcon soundEffectsIcon = new ImageIcon(new ImageIcon(GuiConfig.resourcePath + (isSoundEffectsMuted ? "icons/soundoff.png" : "icons/soundon.png")).getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH));
+        return soundEffectsIcon;
     }
 
 
