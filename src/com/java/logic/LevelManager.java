@@ -179,12 +179,12 @@ public class LevelManager {
             JSONObject decoratorJSON = decorators.getJSONObject(k);
             prevPiece = decorator == null ? piece_to_add : decorator;
             type = decoratorJSON.getString("type");
-                decorator = switch (type) {
-                    case "rotation" -> createRotation(prevPiece, decoratorJSON);
-                    case "flip" -> createFlip(prevPiece, decoratorJSON);
-                    default -> createTranslation(prevPiece, decoratorJSON);
-                };
-            }
+            decorator = switch (type) {
+                case "rotation" -> createRotation(prevPiece, decoratorJSON);
+                case "flip" -> createFlip(prevPiece, decoratorJSON);
+                default -> createTranslation(prevPiece, decoratorJSON);
+            };
+        }
 
 
         // Add the piece to the arena
@@ -263,10 +263,15 @@ public class LevelManager {
         pieceLogic.addTarget(target_to_add);
     }
 
+    /**
+     * Check if a level is locked in the levels.json file.
+     * @param id the id of the level to check
+     * @return true if the level is locked, false otherwise
+     */
     public static boolean isLocked(int id){
         try {
             // Read the .json file
-            String content = new String(Files.readAllBytes(Paths.get(GuiConfig.resourcePath + "maps/levels.json")));
+            String content = new String(Files.readAllBytes(Paths.get(GuiConfig.resPath + "maps/levels.json")));
 
             // Parse the content into a JSONObject
             JSONObject obj = new JSONObject(content);
@@ -286,15 +291,19 @@ public class LevelManager {
             // If no matching id is found, return null
             return true;
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Error while opening the JSON file.");
             return true;
         }
     }
 
+    /**
+     * Unlock a level in the levels.json file.
+     * @param id the id of the level to unlock
+     */
     public static void unlockLevel(int id){
         try {
             // Read the .json file
-            String content = new String(Files.readAllBytes(Paths.get(GuiConfig.resourcePath + "maps/levels.json")));
+            String content = new String(Files.readAllBytes(Paths.get(GuiConfig.resPath + "maps/levels.json")));
 
             // Parse the content into a JSONObject
             JSONObject obj = new JSONObject(content);
@@ -312,11 +321,11 @@ public class LevelManager {
             }
 
             // Write the new content
-            FileWriter file = new FileWriter(GuiConfig.resourcePath + "maps/levels.json");
+            FileWriter file = new FileWriter(GuiConfig.resPath + "maps/levels.json");
             file.write(obj.toString(4));
             file.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Error while unlocking the level in the JSON file.");
         }
     }
 }
