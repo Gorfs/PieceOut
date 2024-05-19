@@ -56,7 +56,7 @@ public class InstanceManager {
 
 
     private int numMoves = 0;
-    private final int minNumMoves = LevelManager.NumMovesFromJson(level);
+    private int minNumMoves ;
 
     public GamePanel getGamePanel() {
         return gamePanel;
@@ -96,6 +96,8 @@ public class InstanceManager {
          */
 
         this.level = level;
+        this.minNumMoves = LevelManager.NumMovesFromJson(level);
+
         playerController = new PlayerController(this, pieceLogic, guiConfig);
         arena = new Arena(this);
 
@@ -147,6 +149,7 @@ public class InstanceManager {
             }
         });
         levelTransitionPanel.animationOnStart();
+        Debug.out("NumMoves: " + numMoves + " minNumMoves: " + minNumMoves);
     }
 
     public Sound getSound() {
@@ -201,7 +204,7 @@ public class InstanceManager {
     public int rating() {
         if (numMoves <= minNumMoves) {
             return 3;
-        } else if (numMoves <= minNumMoves + 2) {
+        } else if (numMoves <= minNumMoves * 1.5) {
             return 2;
         } else {
             return 1;
