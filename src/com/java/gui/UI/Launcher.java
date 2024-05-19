@@ -31,10 +31,11 @@ public class Launcher {
     private final LauncherPanel launcherPanel;
     private final GameWindow mainFrame;
     private final CardLayout layout;
-    private final Sound sound = new Sound();
+    private final Sound sound ;
 
-    public Launcher(Point location) {
+    public Launcher(Point location, Sound sound) {
         mainFrame = new GameWindow();
+        this.sound = sound;
         launcherPanel = new LauncherPanel();
         layout = new CardLayout();
         mainFrame.setLayout(layout);

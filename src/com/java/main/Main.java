@@ -1,5 +1,6 @@
 package com.java.main;
 
+import com.java.gui.sound.Sound;
 import com.java.logic.*;
 
 import java.awt.Dimension;
@@ -28,7 +29,7 @@ public class Main {
         double height = screenSize.getHeight();
         
         Point location = new Point((int) width / 2 - GuiConfig.WINDOW_WIDTH / 2, (int) height / 2 - GuiConfig.WINDOW_HEIGHT / 2);
-        Launcher launcher = new Launcher(location);
+        Launcher launcher = new Launcher(location, new Sound());
         launcher.launch();
         
     }

@@ -11,10 +11,10 @@ import javax.sound.sampled.FloatControl;
 import java.io.File;
 
 public class Sound {
-    Clip clip ;
+    private Clip clip ;
     File[] soundFiles = new File[20];
-    boolean soundEffectsMuted = false;
-    boolean musicMuted = false;
+    private boolean soundEffectsMuted = false;
+    private boolean musicMuted = false;
 
     public Sound() {
         soundFiles[0] = new File(GuiConfig.resourcePath + "sfx/bg.wav");
@@ -113,6 +113,7 @@ public class Sound {
     }
 
     public void playOST(){
+        if (musicMuted) return;
         playMusic(0);
     }
 

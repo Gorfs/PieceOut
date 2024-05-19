@@ -72,8 +72,8 @@ public class InstanceManager {
         mainFrame.setLayout(layout);
         this.pieceLogic = pieceLogic;
         mainFrame.setLocation(location);
-        this.secondPlayer = this;
         this.sound = sound;
+        this.secondPlayer = this;
         players = 1;
 
 
@@ -252,7 +252,7 @@ public class InstanceManager {
             }
         }
         Point location = mainFrame.getLocation();
-        Launcher launcher = new Launcher(location);
+        Launcher launcher = new Launcher(location, sound);
         launcher.launch();
     }
 
