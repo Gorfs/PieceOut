@@ -21,14 +21,14 @@ import java.util.ArrayList;
  * Contains the arena, the pieces, the UI, etc.
  */
 public class GamePanel extends JPanel {
-    private final JPanel topPanel;
+    private final TopPanel topPanel;
     private ArenaContainerPanel arenaContainerPanel;
     private ArenaPanel arenaPanel;
     private final JPanel bottomPanel;
 
     private final PieceLogic pieceLogic;
 
-    protected final InstanceManager guiManager;
+    protected final InstanceManager instanceManager;
 
     public ArenaPanel getArenaPanel(){
         return this.arenaPanel;
@@ -39,24 +39,24 @@ public class GamePanel extends JPanel {
         return this.arenaContainerPanel;
     }
 
-    public GamePanel(PieceLogic pieceLogic, InstanceManager guiManager){
+    public GamePanel(PieceLogic pieceLogic, InstanceManager instanceManager){
         super();
 
-        this.guiManager = guiManager;
+        this.instanceManager = instanceManager;
         this.pieceLogic = pieceLogic;
 
         // this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.setLayout(new BorderLayout());
         this.setBackground(Colours.BACKGROUND);
 
-        this.topPanel = new TopPanel(guiManager);
+        this.topPanel = new TopPanel(instanceManager);
         this.add(topPanel, BorderLayout.NORTH);
 
-        this.arenaContainerPanel = new ArenaContainerPanel(guiManager);
+        this.arenaContainerPanel = new ArenaContainerPanel(instanceManager);
         this.arenaPanel = arenaContainerPanel.getArenaPanel();
         this.add(arenaContainerPanel, BorderLayout.CENTER);
 
-        this.bottomPanel = new BottomPanel(guiManager);
+        this.bottomPanel = new BottomPanel(instanceManager);
         this.add(bottomPanel, BorderLayout.SOUTH);
         // this.setMaximumSize(new Dimension(GuiConfig.width, GuiConfig.height - 200));
     }
@@ -65,23 +65,23 @@ public class GamePanel extends JPanel {
      * paints the pieces from the Piece logic class to the gui
      */
     public void paintPieces(){
-        if (guiManager.isTransitioning()){
+        if (instanceManager.isTransitioning()){
             return;
         }
         Graphics g = this.getGraphics();
         for(Decorator piece: this.pieceLogic.getPieces()){
-            GuiPiece guiPiece = new GuiPiece(this.guiManager, piece);
+            GuiPiece guiPiece = new GuiPiece(this.instanceManager, piece);
             guiPiece.paintComponent(g);
         }
     }
 
     public void paintTargets(){
-        if (guiManager.isTransitioning()){
+        if (instanceManager.isTransitioning()){
             return;
         }
         Graphics g = this.getGraphics();
         for(Target target: this.pieceLogic.getTargets()){
-            GuiTarget guiTarget = new GuiTarget(this.guiManager, target);
+            GuiTarget guiTarget = new GuiTarget(this.instanceManager, target);
             guiTarget.paintComponent(g);
         }
     }
@@ -102,8 +102,9 @@ public class GamePanel extends JPanel {
     }
 
     public void update() {
-        //main function that updated the gui of the gameplay
+        // this makes sure to remove any previous pieces before adding new ones.
         repaint();
+        this.topPanel.updateCount(instanceManager);
 
         // scheduling the painting of the pieces on the next event on the event dispatch thread
         SwingUtilities.invokeLater(this::paintTargets);

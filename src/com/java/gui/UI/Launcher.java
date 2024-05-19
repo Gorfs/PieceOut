@@ -53,7 +53,6 @@ public class Launcher {
      * This method is called to start the game with the number of players specified
      */
     public void startGame(int players){
-        //TODO: implement the logic to start the game with the number of players specified
         mainFrame.dispose();
         Point location = mainFrame.getLocation();
         SelectLevelMenu selectLevelMenu = new SelectLevelMenu(location, players);

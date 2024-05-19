@@ -8,6 +8,7 @@ import com.java.config.GuiConfig;
 import java.awt.*;
 
 import com.java.config.Colours;
+import com.java.config.*;
 import com.java.geometry.IntCoordinates;
 import com.java.gui.InstanceManager;
 import com.java.logic.Arena;

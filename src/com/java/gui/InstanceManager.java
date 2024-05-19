@@ -1,12 +1,15 @@
 package com.java.gui;
 
 import com.java.config.*;
+import com.java.config.GuiConfig;
+import com.java.config.LogicConstants;
 import com.java.gui.sound.Sound;
 import com.java.piece.Target;
 import com.java.piece.decorator.Decorator;
 import com.java.controllers.PlayerController;
 import com.java.gui.UI.Launcher;
 import com.java.gui.UI.LevelTransitionPanel;
+import com.java.gui.gamePlay.*;
 import com.java.logic.Arena;
 import com.java.logic.LevelManager;
 import com.java.logic.PieceLogic;

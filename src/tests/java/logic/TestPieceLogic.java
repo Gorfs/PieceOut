@@ -5,10 +5,10 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import src.com.java.geometry.IntCoordinates;
-import src.com.java.logic.PieceLogic;
-import src.com.java.piece.decorator.*;
-import src.com.java.piece.*;
+import com.java.geometry.IntCoordinates;
+import com.java.logic.PieceLogic;
+import com.java.piece.decorator.*;
+import com.java.piece.*;
 
 public class TestPieceLogic {
 

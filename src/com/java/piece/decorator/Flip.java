@@ -57,18 +57,19 @@ public class Flip extends Decorator {
         boolean[][] initShape = this.getLast().getShape();
         boolean[][] rotatedShape = new boolean[initShape.length][initShape[0].length];
         this.getLast().addFlip(this.xFlip);
-        if (this.xFlip){
-            this.xflip = !this.xflip;
-        }else{
-            this.yflip = !this.yflip;
-        }
-        // changing the position on the map to offset change of fixturePoint
+       // changing the position on the map to offset change of fixturePoint
         this.offsetPosition(this.getActionPoint());
 
         // flipping the action point for all the decorators in the list
         Decorator first = (Decorator) this.getFirst();
         first.applyFlip(this.xFlip);
 
+        if (this.xFlip){
+            this.xflip = !this.xflip;
+        }else{
+            this.yflip = !this.yflip;
+        }
+ 
         // setting rotated shape to the rotation of the initial shape
         for (int i = 0; i < initShape.length; i++) {
             for (int j = 0; j < initShape[0].length; j++) {

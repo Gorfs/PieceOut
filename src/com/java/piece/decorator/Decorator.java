@@ -90,7 +90,7 @@ public abstract class Decorator extends Piece {
         if (!xAxis) {
             this.actionPoint = new IntCoordinates(shape[0].length - this.actionPoint.getX() - 1, this.actionPoint.getY());
         } else {
-            this.actionPoint = new IntCoordinates(this.actionPoint.getX(), shape.length - this.actionPoint.getY() - 1);
+            this.actionPoint = new IntCoordinates(this.actionPoint.getX(), shape.length - this.actionPoint.getY() -1);
         }
     }
 
@@ -199,7 +199,7 @@ public abstract class Decorator extends Piece {
     public boolean checkCollision(PieceLogic pieceLogic) {
         // Get the position of the piece
         IntCoordinates piecePos = this.getLast().getOffset();
-        boolean[][] matrix = this.getLast().guiManager.arena.getMatrix();
+        boolean[][] matrix = this.getLast().instanceManager.arena.getMatrix();
         // Variable to store the last piece
         PieceBrute last;
         for (int i = 0; i < this.getShape().length; i++) {
