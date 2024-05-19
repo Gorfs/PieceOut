@@ -81,7 +81,7 @@ public class TopPanel extends JPanel{
 
 
 
-        this.setBorder(BorderFactory.createEmptyBorder(3,3,3,3));
+        this.setBorder(BorderFactory.createEmptyBorder(3,3,3,20));
         this.setMinimumSize(new Dimension(Integer.MAX_VALUE, 30));
         this.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
         this.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -92,7 +92,6 @@ public class TopPanel extends JPanel{
         this.add(movesLabel);
         this.add(Box.createHorizontalGlue());
         this.add(muteMusicButton);
-        this.add(Box.createHorizontalGlue());
         this.add(muteSoundEffects);
 
     }
