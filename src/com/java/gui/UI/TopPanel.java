@@ -16,6 +16,7 @@ public class TopPanel extends JPanel{
     JLabel levelLabel;
     JButton returnButton;
     JLabel movesLabel;
+    JButton muteButton;
 
     public TopPanel(InstanceManager instanceManager){
         super();
@@ -35,9 +36,9 @@ public class TopPanel extends JPanel{
         ImageIcon mainMenuIcon = new ImageIcon(new ImageIcon(GuiConfig.resourcePath + "icons/mainmenu.png").getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH));
 
         levelLabel = new JLabel("Level : " + (instanceManager.level + 1));
-        returnButton = new JButton("Return to Main Menu");
+        returnButton = new JButton("  Menu ");
         movesLabel = new JLabel("Moves : " + instanceManager.getNumMoves());
-
+        muteButton = new JButton("Mute");
 
         levelLabel.setHorizontalAlignment(SwingConstants.CENTER);
         levelLabel.setForeground(Color.WHITE);
@@ -59,6 +60,15 @@ public class TopPanel extends JPanel{
         });
 
 
+        muteButton.setBackground(Colours.BACKGROUND.darker());
+        muteButton.setForeground(Color.WHITE);
+        muteButton.setFocusable(false);
+        muteButton.setFont(subTitleFont);
+        muteButton.addActionListener(e -> {
+            instanceManager.getSound().toggleMute();
+        });
+
+
         this.setBorder(BorderFactory.createEmptyBorder(3,3,3,3));
         this.setMinimumSize(new Dimension(Integer.MAX_VALUE, 30));
         this.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
@@ -69,6 +79,8 @@ public class TopPanel extends JPanel{
         this.add(Box.createHorizontalGlue());
         this.add(movesLabel);
         this.add(Box.createHorizontalGlue());
+        this.add(muteButton);
+        
     }
 
 

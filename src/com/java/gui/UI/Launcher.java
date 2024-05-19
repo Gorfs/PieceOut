@@ -31,6 +31,7 @@ public class Launcher {
     private final LauncherPanel launcherPanel;
     private final GameWindow mainFrame;
     private final CardLayout layout;
+    private final Sound sound = new Sound();
 
     public Launcher(Point location) {
         mainFrame = new GameWindow();
@@ -55,7 +56,7 @@ public class Launcher {
     public void startGame(int players){
         mainFrame.dispose();
         Point location = mainFrame.getLocation();
-        SelectLevelMenu selectLevelMenu = new SelectLevelMenu(location, players);
+        SelectLevelMenu selectLevelMenu = new SelectLevelMenu(location, sound, players);
         selectLevelMenu.launch();
     }
     
@@ -77,7 +78,7 @@ public class Launcher {
             this.setBackground(Colours.BACKGROUND);
             this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-            Sound sound = new Sound();
+
             sound.playOST();
 
             try {

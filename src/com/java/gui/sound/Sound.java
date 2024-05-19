@@ -102,4 +102,12 @@ public class Sound {
     public void playOST(){
         playMusic(0);
     }
+
+    public void toggleMute() {
+        if (clip.isActive()) {
+            stop();
+        } else {
+            play();
+        }
+    }
 }
