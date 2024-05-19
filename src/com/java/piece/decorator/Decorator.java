@@ -18,7 +18,7 @@ public abstract class Decorator extends Piece {
      */
     protected Piece prevPiece;
     /**
-     * Previous piece in the decorator pattern.
+     * Next piece in the decorator pattern.
      */
     protected Decorator nextPiece;
     /**

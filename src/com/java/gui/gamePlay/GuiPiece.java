@@ -23,7 +23,7 @@ public class GuiPiece extends JPanel {
     // ! assumes that the nextPiece is in a valid place in the arena
     private final InstanceManager instanceManager;
     private final Decorator piece;
-
+    private final Color colour;
     private ImageIcon shapeIcon;
     // private ImageIcon[] iconList = new ImageIcon[4];
 
@@ -31,6 +31,7 @@ public class GuiPiece extends JPanel {
     public GuiPiece(InstanceManager instanceManager, Decorator piece) {
         this.instanceManager = instanceManager;
         this.piece = piece;
+        this.colour = piece.getPiece().getColor();
         shapeIcon = switch(piece.getPiece().type){
             case "OShape" -> GuiPieceImages.OImage;
             case "HoShape" -> GuiPieceImages.HoImage;
@@ -52,7 +53,8 @@ public class GuiPiece extends JPanel {
         BufferedImage img = null;
         double imgScale = 0.05;
 
-        boolean[][] shapeMatrix = piece.getShape();
+        boolean[][] shapeMatrix = this.piece.getShape();
+        System.out.println(shapeMatrix[0][0]);
         IntCoordinates offSet = this.piece.getPiece().getOffset();
         IntCoordinates cellCoords;
         IntCoordinates pieceCoords;
@@ -60,21 +62,21 @@ public class GuiPiece extends JPanel {
 
         if (shapeIcon != null) {
             // preloading all the rotated icon shapes
-            for( int i = 0 ; i < piece.getLast().rotations; i++){
+            for( int i = 0 ; i < piece.getPiece().rotations; i++){
                 // this should only execute a maximum of 3 times
                 shapeIcon = GuiPieceImages.rotateImage(shapeIcon);
             }
-            if(piece.getLast().xFlipped){
+            if(piece.getPiece().xFlipped){
                 shapeIcon = GuiPieceImages.flipImage(shapeIcon, true);
             }
-            if(piece.getLast().yFlipped){
+            if(piece.getPiece().yFlipped){
                 shapeIcon = GuiPieceImages.flipImage(shapeIcon, false);
             }
             pieceCoords = this.instanceManager.getPixelCoordinates(new IntCoordinates(offSet.getX() ,offSet.getY()));
-            GuiPieceImages.changeColour(shapeIcon, this.piece.getPiece().getColor());
+            GuiPieceImages.changeColour(shapeIcon, this.colour);
             int imageWidth = shapeIcon.getImage().getWidth(null) / 120 * guiConfig.CELL_SIZE;
             int imageHeight =shapeIcon.getImage().getHeight(null) /120 * guiConfig.CELL_SIZE;
-            g2d.setColor(this.piece.getPiece().getColor());
+            g2d.setColor(this.colour);
             g2d.drawImage(shapeIcon.getImage(), pieceCoords.getX(), pieceCoords.getY(), imageWidth, imageHeight, null);
 
 
@@ -93,10 +95,7 @@ public class GuiPiece extends JPanel {
                     try {
                         cellCoords = new IntCoordinates(j + offSet.getX(), i + offSet.getY());
                         cellCoords = this.instanceManager.getPixelCoordinates(cellCoords);
-                        g2d.setColor(piece.getPiece().getColor());
-
-                        // g2d.fillRect(cellCoords.getX(), cellCoords.getY(), guiConfig.CELL_SIZE, guiConfig.CELL_SIZE);
-
+                        g2d.setColor(this.colour);
                         // load the icon for decorator into memory
                         String action = piece.getActionType(j, i);
                         try{

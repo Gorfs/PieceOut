@@ -60,7 +60,7 @@ public class Rotation extends Decorator {
     public void personalAction() {
         boolean[][] initShape = this.getPiece().getShape();
         boolean[][] rotatedShape = new boolean[initShape[0].length][initShape.length]; // new shape after rotation
-        this.getLast().addRotation(this.clockwise);
+        this.getPiece().addRotation(this.clockwise);
         this.offsetPosition(this.getActionPoint());
 
         // changing action point for all the decorators in the list
