@@ -11,8 +11,10 @@ import javax.sound.sampled.FloatControl;
 import java.io.File;
 
 public class Sound {
-    Clip clip ;
+    private Clip clip ;
     File[] soundFiles = new File[20];
+    private boolean soundEffectsMuted = false;
+    private boolean musicMuted = false;
 
     public Sound() {
         soundFiles[0] = new File(GuiConfig.resourcePath + "sfx/bg.wav");
@@ -35,6 +37,14 @@ public class Sound {
         soundFiles[17] = new File(GuiConfig.resourcePath + "sfx/note9.wav");
         soundFiles[18] = new File(GuiConfig.resourcePath + "sfx/note10.wav");
 
+    }
+
+    public boolean isSoundEffectsMuted() {
+        return soundEffectsMuted;
+    }
+
+    public boolean isMusicMuted() {
+        return musicMuted;
     }
 
     public void setFile(int i){
@@ -74,6 +84,7 @@ public class Sound {
     }
 
     public void playMoveSound() {
+        if (soundEffectsMuted) return;
         int i = (int) (Math.random() * 5) + 1;
         Sound soundEffect = new Sound();
         soundEffect.setFile(i);
@@ -86,6 +97,7 @@ public class Sound {
 
 
     public void playCollisionSound() {
+        if (soundEffectsMuted) return;
         int i = (int) (Math.random() * 3) + 6;
         Sound soundEffect = new Sound();
         soundEffect.setFile(i);
@@ -93,6 +105,7 @@ public class Sound {
     }
 
     public void playNote() {
+        if (soundEffectsMuted) return;
         int i = (int) (Math.random() * 10) + 9;
         Sound soundEffect = new Sound();
         soundEffect.setFile(i);
@@ -100,6 +113,21 @@ public class Sound {
     }
 
     public void playOST(){
+        if (musicMuted) return;
         playMusic(0);
+    }
+
+    public void toggleMute() {
+        if (clip.isActive()) {
+            stop();
+            musicMuted = true;
+        } else {
+            play();
+            musicMuted = false;
+        }
+    }
+
+    public void toggleSoundEffects(){
+        soundEffectsMuted = !soundEffectsMuted;
     }
 }

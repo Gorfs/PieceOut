@@ -65,21 +65,21 @@ public class InstanceManager {
         return gamePanel;
     }
 
-    public InstanceManager(PieceLogic pieceLogic, Point location) {
+    public InstanceManager(PieceLogic pieceLogic, Point location, Sound sound) {
         /*
          * init of instance
          */
         mainFrame.setLayout(layout);
         this.pieceLogic = pieceLogic;
         mainFrame.setLocation(location);
+        this.sound = sound;
         this.secondPlayer = this;
-        sound = new Sound();
         players = 1;
 
 
     }
 
-    public InstanceManager(PieceLogic pieceLogic, Point location, InstanceManager secondPlayer) {
+    public InstanceManager(PieceLogic pieceLogic, Point location, Sound sound, InstanceManager secondPlayer) {
         /*
          * init of instance
          */
@@ -87,7 +87,7 @@ public class InstanceManager {
         this.pieceLogic = pieceLogic;
         mainFrame.setLocation(location);
         this.secondPlayer = secondPlayer;
-        sound = new Sound();
+        this.sound = sound;
         players = 2;
     }
 
@@ -192,7 +192,7 @@ public class InstanceManager {
         if (level + 1 != LogicConstants.NUMBER_OF_LEVELS){
             Debug.out("You win!");
             Point location = mainFrame.getLocation();
-            InstanceManager next = new InstanceManager(new PieceLogic(), location, secondPlayer);
+            InstanceManager next = new InstanceManager(new PieceLogic(), location, sound, secondPlayer);
             level++;
             next.start(level);
             this.clear();
@@ -252,7 +252,7 @@ public class InstanceManager {
             }
         }
         Point location = mainFrame.getLocation();
-        Launcher launcher = new Launcher(location);
+        Launcher launcher = new Launcher(location, sound);
         launcher.launch();
     }
 

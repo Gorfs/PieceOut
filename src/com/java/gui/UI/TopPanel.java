@@ -16,6 +16,8 @@ public class TopPanel extends JPanel{
     JLabel levelLabel;
     JButton returnButton;
     JLabel movesLabel;
+    JButton muteMusicButton;
+    JButton muteSoundEffects;
 
     public TopPanel(InstanceManager instanceManager){
         super();
@@ -35,9 +37,10 @@ public class TopPanel extends JPanel{
         ImageIcon mainMenuIcon = new ImageIcon(new ImageIcon(GuiConfig.resourcePath + "icons/mainmenu.png").getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH));
 
         levelLabel = new JLabel("Level : " + (instanceManager.level + 1));
-        returnButton = new JButton("Return to Main Menu");
+        returnButton = new JButton("  Menu ");
         movesLabel = new JLabel("Moves : " + instanceManager.getNumMoves());
-
+        muteMusicButton = new JButton("Music");
+        muteSoundEffects = new JButton("Sound");
 
         levelLabel.setHorizontalAlignment(SwingConstants.CENTER);
         levelLabel.setForeground(Color.WHITE);
@@ -53,13 +56,44 @@ public class TopPanel extends JPanel{
         returnButton.setForeground(Color.WHITE);
         returnButton.setFocusable(false);
         returnButton.setFont(subTitleFont);
+        returnButton.setVerticalTextPosition(SwingConstants.BOTTOM);
+        returnButton.setHorizontalTextPosition(SwingConstants.CENTER);
 
         returnButton.addActionListener(e -> {
             instanceManager.returnToMainMenu();
         });
 
+//        boolean isMusicMuted = instanceManager.getSound().isMusicMuted();
+//        ImageIcon musicIcon = new ImageIcon(new ImageIcon(GuiConfig.resourcePath + (isMusicMuted ? "icons/musicoff.png" : "icons/musicon.png")).getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH));
 
-        this.setBorder(BorderFactory.createEmptyBorder(3,3,3,3));
+        muteMusicButton.setIcon(getMusicIcon(instanceManager));
+        muteMusicButton.setBackground(Colours.BACKGROUND.darker());
+        muteMusicButton.setForeground(Color.WHITE);
+        muteMusicButton.setFocusable(false);
+        muteMusicButton.setFont(subTitleFont);
+        muteMusicButton.addActionListener(e -> {
+            instanceManager.getSound().toggleMute();
+            muteMusicButton.setIcon(getMusicIcon(instanceManager));
+        });
+
+
+
+        muteSoundEffects.setIcon(getSoundEffectsIcon(instanceManager));
+        muteSoundEffects.setBackground(Colours.BACKGROUND.darker());
+        muteSoundEffects.setForeground(Color.WHITE);
+        muteSoundEffects.setFocusable(false);
+        muteSoundEffects.setFont(subTitleFont);
+        muteSoundEffects.addActionListener(e -> {
+            instanceManager.getSound().toggleSoundEffects();
+            muteSoundEffects.setIcon(getSoundEffectsIcon(instanceManager));
+        });
+
+
+
+
+
+
+        this.setBorder(BorderFactory.createEmptyBorder(3,3,3,20));
         this.setMinimumSize(new Dimension(Integer.MAX_VALUE, 30));
         this.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
         this.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -69,6 +103,21 @@ public class TopPanel extends JPanel{
         this.add(Box.createHorizontalGlue());
         this.add(movesLabel);
         this.add(Box.createHorizontalGlue());
+        this.add(muteMusicButton);
+        this.add(muteSoundEffects);
+
+    }
+
+    ImageIcon getMusicIcon(InstanceManager instanceManager){
+        boolean isMusicMuted = instanceManager.getSound().isMusicMuted();
+        ImageIcon musicIcon = new ImageIcon(new ImageIcon(GuiConfig.resourcePath + (isMusicMuted ? "icons/musicoff.png" : "icons/musicon.png")).getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH));
+        return musicIcon;
+    }
+
+    ImageIcon getSoundEffectsIcon(InstanceManager instanceManager){
+        boolean isSoundEffectsMuted = instanceManager.getSound().isSoundEffectsMuted();
+        ImageIcon soundEffectsIcon = new ImageIcon(new ImageIcon(GuiConfig.resourcePath + (isSoundEffectsMuted ? "icons/soundoff.png" : "icons/soundon.png")).getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH));
+        return soundEffectsIcon;
     }
 
 

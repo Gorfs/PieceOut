@@ -28,14 +28,15 @@ public class SelectLevelMenu {
     private final GameWindow mainFrame;
     private final CardLayout layout;
     private final int players;
-    private final Sound sound = new Sound();
+    private final Sound sound ;
 
-    public SelectLevelMenu(Point location, int players) {
+    public SelectLevelMenu(Point location, Sound sound, int players) {
         mainFrame = new GameWindow();
         selectLevelPanel = new SelectLevelPanel();
         layout = new CardLayout();
         mainFrame.setLayout(layout);
         mainFrame.setLocation(location);
+        this.sound = sound;
         this.players = players;
     }
 
@@ -57,16 +58,16 @@ public class SelectLevelMenu {
         level--;
         if (players == 1) {
             Point location = mainFrame.getLocation();
-            InstanceManager instanceManager = new InstanceManager(new PieceLogic(), location);
+            InstanceManager instanceManager = new InstanceManager(new PieceLogic(), location, sound);
             instanceManager.start(level);
         }
         else{
             Point location2 = mainFrame.getLocation();
             location2.setLocation(location2.getX() + GuiConfig.WINDOW_WIDTH + 10, location2.getY());
-            InstanceManager instanceManager2 = new InstanceManager(new PieceLogic(), location2, null);
+            InstanceManager instanceManager2 = new InstanceManager(new PieceLogic(), location2, sound);
             instanceManager2.start(level);
             Point location = mainFrame.getLocation();
-            InstanceManager instanceManager = new InstanceManager(new PieceLogic(), location, instanceManager2);
+            InstanceManager instanceManager = new InstanceManager(new PieceLogic(), location, sound, instanceManager2);
             instanceManager.start(level);
         }
     }
@@ -74,7 +75,7 @@ public class SelectLevelMenu {
     
     class SelectLevelPanel extends JPanel {
 
-        private final Sound sound = new Sound();
+
         
 
         /*
