@@ -23,13 +23,19 @@ Or download the project from moodle and extract
 
 ### Compile project
 ```
-$ cd /path/to/project/src
+$ cd /path/to/project/
 $ gradle build
 ```
 ## Usage
 ### Running the Project
 ```
-$ gradle run
+$ cd /path/to/project/
+$ gradle runJar
+```
+or
+```
+$ cd /path/to/project/
+$ java -jar /build/libs/2023-yj2-c-pieceout.jar
 ```
 
 ## Features

@@ -217,6 +217,7 @@ public class InstanceManager {
         if (pieceLogic.checkWin()) {
             playerController.stopController(gamePanel.getArenaPanel());
             soundManager.playNote();
+            LevelManager.unlockLevel(level);
             Debug.out("Result : " + rating() + " stars!");
             levelTransitionPanel.showRating(rating(), layeredPane, guiConfig);
             levelTransitionPanel.animationAtEnd(this);

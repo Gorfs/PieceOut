@@ -21,6 +21,7 @@ import com.java.config.GuiConfig;
 import com.java.gui.GameWindow;
 import com.java.gui.InstanceManager;
 import com.java.gui.sound.SoundManager;
+import com.java.logic.LevelManager;
 import com.java.logic.PieceLogic;
 
 
@@ -186,6 +187,13 @@ public class SelectLevelMenu {
              */
             public SelectButton(int level, Font buttonFont) {
                 super((String.valueOf(level)));
+                if (LevelManager.isLocked(level-1)){
+                    this.setEnabled(false);
+                }
+                else{
+                    this.setEnabled(true);
+                }
+
                 this.setFont(buttonFont);
                 this.setBackground(Colours.BACKGROUND.darker());
                 this.setForeground(Color.WHITE);
