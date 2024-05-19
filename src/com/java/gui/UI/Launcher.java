@@ -31,7 +31,7 @@ public class Launcher {
     private final LauncherPanel launcherPanel;
     private final GameWindow mainFrame;
     private final CardLayout layout;
-    private final Sound sound ;
+    private Sound sound ;
 
     public Launcher(Point location, Sound sound) {
         mainFrame = new GameWindow();
@@ -54,7 +54,7 @@ public class Launcher {
     /*
      * This method is called to start the game with the number of players specified
      */
-    public void startGame(int players){
+    public void startGame(int players, Sound sound){
         mainFrame.dispose();
         Point location = mainFrame.getLocation();
         SelectLevelMenu selectLevelMenu = new SelectLevelMenu(location, sound, players);
@@ -114,7 +114,7 @@ public class Launcher {
             startOnePlayerButton.setFont(buttonFont);
             startOnePlayerButton.addActionListener(e -> {
                 sound.playNote();
-                Launcher.this.startGame(1);
+                Launcher.this.startGame(1, sound);
             });
     
             startTwoPlayerButton = new JButton("Play with 2 Players");
@@ -125,7 +125,7 @@ public class Launcher {
             startTwoPlayerButton.setFont(buttonFont);
             startTwoPlayerButton.addActionListener(e -> {
                 sound.playNote();
-                Launcher.this.startGame(2);
+                Launcher.this.startGame(2, sound);
             });
     
             exitButton = new JButton("Exit");

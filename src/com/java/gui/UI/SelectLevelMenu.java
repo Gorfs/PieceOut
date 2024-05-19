@@ -64,7 +64,7 @@ public class SelectLevelMenu {
         else{
             Point location2 = mainFrame.getLocation();
             location2.setLocation(location2.getX() + GuiConfig.WINDOW_WIDTH + 10, location2.getY());
-            InstanceManager instanceManager2 = new InstanceManager(new PieceLogic(), location2, null);
+            InstanceManager instanceManager2 = new InstanceManager(new PieceLogic(), location2, sound);
             instanceManager2.start(level);
             Point location = mainFrame.getLocation();
             InstanceManager instanceManager = new InstanceManager(new PieceLogic(), location, sound, instanceManager2);
