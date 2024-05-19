@@ -4,9 +4,7 @@ package com.java.gui.UI;
 import com.java.config.Colours;
 import com.java.config.GuiConfig;
 import com.java.gui.GameWindow;
-import com.java.gui.InstanceManager;
 import com.java.gui.sound.SoundManager;
-import com.java.logic.PieceLogic;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -27,12 +25,14 @@ public class Launcher {
      * Main frame of the game
      */
     private final GameWindow mainFrame;
+    private final SoundManager soundManager;
 
     /**
      * Main constructor of the launcher
      */
-    public Launcher(Point location) {
+    public Launcher(Point location, SoundManager sound) {
         mainFrame = new GameWindow();
+        this.soundManager = sound;
         launcherPanel = new LauncherPanel();
         CardLayout layout = new CardLayout();
         mainFrame.setLayout(layout);
@@ -51,26 +51,12 @@ public class Launcher {
      * This method is called to start the game with the number of players specified
      * @param players Number of players that will play the game
      */
-    public void startGame(int players){
+    public void startGame(int players, SoundManager soundManager){
         mainFrame.dispose();
-        if (players == 1) {
-            int level = 0;
-            Point location = mainFrame.getLocation();
-            InstanceManager instanceManager = new InstanceManager(new PieceLogic(), location);
-            instanceManager.start(level);
-        }
-        else{
-            int level =0;
-            Point location2 = mainFrame.getLocation();
-            location2.setLocation(location2.getX() + GuiConfig.WINDOW_WIDTH + 10, location2.getY());
-            InstanceManager instanceManager2 = new InstanceManager(new PieceLogic(), location2, null);
-            instanceManager2.start(level);
-            Point location = mainFrame.getLocation();
-            InstanceManager instanceManager = new InstanceManager(new PieceLogic(), location, instanceManager2);
-            instanceManager.start(level);
-        }
+        Point location = mainFrame.getLocation();
+        SelectLevelMenu selectLevelMenu = new SelectLevelMenu(location, soundManager, players);
+        selectLevelMenu.launch();
     }
-
 
     /**
      * This subclass is responsible for the launcher panel.
@@ -78,7 +64,6 @@ public class Launcher {
      * the game with one or two players or to exit the game.
      */
     class LauncherPanel extends JPanel {
-
         /**
          * Constructor of the LauncherPanel, it initializes the attributes and sets the background color
          */
@@ -86,8 +71,7 @@ public class Launcher {
             this.setBackground(Colours.BACKGROUND);
             this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-            SoundManager sound = new SoundManager();
-            sound.playOST();
+            soundManager.playOST();
 
             try {
                 BufferedImage bufferedImage = ImageIO.read(new File(GuiConfig.resPath + "icons/titleImage.png"));
@@ -118,8 +102,8 @@ public class Launcher {
             }
 
             // Get the buttons
-            JButton startOnePlayerButton = getStartOnePlayerButton(buttonFont);
-            JButton startTwoPlayerButton = getStartTwoPlayerButton(buttonFont);
+            JButton startOnePlayerButton = getStartOnePlayerButton(buttonFont, soundManager);
+            JButton startTwoPlayerButton = getStartTwoPlayerButton(buttonFont, soundManager);
             JButton exitButton = getExitButton(buttonFont);
 
             // Create a JPanel with a BoxLayout and add the buttons to it
@@ -153,15 +137,18 @@ public class Launcher {
          * @param buttonFont Font to use for the button
          * @return "Start a game for one player" button
          */
-        private JButton getStartOnePlayerButton(Font buttonFont) {
-            JButton startOnePlayerButton = new JButton("Play with 1 Player");
-            startOnePlayerButton.setBackground(Colours.BACKGROUND.darker());
-            startOnePlayerButton.setForeground(Color.WHITE);
-            startOnePlayerButton.setFocusable(false);
-            startOnePlayerButton.setPreferredSize(new Dimension(250, 50));
-            startOnePlayerButton.setFont(buttonFont);
-            startOnePlayerButton.addActionListener(e -> Launcher.this.startGame(1));
-            return startOnePlayerButton;
+        private JButton getStartOnePlayerButton(Font buttonFont, SoundManager sound) {
+            JButton onePLayer = new JButton("Play with 1 Player");
+            onePLayer.setBackground(Colours.BACKGROUND.darker());
+            onePLayer.setForeground(Color.WHITE);
+            onePLayer.setFocusable(false);
+            onePLayer.setPreferredSize(new Dimension(250, 50));
+            onePLayer.setFont(buttonFont);
+            onePLayer.addActionListener(e -> {
+                sound.playNote();
+                Launcher.this.startGame(1, sound);
+            });
+            return onePLayer;
         }
 
         /**
@@ -169,15 +156,18 @@ public class Launcher {
          * @param buttonFont Font to use for the button
          * @return "Start a game for two players" button
          */
-        private JButton getStartTwoPlayerButton(Font buttonFont) {
-            JButton startTwoPlayerButton = new JButton("Play with 2 Players");
-            startTwoPlayerButton.setBackground(Colours.BACKGROUND.darker());
-            startTwoPlayerButton.setForeground(Color.WHITE);
-            startTwoPlayerButton.setFocusable(false);
-            startTwoPlayerButton.setPreferredSize(new Dimension(200, 50));
-            startTwoPlayerButton.setFont(buttonFont);
-            startTwoPlayerButton.addActionListener(e -> Launcher.this.startGame(2));
-            return startTwoPlayerButton;
+        private JButton getStartTwoPlayerButton(Font buttonFont, SoundManager sound) {
+            JButton twoPlayer = new JButton("Play with 2 Players");
+            twoPlayer.setBackground(Colours.BACKGROUND.darker());
+            twoPlayer.setForeground(Color.WHITE);
+            twoPlayer.setFocusable(false);
+            twoPlayer.setPreferredSize(new Dimension(200, 50));
+            twoPlayer.setFont(buttonFont);
+            twoPlayer.addActionListener(e -> {
+                sound.playNote();
+                Launcher.this.startGame(2, sound);
+            });
+            return twoPlayer;
         }
 
         /**

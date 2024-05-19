@@ -1,19 +1,18 @@
 package com.java.logic;
 
-import com.java.piece.PieceBrute;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import com.java.config.Colours;
 import com.java.config.GuiConfig;
 import com.java.geometry.IntCoordinates;
-import com.java.gui.InstanceManager;
 import com.java.piece.Piece;
+import com.java.piece.PieceBrute;
 import com.java.piece.ShapeFactory;
 import com.java.piece.Target;
 import com.java.piece.decorator.Decorator;
 import com.java.piece.decorator.Flip;
 import com.java.piece.decorator.Rotation;
 import com.java.piece.decorator.Translation;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.awt.*;
 import java.io.IOException;
@@ -106,9 +105,8 @@ public class LevelManager {
      * It creates the pieces and the targets and adds them to the pieceLogic.
      * @param pieceLogic the pieceLogic to add the pieces to
      * @param id the id of the level to load
-     * @param iManager the instance manager that contains the level data
      */
-    public static void loadPiecesFromJson(PieceLogic pieceLogic, int id, InstanceManager iManager) {
+    public static void loadPiecesFromJson(PieceLogic pieceLogic, int id) {
         try {
             // Read the .json file
             String content = new String(Files.readAllBytes(Paths.get(GuiConfig.resPath + "maps/pieces.json")));
@@ -127,7 +125,7 @@ public class LevelManager {
                     JSONArray pieces = level.getJSONArray("pieces");
                     for (int j = 0; j < pieces.length(); j++) {
                         JSONObject piece = pieces.getJSONObject(j);
-                        createPiece(piece, pieceLogic, iManager);
+                        createPiece(piece, pieceLogic);
                     }
                 }
             }
@@ -138,7 +136,7 @@ public class LevelManager {
                     JSONArray targets = level.getJSONArray("targets");
                     for (int j = 0; j < targets.length(); j++) {
                         JSONObject target = targets.getJSONObject(j);
-                        createTarget(target, pieceLogic, iManager);
+                        createTarget(target, pieceLogic);
                     }
                 }
             }
@@ -152,9 +150,8 @@ public class LevelManager {
      * It also creates the decorators and adds them to the piece.
      * @param piece the piece to create
      * @param pieceLogic the pieceLogic to add the piece to
-     * @param iManager the instance manager that contains the level data
      */
-    public static void createPiece(JSONObject piece, PieceLogic pieceLogic, InstanceManager iManager) {
+    public static void createPiece(JSONObject piece, PieceLogic pieceLogic) {
         // Get the color
         Color color = switch (piece.getString("color")) {
             case "green" -> Colours.PIECE_GREEN;
@@ -248,9 +245,8 @@ public class LevelManager {
      * Create a target from a JSONObject and add it to the pieceLogic.
      * @param target the target to create
      * @param pieceLogic the pieceLogic to add the target to
-     * @param iManager the instance manager that contains the level data
      */
-    public static void createTarget(JSONObject target, PieceLogic pieceLogic, InstanceManager iManager) {
+    public static void createTarget(JSONObject target, PieceLogic pieceLogic) {
         // Get the position
         JSONArray positionArray = target.getJSONArray("position");
         IntCoordinates position = new IntCoordinates(positionArray.getInt(0), positionArray.getInt(1));

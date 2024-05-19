@@ -86,19 +86,19 @@ public class InstanceManager {
     /**
      * Minimum number of moves to complete the level.
      */
-    private final int minNumMoves = LevelManager.NumMovesFromJson(level);
+    private int minNumMoves ;
 
     /**
      * Constructor of the InstanceManager.
      * It initializes the main frame, the layout, the piece logic of the game and the sound manager.
      * @param pieceLogic the piece logic of the game
      */
-    public InstanceManager(PieceLogic pieceLogic, Point location) {
+    public InstanceManager(PieceLogic pieceLogic, Point location, SoundManager sound) {
         mainFrame.setLayout(layout);
         this.pieceLogic = pieceLogic;
         mainFrame.setLocation(location);
         this.secondPlayer = this;
-        soundManager = new SoundManager();
+        soundManager = sound;
         players = 1;
     }
 
@@ -110,12 +110,12 @@ public class InstanceManager {
      * @param location the location of the window
      * @param secondPlayer the instance manager of the second player
      */
-    public InstanceManager(PieceLogic pieceLogic, Point location, InstanceManager secondPlayer) {
+    public InstanceManager(PieceLogic pieceLogic, Point location, SoundManager sound, InstanceManager secondPlayer) {
         mainFrame.setLayout(layout);
         this.pieceLogic = pieceLogic;
         mainFrame.setLocation(location);
         this.secondPlayer = secondPlayer;
-        soundManager = new SoundManager();
+        soundManager = sound;
         players = 2;
     }
 
@@ -128,6 +128,8 @@ public class InstanceManager {
     public void start(int level) {
         // Initialize the level and the player controller
         this.level = level;
+        // Get the minimum move for the level
+        this.minNumMoves = LevelManager.NumMovesFromJson(level);
         // Initialize the player controller
         playerController = new PlayerController(this, pieceLogic, guiConfig);
         // Initialize the arena
@@ -181,6 +183,7 @@ public class InstanceManager {
             }
         });
         levelTransitionPanel.animationOnStart(this);
+        Debug.out("NumMoves: " + numMoves + " minNumMoves: " + minNumMoves);
     }
 
     /**
@@ -228,7 +231,7 @@ public class InstanceManager {
         if (level + 1 != LogicConstants.NUMBER_OF_LEVELS){
             Debug.out("You win!");
             Point location = mainFrame.getLocation();
-            InstanceManager next = new InstanceManager(new PieceLogic(), location, secondPlayer);
+            InstanceManager next = new InstanceManager(new PieceLogic(), location, soundManager, secondPlayer);
             level++;
             next.start(level);
             this.clear();
@@ -245,7 +248,7 @@ public class InstanceManager {
     public int rating() {
         if (numMoves <= minNumMoves) {
             return 3;
-        } else if (numMoves <= minNumMoves + 2) {
+        } else if (numMoves <= minNumMoves * 1.5) {
             return 2;
         } else {
             return 1;
@@ -277,7 +280,7 @@ public class InstanceManager {
             }
         }
         Point location = mainFrame.getLocation();
-        Launcher launcher = new Launcher(location);
+        Launcher launcher = new Launcher(location, soundManager);
         launcher.launch();
     }
 
