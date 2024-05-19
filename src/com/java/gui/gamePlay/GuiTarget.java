@@ -8,21 +8,22 @@ import com.java.piece.Target;
 import javax.swing.*;
 import java.awt.*;
 
+
 /**
- * This class is responsible for painting the target in the game
+ * This class is responsible for painting the target in the game.
  */
 public class GuiTarget extends JPanel {
     /**
-     * Instance manager of the game
+     * Instance manager of the game.
      */
     private final InstanceManager instanceManager;
     /**
-     * Target to be painted
+     * Target to be painted.
      */
     private final Target target;
 
     /**
-     * Constructor of the GuiTarget class
+     * Constructor of the GuiTarget class.
      * @param iManager Instance manager of the game
      * @param target Target to be painted
      */

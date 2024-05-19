@@ -8,9 +8,12 @@ import com.java.piece.Piece;
 import com.java.geometry.IntCoordinates;
 import com.java.utils.Debug;
 
+
 /**
  * Class that represent the decorator pattern for the translation.
  * (North, East, South, West, according to the Direction.java enumeration class).
+ * It is used to translate the piece in the direction of the translation.
+ * @see Decorator
  */
 public class Translation extends Decorator {
     /**
@@ -18,7 +21,7 @@ public class Translation extends Decorator {
      */
     private Direction dir = Direction.NORTH;
     /**
-     * Array of boolean that represents the possible direction of the translation.
+     * Array of boolean that represents the possible direction of the translation
      * (North, East, South, West).
      */
     private final boolean[] directions;
@@ -36,9 +39,7 @@ public class Translation extends Decorator {
     @Override
     public boolean action(PieceLogic pieceLogic, InstanceManager instanceManager, int x, int y, IntCoordinates mousePos) {
         // If it is the right action we pressed on, then do the action.
-        // (deal with offset)
         if (this.getActionPoint().getX() == x && this.getActionPoint().getY() == y) {
-            // TODO: Create a box for each direction for multiple direction choice
             this.updateDir(mousePos, instanceManager);
             int temp = switch (dir) {
                 case NORTH -> 0;
@@ -49,25 +50,23 @@ public class Translation extends Decorator {
             if (directions[temp]) {
                 personalAction();
                 Debug.printDecorator(this);
-                if (checkCollision(pieceLogic)) {
+                if (checkCollision(pieceLogic, instanceManager)) {
                     Debug.out("Collision detected");
                     personalReverseAction();
-                    instanceManager.getSound().playCollisionSound();
+                    instanceManager.getSoundManager().playCollisionSound();
                     return false;
                 } else {
                     Debug.out("No collision detected");
-                    instanceManager.playerController.um.addEdit(new Move(this));
+                    instanceManager.getPlayerController().getUm().addEdit(new Move(this));
                     instanceManager.incMoves();
-                    instanceManager.getSound().playMoveSound();
+                    instanceManager.getSoundManager().playMoveSound();
                     return true;
                 }
             }
-
-            // If not, then we check for the next decorator.
         } else {
+            // If not, then we check for the next decorator.
             return this.prevPiece.action(pieceLogic, instanceManager, x, y, mousePos);
         }
-
         return false;
     }
 
@@ -97,6 +96,10 @@ public class Translation extends Decorator {
         invertDir();
     }
 
+    /**
+     * Method that applies the flip to the translation decorator.
+     * @param xAxis boolean that represents the axis of the flip. True for the X-axis, false for the Y-axis
+     */
     @Override
     public void applyFlip(boolean xAxis){
         boolean[] temp = directions.clone();
@@ -116,6 +119,10 @@ public class Translation extends Decorator {
         }
     }
 
+    /**
+     * Method that applies the rotation to the translation decorator.
+     * @param clockwise boolean that true when we rotate clockwise and false when we rotate counter-clockwise
+     */
     @Override
     public void applyRotation(boolean clockwise) {
         this.rotateActionPoint(clockwise);
@@ -155,10 +162,17 @@ public class Translation extends Decorator {
         }
     }
 
+    /**
+     * Method that updates the direction of the translation.
+     * @param dir the new direction of the translation
+     */
     public void updateDir(Direction dir) {
         this.dir = dir;
     }
 
+    /**
+     * @return the direction of the translation
+     */
     public Direction getDirection() {
         if (directions[0]) return Direction.NORTH;
         if (directions[1]) return Direction.EAST;
@@ -180,14 +194,14 @@ public class Translation extends Decorator {
     }
 
     /**
-     * @return the array of directions (North, East, South, West) according to the Direction.java enumeration class.
+     * @return the array of directions (North, East, South, West) according to the Direction.java enumeration class
      */
     public boolean[] getDirections() {
         return directions;
     }
 
     /**
-     * @return the current direction of the translation.
+     * @return the current direction of the translation
      */
     public Direction getDir() {
         return dir;
@@ -195,7 +209,7 @@ public class Translation extends Decorator {
 
     /**
      * Set the direction of the translation.
-     * @param dir the new direction of the translation.
+     * @param dir the new direction of the translation
      */
     public void setDir(Direction dir) {
         this.dir = dir;

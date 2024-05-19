@@ -7,7 +7,7 @@ import com.java.config.*;
 
 /**
  * This class is responsible for the main window of the game.
- * It is a JFrame that contains the game and represent the main window of the game.
+ * It is a JFrame that contains the game and represents the main window of the game.
  */
 public class GameWindow extends JFrame{
     /**

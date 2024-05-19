@@ -2,28 +2,29 @@ package com.java.logic;
 
 import com.java.gui.InstanceManager;
 
+
 /**
  * The Arena class represents a game arena with a specified width and height.
  * Max width and height are 7.
  */
 public class Arena {
     /**
-     * The width of the arena
+     * The width of the arena.
      */
     private final int width;
     /**
-     * The height of the arena
+     * The height of the arena.
      */
     private final int height;
     /**
-     * The matrix representing the arena
+     * The matrix representing the arena.
      */
     private final boolean[][] matrix;
 
     /**
      * Represents an arena in the game.
      * The arena is responsible for managing the dimensions and loading the arena from a file.
-     * @param iManager the instance manager that contains the level data.
+     * @param iManager the instance manager that contains the level data
      */
     public Arena(InstanceManager iManager){
         String[] data = LevelManager.loadLevelFromJson(iManager.level);
@@ -49,7 +50,7 @@ public class Arena {
     }
 
     /**
-     * @return boolean[][] that represents the map of the playable area.
+     * @return boolean[][] that represents the map of the playable area
      */
     public boolean[][] getMatrix(){
         return matrix;

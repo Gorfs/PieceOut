@@ -2,17 +2,30 @@ package com.java.gui.sound;
 
 import com.java.config.GuiConfig;
 
-
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import java.io.File;
 
-public class Sound {
-    Clip clip ;
-    File[] soundFiles = new File[20];
 
-    public Sound() {
+/**
+ * Class that manages the sound of the game.
+ */
+public class SoundManager {
+    /**
+     * Clip that will play the sound.
+     */
+    protected Clip clip;
+    /**
+     * Array of files that contains the sound files.
+     */
+    protected final File[] soundFiles = new File[14];
+
+    /**
+     * Constructor of the Sound class.
+     * It initializes the sound files.
+     */
+    public SoundManager() {
         soundFiles[0] = new File(GuiConfig.resPath + "sfx/bg.wav");
         soundFiles[1] = new File(GuiConfig.resPath + "sfx/move1.wav");
         soundFiles[2] = new File(GuiConfig.resPath + "sfx/move2.wav");
@@ -29,60 +42,77 @@ public class Sound {
         soundFiles[13] = new File(GuiConfig.resPath + "sfx/win5.wav");
     }
 
+    /**
+     * Method that sets the file that we want to play.
+     * @param i index of the file we want to set
+     */
     public void setFile(int i){
         try {
             AudioInputStream ais = AudioSystem.getAudioInputStream(soundFiles[i]);
             clip = AudioSystem.getClip();
             clip.open(ais);
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Error in Sound.setFile : " + e.getMessage());
         }
     }
 
+    /**
+     * Method that plays the sound.
+     */
     public void play() {
         if (clip != null) clip.start();
     }
 
-    public void stop() {
-        if (clip != null) clip.stop();
-    }
-
+    /**
+     * Method that loops the sound.
+     */
     public void loop() {
         if (clip != null) clip.loop(Clip.LOOP_CONTINUOUSLY);
     }
 
+    /**
+     * This method plays the music we asked for.
+     * @param i index of the file we want to play
+     */
     public void playMusic(int i) {
         setFile(i);
         play();
         loop();
     }
 
+    /**
+     * Method that plays the sound of a move.
+     */
     public void playMoveSound() {
         int i = (int) (Math.random() * 5) + 1;
-        Sound soundEffect = new Sound();
+        SoundManager soundEffect = new SoundManager();
         soundEffect.setFile(i);
         soundEffect.play();
     }
 
-    public void stopMusic() {
-        stop();
-    }
-
-
+    /**
+     * Method that plays the sound of a collision.
+     */
     public void playCollisionSound() {
         int i = (int) (Math.random() * 3) + 6;
-        Sound soundEffect = new Sound();
+        SoundManager soundEffect = new SoundManager();
         soundEffect.setFile(i);
         soundEffect.play();
     }
 
+    /**
+     * Method that plays the sound of a win.
+     */
     public void playNote() {
         int i = (int) (Math.random() * 5) + 9;
-        Sound soundEffect = new Sound();
+        SoundManager soundEffect = new SoundManager();
         soundEffect.setFile(i);
         soundEffect.play();
     }
 
+    /**
+     * Method that plays the sound of a win.
+     */
     public void playOST(){
         playMusic(0);
     }

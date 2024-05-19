@@ -1,8 +1,6 @@
 package com.java.utils;
 
-import com.java.piece.PieceBrute;
 import com.java.piece.decorator.Decorator;
-import com.java.geometry.IntCoordinates;
 import com.java.piece.decorator.Translation;
 
 /**
@@ -10,7 +8,7 @@ import com.java.piece.decorator.Translation;
  */
 public class Debug {
     // TODO switch to false when prototype is finished.
-    private static boolean debugging = true;
+    private static final boolean debugging = true;
     private static int debugMessages = 0;
 
     /**
@@ -20,32 +18,6 @@ public class Debug {
         if (debugging) {
             System.out.println("DEBUG > " + debugMessages + " : " + message);
             debugMessages++;
-        }
-    }
-
-    public static void printBooleanArray(boolean[][] arr) {
-        for (boolean[] booleans : arr) {
-            for (boolean aBoolean : booleans) {
-                System.out.print(aBoolean + " ");
-            }
-            System.out.println();
-        }
-    }
-
-    public static void printShapePieces(PieceBrute p) {
-        IntCoordinates fixturePoint = p.getFixturePoint();
-        System.out.println("Fixture point is : " + fixturePoint.getX() + " " + fixturePoint.getY());
-        System.out.println("position is x : " + p.getPos().getX() + " y : " + p.getPos().getY());
-        boolean[][] shape = p.getShape();
-        for (int i = 0; i < shape.length; i++) {
-            for (int j = 0; j < shape[i].length; j++) {
-                if (fixturePoint.getX() == (j) && fixturePoint.getY() == (i)) {
-                    System.out.print("X");
-                } else {
-                    System.out.print(shape[i][j] ? "O" : ".");
-                }
-            }
-            System.out.println();
         }
     }
 
@@ -82,12 +54,5 @@ public class Debug {
      */
     public static boolean isDebugging() {
         return debugging;
-    }
-
-    /**
-     * Toggles the debugging mode
-     */
-    public static void toggleDebugging() {
-        debugging = !debugging;
     }
 }

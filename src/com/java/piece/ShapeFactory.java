@@ -13,36 +13,31 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 
-
 /**
  * Class factory for shapes, each shape can be imported from the files.
+ * It is used to create a piece.
+ * @see PieceBrute
  */
 public class ShapeFactory extends PieceBrute {
     /**
-     * Constructor of ShapeFactory
+     * Constructor of ShapeFactory. It creates a piece with a shape from a file.
      * @param filePath File name like "OShape".
      * @param color Color of the nextPiece.
      * @param fixturePoint point of the face.
      * @param pos Position of the piece.
      */
-    public ShapeFactory(String filePath, Color color, IntCoordinates pos, IntCoordinates fixturePoint,
-                        InstanceManager instanceManager) {
+    public ShapeFactory(String filePath, Color color, IntCoordinates pos, IntCoordinates fixturePoint) {
         this.color = color;
         this.setPos(pos);
         this.setFixturePoint(fixturePoint);
         this.setShape(generateShape(filePath));
-        this.instanceManager = instanceManager;
-    }
-
-    public ShapeFactory(String filePath, Color color, IntCoordinates pos, IntCoordinates fixturePoint) {
-        this(filePath, color, pos, fixturePoint,  null);
     }
 
     /**
      * used mostly for test purposes
      */
     public ShapeFactory(){
-        this(null, null, new IntCoordinates(0, 0), new IntCoordinates(0, 0),null);
+        this(null, null, new IntCoordinates(0, 0), new IntCoordinates(0, 0));
     }
 
     /**
@@ -56,7 +51,6 @@ public class ShapeFactory extends PieceBrute {
             JSONObject jsonObject = new JSONObject(content);
             JSONArray shapeArray = jsonObject.getJSONArray("shapes");
 
-
             for (int i = 0; i < shapeArray.length(); i++) {
                 JSONObject type = shapeArray.getJSONObject(i);
                 // If the shape is found, get the shape
@@ -65,7 +59,6 @@ public class ShapeFactory extends PieceBrute {
                     // adding the type of the shape to the piece itself
                     String shapeType = type.getString("type");
                     this.setType(shapeType);
-
 
                     JSONArray form = type.getJSONArray("form");
                     // Create the shape
@@ -81,8 +74,8 @@ public class ShapeFactory extends PieceBrute {
                 }
             }
         } catch (IOException e) {
-            // TODO: handle exception
-            e.printStackTrace();
+            System.out.println("Error while reading the file, unable to generate the shape.");
+            return new boolean[][]{{false}};
         }
         return null;
     }

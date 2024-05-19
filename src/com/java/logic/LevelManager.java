@@ -1,5 +1,6 @@
 package com.java.logic;
 
+import com.java.piece.PieceBrute;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import com.java.config.Colours;
@@ -18,6 +19,7 @@ import java.awt.*;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+
 
 /**
  * The LevelManager class is responsible for loading levels from the levels.json file.
@@ -66,6 +68,11 @@ public class LevelManager {
         }
     }
 
+    /**
+     * Load the number of moves for a level from the levels.json file.
+     * @param id the id of the level to load
+     * @return the number of moves for the level
+     */
     public static int NumMovesFromJson(int id){
         try {
             // Read the .json file
@@ -88,7 +95,8 @@ public class LevelManager {
             // If no matching id is found, return null
             return -1;
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Error while loading the level from the JSON file.");
+            System.out.println(e.getMessage());
             return -1;
         }
     }
@@ -160,8 +168,8 @@ public class LevelManager {
         IntCoordinates position = new IntCoordinates(positionArray.getInt(0), positionArray.getInt(1));
 
         // Create the piece
-        Piece piece_to_add = new ShapeFactory(piece.getString("shape"), color, position,
-                new IntCoordinates(0, 0), iManager);
+        PieceBrute piece_to_add = new ShapeFactory(piece.getString("shape"), color, position,
+                new IntCoordinates(0, 0));
 
         // Add the decorators
         JSONArray decorators = piece.getJSONArray("decorators");
@@ -186,7 +194,7 @@ public class LevelManager {
     }
 
     /**
-     * Create a translation decorator from a JSONObject
+     * Create a translation decorator from a JSONObject.
      * @param piece the piece to add the decorator to
      * @param decoratorJSON the JSONObject representing the decorator
      * @return the created decorator
@@ -204,7 +212,7 @@ public class LevelManager {
     }
 
     /**
-     * Create a rotation decorator from a JSONObject
+     * Create a rotation decorator from a JSONObject.
      * @param piece the piece to add the decorator to
      * @param decoratorJSON the JSONObject representing the decorator
      * @return the created decorator
@@ -223,7 +231,7 @@ public class LevelManager {
     }
 
     /**
-     * Create a flip decorator from a JSONObject
+     * Create a flip decorator from a JSONObject.
      * @param piece the piece to add the decorator to
      * @param decoratorJSON the JSONObject representing the decorator
      * @return the created decorator
@@ -237,7 +245,7 @@ public class LevelManager {
     }
 
     /**
-     * Create a target from a JSONObject and add it to the pieceLogic
+     * Create a target from a JSONObject and add it to the pieceLogic.
      * @param target the target to create
      * @param pieceLogic the pieceLogic to add the target to
      * @param iManager the instance manager that contains the level data
@@ -253,7 +261,7 @@ public class LevelManager {
         boolean isFlippedY = target.getBoolean("flip_y");
         // Create the target
         Target target_to_add = new Target(pieceLogic.getPieces().get(target.getInt("id")), position, rotations,
-                isFlippedX, isFlippedY, iManager);
+                isFlippedX, isFlippedY);
         // Add the target to the pieceLogic
         pieceLogic.addTarget(target_to_add);
     }

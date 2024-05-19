@@ -7,7 +7,6 @@ import static java.lang.Math.min;
  * Class that contains all the GUI configurations.
  */
 public class GuiConfig {
-
     /**
      * Default value for the window width. By default, it's 800.
      */
@@ -27,17 +26,20 @@ public class GuiConfig {
     public int height = WINDOW_HEIGHT;
 
     /**
-     * Default scale of the arena. By default, it's 0.75
+     * Default scale of the arena. By default, it's 0.75.
      */
     public static final double initArenaScale = 0.60;
+    /**
+     * Scale of the arena.
+     */
     public double arenaScale = initArenaScale;
     /**
-     * Size of the cell. By default, it's 75.
+     * Size of the cell. By default, it's arenaScale(0.75) times 100, so 75.
      */
     public int CELL_SIZE = (int) Math.floor(100 * arenaScale);
 
     /**
-     * Path to the resources. By default, it's "src/com/resources/"
+     * Path to the resources. By default, it's "src/com/resources/".
      */
     public static String resPath = "src/com/resources/";
 

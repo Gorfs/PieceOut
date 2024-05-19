@@ -17,13 +17,33 @@ import java.awt.*;
  * It contains the arena, the pieces, the UI, etc.
  */
 public class GamePanel extends JPanel {
+    /**
+     * This is the top panel.
+     * It contains a "main menu" button, the level we are currently on, and the number of moves.
+     */
     private final TopPanel topPanel;
+    /**
+     * This is the arena container panel.
+     * It contains the arena where the pieces and the map are shown, it is the main area where the player will play.
+     */
     private final ArenaContainerPanel arenaContainerPanel;
+    /**
+     * This is the arena panel.
+     * It contains the 7x7 grid of cells that the game is played on.
+     */
     private final ArenaPanel arenaPanel;
-    private final JPanel bottomPanel;
-
+    /**
+     * This is the bottom panel.
+     * It contains the undo button and the redo button.
+     */
+    private final BottomPanel bottomPanel;
+    /**
+     * PieceLogic instance that manages the pieces.
+     */
     private final PieceLogic pieceLogic;
-
+    /**
+     * InstanceManager instance that manages the game.
+     */
     protected final InstanceManager instanceManager;
 
     /**
@@ -53,7 +73,7 @@ public class GamePanel extends JPanel {
     }
 
     /**
-     * paints the pieces from the Piece logic class to the gui
+     * paints the pieces from the Piece logic class to the gui.
      */
     public void paintPieces(){
         if (instanceManager.isTransitioning()){
@@ -84,7 +104,6 @@ public class GamePanel extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         //paint the arena
-
         SwingUtilities.invokeLater(this::paintTargets);
         SwingUtilities.invokeLater(this::paintPieces);
     }
@@ -96,6 +115,7 @@ public class GamePanel extends JPanel {
         // this makes sure to remove any previous pieces before adding new ones.
         repaint();
         this.topPanel.updateCount(instanceManager);
+        this.bottomPanel.updateButtons();
 
         // scheduling the painting of the pieces on the next event on the event dispatch thread
         SwingUtilities.invokeLater(this::paintTargets);
@@ -121,7 +141,7 @@ public class GamePanel extends JPanel {
      * @return the bottom panel of the game
      */
     public BottomPanel getBottomPanel(){
-        return (BottomPanel) this.bottomPanel;
+        return this.bottomPanel;
     }
 }
 

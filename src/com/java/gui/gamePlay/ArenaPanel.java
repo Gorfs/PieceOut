@@ -6,18 +6,18 @@ import com.java.gui.InstanceManager;
 import javax.swing.*;
 import java.awt.*;
 
+
 /**
- * class that represents the panel that displays the 7x7 grid of cells that
- * the game is played on
+ * class that represents the panel that displays the 7x7 grid of cells that the game is played on.
  */
 public class ArenaPanel extends JPanel {
     /**
-     * Instance that manages the game
+     * Instance that manages the game.
      */
     private final InstanceManager instanceManager;
 
     /**
-     * Constructor for the ArenaPanel class
+     * Constructor for the ArenaPanel class. It initializes the panel and fills it with cells.
      * @param instanceManager instance that manages the game
      */
     public ArenaPanel(InstanceManager instanceManager) {
@@ -26,7 +26,7 @@ public class ArenaPanel extends JPanel {
         this.setBackground(Colours.BACKGROUND_GREYED);
         // initializing the instance manager
         this.instanceManager = instanceManager;
-        int map_size = instanceManager.arena.getMatrix().length;
+        int map_size = instanceManager.getArena().getMatrix().length;
 
         this.setLayout(new GridLayout(map_size, map_size));
         this.setAlignmentY(CENTER_ALIGNMENT);
@@ -44,7 +44,7 @@ public class ArenaPanel extends JPanel {
      */
     public Cell[][] getCells() {
         // returns a 2d array of all the gui.gameplay.cell components drawn on the map
-        boolean[][] matrix = instanceManager.arena.getMatrix();
+        boolean[][] matrix = instanceManager.getArena().getMatrix();
         int width = matrix.length;
         int height = matrix[0].length;
         int x = 0;
@@ -61,16 +61,5 @@ public class ArenaPanel extends JPanel {
             }
         }
         return result;
-    }
-
-    /**
-     * updates the cells to a new matrix state.
-     */
-    public void updateArena() {
-        boolean[][] matrix = instanceManager.arena.getMatrix();
-        for (int i = 0; i < Math.pow(matrix.length, 2); i++) {
-            Cell cell = (Cell) this.getComponent(i);
-            cell.updatePlayableCell();
-        }
     }
 }

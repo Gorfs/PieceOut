@@ -8,9 +8,11 @@ import com.java.piece.Piece;
 import com.java.piece.PieceBrute;
 import com.java.utils.Debug;
 
+
 /**
  * Abstract class for the decorators. It extends 'Piece' because it uses the
- * method of 'decorator design pattern'.
+ * method of 'decorator design pattern'. It is the base for creating decorators.
+ * @see Piece
  */
 public abstract class Decorator extends Piece {
     /**
@@ -26,22 +28,22 @@ public abstract class Decorator extends Piece {
      */
     protected IntCoordinates localPos;
     /**
-     * the point which we apply the action too
+     * the point which we apply the action too.
      */
     private IntCoordinates actionPoint;
 
     /**
      * Constructor for the decorators.
-     * @param p Piece on which we add the decorator.
+     * @param p Piece on which we add the decorator
      */
     public Decorator(Piece p, IntCoordinates pos) {
-        // if the piece is a decorator, setting the next piece to allow for getting of
-        // the first element of the list
+        // if the piece is a decorator, setting the current piece as the next piece for p.
         try {
             Decorator p1 = (Decorator) p;
             p1.setNextPiece(this);
         } catch (Exception e) {
-            // TODO handle this exception to make it look prettier, should not be a problem
+            System.out.println("The given piece is not a decorator. It is a base piece.");
+            System.out.println("Nothing else to do here.");
         }
         this.prevPiece = p;
         this.localPos = pos;
@@ -56,18 +58,18 @@ public abstract class Decorator extends Piece {
             // Do the action
             personalAction();
             Debug.printDecorator(this);
-            if (checkCollision(pieceLogic)) {
+            if (checkCollision(pieceLogic, instanceManager)) {
                 // If the piece is colliding with the walls, then we reverse the action.
                 Debug.out("Collision detected");
                 personalReverseAction();
-                instanceManager.getSound().playCollisionSound();
+                instanceManager.getSoundManager().playCollisionSound();
                 return false;
             } else {
                 // If not, then we add the move to the undo manager.
                 Debug.out("No collision detected");
-                instanceManager.playerController.um.addEdit(new Move(this));
+                instanceManager.getPlayerController().getUm().addEdit(new Move(this));
                 instanceManager.incMoves();
-                instanceManager.getSound().playMoveSound();
+                instanceManager.getSoundManager().playMoveSound();
                 return true;
             }
         } else {
@@ -161,10 +163,10 @@ public abstract class Decorator extends Piece {
     /**
      * @return the prevPiece it decorates.
      */
-    public boolean checkCollision(PieceLogic pieceLogic) {
+    public boolean checkCollision(PieceLogic pieceLogic, InstanceManager iManager) {
         // Get the position of the piece
         IntCoordinates piecePos = this.getPiece().getOffset();
-        boolean[][] matrix = this.getPiece().instanceManager.arena.getMatrix();
+        boolean[][] matrix = iManager.getArena().getMatrix();
         // Variable to store the last piece
         PieceBrute last;
         for (int i = 0; i < this.getShape().length; i++) {
@@ -204,7 +206,7 @@ public abstract class Decorator extends Piece {
      * Method that returns the action type of the correct Piece.
      * @param x local getX coordinates in a shape array
      * @param y local getY coordinates in a shape array
-     * @return Returns a String that represents the action of the decorator.
+     * @return a String that represents the action of the decorator
      */
     public String getActionType(int x, int y) {
         if (this.actionPoint.getX() == x && this.actionPoint.getY() == y) {
@@ -231,9 +233,8 @@ public abstract class Decorator extends Piece {
         }
     }
 
-
     /**
-     * @return the base of the piece, where are stocked the position and the shape of the piece.
+     * @return the base of the piece, where are stocked the position and the shape of the piece
      */
     public PieceBrute getPiece() {
         Piece temp = prevPiece;
@@ -243,7 +244,7 @@ public abstract class Decorator extends Piece {
     }
 
     /**
-     * @return the last decorator in the chain added to the piece.
+     * @return the last decorator in the chain added to the piece
      */
     public Decorator getLast() {
         Decorator temp = this;
@@ -258,7 +259,7 @@ public abstract class Decorator extends Piece {
 
     /**
      * Method that returns the nextPiece it decorates.
-     * @return the nextPiece it decorates.
+     * @return the nextPiece it decorates
      */
     public Piece getNextPiece() {
         return nextPiece;
@@ -266,14 +267,14 @@ public abstract class Decorator extends Piece {
 
     /**
      * Method that sets the nextPiece it decorates.
-     * @param p Piece that we want to set as the nextPiece.
+     * @param p Piece that we want to set as the nextPiece
      */
     public void setNextPiece(Decorator p) {
         this.nextPiece = p;
     }
 
     /**
-     * @return Returns the local position of the decorator.
+     * @return Returns the local position of the decorator
      */
     public IntCoordinates getActionPoint() {return this.actionPoint;}
 

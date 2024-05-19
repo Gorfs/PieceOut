@@ -1,11 +1,11 @@
 package com.java.logic;
 
-
 import com.java.geometry.IntCoordinates;
 import com.java.piece.Target;
 import com.java.piece.decorator.Decorator;
 
 import java.util.ArrayList;
+
 
 /**
  * The PieceLogic class represents the logic of the game.
@@ -88,16 +88,15 @@ public class PieceLogic {
         targets.clear();
     }
 
-
     /**
-     * @return ArrayList<PieceBrute> that represents the pieces of the game.
+     * @return ArrayList<PieceBrute> that represents the pieces of the game
      */
     public ArrayList<Decorator> getPieces(){
         return pieces;
     }
 
     /**
-     * @return ArrayList<Target> that represents the targets of the game.
+     * @return ArrayList<Target> that represents the targets of the game
      */
     public ArrayList<Target> getTargets() {
         return targets;

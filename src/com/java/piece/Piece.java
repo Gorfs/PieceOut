@@ -6,22 +6,32 @@ import com.java.logic.PieceLogic;
 import com.java.utils.Debug;
 
 
+/**
+ * Abstract class that represents the pieces of the game.
+ * It is the base of the decorator pattern.
+ */
 public abstract class Piece {
+    /**
+     * This represents the number of times it has been rotated.
+     */
+    private short rotations = 0;
+    /**
+     * This represents if the piece has been flipped on the x-axis.
+     */
+    private boolean xFlipped = false;
+    /**
+     * This represents if the piece has been flipped on the y-axis.
+     */
+    private boolean yFlipped = false;
+    /**
+     * This represents the type of the piece.
+     */
+    private String type;
 
     /**
-     * @return Returns the current shape of the nextPiece.
+     * This method is used to add a rotation to the piece.
+     * @param clockwise boolean that represents the direction of the rotation
      */
-    public abstract boolean[][] getShape();
-
-    // this represents the number of times it has been rotated
-    // for a clockwise rotation add 1
-    // for an anticlockwise rotation add 3
-    // always mod 4 it.
-    public short rotations = 0;
-
-    public boolean xFlipped = false;
-    public boolean yFlipped = false;
-
     public void addRotation(boolean clockwise){
         Debug.out("ADDING ROTATION TO PIECE WITH ADD ROTATION "+ rotations +  " ");
         if (clockwise) rotations++;
@@ -29,24 +39,14 @@ public abstract class Piece {
         rotations %= 4;
     }
 
+    /**
+     * This method is used to add a flip to the piece.
+     * @param xAxis boolean that represents the axis of the flip. True for the X-axis, false for the Y-axis
+     */
     public void addFlip(boolean xAxis){
         if (xAxis) xFlipped = !xFlipped;
         else yFlipped = !yFlipped;
     }
-
-
-    public String type;
-    public void setType(String str){
-        type = str;
-    }
-
-    /**
-     * @return Returns a String that represents the nextPiece.
-     */
-    public String toString() {
-        return "";
-    }
-    public InstanceManager instanceManager;
 
     /**
      * This method is called when the piece is clicked.
@@ -65,9 +65,57 @@ public abstract class Piece {
      * This method is used to know the type of action.
      * @param x local getX coordinates in a shape array
      * @param y local getY coordinates in a shape array
-     * @return Returns a String that represents the action type of the nextPiece.
+     * @return a String that represents the action type of the piece.
      */
     public String getActionType(int x, int y) {
+        return "";
+    }
+
+    /**
+     * @return the current shape of the piece
+     */
+    public abstract boolean[][] getShape();
+
+    /**
+     * @return the amount of time the piece has rotated
+     */
+    public int getRotations(){
+        return rotations;
+    }
+
+    /**
+     * @return the type of the piece
+     */
+    public String getType(){
+        return type;
+    }
+
+    /**
+     * Set the type of the piece.
+     * @param str the type of the piece
+     */
+    public void setType(String str){
+        type = str;
+    }
+
+    /**
+     * @return the true if the piece has been flipped in the x-axis
+     */
+    public boolean isxFlipped() {
+        return xFlipped;
+    }
+
+    /**
+     * @return the true if the piece has been flipped in the y-axis
+     */
+    public boolean isyFlipped() {
+        return yFlipped;
+    }
+
+    /**
+     * @return Returns a String that represents the piece.
+     */
+    public String toString() {
         return "";
     }
 }

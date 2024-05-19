@@ -8,7 +8,7 @@ import com.java.geometry.IntCoordinates;
 import com.java.gui.UI.Launcher;
 import com.java.gui.UI.LevelTransitionPanel;
 import com.java.gui.gamePlay.*;
-import com.java.gui.sound.Sound;
+import com.java.gui.sound.SoundManager;
 import com.java.logic.Arena;
 import com.java.logic.LevelManager;
 import com.java.logic.PieceLogic;
@@ -21,55 +21,76 @@ import java.awt.*;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
+
 /**
  * InstanceManager class that is responsible for creating, changing,
  * updating and general management of the GUI.
  */
 public class InstanceManager {
     /**
-     * main frame and window of the game
+     * Main frame and window of the game.
      */
     private final GameWindow mainFrame = new GameWindow();
     /**
-     * Game panel of the game seen by the player
+     * Game panel of the game seen by the player.
      */
     private GamePanel gamePanel;
+    /**
+     * Configuration of the GUI for the instance.
+     */
     private final GuiConfig guiConfig = new GuiConfig();
     /**
-     * layout to change panels in rootPanel
+     * Layout to change panels in rootPanel.
      */
     private final CardLayout layout = new CardLayout();
     /**
-     * Panel that contains the level transition panel, that is shown when the level is completed
+     * Panel that contains the level transition panel, that is shown when the level is completed.
      */
     private final LevelTransitionPanel levelTransitionPanel = new LevelTransitionPanel();
+    /**
+     * Layered pane that contains the game panel and the level transition panel.
+     */
     private final JLayeredPane layeredPane = new JLayeredPane();
     /**
-     * Piece logic of the game, where the pieces are stocked
+     * Piece logic of the game, where the pieces are stocked.
      */
     private final PieceLogic pieceLogic;
     /**
-     * Player controller of the game, that manages the player actions
+     * Player controller of the game, that manages the player actions.
      */
-    public PlayerController playerController;
+    private PlayerController playerController;
     /**
-     * Arena of the game, where the pieces are placed
+     * Arena of the game, where the pieces are placed.
      */
-    public Arena arena;
-    private final Sound sound;
+    private Arena arena;
     /**
-     * level of the puzzle we are currently playing
+     * Sound of the game.
+     */
+    private final SoundManager soundManager;
+    /**
+     * level of the puzzle we are currently playing.
      */
     public int level;
+    /**
+     * Number of players in the game.
+     */
     private final int players;
+    /**
+     * Instance manager of the second player.
+     */
     private final InstanceManager secondPlayer;
-
-
+    /**
+     * Number of moves made by the player.
+     */
     private int numMoves = 0;
+    /**
+     * Minimum number of moves to complete the level.
+     */
     private final int minNumMoves = LevelManager.NumMovesFromJson(level);
 
     /**
-     * Constructor of the InstanceManager
+     * Constructor of the InstanceManager.
+     * It initializes the main frame, the layout, the piece logic of the game and the sound manager.
      * @param pieceLogic the piece logic of the game
      */
     public InstanceManager(PieceLogic pieceLogic, Point location) {
@@ -77,22 +98,30 @@ public class InstanceManager {
         this.pieceLogic = pieceLogic;
         mainFrame.setLocation(location);
         this.secondPlayer = this;
-        sound = new Sound();
+        soundManager = new SoundManager();
         players = 1;
     }
 
+    /**
+     * Constructor of the InstanceManager.
+     * It initializes the main frame, the layout, the piece logic of the game,
+     * the location of the window and the instance manager of the second player.
+     * @param pieceLogic the piece logic of the game
+     * @param location the location of the window
+     * @param secondPlayer the instance manager of the second player
+     */
     public InstanceManager(PieceLogic pieceLogic, Point location, InstanceManager secondPlayer) {
         mainFrame.setLayout(layout);
         this.pieceLogic = pieceLogic;
         mainFrame.setLocation(location);
         this.secondPlayer = secondPlayer;
-        sound = new Sound();
+        soundManager = new SoundManager();
         players = 2;
     }
 
     /**
      * Initiates the GUI window.
-     * It creates the game panel, the player controller, the arena and the pieces and targets
+     * It creates the game panel, the player controller, the arena and the pieces and targets.
      * @param level the level of the puzzle we are currently playing
      *              (0 for the first level, 1 for the second, etc.)
      */
@@ -133,7 +162,7 @@ public class InstanceManager {
         // Listener for resizing the window
         this.mainFrame.addComponentListener(new ComponentAdapter() {
             /**
-             * Invoked when the component's size changes. This method is used to update the size of the arena
+             * Invoked when the component's size changes. This method is used to update the size of the arena.
              * @param componentEvent the event to be processed by the listener
              */
             public void componentResized(ComponentEvent componentEvent) {
@@ -155,9 +184,9 @@ public class InstanceManager {
     }
 
     /**
-     * returns the pixel coordinates of the cell relative to the top left of the window
+     * returns the pixel coordinates of the cell relative to the top left of the window.
      * @param cellCoords Coordinates of the cell int the game
-     * @return IntCoordinates
+     * @return IntCoordinates of the cell in pixels
      */
     public IntCoordinates getPixelCoordinates(IntCoordinates cellCoords) {
         ArenaPanel arenaPanel = this.getGamePanel().getArenaPanel();
@@ -177,15 +206,14 @@ public class InstanceManager {
     }
 
     /** 
-     * updates the GUI
+     * updates the GUI of the game.
     */
     public void update() {
         gamePanel.update();
-        gamePanel.getBottomPanel().updateButtons(); //TODO move this call to inside the gamePanel.update() function
 
         if (pieceLogic.checkWin()) {
             playerController.stopController(gamePanel.getArenaPanel());
-            sound.playNote();
+            soundManager.playNote();
             Debug.out("Result : " + rating() + " stars!");
             levelTransitionPanel.showRating(rating(), layeredPane, guiConfig);
             levelTransitionPanel.animationAtEnd(this);
@@ -193,6 +221,9 @@ public class InstanceManager {
 
     }
 
+    /**
+     * Method that is called when the level is completed and switches to the next level.
+     */
     public void nextLevel() {
         if (level + 1 != LogicConstants.NUMBER_OF_LEVELS){
             Debug.out("You win!");
@@ -208,7 +239,9 @@ public class InstanceManager {
 
     }
 
-
+    /**
+     * @return the rating of the player based on the number of moves made.
+     */
     public int rating() {
         if (numMoves <= minNumMoves) {
             return 3;
@@ -219,9 +252,8 @@ public class InstanceManager {
         }
     }
 
-
     /**
-     * Method used to clear the GUI
+     * Method used to clear the GUI.
      */
     private void clear(){
         this.pieceLogic.clearPieces();
@@ -231,17 +263,13 @@ public class InstanceManager {
     }
 
     /**
-     * changes the panel in the main frame to the panel with the name panelName
+     * Method that is called when the player wants to return to the main menu.
      */
-    public void changePanel(String panelName) {
-        layout.show(mainFrame, panelName);
-    }
-
     public void returnToMainMenu() {
         if (secondPlayer == null && players == 2) {
             return;
         }
-        sound.playNote();
+        soundManager.playNote();
         this.clear();
         if (players == 2){
             for (Frame frame : Frame.getFrames()) {
@@ -254,7 +282,7 @@ public class InstanceManager {
     }
 
     /**
-     * Method that is called when the level is completed
+     * Method that is called when the level is completed.
      */
     public boolean isTransitioning() {
         return levelTransitionPanel.isTransitioning();
@@ -268,24 +296,29 @@ public class InstanceManager {
     }
 
     /**
-     * @return the piece logic of the game, where the pieces are stocked
+     * Increments the number of moves made by the player.
      */
-    public PieceLogic getPieceLogic() {
-        return pieceLogic;
-    }
-
     public void incMoves() {
         numMoves++;
     }
 
+    /**
+     * Decrements the number of moves made by the player.
+     */
     public void decMoves() {
         numMoves--;
     }
 
+    /**
+     * @return the number of moves made by the player
+     */
     public int getNumMoves() {
         return numMoves;
     }
 
+    /**
+     * @return the configuration of the GUI
+     */
     public GuiConfig getGuiConfig() {
         return guiConfig;
     }
@@ -296,7 +329,18 @@ public class InstanceManager {
         return this.mainFrame.getHeight();
     }
 
-    public Sound getSound() {
-        return sound;
+    public PlayerController getPlayerController() {
+        return playerController;
+    }
+
+    public Arena getArena() {
+        return arena;
+    }
+
+    /**
+     * @return the sound manager of the game
+     */
+    public SoundManager getSoundManager() {
+        return soundManager;
     }
 }

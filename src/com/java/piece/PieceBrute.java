@@ -1,6 +1,5 @@
 package com.java.piece;
 
-
 import com.java.geometry.IntCoordinates;
 
 import java.awt.*;
@@ -8,6 +7,8 @@ import java.awt.*;
 
 /**
  * Abstract class used to create pieces for the game.
+ * It is the base for creating piece.
+ * @see Piece
  */
 public abstract class PieceBrute extends Piece {
     /**
@@ -26,23 +27,27 @@ public abstract class PieceBrute extends Piece {
      * Shape of the piece.
      */
     private boolean[][] shape;
+    /**
+     * Array of IntCoordinates(x,y) that contains the coordinates where shape[y][x] is true.
+     */
+    private IntCoordinates[] posShape;
 
     /**
-     * @return the color of the piece.
+     * @return the color of the piece
      */
     public Color getColor() {
         return color;
     }
 
     /**
-     * @return the pivot point of the piece.
+     * @return the pivot point of the piece
      */
     public IntCoordinates getFixturePoint(){
         return fixturePoint;
     }
 
     /**
-     * @return the current shape of the piece.
+     * @return the current shape of the piece
      */
     public boolean[][] getShape() {
         return shape;
@@ -50,14 +55,15 @@ public abstract class PieceBrute extends Piece {
 
     /**
      * Method that set a new shape to the piece.
-     * @param shape New shape we want to give to our piece.
+     * @param shape New shape we want to give to our piece
      */
     public void setShape(boolean[][] shape) {
         this.shape = shape;
+        this.posShape = generatePosShape();
     }
 
     /**
-     * @return Returns the position of the piece.
+     * @return the position of the piece
      */
     public IntCoordinates getPos() {
         return pos;
@@ -65,14 +71,14 @@ public abstract class PieceBrute extends Piece {
 
     /**
      * Manually change the position of the piece.
-     * @param pos New position of the piece.
+     * @param pos New position of the piece
      */
     public void setPos(IntCoordinates pos) {
         this.pos = pos;
     }
 
     /**
-     * @return IntCoordinates
+     * @return IntCoordinates of the offset from the piece to the main arena grid
      */
     public IntCoordinates getOffset(){
         // returns new int-coordinates with the offset from the piece added
@@ -91,11 +97,41 @@ public abstract class PieceBrute extends Piece {
     }
 
     /**
-     * sets the which point of the shape matrix to fix to the pos on the main arena grid
+     * Method that generates the coordinates of the shape matrix where shape[y][x] is true.
+     * @return an array of IntCoordinates(x,y) that contains the coordinates where shape[y][x] is true
+     */
+    public IntCoordinates[] generatePosShape() {
+        if (this.getShape() == null) {
+            return null;
+        }
+        IntCoordinates[] pos = new IntCoordinates[this.getShape().length * this.getShape()[0].length];
+        int n = 0;
+        for (int i = 0; i < this.getShape().length; i++) {
+            for (int j = 0; j < this.getShape()[0].length; j++) {
+                if (this.getShape()[i][j]) {
+                    pos[n] = new IntCoordinates(j, i);
+                    n++;
+                }
+            }
+        }
+        IntCoordinates[] pos2 = new IntCoordinates[n];
+        System.arraycopy(pos, 0, pos2, 0, n);
+        return pos2;
+    }
+
+    /**
+     * Sets the which point of the shape matrix to fix to the pos on the main arena grid
      * @param fixturePoint IntCoordinates of the fixture point of the piece.
      */
     public void setFixturePoint(IntCoordinates fixturePoint) {
         this.fixturePoint = fixturePoint;
+    }
+
+    /**
+     * @return an array of IntCoordinates(x,y) that contains the coordinates where shape[y][x] is true
+     */
+    public IntCoordinates[] getPosShape() {
+        return posShape;
     }
 
     @Override

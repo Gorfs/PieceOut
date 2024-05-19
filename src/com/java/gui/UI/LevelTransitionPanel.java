@@ -32,7 +32,7 @@ public class LevelTransitionPanel extends JPanel{
      */
     public void animationOnStart(InstanceManager iManager) {
         isTransitioning = true;
-        iManager.getSound().playNote();
+        iManager.getSoundManager().playNote();
         Timer timer = new Timer(10, null);
         timer.addActionListener(e -> {
             int x = LevelTransitionPanel.this.getLocation().x;

@@ -30,7 +30,7 @@ public class BottomPanel extends JPanel {
         JPanel buttonContainer = new JPanel();
 
         // setting up the undoManager
-        this.playerController = instanceManager.playerController;
+        this.playerController = instanceManager.getPlayerController();
 
 
         buttonContainer.setLayout(new BoxLayout(buttonContainer, BoxLayout.X_AXIS));
@@ -49,9 +49,9 @@ public class BottomPanel extends JPanel {
         // Initialize the undo button
         undoButton.setIcon(undoIcon);
         undoButton.addActionListener(e -> {
-            playerController.um.undo();
+            playerController.getUm().undo();
             instanceManager.decMoves();
-                Debug.out("numMoves: " + instanceManager.getNumMoves());instanceManager.getSound().playMoveSound();instanceManager.update();
+                Debug.out("numMoves: " + instanceManager.getNumMoves());instanceManager.getSoundManager().playMoveSound();instanceManager.update();
             updateButtons();
         });
 
@@ -66,9 +66,9 @@ public class BottomPanel extends JPanel {
         // Initialize the redo button
         redoButton.setIcon(redoIcon);
         redoButton.addActionListener(e -> {
-            playerController.um.redo();
+            playerController.getUm().redo();
             instanceManager.incMoves();
-                Debug.out("numMoves: " + instanceManager.getNumMoves());instanceManager.getSound().playMoveSound();instanceManager.update();
+                Debug.out("numMoves: " + instanceManager.getNumMoves());instanceManager.getSoundManager().playMoveSound();instanceManager.update();
             updateButtons();
         });
 
@@ -88,8 +88,8 @@ public class BottomPanel extends JPanel {
      */
     public void updateButtons() {
         // on update of game loop, update the buttons to clickable or not.
-        updateButton(redoButton, playerController.um.canRedo());
-        updateButton(undoButton, playerController.um.canUndo());
+        updateButton(redoButton, playerController.getUm().canRedo());
+        updateButton(undoButton, playerController.getUm().canUndo());
     }
 
     /**

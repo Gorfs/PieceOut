@@ -5,7 +5,7 @@ import com.java.config.Colours;
 import com.java.config.GuiConfig;
 import com.java.gui.GameWindow;
 import com.java.gui.InstanceManager;
-import com.java.gui.sound.Sound;
+import com.java.gui.sound.SoundManager;
 import com.java.logic.PieceLogic;
 
 import javax.imageio.ImageIO;
@@ -86,7 +86,7 @@ public class Launcher {
             this.setBackground(Colours.BACKGROUND);
             this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-            Sound sound = new Sound();
+            SoundManager sound = new SoundManager();
             sound.playOST();
 
             try {

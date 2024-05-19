@@ -17,36 +17,46 @@ import javax.swing.undo.UndoManager;
 
 
 /**
- * Class that controls the player's actions
+ * Class that controls the player's actions.
  */
 public class PlayerController extends JPanel implements MouseListener, MouseMotionListener {
     /**
-     * Variable used to manage the undo and redo actions
+     * Variable used to manage the undo and redo actions.
      */
-    public UndoManager um = new UndoManager();
-
-
+    private final UndoManager um = new UndoManager();
     /**
-     * Variable used to manage the pieces, it contains the pieces that are in the game
+     * Variable used to manage the pieces, it contains the pieces that are in the game.
      */
     protected final PieceLogic pieceLogic;
     /**
-     * Variable used to link the instance manager to the controller
+     * Variable used to link the instance manager to the controller.
      */
     protected final InstanceManager instanceManager;
+    /**
+     * Variable used to manage the GUI configuration.
+     */
     protected final GuiConfig guiConfig;
 
-
-    IntCoordinates mousePosInWindow;
-    int i, j; // local coords of a shape array
-
-    Decorator selectedPiece = null;
-    IntCoordinates pressPos = null;
+    /**
+     * Variables used to manage the position of the mouse.
+     */
+    protected IntCoordinates mousePosInWindow;
+    /**
+     * Variable used to manage the selected piece.
+     */
+    protected Decorator selectedPiece = null;
+    /**
+     * Variables used to manage the position of the selected piece.
+     */
+    protected int i, j;
+    /**
+     * Variables used to manage the position of the mouse when the mouse is pressed.
+     */
+    protected IntCoordinates pressPos = null;
 
     /**
      * Constructor of the PlayerController where we initialize the attribute
-     * controlling
-     * and add the MouseListener and KeyListener to the JPanel
+     * controlling and add the MouseListener and KeyListener to the JPanel.
      * @param instanceManager Instance manager of the game we need to link to the player controller
      * @param pieceLogic Logic of the pieces used to manage the pieces in the game
      */
@@ -57,7 +67,7 @@ public class PlayerController extends JPanel implements MouseListener, MouseMoti
     }
 
     /**
-     * Method to start the controller
+     * Method that start the controller.
      * @param content Container where the controller will be added
      */
     public void startController(Container content){
@@ -65,19 +75,25 @@ public class PlayerController extends JPanel implements MouseListener, MouseMoti
         content.addMouseMotionListener(this);
     }
 
+    /**
+     * Method that stop the controller.
+     * @param content Container where the controller will be removed
+     */
     public void stopController(Container content){
         content.removeMouseListener(this);
         content.removeMouseMotionListener(this);
     }
 
     /**
-     * Method to activate or deactivate the control of the piece
+     * Method to enable or disable the control of the piece.
      * @param e MouseEvent that contains the position of the mouse
      */
     public Decorator isMouseOnPiece(MouseEvent e) {
         // Get mouse position in the ArenaPanel
-        IntCoordinates mousePos = new IntCoordinates((e.getX() / guiConfig.CELL_SIZE), e.getY() / guiConfig.CELL_SIZE);
-        IntCoordinates mousePosInWindow = new IntCoordinates(e.getX() % guiConfig.CELL_SIZE, e.getY() % guiConfig.CELL_SIZE);
+        IntCoordinates mousePos = new IntCoordinates((e.getX() / guiConfig.CELL_SIZE),
+                e.getY() / guiConfig.CELL_SIZE);
+        IntCoordinates mousePosInWindow = new IntCoordinates(e.getX() % guiConfig.CELL_SIZE,
+                e.getY() % guiConfig.CELL_SIZE);
         // Print the mouse position
         Debug.out("Mouse pos: " + mousePosInWindow + " " + mousePos);
         // Initialize the position of the piece
@@ -87,20 +103,18 @@ public class PlayerController extends JPanel implements MouseListener, MouseMoti
             // Get the position of the piece
             piecePos = piece.getPiece().getOffset();
             // Look into the shape of the piece
-            for (int i = 0; i < piece.getShape().length; i++) {
-                for (int j = 0; j < piece.getShape()[i].length; j++) {
-                    // Check if the mouse position is on the piece
-                    if (piece.getShape()[i][j]) {
-                        IntCoordinates temp = new IntCoordinates(piecePos.getX() + j, piecePos.getY() + i);
-                        // If the mouse position is on the piece, the piece is now controlled
-                        if (mousePos.equals(temp)) {
-                            // triggering action at local coords of a shape array
-                            this.mousePosInWindow = mousePosInWindow;
-                            this.i = i;
-                            this.j = j;
-                            return piece;
-                        }
-                    }
+            for (IntCoordinates pos: piece.getPiece().getPosShape()) {
+                // The position given is a position true in the shape of the piece because it is in the posShape array,
+                // so no need to verify if the position is true in the shape
+                IntCoordinates temp = new IntCoordinates(piecePos.getX() + pos.getX(),
+                        piecePos.getY() + pos.getY());
+                // If the mouse position is on the piece, the piece is now controlled
+                if (mousePos.equals(temp)) {
+                    // triggering action at local coords of a shape array
+                    this.mousePosInWindow = mousePosInWindow;
+                    this.i = pos.getY();
+                    this.j = pos.getX();
+                    return piece;
                 }
             }
         }
@@ -108,6 +122,11 @@ public class PlayerController extends JPanel implements MouseListener, MouseMoti
         return null;
     }
 
+    /**
+     * Method that gives the direction of the drag.
+     * @param newPos new position of the mouse
+     * @return the direction of the drag
+     */
     private Direction dragDirection(IntCoordinates newPos){
         Direction dragDir = switch (newPos.getX() - pressPos.getX()) {
             case 1, 2 -> Direction.EAST;
@@ -122,7 +141,10 @@ public class PlayerController extends JPanel implements MouseListener, MouseMoti
         return dragDir;
     }
 
-
+    /**
+     * Method that slides the piece in the direction of the drag.
+     * @param dragDir the direction of the drag
+     */
     private void slidePiece(Direction dragDir){
         // go through the decorators of the piece and check if it matches the drag direction
         var temp = selectedPiece;
@@ -134,20 +156,19 @@ public class PlayerController extends JPanel implements MouseListener, MouseMoti
                     if (t.getDirections()[k] && Direction.values()[k] == dragDir) {
                         t.updateDir(Direction.values()[k]);
                         t.personalAction();
-                        if (t.checkCollision(pieceLogic)) {
+                        if (t.checkCollision(pieceLogic, instanceManager)) {
                             t.personalReverseAction();
-                            instanceManager.getSound().playCollisionSound();
+                            instanceManager.getSoundManager().playCollisionSound();
                             selectedPiece = null;
                             break;
                         } else {
                             um.addEdit(new Move(t));
                             instanceManager.incMoves();
-                            instanceManager.getSound().playMoveSound();
+                            instanceManager.getSoundManager().playMoveSound();
                             instanceManager.update();
                         }
                         Debug.out("actioned");
                         break;
-
                     }
                 }
             }
@@ -178,8 +199,8 @@ public class PlayerController extends JPanel implements MouseListener, MouseMoti
 
     @Override
     public void mouseReleased(MouseEvent e) {
+        Debug.out("piece released");
         selectedPiece = null;
-//        Debug.out("piece released");
     }
 
     @Override
@@ -193,22 +214,20 @@ public class PlayerController extends JPanel implements MouseListener, MouseMoti
     @Override
     public void mouseDragged(MouseEvent e) {
         if (selectedPiece == null) return;
-
+        Debug.out("piece dragged");
+        // get a new position
         IntCoordinates newPos = new IntCoordinates((e.getX() / guiConfig.CELL_SIZE), e.getY() / guiConfig.CELL_SIZE);
-
         // get drag direction
         Direction dragDir = dragDirection(newPos);
-
-//        Debug.out("dragDir : " + dragDir);
-
         //slide the piece
         slidePiece(dragDir);
-
-
     }
 
     @Override
     public void mouseMoved(MouseEvent e) {
+    }
 
+    public UndoManager getUm() {
+        return um;
     }
 }

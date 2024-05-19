@@ -3,10 +3,12 @@ package com.java.piece.decorator;
 import com.java.geometry.IntCoordinates;
 import com.java.piece.Piece;
 
+
 /**
  * Class that represent the decorator pattern for the clockwise rotation.
  * The rotation is done by rotating the shape of the piece 90 degrees clockwise if the direction (clockwise) is true,
  * or 90 degrees anti-clockwise if the direction (clockwise) is false.
+ * @see Decorator
  */
 public class Rotation extends Decorator {
     /**
@@ -16,7 +18,7 @@ public class Rotation extends Decorator {
 
     /**
      * Constructor for the decorator RotateClock.
-     * @param p Piece on which we add the decorator.
+     * @param p Piece on which we add the decorator.*
      */
     public Rotation(Piece p, IntCoordinates pp) {
         super(p, pp);
@@ -25,14 +27,18 @@ public class Rotation extends Decorator {
 
     /**
      * Constructor for the decorator RotateClock.
-     * @param p Piece on which we add the decorator.
-     * @param clockwise boolean that represents the direction of the rotation.
+     * @param p Piece on which we add the decorator
+     * @param clockwise boolean that represents the direction of the rotation
      */
     public Rotation(Piece p, IntCoordinates pp, boolean clockwise) {
         this(p, pp);
         this.clockwise = clockwise;
     }
 
+    /**
+     * Apply the rotation to the rotation decorator.
+     * @param direction boolean that true when we rotate clockwise and false when we rotate anti-clockwise
+     */
     @Override
     public void applyRotation(boolean direction) {
         this.rotateActionPoint(direction);
@@ -41,6 +47,10 @@ public class Rotation extends Decorator {
         }
     }
 
+    /**
+     * Apply the flip to the rotation decorator.
+     * @param xAxis boolean that represents the axis of the flip. True for the X-axis, false for the Y-axis
+     */
     @Override
     public void applyFlip(boolean xAxis) {
         // updating the decorator's action points for a flip depending on the axis of flip
@@ -79,7 +89,6 @@ public class Rotation extends Decorator {
                 }
             }
         }
-
         // applying change to piece
         this.getPiece().setShape(rotatedShape);
         this.getPiece().setFixturePoint(this.getActionPoint());
@@ -96,7 +105,7 @@ public class Rotation extends Decorator {
     }
 
     /**
-     * @return the direction of the rotation. True for clockwise, false for anti-clockwise.
+     * @return the direction of the rotation. True for clockwise, false for anti-clockwise
      */
     public boolean getRotationDirection() {
         return this.clockwise;

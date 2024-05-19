@@ -6,6 +6,7 @@ import com.java.piece.decorator.Translation;
 
 import javax.swing.undo.AbstractUndoableEdit;
 
+
 /**
  * The Move class represents a move that can be done by a piece.
  * It contains the piece that will be moved and the direction of the move.
