@@ -248,7 +248,7 @@ public class LevelManager {
             // Iterate over the levels
             for (int i = 0; i < levels.length(); i++) {
                 JSONObject level = levels.getJSONObject(i);
-                if (level.getInt("id") == id) {
+                if (level.getInt("id") == id || level.getInt("id") == id + 1){
                     // If the id matches, return the map
                     level.put("locked", false);
                 }
