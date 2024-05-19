@@ -1,14 +1,12 @@
-{
-    "levels": [
-        {
-            "id": 0,
-            "name": "Level 1",
-            "difficulty": 0,
-            "moves": 4,
-            "map": {
-                "width": 7,
-                "height": 7,
-                "data": [
+{"levels": [
+     {
+          "difficulty": 0,
+          "moves": 4,
+          "name": "Level 1",
+          "id": 0,
+          "locked": false,
+          "map": {
+               "data": [
                     "0000000",
                     "0000000",
                     "1111110",
@@ -16,18 +14,19 @@
                     "0000000",
                     "0000000",
                     "0000000"
-                ]
-            }
-        },
-        {
-            "id": 1,
-            "name": "Level 2",
-            "difficulty": 0,
-            "moves": 8,
-            "map": {
-                "width": 7,
-                "height": 7,
-                "data": [
+               ],
+               "width": 7,
+               "height": 7
+          }
+     },
+     {
+          "difficulty": 0,
+          "moves": 8,
+          "name": "Level 2",
+          "id": 1,
+          "locked": false,
+          "map": {
+               "data": [
                     "0000100",
                     "0000100",
                     "0000100",
@@ -35,18 +34,19 @@
                     "0000100",
                     "0000100",
                     "0000100"
-                ]
-            }
-        },
-        {
-            "id": 2,
-            "name": "Level 3",
-            "difficulty": 0,
-            "moves": 14,
-            "map": {
-                "width": 7,
-                "height": 7,
-                "data": [
+               ],
+               "width": 7,
+               "height": 7
+          }
+     },
+     {
+          "difficulty": 0,
+          "moves": 14,
+          "name": "Level 3",
+          "id": 2,
+          "locked": false,
+          "map": {
+               "data": [
                     "0011100",
                     "0111110",
                     "0010110",
@@ -54,18 +54,19 @@
                     "0010110",
                     "0111110",
                     "0011100"
-                ]
-            }
-        },
-        {
-            "id": 3,
-            "name": "Level 4",
-            "difficulty": 1,
-            "moves": 8,
-            "map": {
-                "width": 7,
-                "height": 7,
-                "data": [
+               ],
+               "width": 7,
+               "height": 7
+          }
+     },
+     {
+          "difficulty": 1,
+          "moves": 8,
+          "name": "Level 4",
+          "id": 3,
+          "locked": true,
+          "map": {
+               "data": [
                     "0000010",
                     "0000010",
                     "0000110",
@@ -73,18 +74,19 @@
                     "0000110",
                     "0000010",
                     "0000010"
-                ]
-            }
-        },
-        {
-            "id": 4,
-            "name": "Level 5",
-            "difficulty": 1,
-            "moves": 9,
-            "map": {
-                "width": 7,
-                "height": 7,
-                "data": [
+               ],
+               "width": 7,
+               "height": 7
+          }
+     },
+     {
+          "difficulty": 1,
+          "moves": 9,
+          "name": "Level 5",
+          "id": 4,
+          "locked": true,
+          "map": {
+               "data": [
                     "0000000",
                     "0000100",
                     "0000100",
@@ -92,18 +94,19 @@
                     "0001110",
                     "0111110",
                     "0000000"
-                ]
-            }
-        },
-        {
-            "id": 5,
-            "name": "Level 6",
-            "difficulty": 1,
-            "moves": 7,
-            "map": {
-                "width": 7,
-                "height": 7,
-                "data": [
+               ],
+               "width": 7,
+               "height": 7
+          }
+     },
+     {
+          "difficulty": 1,
+          "moves": 7,
+          "name": "Level 6",
+          "id": 5,
+          "locked": true,
+          "map": {
+               "data": [
                     "0001000",
                     "0001000",
                     "0011100",
@@ -111,18 +114,19 @@
                     "0011100",
                     "0001100",
                     "0011100"
-                ]
-            }
-        },
-        {
-            "id": 6,
-            "name": "Level 7",
-            "difficulty": 2,
-            "moves": 7,
-            "map": {
-                "width": 7,
-                "height": 7,
-                "data": [
+               ],
+               "width": 7,
+               "height": 7
+          }
+     },
+     {
+          "difficulty": 2,
+          "moves": 7,
+          "name": "Level 7",
+          "id": 6,
+          "locked": true,
+          "map": {
+               "data": [
                     "0011000",
                     "0001000",
                     "0011000",
@@ -130,18 +134,19 @@
                     "0011000",
                     "0001000",
                     "0011000"
-                ]
-            }
-        },
-        {
-            "id": 7,
-            "name": "Level 8",
-            "difficulty": 2,
-            "moves": 15,
-            "map": {
-                "width": 7,
-                "height": 7,
-                "data": [
+               ],
+               "width": 7,
+               "height": 7
+          }
+     },
+     {
+          "difficulty": 2,
+          "moves": 15,
+          "name": "Level 8",
+          "id": 7,
+          "locked": true,
+          "map": {
+               "data": [
                     "0111100",
                     "0111100",
                     "0111100",
@@ -149,8 +154,9 @@
                     "0111100",
                     "0111100",
                     "0111100"
-                ]
-            }
-        }
-    ]
-}
+               ],
+               "width": 7,
+               "height": 7
+          }
+     }
+]}

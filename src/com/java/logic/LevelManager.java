@@ -1,6 +1,7 @@
 package com.java.logic;
 
 import java.awt.*;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -203,5 +204,62 @@ public class LevelManager {
         Target target_to_add = new Target(pieceLogic.getPieces().get(target.getInt("id")), position, rotations, isFlippedX, isFlippedY, instanceManager);
         // Add the target to the pieceLogic
         pieceLogic.addTarget(target_to_add);
+    }
+
+    public static boolean isLocked(int id){
+        try {
+            // Read the .json file
+            String content = new String(Files.readAllBytes(Paths.get(GuiConfig.resourcePath + "maps/levels.json")));
+
+            // Parse the content into a JSONObject
+            JSONObject obj = new JSONObject(content);
+
+            // Get the levels JSONArray
+            JSONArray levels = obj.getJSONArray("levels");
+
+            // Iterate over the levels
+            for (int i = 0; i < levels.length(); i++) {
+                JSONObject level = levels.getJSONObject(i);
+                if (level.getInt("id") == id) {
+                    // If the id matches, return the map
+                    return level.getBoolean("locked");
+                }
+            }
+
+            // If no matching id is found, return null
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return true;
+        }
+    }
+
+    public static void unlockLevel(int id){
+        try {
+            // Read the .json file
+            String content = new String(Files.readAllBytes(Paths.get(GuiConfig.resourcePath + "maps/levels.json")));
+
+            // Parse the content into a JSONObject
+            JSONObject obj = new JSONObject(content);
+
+            // Get the levels JSONArray
+            JSONArray levels = obj.getJSONArray("levels");
+
+            // Iterate over the levels
+            for (int i = 0; i < levels.length(); i++) {
+                JSONObject level = levels.getJSONObject(i);
+                if (level.getInt("id") == id) {
+                    // If the id matches, return the map
+                    level.put("locked", false);
+                }
+            }
+
+            // Write the new content
+            FileWriter file = new FileWriter(GuiConfig.resourcePath + "maps/levels.json");
+            file.write(obj.toString(4));
+            file.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
