@@ -1,6 +1,6 @@
 # Piece out
 
-## Introduction
+## Description
 l2 Licence Informatique Projet de programmation (IF14Y010) 
 Groupe YJ2-C
 
@@ -13,23 +13,23 @@ Groupe YJ2-C
 ## Installation
 ### Prerequisites
 - Java JDK 17: The project requires Java JDK 17 to run. You can download it from the [official Oracle website](https://www.oracle.com/java/technologies/downloads/) or install it via a package manager like apt on Ubuntu or Homebrew on MacOS. 
-
+- Gradle: The project also requires Gradle to build and manage dependencies. You can download it from the [official Gradle website](https://gradle.org/install/) or install it via a package manager like apt on Ubuntu or Homebrew on MacOS. 
 
 ### Clone the project repository OR download
 ```
 git clone https://gaufre.informatique.univ-paris-diderot.fr/beales/2023-yj2-c-pieceout.git
 ``` 
-Or download the project from moodle and unzip
+Or download the project from moodle and extract 
 
 ### Compile project
 ```
-cd /path/to/project/src
-javac -d out com/java/main/*.java
+$ cd /path/to/project/src
+$ gradle build
 ```
 ## Usage
 ### Running the Project
 ```
-java -cp /path/to/project/src com.java.main.MainClass
+$ gradle run
 ```
 
 ## Features
