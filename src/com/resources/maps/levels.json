@@ -24,7 +24,7 @@
           "moves": 8,
           "name": "Level 2",
           "id": 1,
-          "locked": false,
+          "locked": true,
           "map": {
                "data": [
                     "0000100",
@@ -44,7 +44,7 @@
           "moves": 14,
           "name": "Level 3",
           "id": 2,
-          "locked": false,
+          "locked": true,
           "map": {
                "data": [
                     "0011100",
