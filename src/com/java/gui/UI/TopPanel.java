@@ -56,6 +56,8 @@ public class TopPanel extends JPanel{
         returnButton.setForeground(Color.WHITE);
         returnButton.setFocusable(false);
         returnButton.setFont(subTitleFont);
+        returnButton.setVerticalTextPosition(SwingConstants.BOTTOM);
+        returnButton.setHorizontalTextPosition(SwingConstants.CENTER);
 
         returnButton.addActionListener(e -> {
             instanceManager.returnToMainMenu();
