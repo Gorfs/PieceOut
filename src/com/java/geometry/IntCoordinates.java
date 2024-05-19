@@ -5,15 +5,17 @@ package com.java.geometry;
  */
 public class IntCoordinates {
     /**
-     * Attributes of IntCoordinates
-     * x: coordinates in X-axis
-     * y: coordinates on Y-axis
+     * Coordinates on the X-axis.
      */
     private int x;
+    /**
+     * Coordinates on the Y-axis.
+     */
     private int y;
 
     /**
-     * Constructor of IntCoordinates
+     * Constructor of IntCoordinates.
+     * It initializes the coordinates.
      * @param x coordinates in X-axis
      * @param y coordinates on Y-axis
      */
@@ -23,22 +25,24 @@ public class IntCoordinates {
     }
 
     /**
+     * Compares two IntCoordinates objects and returns true if they are at the same position
+     * if their x and y are equals.
      * @param pos IntCoordinates to compare with
-     * @return Returns true or false, whether equal or not.
+     * @return Returns true or false, whether equal or not
      */
     public boolean equals(IntCoordinates pos) {
         return this.getX() == pos.getX() && this.getY() == pos.getY();
     }
 
     /**
-     * @return Returns the coordinates of the piece.
+     * @return Returns the coordinates of the piece
      */
     public int getX() {
         return x;
     }
 
     /**
-     * @return Returns the coordinates of the piece.
+     * @return Returns the coordinates of the piece
      */
     public int getY() {
         return y;

@@ -1,50 +1,44 @@
 package com.java.gui.UI;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.undo.UndoManager;
-
-import java.util.ArrayList;
-
 import com.java.config.Colours;
 import com.java.config.GuiConfig;
-import com.java.utils.Debug;
-import com.java.gui.InstanceManager;
 import com.java.controllers.PlayerController;
+import com.java.gui.InstanceManager;
+import com.java.utils.Debug;
 
+import javax.swing.*;
+import java.awt.*;
+
+
+/**
+ * this panel represents the bottom panel containing the undo and redo buttons
+ */
 public class BottomPanel extends JPanel {
     /**
-     * this panel represents the bottom panel containing the undo and redo buttons
+     * undo button.
      */
-
-    private ArrayList<JButton> btnList = new ArrayList<JButton>();
-
-    private JButton undoButton;
-    private JButton redoButton;
-
+    private final JButton undoButton;
+    /**
+     * redo button.
+     */
+    private final JButton redoButton;
+    /**
+     * player controller instance that attached to the undo and redo button.
+     */
     public PlayerController playerController;
 
+    /**
+     * main constructor of the bottom panel
+     */
     public BottomPanel(InstanceManager instanceManager) {
-        /**
-         * main constructur of the bottom panel
-         */
         super();
+        // setting the layout of the bottom panel
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.setOpaque(false);
         JPanel buttonContainer = new JPanel();
 
         // setting up the undoManager
-        this.playerController = instanceManager.playerController;
+        this.playerController = instanceManager.getPlayerController();
 
 
         buttonContainer.setLayout(new BoxLayout(buttonContainer, BoxLayout.X_AXIS));
@@ -55,76 +49,63 @@ public class BottomPanel extends JPanel {
         undoButton.setBackground(Colours.BACKGROUND.brighter());
         undoButton.setForeground(Color.WHITE);
         undoButton.setFocusable(false);
-        // Setting the icon for the undo button
-        ImageIcon undoIcon = new ImageIcon(
-                new ImageIcon(GuiConfig.resourcePath + "icons/undo.png").getImage().getScaledInstance(50, 50,
-                        Image.SCALE_SMOOTH));
+
+        // Load the image for the undo button
+        Image image = new ImageIcon(GuiConfig.resPath + "icons/undo.png")
+                .getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+        ImageIcon undoIcon = new ImageIcon(image);
+        // Initialize the undo button
         undoButton.setIcon(undoIcon);
-        undoButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                // testing undo
-                playerController.um.undo();
-                instanceManager.decMoves();
-                Debug.out("numMoves: " + instanceManager.getNumMoves());
-                instanceManager.getSound().playMoveSound();
-                instanceManager.update();
-                updateButtons();
-            }
+        undoButton.addActionListener(e -> {
+            playerController.getUm().undo();
+            instanceManager.decMoves();
+            Debug.out("numMoves: " + instanceManager.getNumMoves());
+            instanceManager.getSoundManager().playMoveSound();instanceManager.update();
+            updateButtons();
         });
 
         redoButton = new JButton();
         redoButton.setForeground(Color.WHITE);
         redoButton.setFocusable(false);
 
-        // Load the image
-        ImageIcon redoIcon = new ImageIcon(
-                new ImageIcon(GuiConfig.resourcePath + "icons/redo.png").getImage().getScaledInstance(50, 50,
-                        Image.SCALE_SMOOTH));
+        // Load the image for the redo button
+        image = new ImageIcon(GuiConfig.resPath + "icons/redo.png")
+                .getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+        ImageIcon redoIcon = new ImageIcon(image);
+        // Initialize the redo button
         redoButton.setIcon(redoIcon);
-        // redoButton.setBorder(BorderFactory.createEmptyBorder(3,3,3,3));
-        redoButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                playerController.um.redo();
-                instanceManager.incMoves();
-                Debug.out("numMoves: " + instanceManager.getNumMoves());
-                instanceManager.getSound().playMoveSound();
-                instanceManager.update();
-                updateButtons();
-            }
+        redoButton.addActionListener(e -> {
+            playerController.getUm().redo();
+            instanceManager.incMoves();
+            Debug.out("numMoves: " + instanceManager.getNumMoves());
+            instanceManager.getSoundManager().playMoveSound();instanceManager.update();
+            updateButtons();
         });
 
-        // this.add(Box.createRigidArea(new Dimension(GuiConfig.WINDOW_WIDTH / 5, 20)));
         this.add(buttonContainer);
         buttonContainer.add(undoButton);
         buttonContainer.add(Box.createRigidArea(new Dimension(20, 0)));
         buttonContainer.add(redoButton);
         this.setBorder(BorderFactory.createEmptyBorder(3, 3, 10, 3));
-
-        btnList.add(undoButton);
-        btnList.add(redoButton);
-        updateButtons();
-        // Add a border to the bottom panel
-        // this.setBorder(BorderFactory.createLineBorder(Color.BLUE));
-
-        // making the main bottom panel take up the whole width
+        // making the main bottom panel takes up the whole width
         this.setMaximumSize(new Dimension(Integer.MAX_VALUE, 100));
-        // this.setMinimumSize(new Dimension(Integer.MAX_VALUE, 300));
 
+        updateButtons();
     }
 
     /**
      * updates the buttons to clickable or not
      */
     public void updateButtons() {
-        // on update of gameloop, update the buttons to clickable or not.
-        updateButton(redoButton, playerController.um.canRedo());
-        updateButton(undoButton, playerController.um.canUndo());
+        // on update of game loop, update the buttons to clickable or not.
+        updateButton(redoButton, playerController.getUm().canRedo());
+        updateButton(undoButton, playerController.getUm().canUndo());
     }
 
     /**
      * updates a single button to clickable or not
-     * @param btn
-     * @param available
+     * @param btn the button to update, either undo or redo
+     * @param available whether the button should be clickable or not
      */
     public void updateButton(JButton btn, boolean available) {
         // setting the value of the button to available (clickable) or not
@@ -137,11 +118,11 @@ public class BottomPanel extends JPanel {
     }
 
     /**
-     * set the button to not clickable and all grey.
-     * @param btn
+     * set the button to not clickable and all gray.
+     * @param btn the button to set to not clickable.
      */
     public void setNotAvailable(JButton btn) {
-        // sets the button to grey and not clickable
+        // sets the button to gray and not clickable
         btn.setEnabled(false);
         btn.setBackground(Colours.BACKGROUND_GREYED);
     }

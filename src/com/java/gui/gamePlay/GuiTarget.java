@@ -4,55 +4,58 @@ import com.java.config.GuiConfig;
 import com.java.geometry.IntCoordinates;
 import com.java.gui.InstanceManager;
 import com.java.piece.Target;
-import com.java.utils.Debug;
 
 import javax.swing.*;
 import java.awt.*;
 
+
+/**
+ * This class is responsible for painting the target in the game.
+ */
 public class GuiTarget extends JPanel {
+    /**
+     * Instance manager of the game.
+     */
     private final InstanceManager instanceManager;
+    /**
+     * Target to be painted.
+     */
     private final Target target;
-    private final Color color;
 
-    public GuiTarget(InstanceManager instanceManager, Target target) {
-        this.instanceManager = instanceManager;
+    /**
+     * Constructor of the GuiTarget class.
+     * @param iManager Instance manager of the game
+     * @param target Target to be painted
+     */
+    public GuiTarget(InstanceManager iManager, Target target) {
+        this.instanceManager = iManager;
         this.target = target;
-        // make the color less opaque
-        Color color = target.getPiece().getLast().getColor();
-        this.color = new Color(color.getRed(), color.getGreen(), color.getBlue(), 70);
-    }
-
-    public IntCoordinates getPixelCoordinates(IntCoordinates cellCoords) {
-        ArenaPanel arenaPanel = this.instanceManager.getGamePanel().getArenaPanel();
-        try {
-            Cell[][] cells = arenaPanel.getCells();
-            Cell cell = cells[cellCoords.getY()][cellCoords.getX()];
-            int xOffSet = arenaPanel.getX();
-            int yOffSet = instanceManager.getArenaPanelY();
-            return new IntCoordinates(cell.getX() + xOffSet, cell.getY() + yOffSet);
-        } catch (Exception e) {
-            Debug.out("Error in getPixelCoordinates : " + e.getMessage());
-            return new IntCoordinates(-100, 0);
-        }
     }
 
     @Override
     public void paintComponent(Graphics g) {
-        GuiConfig guiConfig = this.instanceManager.getGuiConfig();
+        // get the graphics object
         Graphics2D g2d = (Graphics2D) g;
+        GuiConfig guiConfig = this.instanceManager.getGuiConfig();
+
+        // make the color less opaque
+        Color color = target.getPiece().getPiece().getColor();
+        color = new Color(color.getRed(), color.getGreen(), color.getBlue(), 70);
         g2d.setColor(color);
 
+        // get the shape of the target
         boolean[][] shape = target.getShape();
         IntCoordinates cellCoords;
 
+        // draw the target
         for (int y = 0; y < shape.length; y++) {
             for (int x = 0; x < shape[y].length; x++) {
                 if (shape[y][x]) {
-                    cellCoords = getPixelCoordinates( new IntCoordinates(target.getDest().getX() + x, target.getDest().getY() + y));
+                    cellCoords = new IntCoordinates(target.getDest().getX() + x, target.getDest().getY() + y);
+                    cellCoords = this.instanceManager.getPixelCoordinates(cellCoords);
                     g2d.fillRect(cellCoords.getX(), cellCoords.getY(), guiConfig.CELL_SIZE, guiConfig.CELL_SIZE);
                 }
             }
         }
-
     }
 }

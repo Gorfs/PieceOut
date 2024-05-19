@@ -5,7 +5,10 @@ import javax.swing.JFrame;
 import com.java.config.*;
 
 
-
+/**
+ * This class is responsible for the main window of the game.
+ * It is a JFrame that contains the game and represents the main window of the game.
+ */
 public class GameWindow extends JFrame{
     /**
      * Constructs a new GameWindow object.
@@ -13,9 +16,7 @@ public class GameWindow extends JFrame{
     public GameWindow(){
         super("Game");
         this.setBackground(Colours.BACKGROUND);
-        // this.setResizable(false);
         this.setSize(new Dimension(GuiConfig.WINDOW_WIDTH, GuiConfig.WINDOW_HEIGHT));
-        // this.setMaximumSize(new Dimension(GuiConfig.width, GuiConfig.height));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 }

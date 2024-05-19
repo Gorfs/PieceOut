@@ -1,159 +1,138 @@
 package com.java.gui.gamePlay;
 
-import javax.swing.*;
-import javax.swing.border.Border;
-
-import com.java.config.GuiConfig;
-
-import java.awt.*;
-
 import com.java.config.Colours;
-import com.java.config.*;
+import com.java.config.GuiConfig;
 import com.java.geometry.IntCoordinates;
 import com.java.gui.InstanceManager;
-import com.java.logic.Arena;
 import com.java.utils.Debug;
 
+import javax.swing.*;
+import javax.swing.border.Border;
+import java.awt.*;
+
+
+/**
+ * class for the gui representation of the playable cells in the game.
+ */
 public class Cell extends JPanel{
     /**
-     * class for the gui representation of the playable cells in the game.
+     * Instance that manages the game.
      */
     private final InstanceManager instanceManager;
-    
-    // pixel_x and pixel_y are the coordinates of the cell in pixels RELATIVE to the CONTAINER (ARENA PANEL)
-    private int pixel_x;
-    private int pixel_y;
-
-    // map_x and map_y are the coordinates of the cell in the matrix
-    private final int map_x;
-    private final int map_y;
-
-
-    // seperate border for shadow/3d effect
+    /**
+     * Coordinates of the cell in the matrix.
+     */
+    private final IntCoordinates coords;
+    /**
+     * Border that imitates shadow from the top.
+     */
     private final Border topShadow = BorderFactory.createMatteBorder(5, 0, 0, 0, Colours.SHADOW);
+    /**
+     * Border that imitates shadow from the left.
+     */
     private final Border leftShadow = BorderFactory.createMatteBorder(0, 5, 0, 0, Colours.SHADOW);
+    /**
+     * Border that imitates shadow from the top left.
+     */
     private final Border topLeftShadow = BorderFactory.createMatteBorder(5, 5, 0, 0, Colours.SHADOW);
 
-
-    
-    public Cell(InstanceManager instanceManager ,int x_coord, int y_coord){
+    /**
+     * Constructor for the Cell class. It initializes the panel and sets the background color.
+     * @param instanceManager instance that manages the game
+     * @param x x coordinate of the cell in the matrix
+     * @param y y coordinate of the cell in the matrix
+     */
+    public Cell(InstanceManager instanceManager , int x, int y){
         super();
         this.instanceManager = instanceManager;
         GuiConfig guiConfig = instanceManager.getGuiConfig();
+        // setting the preferred size of the cell
         this.setMinimumSize(new Dimension(guiConfig.CELL_SIZE, guiConfig.CELL_SIZE));
         this.setPreferredSize(new Dimension(guiConfig.CELL_SIZE, guiConfig.CELL_SIZE));
         this.setMaximumSize(new Dimension(guiConfig.CELL_SIZE, guiConfig.CELL_SIZE));
-        // For debugging purposes
-        // this.setBorder(BorderFactory.createLineBorder(Color.black, 1));
-
         // pixel coordinates are relative to the top left of the arena
-        this.pixel_x = x_coord * guiConfig.CELL_SIZE;
-        this.pixel_y = y_coord * guiConfig.CELL_SIZE;
-        this.map_x = x_coord;
-        this.map_y = y_coord;
+        this.coords = new IntCoordinates(x, y);
+        // inits the background of the cell
+        updatePlayableCell();
 
-
-        updatePlayableCell(); // inits the background of the cell
-        // this.add(new JLabel("x: " + pixel_x + " y: " + pixel_y));
+        if (Debug.isDebugging()){
+            this.setBorder(BorderFactory.createLineBorder(Color.black, 1));
+        }
     }
 
+    /**
+     * Method that update the coordinates and the size of the cell.
+     */
     public void updateCell(){
         this.removeAll();
         GuiConfig guiConfig = instanceManager.getGuiConfig();
-        this.pixel_x = (int) (double) (map_x * guiConfig.CELL_SIZE);
-        this.pixel_y = (int) (double) (map_y * guiConfig.CELL_SIZE);
 
         this.setSize(new Dimension(guiConfig.CELL_SIZE, guiConfig.CELL_SIZE));
         this.setMinimumSize(new Dimension(guiConfig.CELL_SIZE, guiConfig.CELL_SIZE));
         this.setPreferredSize(new Dimension(guiConfig.CELL_SIZE, guiConfig.CELL_SIZE));
         this.setMaximumSize(new Dimension(guiConfig.CELL_SIZE, guiConfig.CELL_SIZE));
-        if (Debug.isDeubgging()){
-            this.add(new JLabel("x : " +  this.pixel_x + " y : " + this.pixel_y)).setFont(new Font("Arial", Font.PLAIN, 7));
+        if (Debug.isDebugging()){
+            this.add(new JLabel(this.coords.toString())).setFont(new Font("Arial", Font.PLAIN, 7));
         }
         updatePlayableCell();
     }
 
     /**
-     * updates the background of the cell to the correct color given by maze state
+     * Updates the background of the cell to the correct color given by maze state.
      */
     public void updatePlayableCell(){
-        boolean[][] matrix = instanceManager.arena.getMatrix();
-        if (matrix[map_y][map_x]){
-            this.setBackground(Colours.CELLCOLOUR);
+        boolean[][] matrix = instanceManager.getArena().getMatrix();
+        if (matrix[this.coords.getY()][this.coords.getX()]){
+            this.setBackground(Colours.CELL_COLOUR);
             applyShadow();
-                        
         }else{
             this.setBackground(Colours.BACKGROUND);
         }
     }
 
     /**
-     * applies a shadow to the cell if there is not a playable cell to the top or to the
-     * left of the cell.
+     * applies a shadow to the cell if there is not a playable cell to the top or to the left of the cell.
      * this helps to create the illusion of light coming from the top left corner.
      */
     public void applyShadow(){
-        boolean[][] matrix = instanceManager.arena.getMatrix();
+        // get the coordinates of the cell in the matrix
+        int map_x = this.coords.getX();
+        int map_y = this.coords.getY();
+        // get the matrix of the arena
+        boolean[][] matrix = instanceManager.getArena().getMatrix();
         if(map_x == 0 && map_y == 0){
+            // If the cell is in the top left corner of the matrix
             this.setBorder(topLeftShadow);
         }else if(map_x == 0){
+            // If the cell is in the leftmost column of the matrix
             if(!matrix[map_y-1][map_x]){
+                // If the cell above is not a playable cell
                 this.setBorder(topLeftShadow);
             }else{
+                // If the cell above is a playable cell
                 this.setBorder(leftShadow);
             }
         }else if (map_y == 0){
+            // If the cell is in the top row of the matrix
             if(matrix[map_y][map_x-1]){
+                // If the cell to the left is a playable cell
                 this.setBorder(topShadow);
             }else{
+                // If the cell to the left is not a playable cell
                 this.setBorder(topLeftShadow);
             }
-            
-        }else{ // we know x > 0 and y > 0
-            if(!matrix[map_y-1][map_x] && !matrix[map_y][map_x-1]){
+        }else{
+            // If the cell is not in the top row or leftmost column of the matrix (x > 0 and y > 0).
+            if (!matrix[map_y-1][map_x] && !matrix[map_y][map_x-1]) {
+                // If the cell above and to the left are not playable cells
                 this.setBorder(topLeftShadow);
             }else if(!matrix[map_y-1][map_x]){ // we know here that either [y-1][x] is true or [y][x-1] is true
+                // If the cell above is not a playable cell
                 this.setBorder(topShadow);
             }else if(!matrix[map_y][map_x-1]){
+                // If the cell to the left is not a playable cell
                 this.setBorder(leftShadow);
             }
         }
     }
-
-    
-    /** 
-     * @return int
-     * RELATIVE TO THE TOP LEFT OF THE CONTAINER
-     * (Arena Panel)
-     */
-    public int getPixel_x() {
-        return pixel_x;
-    }
-    
-    /** 
-     * @return int
-     * RELATIVE TO THE TOP LEFT OF THE CONTAINER
-     * (Arena panel)
-     */
-    public int getPixel_y() {
-        return pixel_y;
-    }
-
-    
-    /** 
-     * @return IntCoordinates
-     */
-    public IntCoordinates getIntCoordinates() {
-        return new IntCoordinates(map_x, map_y);
-    }
-
-    /**
-     * returns the coordinates in pixels RELATIVE to the top left of the arena Panel
-     * @return
-     */
-    public IntCoordinates getPixelCoordinates(){
-        return new IntCoordinates(pixel_x, pixel_y);
-    }
 }
-    
-
