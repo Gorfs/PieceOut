@@ -144,10 +144,3 @@ public class GamePanel extends JPanel {
         return this.bottomPanel;
     }
 }
-
-
-
-
-
-
-

@@ -10,6 +10,7 @@ import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
+
 public class LevelTransitionPanel extends JPanel{
 
     /**

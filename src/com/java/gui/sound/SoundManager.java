@@ -20,7 +20,13 @@ public class SoundManager {
      * Array of files that contains the sound files.
      */
     protected final File[] soundFiles = new File[14];
+    /**
+     * Booleans that manage the mute of the sound effects. If true, the sound effects are muted.
+     */
     private boolean soundEffectsMuted = false;
+    /**
+     * Booleans that manage the mute of the music. If true, the music is muted.
+     */
     private boolean musicMuted = false;
 
     /**
@@ -65,6 +71,9 @@ public class SoundManager {
         if (clip != null) clip.start();
     }
 
+    /**
+     * Method that stops the sound.
+     */
     public void stop() {
         if (clip != null) clip.stop();
     }
@@ -124,7 +133,9 @@ public class SoundManager {
         playMusic(0);
     }
 
-
+    /**
+     * Method that toggles the mute of the music.
+     */
     public void toggleMute() {
         if (clip.isActive()) {
             stop();
@@ -135,14 +146,23 @@ public class SoundManager {
         }
     }
 
+    /**
+     * Method that toggles the mute of the sound effects.
+     */
     public void toggleSoundEffects(){
         soundEffectsMuted = !soundEffectsMuted;
     }
 
+    /**
+     * @return true if the sound effects are muted
+     */
     public boolean isSoundEffectsMuted() {
         return soundEffectsMuted;
     }
 
+    /**
+     * @return true if the music is muted
+     */
     public boolean isMusicMuted() {
         return musicMuted;
     }

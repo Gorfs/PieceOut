@@ -12,6 +12,7 @@ public class Debug {
     private static int debugMessages = 0;
 
     /**
+     * Print the message to the terminal.
      * @param message the message to print to the terminal
      */
     public static void out(String message) {
@@ -21,6 +22,10 @@ public class Debug {
         }
     }
 
+    /**
+     * Print the decorator to the terminal.
+     * @param d the decorator to print to the terminal
+     */
     public static void printDecorator(Decorator d) {
         if (debugging) {
             System.out.println("Decorator is : " + d.getClass().getName());

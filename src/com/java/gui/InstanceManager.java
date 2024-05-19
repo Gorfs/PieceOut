@@ -332,10 +332,16 @@ public class InstanceManager {
         return this.mainFrame.getHeight();
     }
 
+    /**
+     * @return the width of the main frame
+     */
     public PlayerController getPlayerController() {
         return playerController;
     }
 
+    /**
+     * @return the arena of the game
+     */
     public Arena getArena() {
         return arena;
     }

@@ -14,9 +14,17 @@ import java.awt.*;
  * this panel represents the bottom panel containing the undo and redo buttons
  */
 public class BottomPanel extends JPanel {
+    /**
+     * undo button.
+     */
     private final JButton undoButton;
+    /**
+     * redo button.
+     */
     private final JButton redoButton;
-
+    /**
+     * player controller instance that attached to the undo and redo button.
+     */
     public PlayerController playerController;
 
     /**
@@ -51,7 +59,8 @@ public class BottomPanel extends JPanel {
         undoButton.addActionListener(e -> {
             playerController.getUm().undo();
             instanceManager.decMoves();
-                Debug.out("numMoves: " + instanceManager.getNumMoves());instanceManager.getSoundManager().playMoveSound();instanceManager.update();
+            Debug.out("numMoves: " + instanceManager.getNumMoves());
+            instanceManager.getSoundManager().playMoveSound();instanceManager.update();
             updateButtons();
         });
 
@@ -68,7 +77,8 @@ public class BottomPanel extends JPanel {
         redoButton.addActionListener(e -> {
             playerController.getUm().redo();
             instanceManager.incMoves();
-                Debug.out("numMoves: " + instanceManager.getNumMoves());instanceManager.getSoundManager().playMoveSound();instanceManager.update();
+            Debug.out("numMoves: " + instanceManager.getNumMoves());
+            instanceManager.getSoundManager().playMoveSound();instanceManager.update();
             updateButtons();
         });
 

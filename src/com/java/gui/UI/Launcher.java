@@ -1,6 +1,5 @@
 package com.java.gui.UI;
 
-
 import com.java.config.Colours;
 import com.java.config.GuiConfig;
 import com.java.gui.GameWindow;

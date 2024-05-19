@@ -13,8 +13,17 @@ import java.io.File;
  which indicates the current level
  */
 public class TopPanel extends JPanel{
+    /**
+     * Label that shows the number of moves
+     */
     private final JLabel movesLabel;
+    /**
+     * Button that mutes the music
+     */
     private final JButton muteMusicButton;
+    /**
+     * Button that mutes the sound effects
+     */
     private final JButton muteSoundEffects;
 
     /**
@@ -103,6 +112,11 @@ public class TopPanel extends JPanel{
 
     }
 
+    /**
+     * Method that returns the music icon
+     * @param instanceManager InstanceManager instance that manages the game
+     * @return ImageIcon of the music icon
+     */
     ImageIcon getMusicIcon(InstanceManager instanceManager){
         boolean isMusicMuted = instanceManager.getSoundManager().isMusicMuted();
         String path = GuiConfig.resPath + (isMusicMuted ? "icons/musicoff.png" : "icons/musicon.png");
@@ -110,6 +124,11 @@ public class TopPanel extends JPanel{
         return new ImageIcon(musicImage);
     }
 
+    /**
+     * Method that returns the sound effects icon
+     * @param instanceManager InstanceManager instance that manages the game
+     * @return ImageIcon of the sound effects icon
+     */
     ImageIcon getSoundEffectsIcon(InstanceManager instanceManager){
         boolean isSoundEffectsMuted = instanceManager.getSoundManager().isSoundEffectsMuted();
         String path = GuiConfig.resPath + (isSoundEffectsMuted ? "icons/soundoff.png" : "icons/soundon.png");
@@ -117,6 +136,10 @@ public class TopPanel extends JPanel{
         return new ImageIcon(soundEffImage);
     }
 
+    /**
+     * Method that updates the number of moves
+     * @param instanceManager InstanceManager instance that manages the game
+     */
     public void updateCount(InstanceManager instanceManager){
         movesLabel.setText("Moves : " + instanceManager.getNumMoves());
     }
