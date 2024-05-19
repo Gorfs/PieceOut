@@ -16,7 +16,8 @@ public class TopPanel extends JPanel{
     JLabel levelLabel;
     JButton returnButton;
     JLabel movesLabel;
-    JButton muteButton;
+    JButton muteMusicButton;
+    JButton muteSoundEffects;
 
     public TopPanel(InstanceManager instanceManager){
         super();
@@ -38,7 +39,8 @@ public class TopPanel extends JPanel{
         levelLabel = new JLabel("Level : " + (instanceManager.level + 1));
         returnButton = new JButton("  Menu ");
         movesLabel = new JLabel("Moves : " + instanceManager.getNumMoves());
-        muteButton = new JButton("Mute");
+        muteMusicButton = new JButton("Music");
+        muteSoundEffects = new JButton("Sound");
 
         levelLabel.setHorizontalAlignment(SwingConstants.CENTER);
         levelLabel.setForeground(Color.WHITE);
@@ -60,13 +62,23 @@ public class TopPanel extends JPanel{
         });
 
 
-        muteButton.setBackground(Colours.BACKGROUND.darker());
-        muteButton.setForeground(Color.WHITE);
-        muteButton.setFocusable(false);
-        muteButton.setFont(subTitleFont);
-        muteButton.addActionListener(e -> {
+        muteMusicButton.setBackground(Colours.BACKGROUND.darker());
+        muteMusicButton.setForeground(Color.WHITE);
+        muteMusicButton.setFocusable(false);
+        muteMusicButton.setFont(subTitleFont);
+        muteMusicButton.addActionListener(e -> {
             instanceManager.getSound().toggleMute();
         });
+
+
+        muteSoundEffects.setBackground(Colours.BACKGROUND.darker());
+        muteSoundEffects.setForeground(Color.WHITE);
+        muteSoundEffects.setFocusable(false);
+        muteSoundEffects.setFont(subTitleFont);
+        muteSoundEffects.addActionListener(e -> {
+            instanceManager.getSound().toggleSoundEffects();
+        });
+
 
 
         this.setBorder(BorderFactory.createEmptyBorder(3,3,3,3));
@@ -79,8 +91,10 @@ public class TopPanel extends JPanel{
         this.add(Box.createHorizontalGlue());
         this.add(movesLabel);
         this.add(Box.createHorizontalGlue());
-        this.add(muteButton);
-        
+        this.add(muteMusicButton);
+        this.add(Box.createHorizontalGlue());
+        this.add(muteSoundEffects);
+
     }
 
 

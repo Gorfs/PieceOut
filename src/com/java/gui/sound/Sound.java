@@ -13,6 +13,7 @@ import java.io.File;
 public class Sound {
     Clip clip ;
     File[] soundFiles = new File[20];
+    boolean muteSoundEffects = false;
 
     public Sound() {
         soundFiles[0] = new File(GuiConfig.resourcePath + "sfx/bg.wav");
@@ -74,6 +75,7 @@ public class Sound {
     }
 
     public void playMoveSound() {
+        if (muteSoundEffects) return;
         int i = (int) (Math.random() * 5) + 1;
         Sound soundEffect = new Sound();
         soundEffect.setFile(i);
@@ -86,6 +88,7 @@ public class Sound {
 
 
     public void playCollisionSound() {
+        if (muteSoundEffects) return;
         int i = (int) (Math.random() * 3) + 6;
         Sound soundEffect = new Sound();
         soundEffect.setFile(i);
@@ -93,6 +96,7 @@ public class Sound {
     }
 
     public void playNote() {
+        if (muteSoundEffects) return;
         int i = (int) (Math.random() * 10) + 9;
         Sound soundEffect = new Sound();
         soundEffect.setFile(i);
@@ -109,5 +113,9 @@ public class Sound {
         } else {
             play();
         }
+    }
+
+    public void toggleSoundEffects(){
+        muteSoundEffects = !muteSoundEffects;
     }
 }
