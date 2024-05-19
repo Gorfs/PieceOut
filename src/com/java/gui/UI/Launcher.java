@@ -22,6 +22,7 @@ import com.java.config.Colours;
 import com.java.config.GuiConfig;
 import com.java.gui.GameWindow;
 import com.java.gui.InstanceManager;
+import com.java.gui.UI.SelectLevelMenu;
 import com.java.gui.sound.Sound;
 import com.java.logic.PieceLogic;
 
@@ -53,22 +54,9 @@ public class Launcher {
      */
     public void startGame(int players){
         mainFrame.dispose();
-        if (players == 1) {
-            int level = 0;
-            Point location = mainFrame.getLocation();
-            InstanceManager instanceManager = new InstanceManager(new PieceLogic(), location);
-            instanceManager.start(level);
-        }
-        else{
-            int level =0;
-            Point location2 = mainFrame.getLocation();
-            location2.setLocation(location2.getX() + GuiConfig.WINDOW_WIDTH + 10, location2.getY());
-            InstanceManager instanceManager2 = new InstanceManager(new PieceLogic(), location2, null);
-            instanceManager2.start(level);
-            Point location = mainFrame.getLocation();
-            InstanceManager instanceManager = new InstanceManager(new PieceLogic(), location, instanceManager2);
-            instanceManager.start(level);
-        }
+        Point location = mainFrame.getLocation();
+        SelectLevelMenu selectLevelMenu = new SelectLevelMenu(location, players);
+        selectLevelMenu.launch();
     }
     
     
@@ -81,9 +69,6 @@ public class Launcher {
 
 
 
-        private final Sound sound = new Sound();
-        
-
         /*
          * This panel contains the title image and the buttons to start the game with 1 or 2 players or to exit the game
          */
@@ -92,6 +77,7 @@ public class Launcher {
             this.setBackground(Colours.BACKGROUND);
             this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
+            Sound sound = new Sound();
             sound.playOST();
 
             try {
@@ -125,6 +111,7 @@ public class Launcher {
             startOnePlayerButton.setPreferredSize(new Dimension(250, 50));
             startOnePlayerButton.setFont(buttonFont);
             startOnePlayerButton.addActionListener(e -> {
+                sound.playNote();
                 Launcher.this.startGame(1);
             });
     
@@ -135,6 +122,7 @@ public class Launcher {
             startTwoPlayerButton.setPreferredSize(new Dimension(200, 50));
             startTwoPlayerButton.setFont(buttonFont);
             startTwoPlayerButton.addActionListener(e -> {
+                sound.playNote();
                 Launcher.this.startGame(2);
             });
     

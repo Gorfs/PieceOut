@@ -32,10 +32,9 @@ public class TopPanel extends JPanel{
         catch (Exception e) {
             e.printStackTrace();
         }
-
         ImageIcon mainMenuIcon = new ImageIcon(new ImageIcon(GuiConfig.resourcePath + "icons/mainmenu.png").getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH));
 
-        levelLabel = new JLabel("Level : " + instanceManager.level);
+        levelLabel = new JLabel("Level : " + (instanceManager.level + 1));
         returnButton = new JButton("Return to Main Menu");
         movesLabel = new JLabel("Moves : " + instanceManager.getNumMoves());
 

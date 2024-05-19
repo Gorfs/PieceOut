@@ -26,3 +26,10 @@ jar {
         configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it) }
     }
 }
+
+task runJar(type: JavaExec) {
+    dependsOn jar
+    main = '-jar'
+    args = [jar.archivePath]
+    classpath = sourceSets.main.runtimeClasspath
+}

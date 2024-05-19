@@ -13,9 +13,12 @@ import com.java.config.GuiConfig;
 import com.java.piece.Piece;
 import com.java.piece.ShapeFactory;
 import com.java.piece.Target;
-import com.java.piece.decorator.*;
 import com.java.geometry.IntCoordinates;
 import com.java.gui.InstanceManager;
+import com.java.piece.decorator.Decorator;
+import com.java.piece.decorator.Flip;
+import com.java.piece.decorator.Rotation;
+import com.java.piece.decorator.Translation;
 
 public class LevelManager {
 

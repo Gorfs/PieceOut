@@ -2,14 +2,11 @@ package com.java.piece;
 
 import java.awt.Color;
 
-import com.java.piece.Target;
 import com.java.config.GuiConfig;
 import com.java.geometry.IntCoordinates;
 import com.java.gui.InstanceManager;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import com.java.geometry.IntCoordinates;
-import com.java.gui.InstanceManager;
 
 import java.io.IOException;
 import java.nio.file.Files;

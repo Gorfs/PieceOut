@@ -6,6 +6,8 @@ import com.java.config.GuiConfig;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
+
 import java.io.File;
 
 public class Sound {
@@ -22,11 +24,16 @@ public class Sound {
         soundFiles[6] = new File(GuiConfig.resourcePath + "sfx/collision1.wav");
         soundFiles[7] = new File(GuiConfig.resourcePath + "sfx/collision2.wav");
         soundFiles[8] = new File(GuiConfig.resourcePath + "sfx/collision3.wav");
-        soundFiles[9] = new File(GuiConfig.resourcePath + "sfx/win1.wav");
-        soundFiles[10] = new File(GuiConfig.resourcePath + "sfx/win2.wav");
-        soundFiles[11] = new File(GuiConfig.resourcePath + "sfx/win3.wav");
-        soundFiles[12] = new File(GuiConfig.resourcePath + "sfx/win4.wav");
-        soundFiles[13] = new File(GuiConfig.resourcePath + "sfx/win5.wav");
+        soundFiles[9] = new File(GuiConfig.resourcePath + "sfx/note1.wav");
+        soundFiles[10] = new File(GuiConfig.resourcePath + "sfx/note2.wav");
+        soundFiles[11] = new File(GuiConfig.resourcePath + "sfx/note3.wav");
+        soundFiles[12] = new File(GuiConfig.resourcePath + "sfx/note4.wav");
+        soundFiles[13] = new File(GuiConfig.resourcePath + "sfx/note5.wav");
+        soundFiles[14] = new File(GuiConfig.resourcePath + "sfx/note6.wav");
+        soundFiles[15] = new File(GuiConfig.resourcePath + "sfx/note7.wav");
+        soundFiles[16] = new File(GuiConfig.resourcePath + "sfx/note8.wav");
+        soundFiles[17] = new File(GuiConfig.resourcePath + "sfx/note9.wav");
+        soundFiles[18] = new File(GuiConfig.resourcePath + "sfx/note10.wav");
 
     }
 
@@ -52,8 +59,16 @@ public class Sound {
         if (clip != null) clip.loop(Clip.LOOP_CONTINUOUSLY);
     }
 
+    public void setVolume(float volume) {
+        if (clip != null) {
+            FloatControl volumeControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+            volumeControl.setValue(volume);
+        }
+    }
+
     public void playMusic(int i) {
         setFile(i);
+        setVolume(-10.0f);
         play();
         loop();
     }
@@ -78,7 +93,7 @@ public class Sound {
     }
 
     public void playNote() {
-        int i = (int) (Math.random() * 5) + 9;
+        int i = (int) (Math.random() * 10) + 9;
         Sound soundEffect = new Sound();
         soundEffect.setFile(i);
         soundEffect.play();

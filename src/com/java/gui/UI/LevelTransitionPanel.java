@@ -14,10 +14,10 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import com.java.utils.Debug;
 import com.java.config.Colours;
 import com.java.config.GuiConfig;
 import com.java.gui.InstanceManager;
-import com.java.utils.Debug;
 
 public class LevelTransitionPanel extends JPanel{
     
