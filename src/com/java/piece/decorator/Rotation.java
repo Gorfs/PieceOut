@@ -70,12 +70,12 @@ public class Rotation extends Decorator {
         // rotating matrix 90 degrees clockwise
         for (int i = 0; i < initShape.length; i++) {
             for (int j = 0; j < initShape[0].length; j++) {
-                if (this.clockwise) {
-                    // the rotation is clockwise
-                    rotatedShape[j][initShape.length - i - 1] = initShape[i][j]; // rotating the shape
-                } else {
+                if (!this.clockwise) {
                     // rotating the shape anti-clockwise
                     rotatedShape[initShape[0].length - j - 1][i] = initShape[i][j]; // rotating the shape
+                } else {
+                    // the rotation is clockwise
+                    rotatedShape[j][initShape.length - i - 1] = initShape[i][j]; // rotating the shape
                 }
             }
         }

@@ -31,7 +31,7 @@ public class GuiPiece extends JPanel {
     public GuiPiece(InstanceManager instanceManager, Decorator piece) {
         this.instanceManager = instanceManager;
         this.piece = piece;
-        shapeIcon = switch(piece.getLast().type){
+        shapeIcon = switch(piece.getPiece().type){
             case "OShape" -> GuiPieceImages.OImage;
             case "HoShape" -> GuiPieceImages.HoImage;
             case "IShape" -> GuiPieceImages.IImage;
