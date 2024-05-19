@@ -7,8 +7,7 @@ import com.java.piece.decorator.Translation;
  * Utils packages for debugging purposes.
  */
 public class Debug {
-    // TODO switch to false when prototype is finished.
-    private static final boolean debugging = true;
+    private static final boolean debugging = false;
     private static int debugMessages = 0;
 
     /**
