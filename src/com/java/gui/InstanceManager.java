@@ -151,7 +151,7 @@ public class InstanceManager {
 
         // !MUST BE DONE AFTER IMAGE PRELOAD, see com.java.config.GuiPieceImages.java
         // Load the pieces from the json file
-        LevelManager.loadPiecesFromJson(this.pieceLogic, level, this);
+        LevelManager.loadPiecesFromJson(this.pieceLogic, level);
 
         // paint the targets before the pieces so that the pieces are drawn on top
         for (Target target : this.pieceLogic.getTargets()) {

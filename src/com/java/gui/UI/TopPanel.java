@@ -13,12 +13,9 @@ import java.io.File;
  which indicates the current level
  */
 public class TopPanel extends JPanel{
-
-JLabel levelLabel;
-    JButton returnButton;
-    JLabel movesLabel;
-    JButton muteMusicButton;
-    JButton muteSoundEffects;
+    private final JLabel movesLabel;
+    private final JButton muteMusicButton;
+    private final JButton muteSoundEffects;
 
     /**
      * Constructor for the TopPanel class
@@ -29,20 +26,26 @@ JLabel levelLabel;
         this.setOpaque(false);
         this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 
-        Font titleFont = null;
-        Font subTitleFont = null;
+        Font titleFont;
+        Font subTitleFont;
 
         try{
-            titleFont = Font.createFont(Font.TRUETYPE_FONT, new File(GuiConfig.resPath + "fonts/Lentariso-Bd.ttf")).deriveFont(Font.BOLD, 30f);
-            subTitleFont = Font.createFont(Font.TRUETYPE_FONT, new File(GuiConfig.resPath + "fonts/Lentariso-Bd.ttf")).deriveFont(Font.BOLD, 14f);
+            File fontFile = new File(GuiConfig.resPath + "fonts/Lentariso-Bd.ttf");
+            titleFont = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont(Font.BOLD, 30f);
+            subTitleFont = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont(Font.BOLD, 14f);
         }
         catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Error in TopPanel: \nFont not found, file either not found or doesn't exist.");
+            // If the font is not found, we use the default font
+            titleFont = new Font("Arial", Font.BOLD, 30);
+            subTitleFont = new Font("Arial", Font.BOLD, 14);
         }
-        ImageIcon mainMenuIcon = new ImageIcon(new ImageIcon(GuiConfig.resPath + "icons/mainmenu.png").getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH));
+        String path = GuiConfig.resPath + "icons/mainmenu.png";
+        Image mainMenuImage = new ImageIcon(path).getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+        ImageIcon mainMenuIcon = new ImageIcon(mainMenuImage);
 
-        levelLabel = new JLabel("Level : " + iManager.level + 1);
-        returnButton = new JButton("Menu");
+        JLabel levelLabel = new JLabel("Level : " + iManager.level + 1);
+        JButton returnButton = new JButton("Menu");
         movesLabel = new JLabel("Moves : " + iManager.getNumMoves());
         muteMusicButton = new JButton("Music");
         muteSoundEffects = new JButton("Sound");
@@ -85,11 +88,6 @@ JLabel levelLabel;
             muteSoundEffects.setIcon(getSoundEffectsIcon(iManager));
         });
 
-
-
-
-
-
         this.setBorder(BorderFactory.createEmptyBorder(3,3,3,20));
         this.setMinimumSize(new Dimension(Integer.MAX_VALUE, 30));
         this.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
@@ -106,17 +104,18 @@ JLabel levelLabel;
     }
 
     ImageIcon getMusicIcon(InstanceManager instanceManager){
-        boolean isMusicMuted = instanceManager.getSound().isMusicMuted();
-        ImageIcon musicIcon = new ImageIcon(new ImageIcon(GuiConfig.resourcePath + (isMusicMuted ? "icons/musicoff.png" : "icons/musicon.png")).getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH));
-        return musicIcon;
+        boolean isMusicMuted = instanceManager.getSoundManager().isMusicMuted();
+        String path = GuiConfig.resPath + (isMusicMuted ? "icons/musicoff.png" : "icons/musicon.png");
+        Image musicImage = new ImageIcon(path).getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+        return new ImageIcon(musicImage);
     }
 
     ImageIcon getSoundEffectsIcon(InstanceManager instanceManager){
-        boolean isSoundEffectsMuted = instanceManager.getSound().isSoundEffectsMuted();
-        ImageIcon soundEffectsIcon = new ImageIcon(new ImageIcon(GuiConfig.resourcePath + (isSoundEffectsMuted ? "icons/soundoff.png" : "icons/soundon.png")).getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH));
-        return soundEffectsIcon;
+        boolean isSoundEffectsMuted = instanceManager.getSoundManager().isSoundEffectsMuted();
+        String path = GuiConfig.resPath + (isSoundEffectsMuted ? "icons/soundoff.png" : "icons/soundon.png");
+        Image soundEffImage = new ImageIcon(path).getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+        return new ImageIcon(soundEffImage);
     }
-
 
     public void updateCount(InstanceManager instanceManager){
         movesLabel.setText("Moves : " + instanceManager.getNumMoves());

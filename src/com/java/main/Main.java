@@ -2,7 +2,6 @@ package com.java.main;
 
 import com.java.config.GuiConfig;
 import com.java.gui.UI.Launcher;
-import com.java.gui.sound.Sound;
 import com.java.gui.sound.SoundManager;
 
 import java.awt.*;

@@ -20,23 +20,22 @@ import com.java.config.Colours;
 import com.java.config.GuiConfig;
 import com.java.gui.GameWindow;
 import com.java.gui.InstanceManager;
-import com.java.gui.sound.Sound;
+import com.java.gui.sound.SoundManager;
 import com.java.logic.PieceLogic;
 
 public class SelectLevelMenu {
     private final SelectLevelPanel selectLevelPanel;
     private final GameWindow mainFrame;
-    private final CardLayout layout;
     private final int players;
-    private final Sound sound ;
+    private final SoundManager soundManager;
 
-    public SelectLevelMenu(Point location, Sound sound, int players) {
+    public SelectLevelMenu(Point location, SoundManager sound, int players) {
         mainFrame = new GameWindow();
         selectLevelPanel = new SelectLevelPanel();
-        layout = new CardLayout();
+        CardLayout layout = new CardLayout();
         mainFrame.setLayout(layout);
         mainFrame.setLocation(location);
-        this.sound = sound;
+        this.soundManager = sound;
         this.players = players;
     }
 
@@ -58,16 +57,16 @@ public class SelectLevelMenu {
         level--;
         if (players == 1) {
             Point location = mainFrame.getLocation();
-            InstanceManager instanceManager = new InstanceManager(new PieceLogic(), location, sound);
+            InstanceManager instanceManager = new InstanceManager(new PieceLogic(), location, soundManager);
             instanceManager.start(level);
         }
         else{
             Point location2 = mainFrame.getLocation();
             location2.setLocation(location2.getX() + GuiConfig.WINDOW_WIDTH + 10, location2.getY());
-            InstanceManager instanceManager2 = new InstanceManager(new PieceLogic(), location2, sound);
+            InstanceManager instanceManager2 = new InstanceManager(new PieceLogic(), location2, soundManager);
             instanceManager2.start(level);
             Point location = mainFrame.getLocation();
-            InstanceManager instanceManager = new InstanceManager(new PieceLogic(), location, sound, instanceManager2);
+            InstanceManager instanceManager = new InstanceManager(new PieceLogic(), location, soundManager, instanceManager2);
             instanceManager.start(level);
         }
     }
@@ -90,8 +89,8 @@ public class SelectLevelMenu {
             Font titleFont = null;
 
             try{
-                buttonFont = Font.createFont(Font.TRUETYPE_FONT, new File(GuiConfig.resourcePath + "fonts/Lentariso-Bd.ttf")).deriveFont(Font.BOLD,30f);
-                titleFont = Font.createFont(Font.TRUETYPE_FONT, new File(GuiConfig.resourcePath + "fonts/Lentariso-Bd.ttf")).deriveFont(Font.BOLD, 50f);
+                buttonFont = Font.createFont(Font.TRUETYPE_FONT, new File(GuiConfig.resPath + "fonts/Lentariso-Bd.ttf")).deriveFont(Font.BOLD,30f);
+                titleFont = Font.createFont(Font.TRUETYPE_FONT, new File(GuiConfig.resPath + "fonts/Lentariso-Bd.ttf")).deriveFont(Font.BOLD, 50f);
             }
             catch (Exception e) {
                 e.printStackTrace();
@@ -172,7 +171,7 @@ public class SelectLevelMenu {
                 this.setPreferredSize(size);
                 this.setMaximumSize(size);
                 this.addActionListener(e -> {
-                    sound.playNote();
+                    soundManager.playNote();
                     startGame(players, level);
                 });
             }

@@ -20,6 +20,8 @@ public class SoundManager {
      * Array of files that contains the sound files.
      */
     protected final File[] soundFiles = new File[14];
+    private boolean soundEffectsMuted = false;
+    private boolean musicMuted = false;
 
     /**
      * Constructor of the Sound class.
@@ -61,6 +63,10 @@ public class SoundManager {
      */
     public void play() {
         if (clip != null) clip.start();
+    }
+
+    public void stop() {
+        if (clip != null) clip.stop();
     }
 
     /**
@@ -114,6 +120,30 @@ public class SoundManager {
      * Method that plays the sound of a win.
      */
     public void playOST(){
+        if (musicMuted) return;
         playMusic(0);
+    }
+
+
+    public void toggleMute() {
+        if (clip.isActive()) {
+            stop();
+            musicMuted = true;
+        } else {
+            play();
+            musicMuted = false;
+        }
+    }
+
+    public void toggleSoundEffects(){
+        soundEffectsMuted = !soundEffectsMuted;
+    }
+
+    public boolean isSoundEffectsMuted() {
+        return soundEffectsMuted;
+    }
+
+    public boolean isMusicMuted() {
+        return musicMuted;
     }
 }
