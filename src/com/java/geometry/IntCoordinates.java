@@ -1,4 +1,4 @@
-package src.com.java.geometry;
+package com.java.geometry;
 
 /**
  * Class IntCoordinates that represents the coordinates of the piece.

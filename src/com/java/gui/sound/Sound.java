@@ -1,6 +1,6 @@
-package src.com.java.gui.sound;
+package com.java.gui.sound;
 
-import src.com.java.config.GuiConfig;
+import com.java.config.GuiConfig;
 
 
 import javax.sound.sampled.AudioInputStream;

@@ -1,4 +1,4 @@
-package src.com.java.config;
+package com.java.config;
 
 import static java.lang.Math.min;
 

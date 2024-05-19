@@ -1,9 +1,9 @@
-package src.com.java.gui.UI;
+package com.java.gui.UI;
 
-import src.com.java.config.Colours;
-import src.com.java.config.GuiConfig;
-import src.com.java.gui.InstanceManager;
-import src.com.java.logic.Arena;
+import com.java.config.Colours;
+import com.java.config.GuiConfig;
+import com.java.gui.InstanceManager;
+import com.java.logic.Arena;
 
 import javax.swing.*;
 import java.awt.*;

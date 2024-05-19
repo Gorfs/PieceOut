@@ -1,4 +1,4 @@
-package src.com.java.logic;
+package com.java.logic;
 
 import java.awt.*;
 import java.io.IOException;
@@ -8,17 +8,17 @@ import java.nio.file.Paths;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import src.com.java.config.Colours;
-import src.com.java.config.GuiConfig;
-import src.com.java.piece.Piece;
-import src.com.java.piece.ShapeFactory;
-import src.com.java.piece.Target;
-import src.com.java.geometry.IntCoordinates;
-import src.com.java.gui.InstanceManager;
-import src.com.java.piece.decorator.Decorator;
-import src.com.java.piece.decorator.Flip;
-import src.com.java.piece.decorator.Rotation;
-import src.com.java.piece.decorator.Translation;
+import com.java.config.Colours;
+import com.java.config.GuiConfig;
+import com.java.piece.Piece;
+import com.java.piece.ShapeFactory;
+import com.java.piece.Target;
+import com.java.geometry.IntCoordinates;
+import com.java.gui.InstanceManager;
+import com.java.piece.decorator.Decorator;
+import com.java.piece.decorator.Flip;
+import com.java.piece.decorator.Rotation;
+import com.java.piece.decorator.Translation;
 
 public class LevelManager {
 

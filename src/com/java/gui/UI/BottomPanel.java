@@ -1,4 +1,4 @@
-package src.com.java.gui.UI;
+package com.java.gui.UI;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -16,11 +16,11 @@ import javax.swing.undo.UndoManager;
 
 import java.util.ArrayList;
 
-import src.com.java.config.Colours;
-import src.com.java.config.GuiConfig;
-import src.com.java.utils.Debug;
-import src.com.java.gui.InstanceManager;
-import src.com.java.controllers.PlayerController;
+import com.java.config.Colours;
+import com.java.config.GuiConfig;
+import com.java.utils.Debug;
+import com.java.gui.InstanceManager;
+import com.java.controllers.PlayerController;
 
 public class BottomPanel extends JPanel {
     /**

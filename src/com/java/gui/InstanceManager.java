@@ -1,16 +1,16 @@
-package src.com.java.gui;
+package com.java.gui;
 
-import src.com.java.config.*;
-import src.com.java.gui.sound.Sound;
-import src.com.java.piece.Target;
-import src.com.java.piece.decorator.Decorator;
-import src.com.java.controllers.PlayerController;
-import src.com.java.gui.UI.Launcher;
-import src.com.java.gui.UI.LevelTransitionPanel;
-import src.com.java.logic.Arena;
-import src.com.java.logic.LevelManager;
-import src.com.java.logic.PieceLogic;
-import src.com.java.utils.Debug;
+import com.java.config.*;
+import com.java.gui.sound.Sound;
+import com.java.piece.Target;
+import com.java.piece.decorator.Decorator;
+import com.java.controllers.PlayerController;
+import com.java.gui.UI.Launcher;
+import com.java.gui.UI.LevelTransitionPanel;
+import com.java.logic.Arena;
+import com.java.logic.LevelManager;
+import com.java.logic.PieceLogic;
+import com.java.utils.Debug;
 
 import java.awt.*;
 import java.awt.event.ComponentAdapter;
@@ -20,10 +20,10 @@ import java.util.ArrayList;
 
 import javax.swing.JLayeredPane;
 
-import src.com.java.gui.gamePlay.Cell;
-import src.com.java.gui.gamePlay.GamePanel;
-import src.com.java.gui.gamePlay.GuiPiece;
-import src.com.java.gui.gamePlay.GuiTarget;
+import com.java.gui.gamePlay.Cell;
+import com.java.gui.gamePlay.GamePanel;
+import com.java.gui.gamePlay.GuiPiece;
+import com.java.gui.gamePlay.GuiTarget;
 
 /**
  * GUIManager class that is responsible for creating, changing,
@@ -118,7 +118,7 @@ public class InstanceManager {
 
 
         // loading piece models
-        // ! MUST BE DONE AFTER IMAGE PRELOAD, see src.com.java.config.GuiPieceImages.java
+        // ! MUST BE DONE AFTER IMAGE PRELOAD, see com.java.config.GuiPieceImages.java
         LevelManager.loadPiecesFromJson(this.pieceLogic, level, this);
 
         for (Target target : this.pieceLogic.getTargets()) {

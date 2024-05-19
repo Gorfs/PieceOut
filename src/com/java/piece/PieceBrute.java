@@ -1,9 +1,9 @@
-package src.com.java.piece;
+package com.java.piece;
 
 
-import src.com.java.geometry.IntCoordinates;
-import src.com.java.gui.InstanceManager;
-import src.com.java.logic.PieceLogic;
+import com.java.geometry.IntCoordinates;
+import com.java.gui.InstanceManager;
+import com.java.logic.PieceLogic;
 
 import java.awt.Color;
 

@@ -1,12 +1,12 @@
-package src.com.java.piece.decorator;
+package com.java.piece.decorator;
 
-import src.com.java.config.GuiConfig;
-import src.com.java.gui.InstanceManager;
-import src.com.java.logic.Move;
-import src.com.java.logic.PieceLogic;
-import src.com.java.piece.Piece;
-import src.com.java.geometry.IntCoordinates;
-import src.com.java.utils.Debug;
+import com.java.config.GuiConfig;
+import com.java.gui.InstanceManager;
+import com.java.logic.Move;
+import com.java.logic.PieceLogic;
+import com.java.piece.Piece;
+import com.java.geometry.IntCoordinates;
+import com.java.utils.Debug;
 
 /**
  * Class that represent the decorator pattern for the translation.

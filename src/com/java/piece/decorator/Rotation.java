@@ -1,8 +1,8 @@
-package src.com.java.piece.decorator;
+package com.java.piece.decorator;
 
-import src.com.java.utils.Debug;
-import src.com.java.piece.Piece;
-import src.com.java.geometry.IntCoordinates;
+import com.java.utils.Debug;
+import com.java.piece.Piece;
+import com.java.geometry.IntCoordinates;
 
 /**
  * Class that represent the decorator pattern for the clockwise rotation.

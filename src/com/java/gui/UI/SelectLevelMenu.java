@@ -1,4 +1,4 @@
-package src.com.java.gui.UI;
+package com.java.gui.UI;
 
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -16,12 +16,12 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import src.com.java.config.Colours;
-import src.com.java.config.GuiConfig;
-import src.com.java.gui.GameWindow;
-import src.com.java.gui.InstanceManager;
-import src.com.java.gui.sound.Sound;
-import src.com.java.logic.PieceLogic;
+import com.java.config.Colours;
+import com.java.config.GuiConfig;
+import com.java.gui.GameWindow;
+import com.java.gui.InstanceManager;
+import com.java.gui.sound.Sound;
+import com.java.logic.PieceLogic;
 
 public class SelectLevelMenu {
     private final SelectLevelPanel selectLevelPanel;

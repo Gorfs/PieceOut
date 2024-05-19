@@ -1,4 +1,4 @@
-package src.com.java.logic;
+package com.java.logic;
 
 public class GameLoop {
     /**

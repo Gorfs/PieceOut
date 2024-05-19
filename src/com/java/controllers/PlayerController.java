@@ -1,14 +1,14 @@
-package src.com.java.controllers;
+package com.java.controllers;
 
-import src.com.java.logic.Move;
-import src.com.java.piece.decorator.Decorator;
-import src.com.java.piece.decorator.Direction;
-import src.com.java.piece.decorator.Translation;
-import src.com.java.config.GuiConfig;
-import src.com.java.utils.Debug;
-import src.com.java.geometry.IntCoordinates;
-import src.com.java.gui.InstanceManager;
-import src.com.java.logic.PieceLogic;
+import com.java.logic.Move;
+import com.java.piece.decorator.Decorator;
+import com.java.piece.decorator.Direction;
+import com.java.piece.decorator.Translation;
+import com.java.config.GuiConfig;
+import com.java.utils.Debug;
+import com.java.geometry.IntCoordinates;
+import com.java.gui.InstanceManager;
+import com.java.logic.PieceLogic;
 
 import java.awt.*;
 import java.awt.event.*;
