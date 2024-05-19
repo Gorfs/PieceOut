@@ -1,10 +1,10 @@
-package src.com.java.gui.UI;
+package com.java.gui.UI;
 
-import src.com.java.config.Colours;
-import src.com.java.config.GuiConfig;
-import src.com.java.controllers.PlayerController;
-import src.com.java.gui.InstanceManager;
-import src.com.java.utils.Debug;
+import com.java.config.Colours;
+import com.java.config.GuiConfig;
+import com.java.controllers.PlayerController;
+import com.java.gui.InstanceManager;
+import com.java.utils.Debug;
 
 import javax.swing.*;
 import java.awt.*;
@@ -32,7 +32,6 @@ public class BottomPanel extends JPanel {
         // setting up the undoManager
         this.playerController = instanceManager.playerController;
 
-        Debug.out("Player controller: " + playerController);
 
         buttonContainer.setLayout(new BoxLayout(buttonContainer, BoxLayout.X_AXIS));
         buttonContainer.setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
@@ -51,7 +50,8 @@ public class BottomPanel extends JPanel {
         undoButton.setIcon(undoIcon);
         undoButton.addActionListener(e -> {
             playerController.um.undo();
-            instanceManager.getSound().playMoveSound();instanceManager.update();
+            instanceManager.decMoves();
+                Debug.out("numMoves: " + instanceManager.getNumMoves());instanceManager.getSound().playMoveSound();instanceManager.update();
             updateButtons();
         });
 
@@ -67,7 +67,8 @@ public class BottomPanel extends JPanel {
         redoButton.setIcon(redoIcon);
         redoButton.addActionListener(e -> {
             playerController.um.redo();
-            instanceManager.getSound().playMoveSound();instanceManager.update();
+            instanceManager.incMoves();
+                Debug.out("numMoves: " + instanceManager.getNumMoves());instanceManager.getSound().playMoveSound();instanceManager.update();
             updateButtons();
         });
 

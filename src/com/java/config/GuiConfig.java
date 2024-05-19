@@ -1,4 +1,4 @@
-package src.com.java.config;
+package com.java.config;
 
 import static java.lang.Math.min;
 
@@ -20,20 +20,21 @@ public class GuiConfig {
     /**
      * Value of the window width.
      */
-    public static int width = WINDOW_WIDTH;
+    public int width = WINDOW_WIDTH;
     /**
      * Value of the window height.
      */
-    public static int height = WINDOW_HEIGHT;
+    public int height = WINDOW_HEIGHT;
 
     /**
-     * Scale of the arena. By default, it's 0.75
+     * Default scale of the arena. By default, it's 0.75
      */
-    public static double arenaScale = 0.75;
+    public static final double initArenaScale = 0.60;
+    public double arenaScale = initArenaScale;
     /**
      * Size of the cell. By default, it's 75.
      */
-    public static int CELL_SIZE = (int) Math.floor(100 * arenaScale);
+    public int CELL_SIZE = (int) Math.floor(100 * arenaScale);
 
     /**
      * Path to the resources. By default, it's "src/com/resources/"
@@ -43,8 +44,8 @@ public class GuiConfig {
     /**
      * Method to update the scale of the arena when we change the window's size.
      */
-    public static void updateArenaScale(){
-        arenaScale = 0.75 * min(((double) width /(double) WINDOW_WIDTH), ((double)height /(double) WINDOW_HEIGHT));
+    public void updateArenaScale(){
+        arenaScale = initArenaScale * min(((double) width /(double) WINDOW_WIDTH), ((double)height /(double) WINDOW_HEIGHT));
         CELL_SIZE = (int) Math.floor(100 * arenaScale);
     }
 }

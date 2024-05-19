@@ -1,18 +1,16 @@
-package src.com.java.piece;
+package com.java.piece;
 
-import java.awt.Color;
-
-import src.com.java.config.GuiConfig;
-import src.com.java.geometry.IntCoordinates;
-import src.com.java.gui.InstanceManager;
+import com.java.config.GuiConfig;
+import com.java.geometry.IntCoordinates;
+import com.java.gui.InstanceManager;
+import com.java.logic.PieceLogic;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.awt.*;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-
-import src.com.java.logic.PieceLogic;
 
 
 
@@ -28,12 +26,12 @@ public class ShapeFactory extends PieceBrute {
      * @param pos Position of the piece.
      */
     public ShapeFactory(String filePath, Color color, IntCoordinates pos, IntCoordinates fixturePoint,
-                        InstanceManager guiManager) {
+                        InstanceManager instanceManager) {
         this.color = color;
         this.setPos(pos);
         this.setFixturePoint(fixturePoint);
         this.setShape(generateShape(filePath));
-        this.guiManager = guiManager;
+        this.instanceManager = instanceManager;
     }
 
     public ShapeFactory(String filePath, Color color, IntCoordinates pos, IntCoordinates fixturePoint) {
@@ -48,7 +46,7 @@ public class ShapeFactory extends PieceBrute {
     }
 
     /**
-     * Method that generate a nextPiece shape from a file based on the method used to import map.
+     * Method that generate a nextPiece shape from a file based on the method used to import a map.
      * @param filePath File name like "OShape".
      * @return Returns the shape generated from the file.
      */
@@ -57,10 +55,18 @@ public class ShapeFactory extends PieceBrute {
             String content = new String(Files.readAllBytes(Paths.get(GuiConfig.resPath + "shapes.json")));
             JSONObject jsonObject = new JSONObject(content);
             JSONArray shapeArray = jsonObject.getJSONArray("shapes");
+
+
             for (int i = 0; i < shapeArray.length(); i++) {
                 JSONObject type = shapeArray.getJSONObject(i);
                 // If the shape is found, get the shape
                 if (type.getString("type").equals(filePath)) {
+
+                    // adding the type of the shape to the piece itself
+                    String shapeType = type.getString("type");
+                    this.setType(shapeType);
+
+
                     JSONArray form = type.getJSONArray("form");
                     // Create the shape
                     boolean[][] shape = new boolean[type.getInt("height")][type.getInt("width")];
@@ -82,7 +88,8 @@ public class ShapeFactory extends PieceBrute {
     }
 
     @Override
-    public void action(PieceLogic pieceLogic, InstanceManager instanceManager, int x, int y, IntCoordinates mousePos) {
+    public boolean action(PieceLogic pieceLogic, InstanceManager instanceManager, int x, int y, IntCoordinates mousePos) {
         // Does nothing, we went through all the decorator pattern
+        return false;
     }
 }

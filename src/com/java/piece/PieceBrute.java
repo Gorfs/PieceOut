@@ -1,7 +1,7 @@
-package src.com.java.piece;
+package com.java.piece;
 
 
-import src.com.java.geometry.IntCoordinates;
+import com.java.geometry.IntCoordinates;
 
 import java.awt.*;
 
@@ -77,7 +77,7 @@ public abstract class PieceBrute extends Piece {
     public IntCoordinates getOffset(){
         // returns new int-coordinates with the offset from the piece added
 
-        int pivotPointX = this.getFixturePoint().getX(); // distance to border of piece matrix
+        int pivotPointX = this.getFixturePoint().getX(); // distance to a border of piece matrix
         int pivotPointY = this.getFixturePoint().getY(); // ''
 
         int posX = this.getPos().getX();

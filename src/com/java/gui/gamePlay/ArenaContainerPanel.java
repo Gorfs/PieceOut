@@ -1,7 +1,7 @@
-package src.com.java.gui.gamePlay;
+package com.java.gui.gamePlay;
 
 
-import src.com.java.gui.InstanceManager;
+import com.java.gui.InstanceManager;
 
 import javax.swing.*;
 
@@ -21,7 +21,7 @@ public class ArenaContainerPanel extends JPanel {
      */
     public ArenaContainerPanel(InstanceManager instanceManager) {
         super();
-        this.setBackground(src.com.java.config.Colours.BACKGROUND);
+        this.setBackground(com.java.config.Colours.BACKGROUND);
         this.arenaPanel = new ArenaPanel(instanceManager);
         this.add(arenaPanel);
     }

@@ -1,19 +1,20 @@
-package src.com.java.gui;
+package com.java.gui;
 
-import src.com.java.config.GuiConfig;
-import src.com.java.config.LogicConstants;
-import src.com.java.controllers.PlayerController;
-import src.com.java.geometry.IntCoordinates;
-import src.com.java.gui.UI.Launcher;
-import src.com.java.gui.UI.LevelTransitionPanel;
-import src.com.java.gui.gamePlay.*;
-import src.com.java.gui.sound.Sound;
-import src.com.java.logic.Arena;
-import src.com.java.logic.LevelManager;
-import src.com.java.logic.PieceLogic;
-import src.com.java.piece.Target;
-import src.com.java.piece.decorator.Decorator;
-import src.com.java.utils.Debug;
+import com.java.config.GuiConfig;
+import com.java.config.GuiPieceImages;
+import com.java.config.LogicConstants;
+import com.java.controllers.PlayerController;
+import com.java.geometry.IntCoordinates;
+import com.java.gui.UI.Launcher;
+import com.java.gui.UI.LevelTransitionPanel;
+import com.java.gui.gamePlay.*;
+import com.java.gui.sound.Sound;
+import com.java.logic.Arena;
+import com.java.logic.LevelManager;
+import com.java.logic.PieceLogic;
+import com.java.piece.Target;
+import com.java.piece.decorator.Decorator;
+import com.java.utils.Debug;
 
 import javax.swing.*;
 import java.awt.*;
@@ -33,7 +34,7 @@ public class InstanceManager {
      * Game panel of the game seen by the player
      */
     private GamePanel gamePanel;
-
+    private final GuiConfig guiConfig = new GuiConfig();
     /**
      * layout to change panels in rootPanel
      */
@@ -42,6 +43,7 @@ public class InstanceManager {
      * Panel that contains the level transition panel, that is shown when the level is completed
      */
     private final LevelTransitionPanel levelTransitionPanel = new LevelTransitionPanel();
+    private final JLayeredPane layeredPane = new JLayeredPane();
     /**
      * Piece logic of the game, where the pieces are stocked
      */
@@ -62,6 +64,9 @@ public class InstanceManager {
     private final int players;
     private final InstanceManager secondPlayer;
 
+
+    private int numMoves = 0;
+    private final int minNumMoves = LevelManager.NumMovesFromJson(level);
 
     /**
      * Constructor of the InstanceManager
@@ -95,22 +100,25 @@ public class InstanceManager {
         // Initialize the level and the player controller
         this.level = level;
         // Initialize the player controller
-        playerController = new PlayerController(this, pieceLogic);
+        playerController = new PlayerController(this, pieceLogic, guiConfig);
         // Initialize the arena
         this.arena = new Arena(this);
+        // ! YOU MUST PRELOAD IMAGES EARLIER THAN LOADING THE MODELS OF THE PIECES.
+        GuiPieceImages.preLoadImages();
         // Initialize the game panel
         this.gamePanel = new GamePanel(pieceLogic, this);
         playerController.startController(gamePanel.getArenaPanel());
         
-        JLayeredPane layeredPane = new JLayeredPane();
-        layeredPane.setPreferredSize(new Dimension(GuiConfig.width, GuiConfig.height));
-        gamePanel.setBounds(0, 0, GuiConfig.width, GuiConfig.height);
+        // Pane used for level transition
+        layeredPane.setPreferredSize(new Dimension(guiConfig.width, guiConfig.height));
+        gamePanel.setBounds(0, 0, guiConfig.width, guiConfig.height);
         layeredPane.add(gamePanel, JLayeredPane.DEFAULT_LAYER);
         layeredPane.add(levelTransitionPanel, JLayeredPane.PALETTE_LAYER);
     
         mainFrame.add(layeredPane);
         mainFrame.setVisible(true);
 
+        // !MUST BE DONE AFTER IMAGE PRELOAD, see com.java.config.GuiPieceImages.java
         // Load the pieces from the json file
         LevelManager.loadPiecesFromJson(this.pieceLogic, level, this);
 
@@ -129,16 +137,17 @@ public class InstanceManager {
              * @param componentEvent the event to be processed by the listener
              */
             public void componentResized(ComponentEvent componentEvent) {
-                GuiConfig.width = mainFrame.getWidth();
-                GuiConfig.height = mainFrame.getHeight() - getGamePanel().getBottomPanel().getHeight()/2;
-                GuiConfig.updateArenaScale();
+                guiConfig.width = mainFrame.getWidth();
+                // the -30 is due to the height of the top Panel in the gamePanel
+                guiConfig.height = mainFrame.getHeight() - getGamePanel().getBottomPanel().getHeight()/2;
+                guiConfig.updateArenaScale();
 
                 for (Cell[] cells : gamePanel.getArenaPanel().getCells())
                     for (Cell cell : cells) cell.updateCell();
-                gamePanel.setBounds(0, 0, GuiConfig.width, GuiConfig.height);
-                levelTransitionPanel.setBounds(0, 0, GuiConfig.width, GuiConfig.height);
-                if (!levelTransitionPanel.isTransitioning()){
-                    levelTransitionPanel.setLocation(GuiConfig.width, 0);
+                gamePanel.setBounds(0, 0, guiConfig.width, guiConfig.height);
+                levelTransitionPanel.setBounds(0, 0, guiConfig.width, guiConfig.height);
+                if (!isTransitioning()){
+                    levelTransitionPanel.setLocation(guiConfig.width, 0);
                 }
             }
         });
@@ -167,7 +176,6 @@ public class InstanceManager {
         }
     }
 
-
     /** 
      * updates the GUI
     */
@@ -176,15 +184,15 @@ public class InstanceManager {
         gamePanel.getBottomPanel().updateButtons(); //TODO move this call to inside the gamePanel.update() function
 
         if (pieceLogic.checkWin()) {
+            playerController.stopController(gamePanel.getArenaPanel());
             sound.playNote();
+            Debug.out("Result : " + rating() + " stars!");
+            levelTransitionPanel.showRating(rating(), layeredPane, guiConfig);
             levelTransitionPanel.animationAtEnd(this);
         }
 
     }
 
-    /**
-     * Method that is called when the level is completed
-     */
     public void nextLevel() {
         if (level + 1 != LogicConstants.NUMBER_OF_LEVELS){
             Debug.out("You win!");
@@ -199,6 +207,18 @@ public class InstanceManager {
         }
 
     }
+
+
+    public int rating() {
+        if (numMoves <= minNumMoves) {
+            return 3;
+        } else if (numMoves <= minNumMoves + 2) {
+            return 2;
+        } else {
+            return 1;
+        }
+    }
+
 
     /**
      * Method used to clear the GUI
@@ -232,6 +252,14 @@ public class InstanceManager {
         Launcher launcher = new Launcher(location);
         launcher.launch();
     }
+
+    /**
+     * Method that is called when the level is completed
+     */
+    public boolean isTransitioning() {
+        return levelTransitionPanel.isTransitioning();
+    }
+
     /**
      * @return the game panel
      */
@@ -246,18 +274,26 @@ public class InstanceManager {
         return pieceLogic;
     }
 
+    public void incMoves() {
+        numMoves++;
+    }
+
+    public void decMoves() {
+        numMoves--;
+    }
+
+    public int getNumMoves() {
+        return numMoves;
+    }
+
+    public GuiConfig getGuiConfig() {
+        return guiConfig;
+    }
     /**
      * @return the height of the main frame
      */
     public int getHeight() {
         return this.mainFrame.getHeight();
-    }
-
-    /**
-     * @return if the level transition panel is transitioning
-     */
-    public boolean isTransitioning() {
-        return levelTransitionPanel.isTransitioning();
     }
 
     public Sound getSound() {

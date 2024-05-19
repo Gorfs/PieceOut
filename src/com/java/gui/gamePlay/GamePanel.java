@@ -1,12 +1,12 @@
-package src.com.java.gui.gamePlay;
+package com.java.gui.gamePlay;
 
-import src.com.java.config.Colours;
-import src.com.java.gui.InstanceManager;
-import src.com.java.gui.UI.BottomPanel;
-import src.com.java.gui.UI.TopPanel;
-import src.com.java.logic.PieceLogic;
-import src.com.java.piece.Target;
-import src.com.java.piece.decorator.Decorator;
+import com.java.config.Colours;
+import com.java.gui.InstanceManager;
+import com.java.gui.UI.BottomPanel;
+import com.java.gui.UI.TopPanel;
+import com.java.logic.PieceLogic;
+import com.java.piece.Target;
+import com.java.piece.decorator.Decorator;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,6 +17,7 @@ import java.awt.*;
  * It contains the arena, the pieces, the UI, etc.
  */
 public class GamePanel extends JPanel {
+    private final TopPanel topPanel;
     private final ArenaContainerPanel arenaContainerPanel;
     private final ArenaPanel arenaPanel;
     private final JPanel bottomPanel;
@@ -40,7 +41,7 @@ public class GamePanel extends JPanel {
         this.setLayout(new BorderLayout());
         this.setBackground(Colours.BACKGROUND);
 
-        JPanel topPanel = new TopPanel(this.instanceManager);
+        this.topPanel = new TopPanel(this.instanceManager);
         this.add(topPanel, BorderLayout.NORTH);
 
         this.arenaContainerPanel = new ArenaContainerPanel(this.instanceManager);
@@ -92,7 +93,9 @@ public class GamePanel extends JPanel {
      * Main method that updates the gui of the game.
      */
     public void update(){
+        // this makes sure to remove any previous pieces before adding new ones.
         repaint();
+        this.topPanel.updateCount(instanceManager);
 
         // scheduling the painting of the pieces on the next event on the event dispatch thread
         SwingUtilities.invokeLater(this::paintTargets);

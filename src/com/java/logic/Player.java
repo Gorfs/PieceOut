@@ -1,8 +1,8 @@
-package src.com.java.logic;
+package com.java.logic;
 
 import java.util.List;
 
-import src.com.java.config.LogicConstants;
+import com.java.config.LogicConstants;
 
 /**
  * The Player class represents the player of the game.

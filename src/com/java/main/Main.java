@@ -1,14 +1,14 @@
-package src.com.java.main;
+package com.java.main;
 
-import src.com.java.logic.*;
+import com.java.logic.*;
 
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Toolkit;
 
-import src.com.java.config.GuiConfig;
-import src.com.java.gui.*;
-import src.com.java.gui.UI.Launcher;
+import com.java.config.GuiConfig;
+import com.java.gui.*;
+import com.java.gui.UI.Launcher;
 
 /**
  * The Main class is the entry point of the game. This is where we start and launch the game.

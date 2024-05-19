@@ -1,9 +1,9 @@
-package src.com.java.gui.gamePlay;
+package com.java.gui.gamePlay;
 
-import src.com.java.config.GuiConfig;
-import src.com.java.geometry.IntCoordinates;
-import src.com.java.gui.InstanceManager;
-import src.com.java.piece.Target;
+import com.java.config.GuiConfig;
+import com.java.geometry.IntCoordinates;
+import com.java.gui.InstanceManager;
+import com.java.piece.Target;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,11 +23,11 @@ public class GuiTarget extends JPanel {
 
     /**
      * Constructor of the GuiTarget class
-     * @param guiManager Instance manager of the game
+     * @param iManager Instance manager of the game
      * @param target Target to be painted
      */
-    public GuiTarget(InstanceManager guiManager, Target target) {
-        this.instanceManager = guiManager;
+    public GuiTarget(InstanceManager iManager, Target target) {
+        this.instanceManager = iManager;
         this.target = target;
     }
 
@@ -35,6 +35,8 @@ public class GuiTarget extends JPanel {
     public void paintComponent(Graphics g) {
         // get the graphics object
         Graphics2D g2d = (Graphics2D) g;
+        GuiConfig guiConfig = this.instanceManager.getGuiConfig();
+
         // make the color less opaque
         Color color = target.getPiece().getPiece().getColor();
         color = new Color(color.getRed(), color.getGreen(), color.getBlue(), 70);
@@ -50,7 +52,7 @@ public class GuiTarget extends JPanel {
                 if (shape[y][x]) {
                     cellCoords = new IntCoordinates(target.getDest().getX() + x, target.getDest().getY() + y);
                     cellCoords = this.instanceManager.getPixelCoordinates(cellCoords);
-                    g2d.fillRect(cellCoords.getX(), cellCoords.getY(), GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE);
+                    g2d.fillRect(cellCoords.getX(), cellCoords.getY(), guiConfig.CELL_SIZE, guiConfig.CELL_SIZE);
                 }
             }
         }

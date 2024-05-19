@@ -1,7 +1,7 @@
-package src.com.java.piece.decorator;
+package com.java.piece.decorator;
 
-import src.com.java.geometry.IntCoordinates;
-import src.com.java.piece.Piece;
+import com.java.geometry.IntCoordinates;
+import com.java.piece.Piece;
 
 /**
  * Class that represents the decorator pattern for the flip action.
@@ -42,13 +42,19 @@ public class Flip extends Decorator {
     public void personalAction() {
         boolean[][] initShape = this.getPiece().getShape();
         boolean[][] rotatedShape = new boolean[initShape.length][initShape[0].length];
-
-        // changing the position on the map to offset change of fixturePoint
+        this.getLast().addFlip(this.xFlip);
+       // changing the position on the map to offset change of fixturePoint
         this.offsetPosition(this.getActionPoint());
 
         // flipping the action point for all the decorators in the list
         Decorator first = this.getLast();
         first.applyFlip(this.xFlip);
+
+        if (this.xFlip){
+            this.xFlipped = !this.xFlipped;
+        }else{
+            this.yFlipped = !this.yFlipped;
+        }
 
         // setting rotated shape to the rotation of the initial shape
         for (int i = 0; i < initShape.length; i++) {

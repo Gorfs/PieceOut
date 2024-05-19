@@ -1,6 +1,6 @@
-package src.com.java.gui.sound;
+package com.java.gui.sound;
 
-import src.com.java.config.GuiConfig;
+import com.java.config.GuiConfig;
 
 
 import javax.sound.sampled.AudioInputStream;
@@ -27,7 +27,6 @@ public class Sound {
         soundFiles[11] = new File(GuiConfig.resPath + "sfx/win3.wav");
         soundFiles[12] = new File(GuiConfig.resPath + "sfx/win4.wav");
         soundFiles[13] = new File(GuiConfig.resPath + "sfx/win5.wav");
-
     }
 
     public void setFile(int i){

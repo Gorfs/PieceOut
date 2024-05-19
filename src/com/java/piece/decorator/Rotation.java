@@ -1,7 +1,7 @@
-package src.com.java.piece.decorator;
+package com.java.piece.decorator;
 
-import src.com.java.piece.Piece;
-import src.com.java.geometry.IntCoordinates;
+import com.java.geometry.IntCoordinates;
+import com.java.piece.Piece;
 
 /**
  * Class that represent the decorator pattern for the clockwise rotation.
@@ -60,7 +60,7 @@ public class Rotation extends Decorator {
     public void personalAction() {
         boolean[][] initShape = this.getPiece().getShape();
         boolean[][] rotatedShape = new boolean[initShape[0].length][initShape.length]; // new shape after rotation
-
+        this.getLast().addRotation(this.clockwise);
         this.offsetPosition(this.getActionPoint());
 
         // changing action point for all the decorators in the list

@@ -1,12 +1,12 @@
-package src.com.java.piece.decorator;
+package com.java.piece.decorator;
 
-import src.com.java.config.GuiConfig;
-import src.com.java.geometry.IntCoordinates;
-import src.com.java.gui.InstanceManager;
-import src.com.java.logic.Move;
-import src.com.java.logic.PieceLogic;
-import src.com.java.piece.Piece;
-import src.com.java.utils.Debug;
+import com.java.config.GuiConfig;
+import com.java.gui.InstanceManager;
+import com.java.logic.Move;
+import com.java.logic.PieceLogic;
+import com.java.piece.Piece;
+import com.java.geometry.IntCoordinates;
+import com.java.utils.Debug;
 
 /**
  * Class that represent the decorator pattern for the translation.
@@ -34,31 +34,41 @@ public class Translation extends Decorator {
     }
 
     @Override
-    public void action(PieceLogic pieceLogic, InstanceManager instanceManager, int x, int y, IntCoordinates mousePos) {
-        // Update the direction of the translation
+    public boolean action(PieceLogic pieceLogic, InstanceManager instanceManager, int x, int y, IntCoordinates mousePos) {
+        // If it is the right action we pressed on, then do the action.
+        // (deal with offset)
         if (this.getActionPoint().getX() == x && this.getActionPoint().getY() == y) {
-            this.updateDir(mousePos);
-            if (directions[Direction.valueOf(dir.toString()).ordinal()]) {
-                // Do the action
+            // TODO: Create a box for each direction for multiple direction choice
+            this.updateDir(mousePos, instanceManager);
+            int temp = switch (dir) {
+                case NORTH -> 0;
+                case EAST -> 1;
+                case SOUTH -> 2;
+                case WEST -> 3;
+            };
+            if (directions[temp]) {
                 personalAction();
                 Debug.printDecorator(this);
                 if (checkCollision(pieceLogic)) {
-                    // If the piece is colliding with the walls, then we reverse the action.
                     Debug.out("Collision detected");
-                    instanceManager.getSound().playCollisionSound();
                     personalReverseAction();
+                    instanceManager.getSound().playCollisionSound();
+                    return false;
                 } else {
-                    // If not, then we add the move to the undo manager.
                     Debug.out("No collision detected");
-                    instanceManager.getSound().playMoveSound();
                     instanceManager.playerController.um.addEdit(new Move(this));
+                    instanceManager.incMoves();
+                    instanceManager.getSound().playMoveSound();
+                    return true;
                 }
             }
-        } else {
+
             // If not, then we check for the next decorator.
-            this.prevPiece.action(pieceLogic, instanceManager, x, y, mousePos);
+        } else {
+            return this.prevPiece.action(pieceLogic, instanceManager, x, y, mousePos);
         }
 
+        return false;
     }
 
     /**
@@ -89,21 +99,17 @@ public class Translation extends Decorator {
 
     @Override
     public void applyFlip(boolean xAxis){
-        if (xAxis)
-            for (int i = 0; i < directions.length; i = i + 2) {
-                if (directions[i]) {
-                    directions[i] = false;
-                    directions[(i + 2) % 4] = true;
-                }
+        boolean[] temp = directions.clone();
+        int startValue = 0;
+        if (!xAxis) startValue = 1;
+        for (int i = startValue; i < directions.length; i = i + 2) {
+            if (temp[i]) {
+                directions[i] = false;
+                directions[(i + 2) % 4] = true;
             }
-        else
-            for (int i = 1; i < directions.length; i = i + 2) {
-                if (directions[i]) {
-                    directions[i] = false;
-                    directions[(i + 2) % 4] = true;
-                }
-            }
+        }
         this.flipActionPoint(xAxis);
+
         // recursively apply flip to the rest of the list
         if (this.getPrevPiece() instanceof Decorator){
             ((Decorator) this.getPrevPiece()).applyFlip(xAxis);
@@ -135,17 +141,30 @@ public class Translation extends Decorator {
      * Method that updates the direction of the translation according to the mouse position.
      * @param mousePos Coordinates of the mouse
      */
-    public void updateDir(IntCoordinates mousePos) {
-        int ratio = GuiConfig.CELL_SIZE/4;
+    public void updateDir(IntCoordinates mousePos, InstanceManager instanceManager) {
+        GuiConfig guiConfig = instanceManager.getGuiConfig();
+        int ratio = guiConfig.CELL_SIZE/4;
         if (mousePos.getX() < ratio) {
             dir = Direction.WEST;
         } else if (mousePos.getY() < ratio) {
             dir = Direction.NORTH;
-        } else if (mousePos.getX() > GuiConfig.CELL_SIZE - ratio) {
+        } else if (mousePos.getX() > guiConfig.CELL_SIZE - ratio) {
             dir = Direction.EAST;
-        } else if (mousePos.getY() > GuiConfig.CELL_SIZE - ratio) {
+        } else if (mousePos.getY() > guiConfig.CELL_SIZE - ratio) {
             dir = Direction.SOUTH;
         }
+    }
+
+    public void updateDir(Direction dir) {
+        this.dir = dir;
+    }
+
+    public Direction getDirection() {
+        if (directions[0]) return Direction.NORTH;
+        if (directions[1]) return Direction.EAST;
+        if (directions[2]) return Direction.SOUTH;
+        if (directions[3]) return Direction.WEST;
+        return null;
     }
 
     /**

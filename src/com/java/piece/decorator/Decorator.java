@@ -1,12 +1,12 @@
-package src.com.java.piece.decorator;
+package com.java.piece.decorator;
 
-import src.com.java.geometry.IntCoordinates;
-import src.com.java.gui.InstanceManager;
-import src.com.java.logic.Move;
-import src.com.java.logic.PieceLogic;
-import src.com.java.piece.Piece;
-import src.com.java.piece.PieceBrute;
-import src.com.java.utils.Debug;
+import com.java.geometry.IntCoordinates;
+import com.java.gui.InstanceManager;
+import com.java.logic.Move;
+import com.java.logic.PieceLogic;
+import com.java.piece.Piece;
+import com.java.piece.PieceBrute;
+import com.java.utils.Debug;
 
 /**
  * Abstract class for the decorators. It extends 'Piece' because it uses the
@@ -50,9 +50,8 @@ public abstract class Decorator extends Piece {
     }
 
     @Override
-    public void action(PieceLogic pieceLogic, InstanceManager instanceManager, int x, int y, IntCoordinates mousePos) {
+    public boolean action(PieceLogic pieceLogic, InstanceManager instanceManager, int x, int y, IntCoordinates mousePos) {
         // If it is the right action we pressed on, then do the action.
-        // (deal with offset)
         if (this.actionPoint.getX() == x && this.actionPoint.getY() == y) {
             // Do the action
             personalAction();
@@ -62,15 +61,18 @@ public abstract class Decorator extends Piece {
                 Debug.out("Collision detected");
                 personalReverseAction();
                 instanceManager.getSound().playCollisionSound();
+                return false;
             } else {
                 // If not, then we add the move to the undo manager.
                 Debug.out("No collision detected");
                 instanceManager.playerController.um.addEdit(new Move(this));
+                instanceManager.incMoves();
                 instanceManager.getSound().playMoveSound();
+                return true;
             }
         } else {
             // If not, then we check for the next decorator.
-            this.prevPiece.action(pieceLogic, instanceManager, x, y, mousePos);
+            return this.prevPiece.action(pieceLogic, instanceManager, x, y, mousePos);
         }
     }
 
@@ -155,40 +157,46 @@ public abstract class Decorator extends Piece {
         this.getPiece().setPos(new IntCoordinates(pos.getX() - xOffset, pos.getY() - yOffset));
     }
 
+
     /**
-     * Method that checks collision for the piece.
-     * @param pieceLogic PieceLogic object that contains the pieces and targets of the game.
-     * @return true if the piece is colliding with the walls
+     * @return the prevPiece it decorates.
      */
-    protected boolean checkCollision(PieceLogic pieceLogic) {
+    public boolean checkCollision(PieceLogic pieceLogic) {
         // Get the position of the piece
         IntCoordinates piecePos = this.getPiece().getOffset();
-        boolean[][] matrix = this.getPiece().guiManager.arena.getMatrix();
-        // Variable to store the temp piece
-        PieceBrute temp;
-        for (int i = 0; i < this.getShape().length; i++)
-            for (int j = 0; j < this.getShape()[i].length; j++)
+        boolean[][] matrix = this.getLast().instanceManager.arena.getMatrix();
+        // Variable to store the last piece
+        PieceBrute last;
+        for (int i = 0; i < this.getShape().length; i++) {
+            for (int j = 0; j < this.getShape()[i].length; j++) {
                 if (this.getShape()[i][j]) {
                     // Check if the piece is colliding with the walls
-                    if (piecePos.getX() + j < 0 || piecePos.getX() + j >= matrix[0].length
-                            || piecePos.getY() + i < 0 || piecePos.getY() + i >= matrix.length
-                            || !matrix[piecePos.getY() + i][piecePos.getX() + j])
+                    if (piecePos.getX() + j < 0 || piecePos.getX() + j >= matrix[0].length || piecePos.getY() + i < 0
+                            || piecePos.getY() + i >= matrix.length) {
                         return true;
-
+                    }
+                    if (!matrix[piecePos.getY() + i][piecePos.getX() + j]) {
+                        return true;
+                    }
                     // Check if the piece is colliding with another piece
                     for (var piece : pieceLogic.getPieces()) {
-                        // Get the temp piece base
-                        temp = piece.getPiece();
-                        // If the piece is different from the temp piece, we check for collision
-                        if (this.getPiece() != temp)
-                            // Check if the piece is colliding with another piece
-                            for (int k = 0; k < temp.getShape().length; k++)
-                                for (int l = 0; l < temp.getShape()[k].length; l++)
-                                    if (temp.getShape()[k][l] && piecePos.getX() + j == temp.getOffset().getX() + l
-                                            && piecePos.getY() + i == temp.getOffset().getY() + k)
-                                        return true;
+                        last = piece.getPiece();
+                        if (this.getPiece() != last) {
+                            for (int k = 0; k < last.getShape().length; k++) {
+                                for (int l = 0; l < last.getShape()[k].length; l++) {
+                                    if (last.getShape()[k][l]) {
+                                        if (piecePos.getX() + j == last.getOffset().getX() + l
+                                                && piecePos.getY() + i == last.getOffset().getY() + k) {
+                                            return true;
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
+            }
+        }
         return false;
     }
 
@@ -244,9 +252,6 @@ public abstract class Decorator extends Piece {
         return temp;
     }
 
-    /**
-     * @return the prevPiece it decorates.
-     */
     public Piece getPrevPiece() {
         return prevPiece;
     }

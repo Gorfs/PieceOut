@@ -1,8 +1,9 @@
-package src.com.java.gui.gamePlay;
+package com.java.gui.gamePlay;
 
-import src.com.java.config.Colours;
-import src.com.java.config.GuiConfig;
-import src.com.java.gui.InstanceManager;
+import com.java.config.Colours;
+import com.java.config.GuiConfig;
+import com.java.gui.InstanceManager;
+import com.java.utils.Debug;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -12,7 +13,6 @@ import java.awt.*;
  * class for the gui representation of the playable cells in the game.
  */
 public class Cell extends JPanel{
-
     /**
      * Instance that manages the game
      */
@@ -37,9 +37,12 @@ public class Cell extends JPanel{
     public Cell(InstanceManager instanceManager , int x, int y){
         super();
         this.instanceManager = instanceManager;
-        this.setMinimumSize(new Dimension(GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE));
-        this.setPreferredSize(new Dimension(GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE));
-        this.setMaximumSize(new Dimension(GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE));
+        GuiConfig guiConfig = instanceManager.getGuiConfig();
+        this.setMinimumSize(new Dimension(guiConfig.CELL_SIZE, guiConfig.CELL_SIZE));
+        this.setPreferredSize(new Dimension(guiConfig.CELL_SIZE, guiConfig.CELL_SIZE));
+        this.setMaximumSize(new Dimension(guiConfig.CELL_SIZE, guiConfig.CELL_SIZE));
+        // For debugging purposes
+        // this.setBorder(BorderFactory.createLineBorder(Color.black, 1));
 
         // pixel coordinates are relative to the top left of the arena
         this.map_x = x;
@@ -53,10 +56,16 @@ public class Cell extends JPanel{
      * Method that update the coordinates and the size of the cell.
      */
     public void updateCell(){
-        this.setSize(new Dimension(GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE));
-        this.setMinimumSize(new Dimension(GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE));
-        this.setPreferredSize(new Dimension(GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE));
-        this.setMaximumSize(new Dimension(GuiConfig.CELL_SIZE, GuiConfig.CELL_SIZE));
+        this.removeAll();
+        GuiConfig guiConfig = instanceManager.getGuiConfig();
+
+        this.setSize(new Dimension(guiConfig.CELL_SIZE, guiConfig.CELL_SIZE));
+        this.setMinimumSize(new Dimension(guiConfig.CELL_SIZE, guiConfig.CELL_SIZE));
+        this.setPreferredSize(new Dimension(guiConfig.CELL_SIZE, guiConfig.CELL_SIZE));
+        this.setMaximumSize(new Dimension(guiConfig.CELL_SIZE, guiConfig.CELL_SIZE));
+        if (Debug.isDebugging()){
+            this.add(new JLabel("x : " +  this.map_x + " y : " + this.map_y)).setFont(new Font("Arial", Font.PLAIN, 7));
+        }
         updatePlayableCell();
     }
 
@@ -85,21 +94,21 @@ public class Cell extends JPanel{
             this.setBorder(topLeftShadow);
         }else if(map_x == 0){
             if(!matrix[map_y-1][map_x]){
+                this.setBorder(topLeftShadow);
+            }else{
+                this.setBorder(leftShadow);
+            }
+        }else if (map_y == 0){
+            if(matrix[map_y][map_x-1]){
                 this.setBorder(topShadow);
             }else{
                 this.setBorder(topLeftShadow);
             }
-        }else if (map_y == 0){
-            if(matrix[map_y][map_x-1]){
-                this.setBorder(leftShadow);
-            }else{
-                this.setBorder(topLeftShadow);
-            }
             
-        }else{
+        }else{ // we know x > 0 and y > 0
             if(!matrix[map_y-1][map_x] && !matrix[map_y][map_x-1]){
                 this.setBorder(topLeftShadow);
-            }else if(!matrix[map_y-1][map_x]){
+            }else if(!matrix[map_y-1][map_x]){ // we know here that either [y-1][x] is true or [y][x-1] is true
                 this.setBorder(topShadow);
             }else if(!matrix[map_y][map_x-1]){
                 this.setBorder(leftShadow);

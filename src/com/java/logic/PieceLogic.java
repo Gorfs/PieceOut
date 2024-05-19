@@ -1,9 +1,9 @@
-package src.com.java.logic;
+package com.java.logic;
 
 
-import src.com.java.geometry.IntCoordinates;
-import src.com.java.piece.Target;
-import src.com.java.piece.decorator.Decorator;
+import com.java.geometry.IntCoordinates;
+import com.java.piece.Target;
+import com.java.piece.decorator.Decorator;
 
 import java.util.ArrayList;
 

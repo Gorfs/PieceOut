@@ -11,13 +11,13 @@
                     "decorators":[
                         {
                             "type": "translation",
-                            "direction": [false, false, false, true],
-                            "position": [0, 0]
+                            "direction": [false, true, false, false],
+                            "position": [1, 0]
                         },
                         {
                             "type": "translation",
-                            "direction": [false, true, false, false],
-                            "position": [1, 0]
+                            "direction": [false, false, false, true],
+                            "position": [0, 0]
                         }
                     ]
                 }

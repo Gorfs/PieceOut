@@ -1,7 +1,7 @@
-package src.com.java.gui.gamePlay;
+package com.java.gui.gamePlay;
 
-import src.com.java.config.Colours;
-import src.com.java.gui.InstanceManager;
+import com.java.config.Colours;
+import com.java.gui.InstanceManager;
 
 import javax.swing.*;
 import java.awt.*;

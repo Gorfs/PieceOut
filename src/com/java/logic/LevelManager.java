@@ -1,18 +1,18 @@
-package src.com.java.logic;
+package com.java.logic;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import src.com.java.config.Colours;
-import src.com.java.config.GuiConfig;
-import src.com.java.geometry.IntCoordinates;
-import src.com.java.gui.InstanceManager;
-import src.com.java.piece.Piece;
-import src.com.java.piece.ShapeFactory;
-import src.com.java.piece.Target;
-import src.com.java.piece.decorator.Decorator;
-import src.com.java.piece.decorator.Flip;
-import src.com.java.piece.decorator.Rotation;
-import src.com.java.piece.decorator.Translation;
+import com.java.config.Colours;
+import com.java.config.GuiConfig;
+import com.java.geometry.IntCoordinates;
+import com.java.gui.InstanceManager;
+import com.java.piece.Piece;
+import com.java.piece.ShapeFactory;
+import com.java.piece.Target;
+import com.java.piece.decorator.Decorator;
+import com.java.piece.decorator.Flip;
+import com.java.piece.decorator.Rotation;
+import com.java.piece.decorator.Translation;
 
 import java.awt.*;
 import java.io.IOException;
@@ -63,6 +63,33 @@ public class LevelManager {
         } catch (IOException e) {
             System.out.println("Error while loading the level from the JSON file.");
             return null;
+        }
+    }
+
+    public static int NumMovesFromJson(int id){
+        try {
+            // Read the .json file
+            String content = new String(Files.readAllBytes(Paths.get(GuiConfig.resPath + "maps/levels.json")));
+
+            // Parse the content into a JSONObject
+            JSONObject obj = new JSONObject(content);
+
+            // Get the levels JSONArray
+            JSONArray levels = obj.getJSONArray("levels");
+
+            // Iterate over the levels
+            for (int i = 0; i < levels.length(); i++) {
+                JSONObject level = levels.getJSONObject(i);
+                if (level.getInt("id") == id) {
+                    // If the id matches, return the map
+                    return level.getInt("moves");
+                }
+            }
+            // If no matching id is found, return null
+            return -1;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return -1;
         }
     }
 
@@ -139,24 +166,20 @@ public class LevelManager {
         // Add the decorators
         JSONArray decorators = piece.getJSONArray("decorators");
         Decorator decorator = null;
+        String type;
+        Piece prevPiece;
+
         for (int k = 0; k < decorators.length(); k++) {
             JSONObject decoratorJSON = decorators.getJSONObject(k);
-            if (decorator == null) {
-                // Create the decorator for the first time
-                decorator = switch (decoratorJSON.getString("type")) {
-                    case "rotation" -> createRotation(piece_to_add, decoratorJSON);
-                    case "flip" -> createFlip(piece_to_add, decoratorJSON);
-                    default -> createTranslation(piece_to_add, decoratorJSON);
-                };
-            } else {
-                // Create the decorator
-                decorator = switch (decoratorJSON.getString("type")) {
-                    case "rotation" -> createRotation(decorator, decoratorJSON);
-                    case "flip" -> createFlip(decorator, decoratorJSON);
-                    default -> createTranslation(decorator, decoratorJSON);
+            prevPiece = decorator == null ? piece_to_add : decorator;
+            type = decoratorJSON.getString("type");
+                decorator = switch (type) {
+                    case "rotation" -> createRotation(prevPiece, decoratorJSON);
+                    case "flip" -> createFlip(prevPiece, decoratorJSON);
+                    default -> createTranslation(prevPiece, decoratorJSON);
                 };
             }
-        }
+
 
         // Add the piece to the arena
         pieceLogic.addPiece(decorator);
