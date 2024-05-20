@@ -5,6 +5,8 @@ import com.java.config.GuiConfig;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
+
 import java.io.File;
 
 
@@ -19,7 +21,7 @@ public class SoundManager {
     /**
      * Array of files that contains the sound files.
      */
-    protected final File[] soundFiles = new File[14];
+    protected final File[] soundFiles = new File[19];
     /**
      * Booleans that manage the mute of the sound effects. If true, the sound effects are muted.
      */
@@ -43,11 +45,16 @@ public class SoundManager {
         soundFiles[6] = new File(GuiConfig.resPath + "sfx/collision1.wav");
         soundFiles[7] = new File(GuiConfig.resPath + "sfx/collision2.wav");
         soundFiles[8] = new File(GuiConfig.resPath + "sfx/collision3.wav");
-        soundFiles[9] = new File(GuiConfig.resPath + "sfx/win1.wav");
-        soundFiles[10] = new File(GuiConfig.resPath + "sfx/win2.wav");
-        soundFiles[11] = new File(GuiConfig.resPath + "sfx/win3.wav");
-        soundFiles[12] = new File(GuiConfig.resPath + "sfx/win4.wav");
-        soundFiles[13] = new File(GuiConfig.resPath + "sfx/win5.wav");
+        soundFiles[9] = new File(GuiConfig.resPath + "sfx/note1.wav");
+        soundFiles[10] = new File(GuiConfig.resPath + "sfx/note2.wav");
+        soundFiles[11] = new File(GuiConfig.resPath + "sfx/note3.wav");
+        soundFiles[12] = new File(GuiConfig.resPath + "sfx/note4.wav");
+        soundFiles[13] = new File(GuiConfig.resPath + "sfx/note5.wav");
+        soundFiles[14] = new File(GuiConfig.resPath + "sfx/note6.wav");
+        soundFiles[15] = new File(GuiConfig.resPath + "sfx/note7.wav");
+        soundFiles[16] = new File(GuiConfig.resPath + "sfx/note8.wav");
+        soundFiles[17] = new File(GuiConfig.resPath + "sfx/note9.wav");
+        soundFiles[18] = new File(GuiConfig.resPath + "sfx/note10.wav");
     }
 
     /**
@@ -86,11 +93,24 @@ public class SoundManager {
     }
 
     /**
+     * Method that sets the volume of the sound.
+     * @param volume the volume we want to set
+     */
+    public void setVolume(float volume){
+        if (clip != null) {
+            FloatControl volumeControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+            volumeControl.setValue(volume);
+        }
+    }
+
+
+    /**
      * This method plays the music we asked for.
      * @param i index of the file we want to play
      */
     public void playMusic(int i) {
         setFile(i);
+        setVolume(-10.0f);
         play();
         loop();
     }
@@ -99,6 +119,7 @@ public class SoundManager {
      * Method that plays the sound of a move.
      */
     public void playMoveSound() {
+        if (soundEffectsMuted) return;
         int i = (int) (Math.random() * 5) + 1;
         SoundManager soundEffect = new SoundManager();
         soundEffect.setFile(i);
@@ -109,6 +130,7 @@ public class SoundManager {
      * Method that plays the sound of a collision.
      */
     public void playCollisionSound() {
+        if (soundEffectsMuted) return;
         int i = (int) (Math.random() * 3) + 6;
         SoundManager soundEffect = new SoundManager();
         soundEffect.setFile(i);
@@ -119,7 +141,8 @@ public class SoundManager {
      * Method that plays the sound of a win.
      */
     public void playNote() {
-        int i = (int) (Math.random() * 5) + 9;
+        if (soundEffectsMuted) return;
+        int i = (int) (Math.random() * 10) + 9;
         SoundManager soundEffect = new SoundManager();
         soundEffect.setFile(i);
         soundEffect.play();
