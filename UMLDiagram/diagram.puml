@@ -1,0 +1,235 @@
+@startuml
+' skinparam linetype polyline
+allowmixing
+skinparam classAttributeIconSize 0
+package com.java.config{
+
+    class Colours{
+        + static final String RED
+        + static final String GREEN
+        + static final String BLUE
+        + static final String YELLOW 
+        }
+
+    class GuiConfig{
+        + static final int WindowWIDTH
+        + static final int WindowHEIGHT
+        + static finale int CELL_SIZE
+    }
+    class LogicConstants{
+        + static number_of_players
+    }
+}
+
+package com.java.controllers{
+    class PlayerController extends JPanel implements MouseListener{
+        public void startController(Container container)
+        public void toggleControlManager(MouseEvent e)
+
+    }
+}
+package com.java.geometry{
+    class IntCoordinates{
+        + int x
+        + int y
+        public int getX()
+        public int getY()
+        public void setX(int x)
+        pbulci void setY(int y)
+
+    }
+}
+package com.java.gui {
+    class gameWindow extends JFrame
+    class InstanceManager{
+        public InstanceManager(PieceLogic pieceLogic)
+        public void start(int level)
+        public int getArenaPanelY()
+        public void update()
+        public void won()
+        public void changePanel(String panelName)
+        public PieceLogic getPieceLogic()
+        public int getHeight()
+    }
+    package UI{
+        class BottomPanel{
+            public void updateButtons()
+        }
+        class TopPanel{
+
+        }
+    }
+    package gamePlay{
+        class ArenaContainerPanel{
+            public ArenaPanel getArenaPanel()
+
+        }
+        class ArenaPanel{
+            public Cell[] getCells()
+            public void updateArena() 
+        }
+        class Cell{
+            public void updateCell()
+            int getPixel_x()
+            int getPixel_y()
+            IntCoordinates getIntCoordinates()
+            IntCooridnate getPixelCoordinates()
+        }
+
+        class GamePanel{
+            public ArenaContainerPanel getArenaContainerPanel()
+            public BottomPanel getBottomPanel()
+            public void paintPieces()
+            public void update()
+        }
+        class GuiPiece{
+
+        }
+        ArenaContainerPanel <- InstanceManager : uses
+        ArenaContainerPanel -> ArenaPanel : contains
+        ArenaPanel -> Cell : contains multiple of 
+        GamePanel -down-> ArenaContainerPanel : contains
+        GamePanel -> BottomPanel : contains
+        GamePanel -> TopPanel : contains
+
+
+    }
+
+}
+package com.java.logic{
+    class Arena{
+        public int getLevel()
+        public boolean[][] getMatrix()
+        public loadArena(Stirng binary)
+
+    }
+    class LevelManager{
+        public static String[] loadLevelFromJson(int id)
+        public static void lostPiecesFromJson(PieceLogic pieceLogic, int id, instanceManager instanceManager)
+
+
+    }
+    class Move{
+        public void doit()
+        public void undo()
+    }
+    class PieceLogic{
+        private ArrayList<Decorator> pieces
+        public void addPiece(Decorator piece)
+        public void clearPieces()
+    }
+    class Player{
+        public void endOfGameCheck()
+
+    }
+    class SaveSystem{
+        public static void save(List<Integer> nbMovesPerLevel, List<Integer> nbStarsPerLevel, int nbMovesCurrent, int currentLevel)
+        public static void load(Player player)
+    }
+    SaveSystem -down-> Player: used for saving data
+}
+package com.java.main{
+    class Main{
+        public static void main(String[] args)
+    }
+}
+
+package com.java.piece{
+    abstract class Piece{
+        public boolean[][] getShape()
+
+    }
+    abstract class PieceBrute extends Piece{
+        public Color getColor()
+        public IntCoordiantes getPos()
+        public Target getTarget()
+        public void setTarget(Target target)
+        public IntCoordiantes getFixturePoint()
+        public void sn
+        tFixturePoint(IntCoordinates fixturePoint)
+        public void setShape(boolean[][] shape)
+    }
+    class ShapeFactory extends PieceBrute{
+        public ShapeFactory(String filePath, Color c, IntCoordinates pos, IntCoordinates fixtureP, Target t,
+         InstanceManager IM) 
+
+    }
+    class Target{
+         public IntCoordinates getDest()
+         public Direction getDestRotation()
+         public boolean isFlippedX()
+         public boolean isFlippedY()
+    }
+    package decorator{
+        abstract class Decorator extends Piece{
+            protected Piece nextPiece;
+            protected Piece prevPiece;
+            protected IntCoordinates localCoord;
+            public void setActionPoint(IntCoordinates p)
+            public void applyRotation(boolean clockwise)
+            public void rotateActionPoint(boolean clockwise)
+            public void flipActionPoint(boolean xAxis)
+            public void applyFlip(boolean xAxis)
+            public abstract void personalAction()
+            public Piece getNextPiece()
+            public void setNextPiece(Piece p)
+            public Piece getPrevPiece()
+            public boolean[][] getShape() 
+            public void personalAction()
+            public void personalReverseAction()
+        }
+        enum Direction{
+            UP, RIGHT, DOWN, LEFT
+
+        }
+
+        class Flip extends Decorator
+        class Rotation extends Decorator
+        class Translation extends Decorator
+        
+
+    }
+}
+
+package com.java.utils{
+    class Debug{
+        public void printBooleanArray(boolean[][] array)
+        public static void printShapePieces(PieceBrute p)
+        public static void printDecorator(Decorator d)
+        public static void toggleDebugging()
+        public static void out(String message)
+    }
+}
+package src.tests{
+
+}
+
+
+main -down-> InstanceManager
+PieceLogic -> Decorator : stores
+' com.java.gui -down-> com.java.piece 
+Arena -down-> LevelManager : uses
+com.java.gui -[hidden]- com.java.logic
+com.java.main.Main -up-> com.resources
+InstanceManager -down-> PieceLogic : required to construct
+com.java.controllers.playerControlle -up-> ArenaPanel : actived on
+Cell -down-> IntCoordinates : uses
+gui -down-> com.java.config.GuiConfig : is configured by
+
+
+
+
+package com.resources{
+    folder "icons"{
+
+    }
+    folder "maps"{
+
+    artifact "levels<U+002E>json" as  v1
+    artifact "pieces<U+002E>json" as  v2
+    }
+    artifact "shapes<U+002E>json" as validation
+
+}
+
+@enduml
