@@ -44,6 +44,11 @@ Piece out replica written in java 17,
 2 player mode for competitive play.
 Responsive sound design
 
+## rights for sounds, idea etc...
+```
+https://pieceoutgame.com/index.html
+```
+
 ## Contact
 ```
 Beales Archie     archie.beales@etu.u-paris.fr
